@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sports Stream Hub</title>
     
+    <!-- Mobile Web App Capability -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="StreamHub">
@@ -100,11 +101,13 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            padding-right: 12px;
         }
 
         .card-title {
             font-weight: 600;
             font-size: 0.95rem;
+            line-height: 1.3;
         }
 
         .card-sub {
@@ -120,6 +123,7 @@
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.85rem;
+            white-space: nowrap;
         }
 
         .main-btn {
@@ -152,51 +156,90 @@
 
     <div class="container">
         <div id="game-list">
-            <!-- Game cards load here -->
+            <!-- Dynamic game cards load here -->
         </div>
 
         <a id="main-hub-btn" href="https://mybuffstreams.plus/nfl" target="_blank" class="main-btn">
-            Open Main League Page ➔
+            Open Main League Schedule ➔
         </a>
     </div>
 
     <script>
-        // Edit this list anytime in GitHub to update your dad's game lineup!
+        // Data structure with specific teams and direct subpage URLs
         const scheduleData = {
             NFL: {
                 mainUrl: "https://mybuffstreams.plus/nfl",
                 games: [
-                    { title: "NFL Game 1 (Live Feed)", sub: "Main Network Stream", url: "https://mybuffstreams.plus/nfl" },
-                    { title: "NFL Game 2 (Live Feed)", sub: "Prime Stream Channel", url: "https://mybuffstreams.plus/nfl" },
-                    { title: "NFL RedZone Channel", sub: "Commercial Free Live Feed", url: "https://mybuffstreams.plus/nfl" }
+                    { 
+                        title: "Cincinnati Bengals vs Tampa Bay Buccaneers", 
+                        sub: "NFL • Sun, 1:00 PM ET", 
+                        url: "https://mybuffstreams.plus/stream/cincinnati-bengals-vs-tampa-bay-buccaneers" 
+                    },
+                    { 
+                        title: "Detroit Lions vs New Orleans Saints", 
+                        sub: "NFL • Sun, 1:00 PM ET", 
+                        url: "https://mybuffstreams.plus/stream/detroit-lions-vs-new-orleans-saints" 
+                    },
+                    { 
+                        title: "Las Vegas Raiders vs Miami Dolphins", 
+                        sub: "NFL • Sun, 4:25 PM ET", 
+                        url: "https://mybuffstreams.plus/stream/las-vegas-raiders-vs-miami-dolphins" 
+                    },
+                    { 
+                        title: "New York Giants vs Dallas Cowboys", 
+                        sub: "NFL • Sun, 8:20 PM ET", 
+                        url: "https://mybuffstreams.plus/stream/new-york-giants-vs-dallas-cowboys" 
+                    }
                 ]
             },
             NBA: {
                 mainUrl: "https://mybuffstreams.plus/nba",
                 games: [
-                    { title: "NBA Live Game Stream 1", sub: "East Coast Matchup", url: "https://mybuffstreams.plus/nba" },
-                    { title: "NBA Live Game Stream 2", sub: "West Coast Matchup", url: "https://mybuffstreams.plus/nba" },
-                    { title: "NBA TV Stream 24/7", sub: "Live Studio Coverage", url: "https://mybuffstreams.plus/nba" }
+                    { 
+                        title: "Los Angeles Lakers vs Golden State Warriors", 
+                        sub: "NBA • Live Tonight", 
+                        url: "https://mybuffstreams.plus/stream/los-angeles-lakers-vs-golden-state-warriors" 
+                    },
+                    { 
+                        title: "Boston Celtics vs Milwaukee Bucks", 
+                        sub: "NBA • Live Tonight", 
+                        url: "https://mybuffstreams.plus/stream/boston-celtics-vs-milwaukee-bucks" 
+                    }
                 ]
             },
             MLB: {
                 mainUrl: "https://mybuffstreams.plus/mlb",
                 games: [
-                    { title: "MLB Live Ballgame 1", sub: "Featured Broadcast", url: "https://mybuffstreams.plus/mlb" },
-                    { title: "MLB Live Ballgame 2", sub: "Evening Broadcast", url: "https://mybuffstreams.plus/mlb" }
+                    { 
+                        title: "New York Yankees vs Colorado Rockies", 
+                        sub: "MLB • Today 7:05 PM ET", 
+                        url: "https://mybuffstreams.plus/stream/new-york-yankees-vs-colorado-rockies" 
+                    },
+                    { 
+                        title: "Seattle Mariners vs Texas Rangers", 
+                        sub: "MLB • Today 4:10 PM ET", 
+                        url: "https://mybuffstreams.plus/stream/seattle-mariners-vs-texas-rangers" 
+                    }
                 ]
             },
             UFC: {
                 mainUrl: "https://mybuffstreams.plus/mma",
                 games: [
-                    { title: "UFC Fight Night Main Card", sub: "Live PPV/Main Event", url: "https://mybuffstreams.plus/mma" },
-                    { title: "UFC Preliminary Fights", sub: "Early Prelims Feed", url: "https://mybuffstreams.plus/mma" }
+                    { 
+                        title: "UFC Main Card: Championship Fight Night", 
+                        sub: "MMA • Saturday Event Pass", 
+                        url: "https://mybuffstreams.plus/stream/ufc-fight-night" 
+                    }
                 ]
             },
             Boxing: {
                 mainUrl: "https://mybuffstreams.plus/boxing",
                 games: [
-                    { title: "World Championship Boxing Card", sub: "Main Event Stream", url: "https://mybuffstreams.plus/boxing" }
+                    { 
+                        title: "World Championship Boxing Main Event", 
+                        sub: "Boxing • Saturday Night Live", 
+                        url: "https://mybuffstreams.plus/stream/world-championship-boxing" 
+                    }
                 ]
             }
         };
@@ -227,7 +270,7 @@
             });
         }
 
-        // Initialize with NFL
+        // Initialize default tab as NFL
         selectCategory('NFL', document.querySelector('.cat-btn'));
     </script>
 </body>
