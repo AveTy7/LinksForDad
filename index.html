@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sports Stream Hub</title>
     
-    <!-- Mobile Web App Settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="StreamHub">
@@ -15,7 +14,6 @@
             --bg-color: #0f172a;
             --card-bg: #1e293b;
             --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -118,66 +116,51 @@
         .watch-btn {
             background-color: var(--accent-color);
             color: white;
-            text-decoration: none;
+            border: none;
             padding: 10px 18px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.85rem;
             white-space: nowrap;
+            cursor: pointer;
         }
 
-        .search-box {
-            background-color: var(--card-bg);
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 16px;
+        /* Embedded Player Window */
+        #player-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            flex-direction: column;
         }
 
-        .search-box label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .input-group {
+        .modal-header {
             display: flex;
-            gap: 8px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid #334155;
         }
 
-        .search-input {
-            flex: 1;
-            background-color: var(--bg-color);
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px;
-            color: var(--text-color);
-            font-size: 0.9rem;
-        }
-
-        .search-btn {
-            background-color: #334155;
+        .close-btn {
+            background-color: #ef4444;
             color: white;
             border: none;
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 6px 14px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
         }
 
-        .main-btn {
-            display: block;
+        iframe {
             width: 100%;
-            text-align: center;
-            background-color: #334155;
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            margin-top: 16px;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -193,120 +176,50 @@
         <button class="cat-btn" onclick="selectCategory('MLB', this)">MLB</button>
         <button class="cat-btn" onclick="selectCategory('MMA', this)">MMA/UFC</button>
         <button class="cat-btn" onclick="selectCategory('NBA', this)">NBA</button>
-        <button class="cat-btn" onclick="selectCategory('Boxing', this)">Boxing</button>
     </div>
 
     <div class="container">
-        <!-- Direct Matchup Search Box -->
-        <div class="search-box">
-            <label id="search-label">FIND SPECIFIC GAME</label>
-            <div class="input-group">
-                <input type="text" id="team-input" class="search-input" placeholder="e.g. Rams, Yankees, Cowboys...">
-                <button onclick="searchGame()" class="search-btn">Go ➔</button>
-            </div>
-        </div>
+        <div id="game-list"></div>
+    </div>
 
-        <div id="game-list">
-            <!-- Game cards load here -->
+    <!-- Fullscreen Stream Container -->
+    <div id="player-modal">
+        <div class="modal-header">
+            <span id="modal-title" style="font-weight: 600;">Stream View</span>
+            <button class="close-btn" onclick="closeStream()">✕ Close Stream</button>
         </div>
-
-        <a id="main-hub-btn" href="https://mybuffstreams.plus/nflstreams2" target="_blank" class="main-btn">
-            Open Main League Page ➔
-        </a>
+        <iframe id="stream-frame" src="" allowfullscreen></iframe>
     </div>
 
     <script>
-        // Exact active URLs pulled from site
         const scheduleData = {
-            NFL: {
-                mainUrl: "https://mybuffstreams.plus/nflstreams2",
-                games: [
-                    { 
-                        title: "NFL Network", 
-                        sub: "24/7 Channel • Live Stream", 
-                        url: "https://mybuffstreams.plus/nflstreams2" 
-                    },
-                    { 
-                        title: "Los Angeles Rams vs San Francisco 49ers", 
-                        sub: "NFL Game • 12:35 AM", 
-                        url: "https://mybuffstreams.plus/nflstreams2" 
-                    }
-                ]
-            },
-            CFB: {
-                mainUrl: "https://mybuffstreams.plus/ncaastreams",
-                games: [
-                    { 
-                        title: "NCAA College Football Hub", 
-                        sub: "Active CFB Games & Feeds", 
-                        url: "https://mybuffstreams.plus/ncaastreams" 
-                    }
-                ]
-            },
-            MLB: {
-                mainUrl: "https://mybuffstreams.plus/mlb",
-                games: [
-                    { 
-                        title: "New York Yankees vs Colorado Rockies", 
-                        sub: "MLB • 11:05 PM ET", 
-                        url: "https://mybuffstreams.plus/mlb" 
-                    },
-                    { 
-                        title: "Chicago White Sox vs Pittsburgh Pirates", 
-                        sub: "MLB • 11:40 PM ET", 
-                        url: "https://mybuffstreams.plus/mlb" 
-                    }
-                ]
-            },
-            MMA: {
-                mainUrl: "https://mybuffstreams.plus/mmastreams",
-                games: [
-                    { 
-                        title: "UFC / MMA Stream Hub", 
-                        sub: "Live Fight Night & Prelims Pass", 
-                        url: "https://mybuffstreams.plus/mmastreams" 
-                    }
-                ]
-            },
-            NBA: {
-                mainUrl: "https://mybuffstreams.plus/nbastreams",
-                games: [
-                    { 
-                        title: "NBA Stream Hub", 
-                        sub: "Main NBA Game Schedule Page", 
-                        url: "https://mybuffstreams.plus/nbastreams" 
-                    }
-                ]
-            },
-            Boxing: {
-                mainUrl: "https://mybuffstreams.plus/boxing",
-                games: [
-                    { 
-                        title: "Boxing Events Hub", 
-                        sub: "Main Card Streams Page", 
-                        url: "https://mybuffstreams.plus/boxing" 
-                    }
-                ]
-            }
+            NFL: [
+                { title: "Los Angeles Rams vs San Francisco 49ers", sub: "NFL Stream Feed", url: "https://mybuffstreams.plus/nfl" },
+                { title: "NFL Network Live 24/7", sub: "Official Feed", url: "https://mybuffstreams.plus/nfl" }
+            ],
+            CFB: [
+                { title: "NCAA Football Live Games Hub", sub: "CFB Saturday Coverage", url: "https://mybuffstreams.plus/football" }
+            ],
+            MLB: [
+                { title: "New York Yankees vs Colorado Rockies", sub: "MLB Broadcast", url: "https://mybuffstreams.plus/mlb" },
+                { title: "Chicago White Sox vs Pittsburgh Pirates", sub: "MLB Broadcast", url: "https://mybuffstreams.plus/mlb" }
+            ],
+            MMA: [
+                { title: "UFC Fight Night Pass", sub: "MMA Main Event & Prelims", url: "https://mybuffstreams.plus/mma" }
+            ],
+            NBA: [
+                { title: "NBA Stream Hub", sub: "Active Basketball Schedule", url: "https://mybuffstreams.plus/nba" }
+            ]
         };
 
-        let currentCat = 'NFL';
-
         function selectCategory(catKey, btnElement) {
-            currentCat = catKey;
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
 
-            const catData = scheduleData[catKey];
             const container = document.getElementById('game-list');
-            const mainBtn = document.getElementById('main-hub-btn');
-
-            document.getElementById('search-label').innerText = `FIND ${catKey} TEAM / MATCHUP`;
-            mainBtn.href = catData.mainUrl;
-            mainBtn.innerText = `Open All ${catKey} Streams ➔`;
-
             container.innerHTML = '';
-            catData.games.forEach(game => {
+
+            scheduleData[catKey].forEach(game => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
@@ -314,21 +227,24 @@
                         <span class="card-title">${game.title}</span>
                         <span class="card-sub">${game.sub}</span>
                     </div>
-                    <a href="${game.url}" target="_blank" class="watch-btn">Watch</a>
+                    <button onclick="openStream('${game.url}', '${game.title}')" class="watch-btn">Watch Inside App</button>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function searchGame() {
-            const query = document.getElementById('team-input').value.trim();
-            if (!query) return;
-            // Generates a search target URL for buffstreams
-            const searchUrl = `https://www.google.com/search?q=site:mybuffstreams.plus+${encodeURIComponent(query)}`;
-            window.open(searchUrl, '_blank');
+        function openStream(url, title) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('stream-frame').src = url;
+            document.getElementById('player-modal').style.display = 'flex';
         }
 
-        // Initialize default tab as NFL
+        function closeStream() {
+            document.getElementById('player-modal').style.display = 'none';
+            document.getElementById('stream-frame').src = '';
+        }
+
+        // Initialize default tab
         selectCategory('NFL', document.querySelector('.cat-btn'));
     </script>
 </body>
