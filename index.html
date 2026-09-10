@@ -56,11 +56,11 @@
             padding: 12px 16px;
             gap: 10px;
             background-color: var(--bg-color);
-            scrollbar-width: none; /* Hide scrollbar Firefox */
+            scrollbar-width: none;
         }
 
         .category-bar::-webkit-scrollbar {
-            display: none; /* Hide scrollbar Chrome/Safari */
+            display: none;
         }
 
         .cat-btn {
@@ -89,6 +89,13 @@
             margin: 0 auto;
         }
 
+        .status-msg {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -104,11 +111,13 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            padding-right: 12px;
         }
 
         .card-title {
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.3;
         }
 
         .card-sub {
@@ -124,6 +133,7 @@
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.85rem;
+            white-space: nowrap;
             transition: background 0.2s;
         }
 
@@ -161,86 +171,111 @@
 
     <div class="container">
         <div id="game-list">
-            <!-- Dynamic game cards render here -->
+            <div class="status-msg">Fetching live games...</div>
         </div>
 
         <a id="direct-link" href="#" target="_blank" class="direct-hub-btn">
-            Open Main League Page
+            Open Main League Hub
         </a>
     </div>
 
     <script>
-        // Data Configuration
-        const streams = {
-            NFL: {
-                mainUrl: "https://mybuffstreams.plus/nfl",
-                games: [
-                    { title: "NFL Live Coverage Hub", time: "Live 24/7", link: "https://mybuffstreams.plus/nfl" }
-                ]
-            },
-            NBA: {
-                mainUrl: "https://mybuffstreams.plus/nba",
-                games: [
-                    { title: "NBA Live Coverage Hub", time: "Live 24/7", link: "https://mybuffstreams.plus/nba" }
-                ]
-            },
-            MLB: {
-                mainUrl: "https://mybuffstreams.plus/mlb",
-                games: [
-                    { title: "MLB Live Coverage Hub", time: "Live 24/7", link: "https://mybuffstreams.plus/mlb" }
-                ]
-            },
-            UFC: {
-                mainUrl: "https://mybuffstreams.plus/mma",
-                games: [
-                    { title: "UFC / MMA Fight Pass", time: "Live Event", link: "https://mybuffstreams.plus/mma" }
-                ]
-            },
-            Boxing: {
-                mainUrl: "https://mybuffstreams.plus/boxing",
-                games: [
-                    { title: "Boxing Live Events", time: "Main Card", link: "https://mybuffstreams.plus/boxing" }
-                ]
-            }
+        const categories = {
+            NFL: { path: "nfl", name: "NFL" },
+            NBA: { path: "nba", name: "NBA" },
+            MLB: { path: "mlb", name: "MLB" },
+            UFC: { path: "mma", name: "UFC / MMA" },
+            Boxing: { path: "boxing", name: "Boxing" }
         };
 
         let currentCategory = 'NFL';
 
-        function renderGames(category) {
+        async function fetchGames(categoryKey) {
             const container = document.getElementById('game-list');
             const directLink = document.getElementById('direct-link');
-            const categoryData = streams[category];
+            const cat = categories[categoryKey];
 
-            container.innerHTML = '';
-            directLink.href = categoryData.mainUrl;
-            directLink.innerText = `Open All ${category} Streams`;
+            const targetUrl = `https://mybuffstreams.plus/${cat.path}`;
+            directLink.href = targetUrl;
+            directLink.innerText = `Open Main ${cat.name} Page`;
 
-            categoryData.games.forEach(game => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-info">
-                        <span class="card-title">${game.title}</span>
-                        <span class="card-sub">${game.time}</span>
-                    </div>
-                    <a href="${game.link}" target="_blank" class="watch-btn">Watch</a>
-                `;
-                container.appendChild(card);
-            });
+            container.innerHTML = `<div class="status-msg">Fetching live ${cat.name} matchups...</div>`;
+
+            try {
+                // Using a CORS proxy to allow cross-domain web fetching from mobile browsers
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+                const response = await fetch(proxyUrl);
+                
+                if (!response.ok) throw new Error("Network response failed");
+                
+                const data = await response.json();
+                const htmlString = data.contents;
+
+                // Parse the raw HTML text
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlString, 'text/html');
+
+                // Find game links matching the target site's layout
+                const gameElements = doc.querySelectorAll('a[href*="/' + cat.path + '"]');
+                const games = [];
+
+                gameElements.forEach(el => {
+                    const href = el.getAttribute('href');
+                    const text = el.innerText.trim();
+
+                    // Filter out generic navigation links
+                    if (href && text && text.length > 3 && !text.toLowerCase().includes('schedule') && !text.toLowerCase().includes('streams')) {
+                        const fullLink = href.startsWith('http') ? href : `https://mybuffstreams.plus${href}`;
+                        
+                        // Prevent duplicates
+                        if (!games.some(g => g.link === fullLink)) {
+                            games.push({ title: text, link: fullLink });
+                        }
+                    }
+                });
+
+                if (games.length === 0) {
+                    container.innerHTML = `
+                        <div class="status-msg">
+                            No live individual games listed right now.<br>Tap below to visit the main league page.
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = '';
+                games.forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-info">
+                            <span class="card-title">${game.title}</span>
+                            <span class="card-sub">Live / Upcoming</span>
+                        </div>
+                        <a href="${game.link}" target="_blank" class="watch-btn">Watch</a>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="status-msg">
+                        Unable to load dynamic list automatically.<br>Use the main button below to view current games.
+                    </div>`;
+            }
         }
 
-        function selectCategory(category, buttonElement) {
-            currentCategory = category;
+        function selectCategory(categoryKey, buttonElement) {
+            currentCategory = categoryKey;
             
-            // Update Active Button Styling
+            // Highlight current button
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
 
-            renderGames(category);
+            fetchGames(categoryKey);
         }
 
-        // Initial Load
-        renderGames('NFL');
+        // Initial fetch on app open
+        fetchGames('NFL');
     </script>
 </body>
 </html>
