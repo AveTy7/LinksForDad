@@ -126,6 +126,47 @@
             white-space: nowrap;
         }
 
+        .search-box {
+            background-color: var(--card-bg);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .search-box label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-input {
+            flex: 1;
+            background-color: var(--bg-color);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .search-btn {
+            background-color: #334155;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
         .main-btn {
             display: block;
             width: 100%;
@@ -150,50 +191,55 @@
         <button class="cat-btn active" onclick="selectCategory('NFL', this)">NFL</button>
         <button class="cat-btn" onclick="selectCategory('CFB', this)">CFB</button>
         <button class="cat-btn" onclick="selectCategory('MLB', this)">MLB</button>
-        <button class="cat-btn" onclick="selectCategory('UFC', this)">UFC</button>
+        <button class="cat-btn" onclick="selectCategory('MMA', this)">MMA/UFC</button>
         <button class="cat-btn" onclick="selectCategory('NBA', this)">NBA</button>
         <button class="cat-btn" onclick="selectCategory('Boxing', this)">Boxing</button>
     </div>
 
     <div class="container">
-        <div id="game-list">
-            <!-- Dynamic game cards load here -->
+        <!-- Direct Matchup Search Box -->
+        <div class="search-box">
+            <label id="search-label">FIND SPECIFIC GAME</label>
+            <div class="input-group">
+                <input type="text" id="team-input" class="search-input" placeholder="e.g. Rams, Yankees, Cowboys...">
+                <button onclick="searchGame()" class="search-btn">Go ➔</button>
+            </div>
         </div>
 
-        <a id="main-hub-btn" href="https://mybuffstreams.plus/nfl" target="_blank" class="main-btn">
-            Open Main League Schedule ➔
+        <div id="game-list">
+            <!-- Game cards load here -->
+        </div>
+
+        <a id="main-hub-btn" href="https://mybuffstreams.plus/nflstreams2" target="_blank" class="main-btn">
+            Open Main League Page ➔
         </a>
     </div>
 
     <script>
+        // Exact active URLs pulled from site
         const scheduleData = {
             NFL: {
-                mainUrl: "https://mybuffstreams.plus/nfl",
+                mainUrl: "https://mybuffstreams.plus/nflstreams2",
                 games: [
-                    { 
-                        title: "Los Angeles Rams vs San Francisco 49ers", 
-                        sub: "NFL • Live Game Broadcast", 
-                        url: "https://mybuffstreams.plus/stream/los-angeles-rams-vs-san-francisco-49ers" 
-                    },
                     { 
                         title: "NFL Network", 
                         sub: "24/7 Channel • Live Stream", 
-                        url: "https://mybuffstreams.plus/stream/nfl-network" 
+                        url: "https://mybuffstreams.plus/nflstreams2" 
+                    },
+                    { 
+                        title: "Los Angeles Rams vs San Francisco 49ers", 
+                        sub: "NFL Game • 12:35 AM", 
+                        url: "https://mybuffstreams.plus/nflstreams2" 
                     }
                 ]
             },
             CFB: {
-                mainUrl: "https://mybuffstreams.plus/football",
+                mainUrl: "https://mybuffstreams.plus/ncaastreams",
                 games: [
                     { 
-                        title: "Miami (FL) vs Florida A&M", 
-                        sub: "NCAA College Football • Live", 
-                        url: "https://mybuffstreams.plus/stream/miami-fl-vs-florida-a-and-m" 
-                    },
-                    { 
-                        title: "CFB Football Stream Hub", 
-                        sub: "College Football Schedule & Feed", 
-                        url: "https://mybuffstreams.plus/football" 
+                        title: "NCAA College Football Hub", 
+                        sub: "Active CFB Games & Feeds", 
+                        url: "https://mybuffstreams.plus/ncaastreams" 
                     }
                 ]
             },
@@ -201,44 +247,34 @@
                 mainUrl: "https://mybuffstreams.plus/mlb",
                 games: [
                     { 
-                        title: "Philadelphia Phillies vs Houston Astros", 
-                        sub: "MLB • Live Game", 
-                        url: "https://mybuffstreams.plus/stream/philadelphia-phillies-vs-houston-astros" 
-                    },
-                    { 
-                        title: "Seattle Mariners vs Texas Rangers", 
-                        sub: "MLB • Live Game", 
-                        url: "https://mybuffstreams.plus/stream/seattle-mariners-vs-texas-rangers" 
-                    },
-                    { 
                         title: "New York Yankees vs Colorado Rockies", 
-                        sub: "MLB • Evening Game", 
-                        url: "https://mybuffstreams.plus/stream/new-york-yankees-vs-colorado-rockies" 
+                        sub: "MLB • 11:05 PM ET", 
+                        url: "https://mybuffstreams.plus/mlb" 
+                    },
+                    { 
+                        title: "Chicago White Sox vs Pittsburgh Pirates", 
+                        sub: "MLB • 11:40 PM ET", 
+                        url: "https://mybuffstreams.plus/mlb" 
                     }
                 ]
             },
-            UFC: {
-                mainUrl: "https://mybuffstreams.plus/mma",
+            MMA: {
+                mainUrl: "https://mybuffstreams.plus/mmastreams",
                 games: [
                     { 
-                        title: "UFC Fight Night: Main Card", 
-                        sub: "MMA • Live Broadcast", 
-                        url: "https://mybuffstreams.plus/stream/ufc-fight-night" 
-                    },
-                    { 
-                        title: "UFC Preliminary Fights", 
-                        sub: "MMA • Early Cards Feed", 
-                        url: "https://mybuffstreams.plus/stream/ufc-prelims" 
+                        title: "UFC / MMA Stream Hub", 
+                        sub: "Live Fight Night & Prelims Pass", 
+                        url: "https://mybuffstreams.plus/mmastreams" 
                     }
                 ]
             },
             NBA: {
-                mainUrl: "https://mybuffstreams.plus/nba",
+                mainUrl: "https://mybuffstreams.plus/nbastreams",
                 games: [
                     { 
-                        title: "NBA Live Schedule Hub", 
-                        sub: "Offseason / Upcoming Matchups", 
-                        url: "https://mybuffstreams.plus/nba" 
+                        title: "NBA Stream Hub", 
+                        sub: "Main NBA Game Schedule Page", 
+                        url: "https://mybuffstreams.plus/nbastreams" 
                     }
                 ]
             },
@@ -246,15 +282,18 @@
                 mainUrl: "https://mybuffstreams.plus/boxing",
                 games: [
                     { 
-                        title: "World Championship Boxing Card", 
-                        sub: "Boxing • Live Stream", 
-                        url: "https://mybuffstreams.plus/stream/world-championship-boxing" 
+                        title: "Boxing Events Hub", 
+                        sub: "Main Card Streams Page", 
+                        url: "https://mybuffstreams.plus/boxing" 
                     }
                 ]
             }
         };
 
+        let currentCat = 'NFL';
+
         function selectCategory(catKey, btnElement) {
+            currentCat = catKey;
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
 
@@ -262,8 +301,9 @@
             const container = document.getElementById('game-list');
             const mainBtn = document.getElementById('main-hub-btn');
 
+            document.getElementById('search-label').innerText = `FIND ${catKey} TEAM / MATCHUP`;
             mainBtn.href = catData.mainUrl;
-            mainBtn.innerText = `Open Main ${catKey} Schedule Page ➔`;
+            mainBtn.innerText = `Open All ${catKey} Streams ➔`;
 
             container.innerHTML = '';
             catData.games.forEach(game => {
@@ -278,6 +318,14 @@
                 `;
                 container.appendChild(card);
             });
+        }
+
+        function searchGame() {
+            const query = document.getElementById('team-input').value.trim();
+            if (!query) return;
+            // Generates a search target URL for buffstreams
+            const searchUrl = `https://www.google.com/search?q=site:mybuffstreams.plus+${encodeURIComponent(query)}`;
+            window.open(searchUrl, '_blank');
         }
 
         // Initialize default tab as NFL
