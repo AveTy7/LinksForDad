@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sports Stream Hub</title>
     
-    <!-- Mobile Web App Capability -->
+    <!-- Mobile Web App Settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="StreamHub">
@@ -45,11 +45,11 @@
         }
 
         header h1 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
         }
 
-        /* Category Selector Bar */
+        /* Category Navigation Bar */
         .category-bar {
             display: flex;
             overflow-x: auto;
@@ -67,7 +67,7 @@
             background-color: var(--card-bg);
             color: var(--text-muted);
             border: 1px solid #334155;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
@@ -82,18 +82,10 @@
             border-color: var(--accent-color);
         }
 
-        /* Stream List */
         .container {
             padding: 16px;
             max-width: 600px;
             margin: 0 auto;
-        }
-
-        .status-msg {
-            text-align: center;
-            padding: 24px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
         }
 
         .card {
@@ -111,13 +103,11 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            padding-right: 12px;
         }
 
         .card-title {
             font-weight: 600;
-            font-size: 0.95rem;
-            line-height: 1.3;
+            font-size: 1rem;
         }
 
         .card-sub {
@@ -129,29 +119,47 @@
             background-color: var(--accent-color);
             color: white;
             text-decoration: none;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.85rem;
             white-space: nowrap;
-            transition: background 0.2s;
         }
 
         .watch-btn:hover {
             background-color: var(--accent-hover);
         }
 
-        .direct-hub-btn {
-            display: block;
-            width: 100%;
+        .hub-banner {
+            background: linear-gradient(135deg, #1e3a8a, #1e293b);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
-            background-color: #334155;
-            color: var(--text-color);
+            margin-bottom: 20px;
+            border: 1px solid #3b82f6;
+        }
+
+        .hub-banner h2 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .hub-banner p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .main-btn {
+            display: inline-block;
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
             text-decoration: none;
             padding: 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            margin-top: 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -170,112 +178,98 @@
     </div>
 
     <div class="container">
-        <div id="game-list">
-            <div class="status-msg">Fetching live games...</div>
+        <!-- Main Direct Hub Banner -->
+        <div class="hub-banner">
+            <h2 id="hub-title">NFL Live Stream Hub</h2>
+            <p>Access all live games, schedules, and links on MyBuffStreams.</p>
+            <a id="main-hub-btn" href="https://mybuffstreams.plus/nfl" target="_blank" class="main-btn">
+                Open NFL Streams Page ➔
+            </a>
         </div>
 
-        <a id="direct-link" href="#" target="_blank" class="direct-hub-btn">
-            Open Main League Hub
-        </a>
+        <div style="margin-bottom: 12px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted);">
+            QUICK ACCESS CHANNELS
+        </div>
+
+        <div id="quick-links">
+            <!-- Populated via Javascript -->
+        </div>
     </div>
 
     <script>
         const categories = {
-            NFL: { path: "nfl", name: "NFL" },
-            NBA: { path: "nba", name: "NBA" },
-            MLB: { path: "mlb", name: "MLB" },
-            UFC: { path: "mma", name: "UFC / MMA" },
-            Boxing: { path: "boxing", name: "Boxing" }
+            NFL: {
+                title: "NFL Live Stream Hub",
+                url: "https://mybuffstreams.plus/nfl",
+                links: [
+                    { title: "Main NFL Schedule & Games", sub: "Live Sunday & Prime Games", url: "https://mybuffstreams.plus/nfl" },
+                    { title: "NFL RedZone / Live Feed", sub: "Continuous Live Coverage", url: "https://mybuffstreams.plus/nfl" }
+                ]
+            },
+            NBA: {
+                title: "NBA Basketball Hub",
+                url: "https://mybuffstreams.plus/nba",
+                links: [
+                    { title: "Today's NBA Game List", sub: "Live Matchups & Channels", url: "https://mybuffstreams.plus/nba" },
+                    { title: "NBA TV Stream", sub: "24/7 Basketball Coverage", url: "https://mybuffstreams.plus/nba" }
+                ]
+            },
+            MLB: {
+                title: "MLB Baseball Hub",
+                url: "https://mybuffstreams.plus/mlb",
+                links: [
+                    { title: "Today's MLB Game List", sub: "All Live Ballgames", url: "https://mybuffstreams.plus/mlb" }
+                ]
+            },
+            UFC: {
+                title: "UFC & MMA Fight Hub",
+                url: "https://mybuffstreams.plus/mma",
+                links: [
+                    { title: "Main Card & Prelims Pass", sub: "Live Fight Night Coverage", url: "https://mybuffstreams.plus/mma" }
+                ]
+            },
+            Boxing: {
+                title: "Boxing Events Hub",
+                url: "https://mybuffstreams.plus/boxing",
+                links: [
+                    { title: "Boxing Live Cards", sub: "Main Event Streams", url: "https://mybuffstreams.plus/boxing" }
+                ]
+            }
         };
 
-        let currentCategory = 'NFL';
+        function selectCategory(catKey, btn) {
+            // Update Tab UI
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-        async function fetchGames(categoryKey) {
-            const container = document.getElementById('game-list');
-            const directLink = document.getElementById('direct-link');
-            const cat = categories[categoryKey];
-
-            const targetUrl = `https://mybuffstreams.plus/${cat.path}`;
-            directLink.href = targetUrl;
-            directLink.innerText = `Open Main ${cat.name} Page`;
-
-            container.innerHTML = `<div class="status-msg">Fetching live ${cat.name} matchups...</div>`;
-
-            try {
-                // Using a CORS proxy to allow cross-domain web fetching from mobile browsers
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-                const response = await fetch(proxyUrl);
-                
-                if (!response.ok) throw new Error("Network response failed");
-                
-                const data = await response.json();
-                const htmlString = data.contents;
-
-                // Parse the raw HTML text
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlString, 'text/html');
-
-                // Find game links matching the target site's layout
-                const gameElements = doc.querySelectorAll('a[href*="/' + cat.path + '"]');
-                const games = [];
-
-                gameElements.forEach(el => {
-                    const href = el.getAttribute('href');
-                    const text = el.innerText.trim();
-
-                    // Filter out generic navigation links
-                    if (href && text && text.length > 3 && !text.toLowerCase().includes('schedule') && !text.toLowerCase().includes('streams')) {
-                        const fullLink = href.startsWith('http') ? href : `https://mybuffstreams.plus${href}`;
-                        
-                        // Prevent duplicates
-                        if (!games.some(g => g.link === fullLink)) {
-                            games.push({ title: text, link: fullLink });
-                        }
-                    }
-                });
-
-                if (games.length === 0) {
-                    container.innerHTML = `
-                        <div class="status-msg">
-                            No live individual games listed right now.<br>Tap below to visit the main league page.
-                        </div>`;
-                    return;
-                }
-
-                container.innerHTML = '';
-                games.forEach(game => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="card-info">
-                            <span class="card-title">${game.title}</span>
-                            <span class="card-sub">Live / Upcoming</span>
-                        </div>
-                        <a href="${game.link}" target="_blank" class="watch-btn">Watch</a>
-                    `;
-                    container.appendChild(card);
-                });
-
-            } catch (err) {
-                container.innerHTML = `
-                    <div class="status-msg">
-                        Unable to load dynamic list automatically.<br>Use the main button below to view current games.
-                    </div>`;
-            }
-        }
-
-        function selectCategory(categoryKey, buttonElement) {
-            currentCategory = categoryKey;
+            const cat = categories[catKey];
             
-            // Highlight current button
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
+            // Update Banner
+            document.getElementById('hub-title').innerText = cat.title;
+            const mainBtn = document.getElementById('main-hub-btn');
+            mainBtn.href = cat.url;
+            mainBtn.innerText = `Open ${catKey} Streams Page ➔`;
 
-            fetchGames(categoryKey);
+            // Update Cards
+            const container = document.getElementById('quick-links');
+            container.innerHTML = '';
+
+            cat.links.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-info">
+                        <span class="card-title">${item.title}</span>
+                        <span class="card-sub">${item.sub}</span>
+                    </div>
+                    <a href="${item.url}" target="_blank" class="watch-btn">Watch</a>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        // Initial fetch on app open
-        fetchGames('NFL');
+        // Load NFL by default
+        selectCategory('NFL', document.querySelector('.cat-btn'));
     </script>
 </body>
 </html>
