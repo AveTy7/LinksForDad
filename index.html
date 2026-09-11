@@ -57,9 +57,9 @@
         .team img { width: 32px; height: 32px; object-fit: contain; }
         .team-name { font-size: 0.9rem; font-weight: 600; }
         
-        .info { text-align: center; padding: 0 12px; min-width: 110px; }
-        .time { color: #60a5fa; font-weight: 600; font-size: 0.8rem; }
-        .status { color: var(--muted); font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
+        .info { text-align: center; padding: 0 12px; min-width: 130px; }
+        .time { color: #60a5fa; font-weight: 600; font-size: 0.75rem; }
+        .status { color: var(--muted); font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
         .status.live { color: var(--live); font-weight: 700; }
         
         .stream-link-container {
@@ -198,7 +198,7 @@
             filterBar.style.display = 'none';
             const config = LEAGUES[league];
 
-            // Render Scraped Event Lists (MMA, Boxing) using consistent structural cards
+            // Render Scraped Event Lists (MMA, Boxing) using consistent 3-column structural layout
             if (config.type === "scraped") {
                 container.className = "";
                 const filteredItems = globalLinks.filter(item => item.category === config.category);
@@ -207,14 +207,14 @@
                     container.innerHTML = filteredItems.map(item => `
                         <div class="card">
                             <div class="card-main">
-                                <div class="team" style="flex: 2;">
-                                    <span class="team-name" style="text-align: left; width: 100%;">${item.title}</span>
+                                <div class="team" style="flex: 2; text-align: left;">
+                                    <span class="team-name">${item.title}</span>
                                 </div>
                                 <div class="info">
                                     <div class="time">${item.time || 'Upcoming'}</div>
-                                    <div class="status">SCHEDULED</div>
+                                    <div class="status">UPCOMING</div>
                                 </div>
-                                <div class="team" style="flex: 1; justify-content: flex-end;"></div>
+                                <div class="team" style="flex: 0.2;"></div>
                             </div>
                             <div class="stream-link-container">
                                 <a href="${item.href}" target="_blank" class="stream-btn">
