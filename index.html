@@ -182,6 +182,26 @@
             }
         }
 
+        function cleanEventTitle(rawTitle) {
+            if (!rawTitle) return "No Title";
+            let cleaned = rawTitle;
+            
+            // Remove common timestamp / countdown prefixes/suffixes like "Starts in X days", dates, or redundant spacing
+            cleaned = cleaned.replace(/starts in.*?(?=–|-|$)/gi, '');
+            cleaned = cleaned.replace(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b\.?\s*\d{1,2}(st|nd|rd|th)?/gi, '');
+            cleaned = cleaned.replace(/\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/gi, '');
+            cleaned = cleaned.replace(/\d{1,2}:\d{2}\s*(am|pm)?\s*(mst|est|pst|utc)?/gi, '');
+            
+            // Clean up unwanted leftover dashes or extra whitespace
+            cleaned = cleaned.replace(/[-–—|]{2,}/g, '-');
+            cleaned = cleaned.trim();
+            
+            // Strip trailing/leading standalone punctuation
+            cleaned = cleaned.replace(/^[-–—|]\s*|\s*[-–—|]$/g, '');
+            
+            return cleaned || rawTitle;
+        }
+
         function findMatchingLink(game) {
             if (!globalLinks || globalLinks.length === 0) return null;
             const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
@@ -216,12 +236,13 @@
                 if (filteredItems.length > 0) {
                     let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${filteredItems.length} event(s):</p>`;
                     filteredItems.forEach(item => {
+                        const displayTitle = config.type === "scraped" ? cleanEventTitle(item.title) : item.title;
                         htmlOutput += `
                             <div class="card">
                                 <div class="card-main">
                                     <div class="team-name" style="font-size: 0.95rem; width: 100%; text-align: left; padding: 4px 0;">
-                                        ${item.title}
-                                        ${config.type === "test" ? `<br><span style="color: var(--muted); font-size: 0.75rem;">Category: ${item.category || 'Unknown'}</span>` : ''}
+                                        ${displayTitle}
+                                        ${config.type === "test" ? `<br><span style="color: var(--muted); font-size: 0.75rem;">Category: ${item.category || 'Unknown'} (Raw: ${item.title})</span>` : ''}
                                     </div>
                                 </div>
                                 <div class="stream-link-container">
