@@ -206,7 +206,7 @@
             filterBar.style.display = 'none';
             const config = LEAGUES[league];
 
-            // Render Scraped Lists (MMA, Boxing, Test)
+            // Render Scraped Event Lists (MMA, Boxing, Test) using uniform card layouts
             if (config.type === "scraped" || config.type === "test") {
                 container.className = "";
                 const filteredItems = config.type === "scraped" 
@@ -214,22 +214,26 @@
                     : globalLinks;
 
                 if (filteredItems.length > 0) {
-                    let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${filteredItems.length} stream(s):</p>`;
+                    let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${filteredItems.length} event(s):</p>`;
                     filteredItems.forEach(item => {
                         htmlOutput += `
-                            <div class="competition-item">
-                                <div>
-                                    <strong style="font-size: 0.9rem;">${item.title}</strong>
-                                    ${config.type === "test" ? `<br><span style="color: var(--muted); font-size: 0.75rem;">Category: ${item.category || 'Unknown'}</span>` : ''}
+                            <div class="card">
+                                <div class="card-main">
+                                    <div class="team-name" style="font-size: 0.95rem; width: 100%; text-align: left; padding: 4px 0;">
+                                        ${item.title}
+                                        ${config.type === "test" ? `<br><span style="color: var(--muted); font-size: 0.75rem;">Category: ${item.category || 'Unknown'}</span>` : ''}
+                                    </div>
                                 </div>
-                                <a href="${item.href}" target="_blank">
-                                    <i class="fa-solid fa-play"></i> Watch
-                                </a>
+                                <div class="stream-link-container">
+                                    <a href="${item.href}" target="_blank" class="stream-btn">
+                                        <i class="fa-solid fa-play"></i> Watch Stream
+                                    </a>
+                                </div>
                             </div>`;
                     });
                     container.innerHTML = htmlOutput;
                 } else {
-                    container.innerHTML = `<p class='loading'>No links found for ${league}. Run the GitHub Action workflow.</p>`;
+                    container.innerHTML = `<p class='loading'>No events found for ${league}. Run the GitHub Action workflow.</p>`;
                 }
                 return;
             }
