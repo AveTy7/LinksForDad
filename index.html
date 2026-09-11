@@ -88,11 +88,26 @@
             "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" }
         };
 
-        // Conference ID Mappings to replace numbers with clean names
-        const CFB_MAP = {
-            "1": "ACC", "4": "Big 12", "8": "SEC", "9": "Big Ten", "12": "Pac-12",
-            "15": "Conference USA", "17": "MAC", "18": "MWC", "37": "Sun Belt", 
-            "151": "American Athletic", "80": "FBS Independents", "81": "FCS"
+        const CONFERENCE_MAP = {
+            "1": "ACC",
+            "4": "Big 12",
+            "8": "SEC",
+            "9": "Big Ten",
+            "12": "Pac-12",
+            "15": "Conference USA",
+            "17": "MAC",
+            "18": "MWC",
+            "25": "Independents",
+            "37": "Sun Belt",
+            "151": "American Athletic",
+            "80": "FBS",
+            "81": "FCS",
+            "23": "ACC",
+            "2": "Big East",
+            "7": "Big Ten",
+            "6": "Big 12",
+            "3": "Pac-12",
+            "61": "SEC"
         };
 
         let activeLeague = "NFL";
@@ -130,7 +145,6 @@
             if (leagueKey === "MLB") {
                 return formatDate(now);
             } else if (leagueKey === "NFL") {
-                // Thursday through Monday weekly block logic
                 const dayOfWeek = now.getDay(); 
                 let daysUntilMonday = 0;
                 if (dayOfWeek === 1) daysUntilMonday = 0;
@@ -183,7 +197,6 @@
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
 
-                    // Discard finished games, keep live ('in') and upcoming ('pre')
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
@@ -193,9 +206,16 @@
                     const confSet = new Set();
                     
                     const resolveConf = (teamData) => {
-                        const rawId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
-                        if (CFB_MAP[rawId]) return CFB_MAP[rawId];
-                        return teamData.team?.conference?.name || teamData.team?.conference?.shortName || null;
+                        const directName = teamData.team?.conference?.name || teamData.team?.conference?.shortName;
+                        if (directName && isNaN(directName)) {
+                            if (directName.toLowerCase().includes('independent')) return "Independents";
+                            return directName;
+                        }
+
+                        const confId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
+                        if (CONFERENCE_MAP[confId]) return CONFERENCE_MAP[confId];
+
+                        return null;
                     };
 
                     const homeConf = resolveConf(home);
@@ -203,7 +223,19 @@
 
                     if (homeConf) confSet.add(homeConf);
                     if (awayConf) confSet.add(awayConf);
-                    if (confSet.size === 0) confSet.add("General / Other");
+
+                    if (confSet.size === 0 && comp.conferenceGroup?.name) {
+                        const groupName = comp.conferenceGroup.name;
+                        if (groupName.toLowerCase().includes('independent')) {
+                            confSet.add("Independents");
+                        } else {
+                            confSet.add(groupName);
+                        }
+                    }
+
+                    if (confSet.size === 0) {
+                        confSet.add("Independents");
+                    }
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
                     const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
