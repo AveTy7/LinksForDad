@@ -69,7 +69,9 @@
         <p style="color: var(--muted); font-size: 0.8rem;">Live & Upcoming Games • Times in MST</p>
     </header>
 
-    <div class="tabs" id="tab-bar"></div>
+    <div class="tabs" id="tab-bar">
+        <!-- Buttons will be injected dynamically by initTabs -->
+    </div>
 
     <div class="filter-container" id="filter-bar">
         <span class="filter-label">Filter by Conference:</span>
@@ -95,13 +97,14 @@
             "151": "American Athletic", "80": "FBS Independents", "81": "FCS"
         };
 
-        let activeLeague = "Test";
+        let activeLeague = "NFL";
         const cache = {};
         let currentGames = [];
 
         function initTabs() {
             const tabBar = document.getElementById('tab-bar');
-            tabBar.innerHTML = '';
+            tabBar.innerHTML = ''; // Clear container to ensure clean append
+            
             Object.keys(LEAGUES).forEach(league => {
                 const btn = document.createElement('button');
                 btn.className = `tab-btn ${league === activeLeague ? 'active' : ''}`;
@@ -149,26 +152,19 @@
 
         async function fetchLeagueData(league) {
             const container = document.getElementById('game-list');
-            container.className = "loading";
-            container.innerHTML = "Fetching schedule...";
+            const filterBar = document.getElementById('filter-bar');
+            
+            // Hide conference filter by default
+            filterBar.style.display = 'none';
 
             if (league === "Test") {
-                document.getElementById('filter-bar').style.display = 'none';
-                currentGames = [{
-                    id: "test-game-1",
-                    utcTime: Date.now(),
-                    displayTime: "Test Mode @ Active",
-                    statusState: "in",
-                    statusDetail: "TEST LIVE",
-                    homeTeam: "Test Home Team",
-                    homeLogo: "",
-                    awayTeam: "Test Away Team",
-                    awayLogo: "",
-                    conferences: ["Test Conference"]
-                }];
+                currentGames = [];
                 renderGames(currentGames);
                 return;
             }
+
+            container.className = "loading";
+            container.innerHTML = "Fetching schedule...";
 
             if (cache[league]) {
                 currentGames = cache[league];
@@ -313,7 +309,7 @@
             container.className = "";
             
             if (!games.length) {
-                container.innerHTML = "<p class='loading'>No active or upcoming games scheduled for this timeframe.</p>";
+                container.innerHTML = "<p class='loading'>No games or categories scheduled for this view.</p>";
                 return;
             }
 
