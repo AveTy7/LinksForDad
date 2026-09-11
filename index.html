@@ -175,7 +175,7 @@
 
             try {
                 const config = LEAGUES[league];
-                const dateParam = getDateParam(league);
+                const dateParam = getDateParameter(league, config);
                 
                 let urls = [];
                 if (league === "CFB") {
@@ -206,35 +206,53 @@
                     const confSet = new Set();
                     
                     const resolveConf = (teamData) => {
-                        const directName = teamData.team?.conference?.name || teamData.team?.conference?.shortName;
-                        if (directName && isNaN(directName)) {
-                            if (directName.toLowerCase().includes('independent')) return "Independents";
-                            return directName;
+                        // Check direct textual names first
+                        const nameFields = [
+                            teamData.team?.conference?.name,
+                            teamData.team?.conference?.shortName,
+                            teamData.conferenceName
+                        ];
+                        for (let name of nameFields) {
+                            if (name && typeof name === 'string' && isNaN(name)) {
+                                if (name.toLowerCase().includes('independent')) return "Independents";
+                                return name;
+                            }
                         }
 
-                        const confId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
-                        if (CONFERENCE_MAP[confId]) return CONFERENCE_MAP[confId];
+                        // Check ID maps
+                        const idFields = [
+                            teamData.team?.conferenceId,
+                            teamData.conferenceId,
+                            teamData.team?.groups?.id
+                        ];
+                        for (let id of idFields) {
+                            if (id) {
+                                const strId = String(id);
+                                if (CONFERENCE_MAP[strId]) return CONFERENCE_MAP[strId];
+                            }
+                        }
 
                         return null;
                     };
 
-                    const homeConf = resolveConf(home);
-                    const awayConf = resolveConf(away);
+                    let homeConf = resolveConf(home);
+                    let awayConf = resolveConf(away);
 
                     if (homeConf) confSet.add(homeConf);
                     if (awayConf) confSet.add(awayConf);
 
-                    if (confSet.size === 0 && comp.conferenceGroup?.name) {
-                        const groupName = comp.conferenceGroup.name;
-                        if (groupName.toLowerCase().includes('independent')) {
-                            confSet.add("Independents");
-                        } else {
-                            confSet.add(groupName);
-                        }
-                    }
-
+                    // Fallback to competition group or generic labeling safely
                     if (confSet.size === 0) {
-                        confSet.add("Independents");
+                        if (comp.conferenceGroup?.name) {
+                            let gName = comp.conferenceGroup.name;
+                            if (gName.toLowerCase().includes('independent')) {
+                                confSet.add("Independents");
+                            } else {
+                                confSet.add(gName);
+                            }
+                        } else {
+                            confSet.add("Independents");
+                        }
                     }
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
@@ -274,6 +292,38 @@
             } catch (err) {
                 console.error(err);
                 container.innerHTML = "<p class='loading'>Failed to load schedule data.</p>";
+            }
+        }
+
+        function getDateParameter(leagueKey, config) {
+            return getDateParam(leagueKey);
+        }
+
+        function getDateParam(leagueKey) {
+            const now = new Date();
+            const formatDate = (d) => {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}${month}${day}`;
+            };
+
+            if (leagueKey === "MLB") {
+                return formatDate(now);
+            } else if (leagueKey === "NFL") {
+                const dayOfWeek = now.getDay(); 
+                let daysUntilMonday = 0;
+                if (dayOfWeek === 1) daysUntilMonday = 0;
+                else if (dayOfWeek === 0) daysUntilMonday = 1;
+                else daysUntilMonday = (1 + 7 - dayOfWeek) % 7;
+
+                const endMonday = new Date(now);
+                endMonday.setDate(now.getDate() + daysUntilMonday);
+                return `${formatDate(now)}-${formatDate(endMonday)}`;
+            } else {
+                const nextWeek = new Date(now);
+                nextWeek.setDate(now.getDate() + 7);
+                return `${formatDate(now)}-${formatDate(nextWeek)}`;
             }
         }
 
