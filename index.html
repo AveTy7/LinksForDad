@@ -60,6 +60,20 @@
         
         #game-list { min-height: 200px; }
         .loading { text-align: center; color: var(--muted); padding: 40px; }
+        
+        .raw-code-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: var(--muted);
+            max-height: 500px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -69,9 +83,7 @@
         <p style="color: var(--muted); font-size: 0.8rem;">Live & Upcoming Games • Times in MST</p>
     </header>
 
-    <div class="tabs" id="tab-bar">
-        <!-- Buttons will be injected dynamically by initTabs -->
-    </div>
+    <div class="tabs" id="tab-bar"></div>
 
     <div class="filter-container" id="filter-bar">
         <span class="filter-label">Filter by Conference:</span>
@@ -103,8 +115,7 @@
 
         function initTabs() {
             const tabBar = document.getElementById('tab-bar');
-            tabBar.innerHTML = ''; // Clear container to ensure clean append
-            
+            tabBar.innerHTML = '';
             Object.keys(LEAGUES).forEach(league => {
                 const btn = document.createElement('button');
                 btn.className = `tab-btn ${league === activeLeague ? 'active' : ''}`;
@@ -153,13 +164,30 @@
         async function fetchLeagueData(league) {
             const container = document.getElementById('game-list');
             const filterBar = document.getElementById('filter-bar');
-            
-            // Hide conference filter by default
             filterBar.style.display = 'none';
 
             if (league === "Test") {
-                currentGames = [];
-                renderGames(currentGames);
+                container.className = "";
+                container.innerHTML = `<div class="raw-code-box">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Buffstreams - Live Sports Streaming for NBA, NFL, Boxing, MMA&lt;/title&gt;
+    &lt;meta name="description" content="Watch live streams of NBA, NFL, Boxing, MMA, and Formula 1 on Buffstreams. Enjoy high-quality sports streaming from the comfort of your home."&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Welcome to Buffstreams&lt;/h1&gt;
+        &lt;p&gt;Live Sports Streaming for NBA, NFL, Boxing, MMA, and Formula 1&lt;/p&gt;
+    &lt;/header&gt;
+    &lt;main&gt;
+        &lt;section class="stream-container"&gt;
+            &lt;p&gt;Enjoy high-quality sports streaming from the comfort of your home.&lt;/p&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>`;
                 return;
             }
 
