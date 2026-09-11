@@ -169,23 +169,51 @@
             if (league === "Test") {
                 container.className = "";
                 container.innerHTML = `<div class="raw-code-box">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;&gt;
     &lt;title&gt;Buffstreams - Live Sports Streaming for NBA, NFL, Boxing, MMA&lt;/title&gt;
-    &lt;meta name="description" content="Watch live streams of NBA, NFL, Boxing, MMA, and Formula 1 on Buffstreams. Enjoy high-quality sports streaming from the comfort of your home."&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;Watch live streams of NBA, NFL, Boxing, MMA, and Formula 1 on Buffstreams. Enjoy high-quality sports streaming from the comfort of your home.&quot;&gt;
+    &lt;style&gt;
+        body { background-color: #111; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        header { text-align: center; padding: 20px; background: #1e293b; border-radius: 8px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .match-list { margin-top: 20px; display: grid; gap: 15px; }
+        .match-item { background: #1e293b; padding: 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
+        .footer { text-align: center; margin-top: 40px; color: #94a3b8; font-size: 0.9rem; }
+    &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;header&gt;
-        &lt;h1&gt;Welcome to Buffstreams&lt;/h1&gt;
-        &lt;p&gt;Live Sports Streaming for NBA, NFL, Boxing, MMA, and Formula 1&lt;/p&gt;
-    &lt;/header&gt;
-    &lt;main&gt;
-        &lt;section class="stream-container"&gt;
-            &lt;p&gt;Enjoy high-quality sports streaming from the comfort of your home.&lt;/p&gt;
-        &lt;/section&gt;
-    &lt;/main&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;header&gt;
+            &lt;h1&gt;Buffstreams Live HD Sports&lt;/h1&gt;
+            &lt;p&gt;Stream NFL, NBA, UFC, MLB, and more with zero sign-ups.&lt;/p&gt;
+        &lt;/header&gt;
+        &lt;main&gt;
+            &lt;section class=&quot;match-list&quot;&gt;
+                &lt;div class=&quot;match-item&quot;&gt;
+                    &lt;span&gt;NFL: Live Match Streams Available&lt;/span&gt;
+                    &lt;span style=&quot;color: #22c55e; font-weight: bold;&quot;&gt;ONLINE&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;match-item&quot;&gt;
+                    &lt;span&gt;NBA: Regular Season &amp; Playoffs&lt;/span&gt;
+                    &lt;span style=&quot;color: #22c55e; font-weight: bold;&quot;&gt;ONLINE&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;match-item&quot;&gt;
+                    &lt;span&gt;UFC / MMA: Fight Night Events&lt;/span&gt;
+                    &lt;span style=&quot;color: #22c55e; font-weight: bold;&quot;&gt;ONLINE&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;match-item&quot;&gt;
+                    &lt;span&gt;MLB: Daily Baseball Coverage&lt;/span&gt;
+                    &lt;span style=&quot;color: #22c55e; font-weight: bold;&quot;&gt;ONLINE&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+        &lt;/main&gt;
+        &lt;footer class=&quot;footer&quot;&gt;
+            &lt;p&gt;&amp;copy; 2026 Buffstreams. All rights reserved.&lt;/p&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;</div>`;
                 return;
