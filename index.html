@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Schedule (MST)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sports Schedule Hub (MST)</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -14,14 +14,34 @@
             --border: #334155;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
-        body { background: var(--bg); color: var(--text); padding: 16px; }
+        body { background: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
         header { text-align: center; margin-bottom: 16px; }
-        .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 16px; }
+        
+        .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 12px; }
+        .tabs::-webkit-scrollbar { display: none; }
+        
         .tab-btn {
             background: var(--card); color: var(--muted); border: 1px solid var(--border);
             padding: 8px 16px; border-radius: 20px; font-weight: 600; white-space: nowrap; cursor: pointer;
         }
         .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        .filter-container {
+            margin-bottom: 16px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .filter-label { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .conference-select {
+            background: var(--bg); color: var(--text); border: 1px solid var(--border);
+            padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; outline: none;
+        }
+
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
             padding: 12px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
@@ -29,32 +49,47 @@
         .team { display: flex; align-items: center; gap: 8px; flex: 1; }
         .team.away { justify-content: flex-end; text-align: right; }
         .team img { width: 32px; height: 32px; object-fit: contain; }
-        .info { text-align: center; padding: 0 12px; }
-        .time { color: #60a5fa; font-weight: 600; font-size: 0.85rem; }
-        .status { color: var(--muted); font-size: 0.75rem; margin-top: 2px; }
+        .team-name { font-size: 0.9rem; font-weight: 600; }
+        
+        .info { text-align: center; padding: 0 12px; min-width: 110px; }
+        .time { color: #60a5fa; font-weight: 600; font-size: 0.8rem; }
+        .status { color: #22c55e; font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
+        .status.scheduled { color: var(--muted); }
+        .conf-badge { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+        
+        #game-list { min-height: 200px; }
+        .loading { text-align: center; color: var(--muted); padding: 40px; }
     </style>
 </head>
 <body>
 
     <header>
         <h2>Sports Schedule Hub</h2>
-        <p style="color: var(--muted); font-size: 0.8rem;">Times in MST (UTC-7)</p>
+        <p style="color: var(--muted); font-size: 0.8rem;">Upcoming & Live Games • Times in MST</p>
     </header>
 
     <div class="tabs" id="tab-bar"></div>
-    <div id="game-list">Loading live games...</div>
+
+    <div class="filter-container" id="filter-bar">
+        <span class="filter-label">Filter by Conference:</span>
+        <select class="conference-select" id="conf-select" onchange="filterByConference()">
+            <option value="ALL">All Conferences</option>
+        </select>
+    </div>
+
+    <div id="game-list" class="loading">Loading live schedule...</div>
 
     <script>
         const LEAGUES = {
-            "MLB": "baseball/mlb",
-            "NBA": "basketball/nba",
-            "NFL": "football/nfl",
-            "CFB": "football/college-football",
-            "CBB": "basketball/mens-college-basketball"
+            "MLB": { endpoint: "baseball/mlb", type: "mlb" },
+            "NFL": { endpoint: "football/nfl", type: "nfl" },
+            "CFB": { endpoint: "football/college-football", type: "college" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" }
         };
 
         let activeLeague = "NFL";
         const cache = {};
+        let currentGames = [];
 
         function initTabs() {
             const tabBar = document.getElementById('tab-bar');
@@ -75,27 +110,81 @@
             fetchLeagueData(league);
         }
 
+        // Calculate Date Filter Range
+        function getDateParam(leagueKey) {
+            const now = new Date();
+            const formatDate = (d) => d.toISOString().split('T')[0].replace(/-/g, '');
+
+            if (leagueKey === "MLB") {
+                // Today only
+                return formatDate(now);
+            } else if (leagueKey === "NFL") {
+                // Today through next Monday
+                const dayOfWeek = now.getDay(); // 0 is Sunday, 1 is Monday
+                const daysUntilMonday = (8 - dayOfWeek) % 7 || 7;
+                const endMonday = new Date(now);
+                endMonday.setDate(now.getDate() + daysUntilMonday);
+                return `${formatDate(now)}-${formatDate(endMonday)}`;
+            } else {
+                // College (CFB/CBB): 7 days out
+                const nextWeek = new Date(now);
+                nextWeek.setDate(now.getDate() + 7);
+                return `${formatDate(now)}-${formatDate(nextWeek)}`;
+            }
+        }
+
         async function fetchLeagueData(league) {
             const container = document.getElementById('game-list');
-            container.innerHTML = "Loading schedule...";
+            const filterBar = document.getElementById('filter-bar');
+            container.className = "loading";
+            container.innerHTML = "Fetching schedule...";
 
             if (cache[league]) {
-                renderGames(cache[league]);
+                currentGames = cache[league];
+                setupConferenceFilter(currentGames);
+                renderGames(currentGames);
                 return;
             }
 
             try {
-                const endpoint = LEAGUES[league];
-                const resp = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${endpoint}/scoreboard`);
-                const data = await resp.json();
+                const config = LEAGUES[league];
+                const dateParam = getDateParam(league);
                 
-                const games = (data.events || []).map(event => {
+                // Fetch URLs (Include FBS & FCS for College Football)
+                let urls = [];
+                if (league === "CFB") {
+                    urls = [
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`, // FBS
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`  // FCS
+                    ];
+                } else {
+                    urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
+                }
+
+                const responses = await Promise.all(urls.map(u => fetch(u).then(r => r.json())));
+                let rawEvents = [];
+                responses.forEach(r => { if (r.events) rawEvents = rawEvents.concat(r.events); });
+
+                const nowTs = new Date().getTime();
+
+                // Process & Deduplicate events
+                const gameMap = new Map();
+                rawEvents.forEach(event => {
                     const comp = event.competitions[0];
+                    const state = event.status.type.state.toLowerCase();
+
+                    // 1) REMOVE ALREADY PLAYED GAMES
+                    if (state === 'post' || state === 'final') return;
+
+                    const dateObj = new Date(event.date);
+                    
                     const home = comp.competitors.find(c => c.homeAway === 'home') || {};
                     const away = comp.competitors.find(c => c.homeAway === 'away') || {};
-                    
-                    // Convert date to MST
-                    const dateObj = new Date(event.date);
+
+                    // Extract Conference Names for College Sports
+                    const homeConf = home.curatedRank?.current ? `(${home.curatedRank.current})` : '';
+                    const confName = comp.conferenceGroup?.name || home.team?.conferenceId || 'Other';
+
                     const timeStr = dateObj.toLocaleTimeString('en-US', { 
                         timeZone: 'America/Denver', 
                         hour: 'numeric', 
@@ -107,45 +196,88 @@
                         day: 'numeric' 
                     });
 
-                    return {
+                    gameMap.set(event.id, {
                         id: event.id,
                         utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
-                        status: event.status.type.state.toUpperCase(),
-                        homeTeam: home.team?.displayName || 'TBD',
+                        statusState: state,
+                        statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
+                        homeTeam: `${home.team?.displayName || 'TBD'} ${homeConf}`.trim(),
                         homeLogo: home.team?.logo || '',
                         awayTeam: away.team?.displayName || 'TBD',
-                        awayLogo: away.team?.logo || ''
-                    };
-                }).sort((a, b) => a.utcTime - b.utcTime);
+                        awayLogo: away.team?.logo || '',
+                        conference: confName
+                    });
+                });
 
-                cache[league] = games;
-                renderGames(games);
+                // 2) SORT CHRONOLOGICALLY
+                currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
+
+                cache[league] = currentGames;
+                setupConferenceFilter(currentGames);
+                renderGames(currentGames);
+
             } catch (err) {
-                container.innerHTML = "Failed to load schedule data.";
+                console.error(err);
+                container.innerHTML = "<p class='loading'>Failed to load schedule data.</p>";
+            }
+        }
+
+        // Setup Conference Dropdown Filter
+        function setupConferenceFilter(games) {
+            const filterBar = document.getElementById('filter-bar');
+            const select = document.getElementById('conf-select');
+            
+            if (LEAGUES[activeLeague].type !== "college") {
+                filterBar.style.display = 'none';
+                return;
+            }
+
+            // Extract unique conference list
+            const conferences = [...new Set(games.map(g => g.conference))].sort();
+            select.innerHTML = '<option value="ALL">All Conferences</option>';
+            conferences.forEach(conf => {
+                const opt = document.createElement('option');
+                opt.value = conf;
+                opt.innerText = conf;
+                select.appendChild(opt);
+            });
+
+            filterBar.style.display = 'flex';
+        }
+
+        function filterByConference() {
+            const selectedConf = document.getElementById('conf-select').value;
+            if (selectedConf === "ALL") {
+                renderGames(currentGames);
+            } else {
+                const filtered = currentGames.filter(g => g.conference === selectedConf);
+                renderGames(filtered);
             }
         }
 
         function renderGames(games) {
             const container = document.getElementById('game-list');
+            container.className = "";
+            
             if (!games.length) {
-                container.innerHTML = "<p style='text-align:center; color: var(--muted);'>No upcoming games scheduled.</p>";
+                container.innerHTML = "<p class='loading'>No upcoming games scheduled for this timeframe.</p>";
                 return;
             }
 
             container.innerHTML = games.map(g => `
                 <div class="card">
                     <div class="team away">
-                        <span>${g.awayTeam}</span>
-                        <img src="${g.awayLogo}" alt="">
+                        <span class="team-name">${g.awayTeam}</span>
+                        <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
                     </div>
                     <div class="info">
                         <div class="time">${g.displayTime}</div>
-                        <div class="status">${g.status}</div>
+                        <div class="status ${g.statusState === 'in' ? '' : 'scheduled'}">${g.statusDetail}</div>
                     </div>
                     <div class="team home">
-                        <img src="${g.homeLogo}" alt="">
-                        <span>${g.homeTeam}</span>
+                        <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
+                        <span class="team-name">${g.homeTeam}</span>
                     </div>
                 </div>
             `).join('');
