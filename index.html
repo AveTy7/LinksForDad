@@ -117,13 +117,8 @@
 
             if (leagueKey === "MLB") {
                 return formatDate(now);
-            } else if (leagueKey === "NFL") {
-                const dayOfWeek = now.getDay();
-                const daysUntilMonday = (8 - dayOfWeek) % 7 || 7;
-                const endMonday = new Date(now);
-                endMonday.setDate(now.getDate() + daysUntilMonday);
-                return `${formatDate(now)}-${formatDate(endMonday)}`;
             } else {
+                // Extended 7-day window for NFL, CFB, and CBB
                 const nextWeek = new Date(now);
                 nextWeek.setDate(now.getDate() + 7);
                 return `${formatDate(now)}-${formatDate(nextWeek)}`;
@@ -166,27 +161,40 @@
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
 
-                    // REMOVE COMPLETED GAMES ONLY (Keep 'in' / live games and 'pre' / upcoming games)
+                    // Only discard games that are strictly completed/final
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
                     const home = comp.competitors.find(c => c.homeAway === 'home') || {};
                     const away = comp.competitors.find(c => c.homeAway === 'away') || {};
 
-                    // Extract text conference names for both teams
-                    const homeConfName = home.team?.conference?.name || home.team?.conference?.shortName || null;
-                    const awayConfName = away.team?.conference?.name || away.team?.conference?.shortName || null;
-
+                    // Conference Extraction Logic
                     const confSet = new Set();
-                    if (homeConfName && isNaN(homeConfName)) confSet.add(homeConfName);
-                    if (awayConfName && isNaN(awayConfName)) confSet.add(awayConfName);
-                    
-                    // Fallback if team conference details are omitted in endpoint payload
+
+                    const extractConfName = (teamObj) => {
+                        if (!teamObj || !teamObj.team) return null;
+                        const t = teamObj.team;
+                        if (t.conference && typeof t.conference === 'object') {
+                            return t.conference.name || t.conference.shortName || null;
+                        }
+                        if (t.groups && Array.isArray(t.groups)) {
+                            const group = t.groups.find(g => g.name && isNaN(g.name));
+                            if (group) return group.name;
+                        }
+                        return null;
+                    };
+
+                    const homeConf = extractConfName(home);
+                    const awayConf = extractConfName(away);
+
+                    if (homeConf && isNaN(homeConf)) confSet.add(homeConf);
+                    if (awayConf && isNaN(awayConf)) confSet.add(awayConf);
+
                     if (confSet.size === 0 && comp.conferenceGroup?.name && isNaN(comp.conferenceGroup.name)) {
                         confSet.add(comp.conferenceGroup.name);
                     }
                     if (confSet.size === 0) {
-                        confSet.add("Non-Conference / Independent");
+                        confSet.add("Other / Non-Conference");
                     }
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
@@ -238,7 +246,6 @@
                 return;
             }
 
-            // Extract all unique conferences across both home and away teams
             const allConferences = new Set();
             games.forEach(g => {
                 g.conferences.forEach(c => allConferences.add(c));
@@ -261,7 +268,6 @@
             if (selectedConf === "ALL") {
                 renderGames(currentGames);
             } else {
-                // Game matches if EITHER team belongs to the selected conference
                 const filtered = currentGames.filter(g => g.conferences.includes(selectedConf));
                 renderGames(filtered);
             }
