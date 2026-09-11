@@ -111,7 +111,7 @@
         };
 
         // Explicit manual list for true Independents
-        const INDEPENDENT_TEAMS = ["Notre Dame", "UConn", "UMass"];
+        const TRUE_INDEPENDENTS = ["Notre Dame", "UConn", "UMass"];
 
         let activeLeague = "NFL";
         const cache = {};
@@ -212,8 +212,8 @@
                         const teamName = teamData.team?.displayName || "";
                         const shortName = teamData.team?.shortDisplayName || "";
                         
-                        // Strict check against manual list
-                        if (INDEPENDENT_TEAMS.some(ind => teamName.includes(ind) || shortName.includes(ind))) {
+                        // Force Notre Dame/UConn/UMass into Independents
+                        if (TRUE_INDEPENDENTS.some(ind => teamName.includes(ind) || shortName.includes(ind))) {
                             return "Independents";
                         }
 
@@ -225,18 +225,33 @@
 
                         const confId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
                         if (CONFERENCE_MAP[confId]) {
-                            if (CONFERENCE_MAP[confId] === "FBS" || CONFERENCE_MAP[confId] === "FCS") return null;
-                            return CONFERENCE_MAP[confId];
+                            const mapped = CONFERENCE_MAP[confId];
+                            if (mapped === "FBS") return null; // Let it fall through to group / Other cleanly
+                            return mapped;
                         }
 
                         return null;
                     };
 
-                    let homeConf = resolveConf(home);
-                    let awayConf = resolveConf(away);
+                    const homeConf = resolveConf(home);
+                    const awayConf = resolveConf(away);
 
                     if (homeConf) confSet.add(homeConf);
                     if (awayConf) confSet.add(awayConf);
+
+                    // Fallback to competition group info if team details are empty (retaining "Other" for general/FCS)
+                    if (confSet.size === 0 && comp.conferenceGroup?.name) {
+                        let groupName = comp.conferenceGroup.name;
+                        if (groupName.toLowerCase().includes('independent')) {
+                            confSet.add("Independents");
+                        } else {
+                            confSet.add(groupName);
+                        }
+                    }
+
+                    if (confSet.size === 0) {
+                        confSet.add("Other / General");
+                    }
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
                     const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
