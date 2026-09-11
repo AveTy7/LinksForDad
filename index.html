@@ -85,7 +85,8 @@
             "MLB": { endpoint: "baseball/mlb", type: "mlb" },
             "NFL": { endpoint: "football/nfl", type: "nfl" },
             "CFB": { endpoint: "football/college-football", type: "college" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" }
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" },
+            "Test": { endpoint: "", type: "test" }
         };
 
         const CFB_MAP = {
@@ -94,12 +95,13 @@
             "151": "American Athletic", "80": "FBS Independents", "81": "FCS"
         };
 
-        let activeLeague = "NFL";
+        let activeLeague = "Test";
         const cache = {};
         let currentGames = [];
 
         function initTabs() {
             const tabBar = document.getElementById('tab-bar');
+            tabBar.innerHTML = '';
             Object.keys(LEAGUES).forEach(league => {
                 const btn = document.createElement('button');
                 btn.className = `tab-btn ${league === activeLeague ? 'active' : ''}`;
@@ -150,6 +152,24 @@
             container.className = "loading";
             container.innerHTML = "Fetching schedule...";
 
+            if (league === "Test") {
+                document.getElementById('filter-bar').style.display = 'none';
+                currentGames = [{
+                    id: "test-game-1",
+                    utcTime: Date.now(),
+                    displayTime: "Test Mode @ Active",
+                    statusState: "in",
+                    statusDetail: "TEST LIVE",
+                    homeTeam: "Test Home Team",
+                    homeLogo: "",
+                    awayTeam: "Test Away Team",
+                    awayLogo: "",
+                    conferences: ["Test Conference"]
+                }];
+                renderGames(currentGames);
+                return;
+            }
+
             if (cache[league]) {
                 currentGames = cache[league];
                 setupConferenceFilter(currentGames);
@@ -192,10 +212,8 @@
                     const resolveConf = (teamData) => {
                         const teamName = teamData.team?.displayName || "";
                         const shortName = teamData.team?.shortDisplayName || "";
-                        const fullName = teamData.team?.name || "";
                         
-                        // Strict check to isolate exact Notre Dame and UConn (preventing Central Connecticut matching)
-                        const isNotreDame = teamName === "Notre Dame Fighting Irish" || teamName.includes("Notre Dame") && !teamName.includes("Central");
+                        const isNotreDame = teamName === "Notre Dame Fighting Irish" || (teamName.includes("Notre Dame") && !teamName.includes("Central"));
                         const isUConn = teamName === "UConn Huskies" || teamName === "Connecticut Huskies" || (teamName.includes("UConn") && !teamName.includes("Central")) || (teamName === "Connecticut" && !teamName.includes("Central"));
                         
                         if (isNotreDame || isUConn || shortName === "Notre Dame" || shortName === "UConn") {
