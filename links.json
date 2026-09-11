@@ -1,81 +1,79 @@
 [
   {
     "id": 1,
+    "category": "NFL",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/nfl/nfl-network-live-streams-links"
   },
   {
     "id": 2,
+    "category": "NFL",
     "title": "Buffstreams Los Angeles Rams vs San Francisco 49ers",
     "href": "https://mybuffstreams.plus/nfl/san-francisco-49ers-los-angeles-rams/1360429"
   },
   {
     "id": 3,
+    "category": "NFL",
     "title": "Buffstreams Miami Hurricanes vs Florida A&M Rattlers",
     "href": "https://mybuffstreams.plus/cfb/florida-a-and-m-rattlers-miami-hurricanes/1360434"
   },
   {
     "id": 4,
-    "title": "Buffstreams Northwestern Oklahoma State Rangers vs Arkansas Tech Wonder Boys",
-    "href": "https://mybuffstreams.plus/cfb/northwestern-oklahoma-state-rangers-arkansas-tech-wonder-boys/1360430"
-  },
-  {
-    "id": 5,
-    "title": "Buffstreams West Virginia Wesleyan Bobcats vs Shippensburg Raiders",
-    "href": "https://mybuffstreams.plus/cfb/shippensburg-raiders-west-virginia-wesleyan-bobcats/1360431"
-  },
-  {
-    "id": 6,
-    "title": "Buffstreams Denison Big Red vs Oberlin Yeomen",
-    "href": "https://mybuffstreams.plus/cfb/denison-big-red-oberlin-yeomen/1371628"
-  },
-  {
-    "id": 7,
+    "category": "NFL",
     "title": "Buffstreams East Central Tigers vs Arkansas Monticello Boll Weevils",
     "href": "https://mybuffstreams.plus/cfb/arkansas-monticello-boll-weevils-east-central-tigers/1360432"
   },
   {
-    "id": 8,
+    "id": 5,
+    "category": "NFL",
     "title": "Buffstreams Southwestern Oklahoma State Bulldogs vs Harding Bisons",
     "href": "https://mybuffstreams.plus/cfb/southwestern-oklahoma-state-bulldogs-harding-bisons/1360433"
   },
   {
-    "id": 9,
+    "id": 6,
+    "category": "MMA",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/ufc/noche-ufc-live-streams-links"
   },
   {
-    "id": 10,
+    "id": 7,
+    "category": "MMA",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-6-live-streams-links"
   },
   {
-    "id": 11,
+    "id": 8,
+    "category": "MMA",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-331-van-vs-pantoja-2-live-streams-links"
   },
   {
-    "id": 12,
+    "id": 9,
+    "category": "MMA",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/lfc/lfc-63-legacy-fighting-championship-63-live-streams-links"
   },
   {
-    "id": 13,
+    "id": 10,
+    "category": "Boxing",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/boxing/regie-suganob-vs-sivenathi-nontshinga-live-streams-links"
   },
   {
-    "id": 14,
+    "id": 11,
+    "category": "Boxing",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/boxing/brandon-daord-vs-ndabezinhle-phiri-live-streams-links"
   },
   {
-    "id": 15,
+    "id": 12,
+    "category": "Boxing",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/boxing/ryan-garcia-vs-conor-benn-live-streams-links"
   },
   {
-    "id": 16,
+    "id": 13,
+    "category": "Boxing",
     "title": "No Title",
     "href": "https://mybuffstreams.plus/title-game/boxing/john-hedges-vs-pat-brown-live-streams-links"
   }
