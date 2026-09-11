@@ -66,7 +66,8 @@
             border-top: 1px solid var(--border);
             padding-top: 8px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
         }
         .stream-btn {
             background: var(--stream); color: white; text-decoration: none;
@@ -198,7 +199,7 @@
             filterBar.style.display = 'none';
             const config = LEAGUES[league];
 
-            // Render Scraped Event Lists (MMA, Boxing) using consistent 3-column structural layout
+            // Render Scraped Event Lists (MMA, Boxing) with full-width titles and bottom metadata rows
             if (config.type === "scraped") {
                 container.className = "";
                 const filteredItems = globalLinks.filter(item => item.category === config.category);
@@ -206,17 +207,14 @@
                 if (filteredItems.length > 0) {
                     container.innerHTML = filteredItems.map(item => `
                         <div class="card">
-                            <div class="card-main">
-                                <div class="team" style="flex: 2; text-align: left;">
-                                    <span class="team-name">${item.title}</span>
-                                </div>
-                                <div class="info">
-                                    <div class="time">${item.time || 'Upcoming'}</div>
-                                    <div class="status">UPCOMING</div>
-                                </div>
-                                <div class="team" style="flex: 0.2;"></div>
+                            <div style="font-size: 0.95rem; font-weight: 700; width: 100%; text-align: left; padding: 2px 0;">
+                                ${item.title}
                             </div>
                             <div class="stream-link-container">
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="color: #60a5fa; font-weight: 600; font-size: 0.75rem;">${item.time || 'Upcoming'}</span>
+                                    <span style="color: var(--muted); font-size: 0.65rem; font-weight: 600;">SCHEDULED</span>
+                                </div>
                                 <a href="${item.href}" target="_blank" class="stream-btn">
                                     <i class="fa-solid fa-play"></i> Watch Stream
                                 </a>
