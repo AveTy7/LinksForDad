@@ -175,7 +175,7 @@
 
             try {
                 const config = LEAGUES[league];
-                const dateParam = getDateParameter(league, config);
+                const dateParam = getDateParam(league);
                 
                 let urls = [];
                 if (league === "CFB") {
@@ -206,30 +206,25 @@
                     const confSet = new Set();
                     
                     const resolveConf = (teamData) => {
-                        // Check direct textual names first
-                        const nameFields = [
-                            teamData.team?.conference?.name,
-                            teamData.team?.conference?.shortName,
-                            teamData.conferenceName
-                        ];
-                        for (let name of nameFields) {
-                            if (name && typeof name === 'string' && isNaN(name)) {
-                                if (name.toLowerCase().includes('independent')) return "Independents";
-                                return name;
-                            }
+                        const teamName = teamData.team?.displayName || "";
+                        const shortName = teamData.team?.shortDisplayName || "";
+                        
+                        // Explicitly match known independent teams
+                        const independents = ["Notre Dame", "UConn", "UMass"];
+                        if (independents.some(ind => teamName.includes(ind) || shortName.includes(ind))) {
+                            return "Independents";
                         }
 
-                        // Check ID maps
-                        const idFields = [
-                            teamData.team?.conferenceId,
-                            teamData.conferenceId,
-                            teamData.team?.groups?.id
-                        ];
-                        for (let id of idFields) {
-                            if (id) {
-                                const strId = String(id);
-                                if (CONFERENCE_MAP[strId]) return CONFERENCE_MAP[strId];
-                            }
+                        const directName = teamData.team?.conference?.name || teamData.team?.conference?.shortName;
+                        if (directName && typeof directName === 'string' && isNaN(directName)) {
+                            if (directName.toLowerCase().includes('independent')) return "Independents";
+                            return directName;
+                        }
+
+                        const confId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
+                        if (CONFERENCE_MAP[confId]) {
+                            if (CONFERENCE_MAP[confId] === "FBS" || CONFERENCE_MAP[confId] === "FCS") return null;
+                            return CONFERENCE_MAP[confId];
                         }
 
                         return null;
@@ -241,19 +236,9 @@
                     if (homeConf) confSet.add(homeConf);
                     if (awayConf) confSet.add(awayConf);
 
-                    // Fallback to competition group or generic labeling safely
-                    if (confSet.size === 0) {
-                        if (comp.conferenceGroup?.name) {
-                            let gName = comp.conferenceGroup.name;
-                            if (gName.toLowerCase().includes('independent')) {
-                                confSet.add("Independents");
-                            } else {
-                                confSet.add(gName);
-                            }
-                        } else {
-                            confSet.add("Independents");
-                        }
-                    }
+                    // If a team's conference couldn't be explicitly found, check if it's an independent or label safely
+                    if (!homeConf && league === "CFB") confSet.add("Independents");
+                    if (!awayConf && league === "CFB") confSet.add("Independents");
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
                     const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
@@ -292,38 +277,6 @@
             } catch (err) {
                 console.error(err);
                 container.innerHTML = "<p class='loading'>Failed to load schedule data.</p>";
-            }
-        }
-
-        function getDateParameter(leagueKey, config) {
-            return getDateParam(leagueKey);
-        }
-
-        function getDateParam(leagueKey) {
-            const now = new Date();
-            const formatDate = (d) => {
-                const year = d.getFullYear();
-                const month = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${year}${month}${day}`;
-            };
-
-            if (leagueKey === "MLB") {
-                return formatDate(now);
-            } else if (leagueKey === "NFL") {
-                const dayOfWeek = now.getDay(); 
-                let daysUntilMonday = 0;
-                if (dayOfWeek === 1) daysUntilMonday = 0;
-                else if (dayOfWeek === 0) daysUntilMonday = 1;
-                else daysUntilMonday = (1 + 7 - dayOfWeek) % 7;
-
-                const endMonday = new Date(now);
-                endMonday.setDate(now.getDate() + daysUntilMonday);
-                return `${formatDate(now)}-${formatDate(endMonday)}`;
-            } else {
-                const nextWeek = new Date(now);
-                nextWeek.setDate(now.getDate() + 7);
-                return `${formatDate(now)}-${formatDate(nextWeek)}`;
             }
         }
 
