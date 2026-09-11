@@ -12,6 +12,7 @@
             --text: #f8fafc;
             --muted: #94a3b8;
             --border: #334155;
+            --live: #22c55e;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
         body { background: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
@@ -40,6 +41,7 @@
         .conference-select {
             background: var(--bg); color: var(--text); border: 1px solid var(--border);
             padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; outline: none;
+            max-width: 60%;
         }
 
         .card {
@@ -53,9 +55,8 @@
         
         .info { text-align: center; padding: 0 12px; min-width: 110px; }
         .time { color: #60a5fa; font-weight: 600; font-size: 0.8rem; }
-        .status { color: #22c55e; font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
-        .status.scheduled { color: var(--muted); }
-        .conf-badge { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+        .status { color: var(--muted); font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
+        .status.live { color: var(--live); font-weight: 700; }
         
         #game-list { min-height: 200px; }
         .loading { text-align: center; color: var(--muted); padding: 40px; }
@@ -65,7 +66,7 @@
 
     <header>
         <h2>Sports Schedule Hub</h2>
-        <p style="color: var(--muted); font-size: 0.8rem;">Upcoming & Live Games • Times in MST</p>
+        <p style="color: var(--muted); font-size: 0.8rem;">Live & Upcoming Games • Times in MST</p>
     </header>
 
     <div class="tabs" id="tab-bar"></div>
@@ -77,7 +78,7 @@
         </select>
     </div>
 
-    <div id="game-list" class="loading">Loading live schedule...</div>
+    <div id="game-list" class="loading">Loading schedule...</div>
 
     <script>
         const LEAGUES = {
@@ -110,23 +111,19 @@
             fetchLeagueData(league);
         }
 
-        // Calculate Date Filter Range
         function getDateParam(leagueKey) {
             const now = new Date();
             const formatDate = (d) => d.toISOString().split('T')[0].replace(/-/g, '');
 
             if (leagueKey === "MLB") {
-                // Today only
                 return formatDate(now);
             } else if (leagueKey === "NFL") {
-                // Today through next Monday
-                const dayOfWeek = now.getDay(); // 0 is Sunday, 1 is Monday
+                const dayOfWeek = now.getDay();
                 const daysUntilMonday = (8 - dayOfWeek) % 7 || 7;
                 const endMonday = new Date(now);
                 endMonday.setDate(now.getDate() + daysUntilMonday);
                 return `${formatDate(now)}-${formatDate(endMonday)}`;
             } else {
-                // College (CFB/CBB): 7 days out
                 const nextWeek = new Date(now);
                 nextWeek.setDate(now.getDate() + 7);
                 return `${formatDate(now)}-${formatDate(nextWeek)}`;
@@ -135,7 +132,6 @@
 
         async function fetchLeagueData(league) {
             const container = document.getElementById('game-list');
-            const filterBar = document.getElementById('filter-bar');
             container.className = "loading";
             container.innerHTML = "Fetching schedule...";
 
@@ -150,12 +146,11 @@
                 const config = LEAGUES[league];
                 const dateParam = getDateParam(league);
                 
-                // Fetch URLs (Include FBS & FCS for College Football)
                 let urls = [];
                 if (league === "CFB") {
                     urls = [
-                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`, // FBS
-                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`  // FCS
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`,
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`
                     ];
                 } else {
                     urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
@@ -165,25 +160,37 @@
                 let rawEvents = [];
                 responses.forEach(r => { if (r.events) rawEvents = rawEvents.concat(r.events); });
 
-                const nowTs = new Date().getTime();
-
-                // Process & Deduplicate events
                 const gameMap = new Map();
+
                 rawEvents.forEach(event => {
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
 
-                    // 1) REMOVE ALREADY PLAYED GAMES
+                    // REMOVE COMPLETED GAMES ONLY (Keep 'in' / live games and 'pre' / upcoming games)
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
-                    
                     const home = comp.competitors.find(c => c.homeAway === 'home') || {};
                     const away = comp.competitors.find(c => c.homeAway === 'away') || {};
 
-                    // Extract Conference Names for College Sports
-                    const homeConf = home.curatedRank?.current ? `(${home.curatedRank.current})` : '';
-                    const confName = comp.conferenceGroup?.name || home.team?.conferenceId || 'Other';
+                    // Extract text conference names for both teams
+                    const homeConfName = home.team?.conference?.name || home.team?.conference?.shortName || null;
+                    const awayConfName = away.team?.conference?.name || away.team?.conference?.shortName || null;
+
+                    const confSet = new Set();
+                    if (homeConfName && isNaN(homeConfName)) confSet.add(homeConfName);
+                    if (awayConfName && isNaN(awayConfName)) confSet.add(awayConfName);
+                    
+                    // Fallback if team conference details are omitted in endpoint payload
+                    if (confSet.size === 0 && comp.conferenceGroup?.name && isNaN(comp.conferenceGroup.name)) {
+                        confSet.add(comp.conferenceGroup.name);
+                    }
+                    if (confSet.size === 0) {
+                        confSet.add("Non-Conference / Independent");
+                    }
+
+                    const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
+                    const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
 
                     const timeStr = dateObj.toLocaleTimeString('en-US', { 
                         timeZone: 'America/Denver', 
@@ -202,15 +209,14 @@
                         displayTime: `${dateStr} @ ${timeStr} MST`,
                         statusState: state,
                         statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
-                        homeTeam: `${home.team?.displayName || 'TBD'} ${homeConf}`.trim(),
+                        homeTeam: `${homeRank}${home.team?.displayName || 'TBD'}`,
                         homeLogo: home.team?.logo || '',
-                        awayTeam: away.team?.displayName || 'TBD',
+                        awayTeam: `${awayRank}${away.team?.displayName || 'TBD'}`,
                         awayLogo: away.team?.logo || '',
-                        conference: confName
+                        conferences: Array.from(confSet)
                     });
                 });
 
-                // 2) SORT CHRONOLOGICALLY
                 currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
 
                 cache[league] = currentGames;
@@ -223,7 +229,6 @@
             }
         }
 
-        // Setup Conference Dropdown Filter
         function setupConferenceFilter(games) {
             const filterBar = document.getElementById('filter-bar');
             const select = document.getElementById('conf-select');
@@ -233,10 +238,15 @@
                 return;
             }
 
-            // Extract unique conference list
-            const conferences = [...new Set(games.map(g => g.conference))].sort();
+            // Extract all unique conferences across both home and away teams
+            const allConferences = new Set();
+            games.forEach(g => {
+                g.conferences.forEach(c => allConferences.add(c));
+            });
+
+            const sortedConfs = Array.from(allConferences).sort();
             select.innerHTML = '<option value="ALL">All Conferences</option>';
-            conferences.forEach(conf => {
+            sortedConfs.forEach(conf => {
                 const opt = document.createElement('option');
                 opt.value = conf;
                 opt.innerText = conf;
@@ -251,7 +261,8 @@
             if (selectedConf === "ALL") {
                 renderGames(currentGames);
             } else {
-                const filtered = currentGames.filter(g => g.conference === selectedConf);
+                // Game matches if EITHER team belongs to the selected conference
+                const filtered = currentGames.filter(g => g.conferences.includes(selectedConf));
                 renderGames(filtered);
             }
         }
@@ -261,7 +272,7 @@
             container.className = "";
             
             if (!games.length) {
-                container.innerHTML = "<p class='loading'>No upcoming games scheduled for this timeframe.</p>";
+                container.innerHTML = "<p class='loading'>No active or upcoming games scheduled for this timeframe.</p>";
                 return;
             }
 
@@ -273,7 +284,7 @@
                     </div>
                     <div class="info">
                         <div class="time">${g.displayTime}</div>
-                        <div class="status ${g.statusState === 'in' ? '' : 'scheduled'}">${g.statusDetail}</div>
+                        <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
                     </div>
                     <div class="team home">
                         <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
