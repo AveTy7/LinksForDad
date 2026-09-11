@@ -14,6 +14,7 @@
             --muted: #94a3b8;
             --border: #334155;
             --live: #22c55e;
+            --stream: #10b981;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
         body { background: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
@@ -47,8 +48,10 @@
 
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 12px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;
         }
+        .card-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
         .team { display: flex; align-items: center; gap: 8px; flex: 1; }
         .team.away { justify-content: flex-end; text-align: right; }
         .team img { width: 32px; height: 32px; object-fit: contain; }
@@ -59,16 +62,25 @@
         .status { color: var(--muted); font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
         .status.live { color: var(--live); font-weight: 700; }
         
+        .stream-link-container {
+            border-top: 1px solid var(--border);
+            padding-top: 8px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .stream-btn {
+            background: var(--stream); color: white; text-decoration: none;
+            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .stream-btn:hover { opacity: 0.9; }
+
         #game-list { min-height: 200px; }
         .loading { text-align: center; color: var(--muted); padding: 40px; }
         
         .competition-item {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
+            background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+            padding: 12px; margin-bottom: 8px; font-size: 0.85rem;
         }
         .competition-item a { color: #60a5fa; text-decoration: none; word-break: break-all; font-weight: 600; }
         .competition-item a:hover { text-decoration: underline; }
@@ -110,6 +122,20 @@
         let activeLeague = "NFL";
         const cache = {};
         let currentGames = [];
+        let globalLinks = [];
+
+        async function initApp() {
+            // Preload links cache for cross-referencing
+            try {
+                const res = await fetch('links.json');
+                if (res.ok) {
+                    globalLinks = await res.json();
+                }
+            } catch (e) {
+                console.log("Could not load links.json for matching:", e);
+            }
+            initTabs();
+        }
 
         function initTabs() {
             const tabBar = document.getElementById('tab-bar');
@@ -155,37 +181,50 @@
             }
         }
 
+        function findMatchingLink(game) {
+            if (!globalLinks || globalLinks.length === 0) return null;
+            
+            const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
+            const homeFull = clean(game.homeTeam);
+            const awayFull = clean(game.awayTeam);
+            
+            const homeParts = homeFull.split(' ');
+            const awayParts = awayFull.split(' ');
+            const homeNick = homeParts[homeParts.length - 1];
+            const awayNick = awayParts[awayParts.length - 1];
+
+            for (let item of globalLinks) {
+                const title = item.title.toLowerCase();
+                // Match if both team nicknames/full names appear in the scraped title string
+                const matchesHome = title.includes(homeFull) || title.includes(homeNick);
+                const matchesAway = title.includes(awayFull) || title.includes(awayNick);
+
+                if (matchesHome && matchesAway) {
+                    return item.href;
+                }
+            }
+            return null;
+        }
+
         async function fetchLeagueData(league) {
             const container = document.getElementById('game-list');
             const filterBar = document.getElementById('filter-bar');
             filterBar.style.display = 'none';
 
             if (league === "Test") {
-                container.className = "loading";
-                container.innerHTML = "Loading automated links...";
-                
-                try {
-                    const response = await fetch('links.json');
-                    if (!response.ok) throw new Error("Failed to load local links cache");
-                    const items = await response.json();
-                    
-                    container.className = "";
-                    if (items.length > 0) {
-                        let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${items.length} match(es):</p>`;
-                        items.forEach(item => {
-                            htmlOutput += `
-                                <div class="competition-item">
-                                    <strong>#${item.id}: ${item.title}</strong><br>
-                                    <a href="${item.href}" target="_blank">${item.href}</a>
-                                </div>`;
-                        });
-                        container.innerHTML = htmlOutput;
-                    } else {
-                        container.innerHTML = `<p class='loading'>No links found in cache file.</p>`;
-                    }
-                } catch (err) {
-                    console.error(err);
-                    container.innerHTML = `<p class='loading'>Could not load links.json. Run the GitHub Action first.</p>`;
+                container.className = "";
+                if (globalLinks.length > 0) {
+                    let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${globalLinks.length} total automated match(es):</p>`;
+                    globalLinks.forEach(item => {
+                        htmlOutput += `
+                            <div class="competition-item">
+                                <strong>#${item.id}: ${item.title}</strong><br>
+                                <a href="${item.href}" target="_blank">${item.href}</a>
+                            </div>`;
+                    });
+                    container.innerHTML = htmlOutput;
+                } else {
+                    container.innerHTML = `<p class='loading'>No links found in cache file. Run the GitHub Action workflow.</p>`;
                 }
                 return;
             }
@@ -251,7 +290,7 @@
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
 
-                    gameMap.set(event.id, {
+                    const gameObj = {
                         id: event.id,
                         utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
@@ -262,7 +301,12 @@
                         awayTeam: `${awayRank}${away.team?.displayName || 'TBD'}`,
                         awayLogo: away.team?.logo || '',
                         conferences: Array.from(confSet)
-                    });
+                    };
+
+                    // Cross reference and attach link if available
+                    gameObj.streamLink = findMatchingLink(gameObj);
+
+                    gameMap.set(event.id, gameObj);
                 });
 
                 currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
@@ -315,23 +359,32 @@
             }
             container.innerHTML = games.map(g => `
                 <div class="card">
-                    <div class="team away">
-                        <span class="team-name">${g.awayTeam}</span>
-                        <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
+                    <div class="card-main">
+                        <div class="team away">
+                            <span class="team-name">${g.awayTeam}</span>
+                            <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
+                        </div>
+                        <div class="info">
+                            <div class="time">${g.displayTime}</div>
+                            <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
+                        </div>
+                        <div class="team home">
+                            <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
+                            <span class="team-name">${g.homeTeam}</span>
+                        </div>
                     </div>
-                    <div class="info">
-                        <div class="time">${g.displayTime}</div>
-                        <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
-                    </div>
-                    <div class="team home">
-                        <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
-                        <span class="team-name">${g.homeTeam}</span>
-                    </div>
+                    ${g.streamLink ? `
+                        <div class="stream-link-container">
+                            <a href="${g.streamLink}" target="_blank" class="stream-btn">
+                                <i class="fa-solid fa-play"></i> Watch Stream
+                            </a>
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
         }
 
-        initTabs();
+        initApp();
     </script>
 </body>
 </html>
