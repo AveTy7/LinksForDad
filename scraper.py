@@ -1,4 +1,5 @@
 import json
+import re
 from playwright.sync_api import sync_playwright
 
 def scrape_links():
@@ -31,19 +32,31 @@ def scrape_links():
                 
                 elements = page.query_selector_all("a.competition")
                 for el in elements:
-                    # Check title attribute first, then fall back to visible text inside the element
-                    title = el.get_attribute("title")
-                    if not title or title.strip() == "":
-                        title = el.inner_text().strip()
-                    if not title:
-                        title = "No Title"
+                    raw_text = el.get_attribute("title")
+                    if not raw_text or raw_text.strip() == "":
+                        raw_text = el.inner_text().strip()
+                    if not raw_text:
+                        raw_text = "No Title"
                         
                     href = el.get_attribute("href") or "#"
+                    
+                    # Extract title (everything before the hyphen)
+                    title_clean = raw_text
+                    for sep in ['-', '–']:
+                        if sep in raw_text:
+                            title_clean = raw_text.split(sep)[0]
+                            break
+                    title_clean = title_clean.strip()
+                    
+                    # Extract time info if available (e.g., "02:00 PM ET")
+                    time_match = re.search(r'\d{1,2}:\d{2}\s*(?:AM|PM)\s*(?:ET|MT|PT|CT)?', raw_text, re.IGNORECASE)
+                    time_str = time_match.group(0).strip() if time_match else "Upcoming"
                     
                     all_data.append({
                         "id": global_id, 
                         "category": src['category'],
-                        "title": title, 
+                        "title": title_clean if title_clean else raw_text, 
+                        "time": time_str,
                         "href": href
                     })
                     global_id += 1
