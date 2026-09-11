@@ -48,15 +48,22 @@ def scrape_links():
                             break
                     title_clean = title_clean.strip()
                     
-                    # Extract time info if available (e.g., "02:00 PM ET")
+                    # Extract time info (e.g., "02:00 PM ET")
                     time_match = re.search(r'\d{1,2}:\d{2}\s*(?:AM|PM)\s*(?:ET|MT|PT|CT)?', raw_text, re.IGNORECASE)
-                    time_str = time_match.group(0).strip() if time_match else "Upcoming"
+                    time_str = time_match.group(0).strip() if time_match else ""
                     
+                    # Extract day/date keyword if present (e.g., "Sat", "Sep 14", "Tomorrow")
+                    day_match = re.search(r'(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun|Today|Tomorrow|\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2})', raw_text, re.IGNORECASE)
+                    day_str = day_match.group(0).strip() if day_match else ""
+                    
+                    # Format standard display time string
+                    display_time = f"{day_str} @ {time_str}" if day_str and time_str else (time_str or day_str or "Upcoming")
+
                     all_data.append({
                         "id": global_id, 
                         "category": src['category'],
                         "title": title_clean if title_clean else raw_text, 
-                        "time": time_str,
+                        "time": display_time,
                         "href": href
                     })
                     global_id += 1
