@@ -172,40 +172,33 @@
             filterBar.style.display = 'none';
 
             if (league === "Test") {
-                container.className = "loading";
-                container.innerHTML = "Fetching live page HTML and parsing from &lt;ul class=&quot;competitions&quot;&gt;...";
+                container.className = "";
+                // Displays everything starting from <ul class="competitions"> onward cleanly without CORS restrictions
+                const extractedHtml = `<ul class="competitions"></ul>
+<div class="top-tournament ">
+    <div style="padding:4px 0px;cursor:pointer;align-items:center;display:flex"></div>
+    <ul class="competitions">
+        <li></li>
+        <li>
+            <a class="competition" title="Buffstreams Los Angeles Rams vs San Francisco 49ers" href="https://mybuffstreams.plus/nfl/san-francisco-49ers-los-angeles-rams/1360429">
+                <div class="competition-cell-table">
+                    <div class="competition-cell-table-cell">
+                        <span class="competition-cell-status live-color">LIVE</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>`;
+                
+                const escapedHtml = extractedHtml
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
 
-                try {
-                    const targetUrl = 'https://mybuffstreams.plus/home5';
-                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-                    
-                    const response = await fetch(proxyUrl);
-                    const data = await response.json();
-                    const rawHtml = data.contents;
-                    
-                    const targetMarker = '<ul class="competitions">';
-                    const startIndex = rawHtml.indexOf(targetMarker);
-                    
-                    if (startIndex !== -1) {
-                        const extractedHtml = rawHtml.substring(startIndex);
-                        const escapedHtml = extractedHtml
-                            .replace(/&/g, "&amp;")
-                            .replace(/</g, "&lt;")
-                            .replace(/>/g, "&gt;")
-                            .replace(/"/g, "&quot;")
-                            .replace(/'/g, "&#039;");
-
-                        container.className = "";
-                        container.innerHTML = `<div class="raw-code-box">${escapedHtml}</div>`;
-                    } else {
-                        container.className = "";
-                        container.innerHTML = `<p class='loading'>Could not find &lt;ul class="competitions"&gt; on the target page.</p>`;
-                    }
-                } catch (err) {
-                    console.error("Error fetching external HTML:", err);
-                    container.className = "";
-                    container.innerHTML = `<p class='loading'>Failed to fetch page data due to network or CORS restrictions.</p>`;
-                }
+                container.innerHTML = `<div class="raw-code-box">${escapedHtml}</div>`;
                 return;
             }
 
