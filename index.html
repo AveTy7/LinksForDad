@@ -186,20 +186,14 @@
             if (!rawTitle) return "No Title";
             let cleaned = rawTitle;
             
-            // Remove common timestamp / countdown prefixes/suffixes like "Starts in X days", dates, or redundant spacing
-            cleaned = cleaned.replace(/starts in.*?(?=–|-|$)/gi, '');
-            cleaned = cleaned.replace(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b\.?\s*\d{1,2}(st|nd|rd|th)?/gi, '');
-            cleaned = cleaned.replace(/\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/gi, '');
-            cleaned = cleaned.replace(/\d{1,2}:\d{2}\s*(am|pm)?\s*(mst|est|pst|utc)?/gi, '');
+            // Split at the first dash or en-dash and discard everything after it
+            if (cleaned.includes('-')) {
+                cleaned = cleaned.split('-')[0];
+            } else if (cleaned.includes('–')) {
+                cleaned = cleaned.split('–')[0];
+            }
             
-            // Clean up unwanted leftover dashes or extra whitespace
-            cleaned = cleaned.replace(/[-–—|]{2,}/g, '-');
-            cleaned = cleaned.trim();
-            
-            // Strip trailing/leading standalone punctuation
-            cleaned = cleaned.replace(/^[-–—|]\s*|\s*[-–—|]$/g, '');
-            
-            return cleaned || rawTitle;
+            return cleaned.trim() || rawTitle;
         }
 
         function findMatchingLink(game) {
