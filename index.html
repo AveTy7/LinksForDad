@@ -88,30 +88,12 @@
             "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" }
         };
 
-        const CONFERENCE_MAP = {
-            "1": "ACC",
-            "4": "Big 12",
-            "8": "SEC",
-            "9": "Big Ten",
-            "12": "Pac-12",
-            "15": "Conference USA",
-            "17": "MAC",
-            "18": "MWC",
-            "25": "Independents",
-            "37": "Sun Belt",
-            "151": "American Athletic",
-            "80": "FBS",
-            "81": "FCS",
-            "23": "ACC",
-            "2": "Big East",
-            "7": "Big Ten",
-            "6": "Big 12",
-            "3": "Pac-12",
-            "61": "SEC"
+        // Conference ID Mappings to replace numbers with clean names
+        const CFB_MAP = {
+            "1": "ACC", "4": "Big 12", "8": "SEC", "9": "Big Ten", "12": "Pac-12",
+            "15": "Conference USA", "17": "MAC", "18": "MWC", "37": "Sun Belt", 
+            "151": "American Athletic", "80": "FBS Independents", "81": "FCS"
         };
-
-        // Explicit manual list for true Independents
-        const TRUE_INDEPENDENTS = ["Notre Dame", "UConn", "UMass"];
 
         let activeLeague = "NFL";
         const cache = {};
@@ -148,6 +130,7 @@
             if (leagueKey === "MLB") {
                 return formatDate(now);
             } else if (leagueKey === "NFL") {
+                // Thursday through Monday weekly block logic
                 const dayOfWeek = now.getDay(); 
                 let daysUntilMonday = 0;
                 if (dayOfWeek === 1) daysUntilMonday = 0;
@@ -200,6 +183,7 @@
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
 
+                    // Discard finished games, keep live ('in') and upcoming ('pre')
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
@@ -212,25 +196,16 @@
                         const teamName = teamData.team?.displayName || "";
                         const shortName = teamData.team?.shortDisplayName || "";
                         
-                        // Force Notre Dame/UConn/UMass into Independents
-                        if (TRUE_INDEPENDENTS.some(ind => teamName.includes(ind) || shortName.includes(ind))) {
+                        // Carve out check for Notre Dame or University of Connecticut
+                        if (teamName.includes("Notre Dame") || shortName.includes("Notre Dame") || 
+                            teamName.includes("UConn") || shortName.includes("UConn") || 
+                            teamName.includes("Connecticut") || shortName.includes("Connecticut")) {
                             return "Independents";
                         }
 
-                        const directName = teamData.team?.conference?.name || teamData.team?.conference?.shortName;
-                        if (directName && typeof directName === 'string' && isNaN(directName)) {
-                            if (directName.toLowerCase().includes('independent')) return "Independents";
-                            return directName;
-                        }
-
-                        const confId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
-                        if (CONFERENCE_MAP[confId]) {
-                            const mapped = CONFERENCE_MAP[confId];
-                            if (mapped === "FBS") return null; // Let it fall through to group / Other cleanly
-                            return mapped;
-                        }
-
-                        return null;
+                        const rawId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
+                        if (CFB_MAP[rawId]) return CFB_MAP[rawId];
+                        return teamData.team?.conference?.name || teamData.team?.conference?.shortName || null;
                     };
 
                     const homeConf = resolveConf(home);
@@ -238,20 +213,7 @@
 
                     if (homeConf) confSet.add(homeConf);
                     if (awayConf) confSet.add(awayConf);
-
-                    // Fallback to competition group info if team details are empty (retaining "Other" for general/FCS)
-                    if (confSet.size === 0 && comp.conferenceGroup?.name) {
-                        let groupName = comp.conferenceGroup.name;
-                        if (groupName.toLowerCase().includes('independent')) {
-                            confSet.add("Independents");
-                        } else {
-                            confSet.add(groupName);
-                        }
-                    }
-
-                    if (confSet.size === 0) {
-                        confSet.add("Other / General");
-                    }
+                    if (confSet.size === 0) confSet.add("General / Other");
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
                     const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
