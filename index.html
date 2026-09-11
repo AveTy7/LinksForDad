@@ -88,7 +88,6 @@
             "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" }
         };
 
-        // Conference ID Mappings to replace numbers with clean names
         const CFB_MAP = {
             "1": "ACC", "4": "Big 12", "8": "SEC", "9": "Big Ten", "12": "Pac-12",
             "15": "Conference USA", "17": "MAC", "18": "MWC", "37": "Sun Belt", 
@@ -130,7 +129,6 @@
             if (leagueKey === "MLB") {
                 return formatDate(now);
             } else if (leagueKey === "NFL") {
-                // Thursday through Monday weekly block logic
                 const dayOfWeek = now.getDay(); 
                 let daysUntilMonday = 0;
                 if (dayOfWeek === 1) daysUntilMonday = 0;
@@ -183,7 +181,6 @@
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
 
-                    // Discard finished games, keep live ('in') and upcoming ('pre')
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
@@ -195,11 +192,13 @@
                     const resolveConf = (teamData) => {
                         const teamName = teamData.team?.displayName || "";
                         const shortName = teamData.team?.shortDisplayName || "";
+                        const fullName = teamData.team?.name || "";
                         
-                        // Carve out check for Notre Dame or University of Connecticut
-                        if (teamName.includes("Notre Dame") || shortName.includes("Notre Dame") || 
-                            teamName.includes("UConn") || shortName.includes("UConn") || 
-                            teamName.includes("Connecticut") || shortName.includes("Connecticut")) {
+                        // Strict check to isolate exact Notre Dame and UConn (preventing Central Connecticut matching)
+                        const isNotreDame = teamName === "Notre Dame Fighting Irish" || teamName.includes("Notre Dame") && !teamName.includes("Central");
+                        const isUConn = teamName === "UConn Huskies" || teamName === "Connecticut Huskies" || (teamName.includes("UConn") && !teamName.includes("Central")) || (teamName === "Connecticut" && !teamName.includes("Central"));
+                        
+                        if (isNotreDame || isUConn || shortName === "Notre Dame" || shortName === "UConn") {
                             return "Independents";
                         }
 
