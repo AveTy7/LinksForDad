@@ -172,25 +172,40 @@
             filterBar.style.display = 'none';
 
             if (league === "Test") {
-                container.className = "";
-                
-                // Dynamically select and extract all elements down to the deepest nodes using querySelectorAll('*')
-                const allElements = document.querySelectorAll('*');
-                console.log("Total elements found:", allElements.length);
-                allElements.forEach(element => {
-                    console.log(element.tagName);
-                });
+                container.className = "loading";
+                container.innerHTML = "Fetching live page HTML and parsing from &lt;ul class=&quot;competitions&quot;&gt;...";
 
-                // Grab the entire page's outerHTML dynamically so nothing is missed
-                const fullHtml = document.documentElement.outerHTML;
-                const escapedHtml = fullHtml
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
+                try {
+                    const targetUrl = 'https://mybuffstreams.plus/home5';
+                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+                    
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const rawHtml = data.contents;
+                    
+                    const targetMarker = '<ul class="competitions">';
+                    const startIndex = rawHtml.indexOf(targetMarker);
+                    
+                    if (startIndex !== -1) {
+                        const extractedHtml = rawHtml.substring(startIndex);
+                        const escapedHtml = extractedHtml
+                            .replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;");
 
-                container.innerHTML = `<div class="raw-code-box">${escapedHtml}</div>`;
+                        container.className = "";
+                        container.innerHTML = `<div class="raw-code-box">${escapedHtml}</div>`;
+                    } else {
+                        container.className = "";
+                        container.innerHTML = `<p class='loading'>Could not find &lt;ul class="competitions"&gt; on the target page.</p>`;
+                    }
+                } catch (err) {
+                    console.error("Error fetching external HTML:", err);
+                    container.className = "";
+                    container.innerHTML = `<p class='loading'>Failed to fetch page data due to network or CORS restrictions.</p>`;
+                }
                 return;
             }
 
