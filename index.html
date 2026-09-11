@@ -1,47 +1,314 @@
-# NFL Conferences & Divisions Mapping
-NFL_CONFERENCES = {
-    "1": "AFC",
-    "2": "NFC",
-    # NFL Divisions (if using division group IDs)
-    "7": "AFC East",
-    "8": "AFC North",
-    "9": "AFC South",
-    "10": "AFC West",
-    "11": "NFC East",
-    "12": "NFC North",
-    "13": "NFC South",
-    "14": "NFC West",
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sports Schedule Hub (MST)</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #2563eb;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: #334155;
+            --live: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
+        header { text-align: center; margin-bottom: 16px; }
+        
+        .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 12px; }
+        .tabs::-webkit-scrollbar { display: none; }
+        
+        .tab-btn {
+            background: var(--card); color: var(--muted); border: 1px solid var(--border);
+            padding: 8px 16px; border-radius: 20px; font-weight: 600; white-space: nowrap; cursor: pointer;
+        }
+        .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        .filter-container {
+            margin-bottom: 16px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .filter-label { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .conference-select {
+            background: var(--bg); color: var(--text); border: 1px solid var(--border);
+            padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; outline: none;
+            max-width: 60%;
+        }
 
-# College Football (FBS) Major Group IDs
-CFB_CONFERENCES = {
-    "1": "ACC",
-    "4": "Big 12",
-    "8": "SEC",
-    "9": "Big Ten",
-    "12": "Pac-12",
-    "15": "Conference USA",
-    "17": "MAC",
-    "18": "MWC",
-    "37": "Sun Belt",
-    "151": "American",
-    "80": "FBS Independents",
-}
+        .card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 12px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .team { display: flex; align-items: center; gap: 8px; flex: 1; }
+        .team.away { justify-content: flex-end; text-align: right; }
+        .team img { width: 32px; height: 32px; object-fit: contain; }
+        .team-name { font-size: 0.9rem; font-weight: 600; }
+        
+        .info { text-align: center; padding: 0 12px; min-width: 110px; }
+        .time { color: #60a5fa; font-weight: 600; font-size: 0.8rem; }
+        .status { color: var(--muted); font-size: 0.75rem; font-weight: 600; margin-top: 2px; }
+        .status.live { color: var(--live); font-weight: 700; }
+        
+        #game-list { min-height: 200px; }
+        .loading { text-align: center; color: var(--muted); padding: 40px; }
+    </style>
+</head>
+<body>
 
+    <header>
+        <h2>Sports Schedule Hub</h2>
+        <p style="color: var(--muted); font-size: 0.8rem;">Live & Upcoming Games • Times in MST</p>
+    </header>
 
-def get_conference_name(group_id, sport="nfl"):
-    group_str = str(group_id)
+    <div class="tabs" id="tab-bar"></div>
 
-    if sport == "nfl":
-        return NFL_CONFERENCES.get(group_str, f"Conference {group_str}")
-    elif sport in ["cfb", "college-football"]:
-        return CFB_CONFERENCES.get(group_str, f"Conference {group_str}")
+    <div class="filter-container" id="filter-bar">
+        <span class="filter-label">Filter by Conference:</span>
+        <select class="conference-select" id="conf-select" onchange="filterByConference()">
+            <option value="ALL">All Conferences</option>
+        </select>
+    </div>
 
-    return f"Group {group_str}"
+    <div id="game-list" class="loading">Loading schedule...</div>
 
+    <script>
+        const LEAGUES = {
+            "MLB": { endpoint: "baseball/mlb", type: "mlb" },
+            "NFL": { endpoint: "football/nfl", type: "nfl" },
+            "CFB": { endpoint: "football/college-football", type: "college" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" }
+        };
 
-# Usage Example
-raw_group_id = 1
-print(
-    get_conference_name(raw_group_id, sport="nfl")
-)  # Output: AFC
+        // Conference ID Mappings to replace numbers with clean names
+        const CFB_MAP = {
+            "1": "ACC", "4": "Big 12", "8": "SEC", "9": "Big Ten", "12": "Pac-12",
+            "15": "Conference USA", "17": "MAC", "18": "MWC", "37": "Sun Belt", 
+            "151": "American Athletic", "80": "FBS Independents", "81": "FCS"
+        };
+
+        let activeLeague = "NFL";
+        const cache = {};
+        let currentGames = [];
+
+        function initTabs() {
+            const tabBar = document.getElementById('tab-bar');
+            Object.keys(LEAGUES).forEach(league => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${league === activeLeague ? 'active' : ''}`;
+                btn.innerText = league;
+                btn.onclick = () => switchTab(league, btn);
+                tabBar.appendChild(btn);
+            });
+            fetchLeagueData(activeLeague);
+        }
+
+        function switchTab(league, btn) {
+            activeLeague = league;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            fetchLeagueData(league);
+        }
+
+        function getDateParam(leagueKey) {
+            const now = new Date();
+            const formatDate = (d) => {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}${month}${day}`;
+            };
+
+            if (leagueKey === "MLB") {
+                return formatDate(now);
+            } else if (leagueKey === "NFL") {
+                // Thursday through Monday weekly block logic
+                const dayOfWeek = now.getDay(); 
+                let daysUntilMonday = 0;
+                if (dayOfWeek === 1) daysUntilMonday = 0;
+                else if (dayOfWeek === 0) daysUntilMonday = 1;
+                else daysUntilMonday = (1 + 7 - dayOfWeek) % 7;
+
+                const endMonday = new Date(now);
+                endMonday.setDate(now.getDate() + daysUntilMonday);
+                return `${formatDate(now)}-${formatDate(endMonday)}`;
+            } else {
+                const nextWeek = new Date(now);
+                nextWeek.setDate(now.getDate() + 7);
+                return `${formatDate(now)}-${formatDate(nextWeek)}`;
+            }
+        }
+
+        async function fetchLeagueData(league) {
+            const container = document.getElementById('game-list');
+            container.className = "loading";
+            container.innerHTML = "Fetching schedule...";
+
+            if (cache[league]) {
+                currentGames = cache[league];
+                setupConferenceFilter(currentGames);
+                renderGames(currentGames);
+                return;
+            }
+
+            try {
+                const config = LEAGUES[league];
+                const dateParam = getDateParam(league);
+                
+                let urls = [];
+                if (league === "CFB") {
+                    urls = [
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`,
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`
+                    ];
+                } else {
+                    urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
+                }
+
+                const responses = await Promise.all(urls.map(u => fetch(u).then(r => r.json())));
+                let rawEvents = [];
+                responses.forEach(r => { if (r.events) rawEvents = rawEvents.concat(r.events); });
+
+                const gameMap = new Map();
+
+                rawEvents.forEach(event => {
+                    const comp = event.competitions[0];
+                    const state = event.status.type.state.toLowerCase();
+
+                    // Discard finished games, keep live ('in') and upcoming ('pre')
+                    if (state === 'post' || state === 'final') return;
+
+                    const dateObj = new Date(event.date);
+                    const home = comp.competitors.find(c => c.homeAway === 'home') || {};
+                    const away = comp.competitors.find(c => c.homeAway === 'away') || {};
+
+                    const confSet = new Set();
+                    
+                    const resolveConf = (teamData) => {
+                        const rawId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
+                        if (CFB_MAP[rawId]) return CFB_MAP[rawId];
+                        return teamData.team?.conference?.name || teamData.team?.conference?.shortName || null;
+                    };
+
+                    const homeConf = resolveConf(home);
+                    const awayConf = resolveConf(away);
+
+                    if (homeConf) confSet.add(homeConf);
+                    if (awayConf) confSet.add(awayConf);
+                    if (confSet.size === 0) confSet.add("General / Other");
+
+                    const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
+                    const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
+
+                    const timeStr = dateObj.toLocaleTimeString('en-US', { 
+                        timeZone: 'America/Denver', 
+                        hour: 'numeric', 
+                        minute: '2-digit' 
+                    });
+                    const dateStr = dateObj.toLocaleDateString('en-US', { 
+                        timeZone: 'America/Denver', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
+
+                    gameMap.set(event.id, {
+                        id: event.id,
+                        utcTime: dateObj.getTime(),
+                        displayTime: `${dateStr} @ ${timeStr} MST`,
+                        statusState: state,
+                        statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
+                        homeTeam: `${homeRank}${home.team?.displayName || 'TBD'}`,
+                        homeLogo: home.team?.logo || '',
+                        awayTeam: `${awayRank}${away.team?.displayName || 'TBD'}`,
+                        awayLogo: away.team?.logo || '',
+                        conferences: Array.from(confSet)
+                    });
+                });
+
+                currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
+
+                cache[league] = currentGames;
+                setupConferenceFilter(currentGames);
+                renderGames(currentGames);
+
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = "<p class='loading'>Failed to load schedule data.</p>";
+            }
+        }
+
+        function setupConferenceFilter(games) {
+            const filterBar = document.getElementById('filter-bar');
+            const select = document.getElementById('conf-select');
+            
+            if (LEAGUES[activeLeague].type !== "college") {
+                filterBar.style.display = 'none';
+                return;
+            }
+
+            const allConferences = new Set();
+            games.forEach(g => {
+                g.conferences.forEach(c => allConferences.add(c));
+            });
+
+            const sortedConfs = Array.from(allConferences).sort();
+            select.innerHTML = '<option value="ALL">All Conferences</option>';
+            sortedConfs.forEach(conf => {
+                const opt = document.createElement('option');
+                opt.value = conf;
+                opt.innerText = conf;
+                select.appendChild(opt);
+            });
+
+            filterBar.style.display = 'flex';
+        }
+
+        function filterByConference() {
+            const selectedConf = document.getElementById('conf-select').value;
+            if (selectedConf === "ALL") {
+                renderGames(currentGames);
+            } else {
+                const filtered = currentGames.filter(g => g.conferences.includes(selectedConf));
+                renderGames(filtered);
+            }
+        }
+
+        function renderGames(games) {
+            const container = document.getElementById('game-list');
+            container.className = "";
+            
+            if (!games.length) {
+                container.innerHTML = "<p class='loading'>No active or upcoming games scheduled for this timeframe.</p>";
+                return;
+            }
+
+            container.innerHTML = games.map(g => `
+                <div class="card">
+                    <div class="team away">
+                        <span class="team-name">${g.awayTeam}</span>
+                        <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
+                    </div>
+                    <div class="info">
+                        <div class="time">${g.displayTime}</div>
+                        <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
+                    </div>
+                    <div class="team home">
+                        <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
+                        <span class="team-name">${g.homeTeam}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        initTabs();
+    </script>
+</body>
+</html>
