@@ -77,13 +77,6 @@
 
         #game-list { min-height: 200px; }
         .loading { text-align: center; color: var(--muted); padding: 40px; }
-        
-        .competition-item {
-            background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-            padding: 12px; margin-bottom: 8px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center;
-        }
-        .competition-item a { color: #10b981; text-decoration: none; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 6px 12px; border-radius: 6px; }
-        .competition-item a:hover { background: rgba(16, 185, 129, 0.2); }
     </style>
 </head>
 <body class="page-home layout-fluid">
@@ -111,8 +104,7 @@
             "CFB": { endpoint: "football/college-football", type: "espn" },
             "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn" },
             "MMA": { type: "scraped", category: "MMA" },
-            "Boxing": { type: "scraped", category: "Boxing" },
-            "Test": { type: "test" }
+            "Boxing": { type: "scraped", category: "Boxing" }
         };
 
         const CFB_MAP = {
@@ -182,20 +174,6 @@
             }
         }
 
-        function cleanEventTitle(rawTitle) {
-            if (!rawTitle) return "No Title";
-            let cleaned = rawTitle;
-            
-            // Split at the first dash or en-dash and discard everything after it
-            if (cleaned.includes('-')) {
-                cleaned = cleaned.split('-')[0];
-            } else if (cleaned.includes('–')) {
-                cleaned = cleaned.split('–')[0];
-            }
-            
-            return cleaned.trim() || rawTitle;
-        }
-
         function findMatchingLink(game) {
             if (!globalLinks || globalLinks.length === 0) return null;
             const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
@@ -220,33 +198,31 @@
             filterBar.style.display = 'none';
             const config = LEAGUES[league];
 
-            // Render Scraped Event Lists (MMA, Boxing, Test) using uniform card layouts
-            if (config.type === "scraped" || config.type === "test") {
+            // Render Scraped Event Lists (MMA, Boxing) using consistent structural cards
+            if (config.type === "scraped") {
                 container.className = "";
-                const filteredItems = config.type === "scraped" 
-                    ? globalLinks.filter(item => item.category === config.category)
-                    : globalLinks;
+                const filteredItems = globalLinks.filter(item => item.category === config.category);
 
                 if (filteredItems.length > 0) {
-                    let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${filteredItems.length} event(s):</p>`;
-                    filteredItems.forEach(item => {
-                        const displayTitle = config.type === "scraped" ? cleanEventTitle(item.title) : item.title;
-                        htmlOutput += `
-                            <div class="card">
-                                <div class="card-main">
-                                    <div class="team-name" style="font-size: 0.95rem; width: 100%; text-align: left; padding: 4px 0;">
-                                        ${displayTitle}
-                                        ${config.type === "test" ? `<br><span style="color: var(--muted); font-size: 0.75rem;">Category: ${item.category || 'Unknown'} (Raw: ${item.title})</span>` : ''}
-                                    </div>
+                    container.innerHTML = filteredItems.map(item => `
+                        <div class="card">
+                            <div class="card-main">
+                                <div class="team" style="flex: 2;">
+                                    <span class="team-name" style="text-align: left; width: 100%;">${item.title}</span>
                                 </div>
-                                <div class="stream-link-container">
-                                    <a href="${item.href}" target="_blank" class="stream-btn">
-                                        <i class="fa-solid fa-play"></i> Watch Stream
-                                    </a>
+                                <div class="info">
+                                    <div class="time">${item.time || 'Upcoming'}</div>
+                                    <div class="status">SCHEDULED</div>
                                 </div>
-                            </div>`;
-                    });
-                    container.innerHTML = htmlOutput;
+                                <div class="team" style="flex: 1; justify-content: flex-end;"></div>
+                            </div>
+                            <div class="stream-link-container">
+                                <a href="${item.href}" target="_blank" class="stream-btn">
+                                    <i class="fa-solid fa-play"></i> Watch Stream
+                                </a>
+                            </div>
+                        </div>
+                    `).join('');
                 } else {
                     container.innerHTML = `<p class='loading'>No events found for ${league}. Run the GitHub Action workflow.</p>`;
                 }
