@@ -80,10 +80,10 @@
         
         .competition-item {
             background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-            padding: 12px; margin-bottom: 8px; font-size: 0.85rem;
+            padding: 12px; margin-bottom: 8px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center;
         }
-        .competition-item a { color: #60a5fa; text-decoration: none; word-break: break-all; font-weight: 600; }
-        .competition-item a:hover { text-decoration: underline; }
+        .competition-item a { color: #10b981; text-decoration: none; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 6px 12px; border-radius: 6px; }
+        .competition-item a:hover { background: rgba(16, 185, 129, 0.2); }
     </style>
 </head>
 <body class="page-home layout-fluid">
@@ -106,11 +106,13 @@
 
     <script>
         const LEAGUES = {
-            "MLB": { endpoint: "baseball/mlb", type: "mlb" },
-            "NFL": { endpoint: "football/nfl", type: "nfl" },
-            "CFB": { endpoint: "football/college-football", type: "college" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "college" },
-            "Test": { endpoint: "", type: "test" }
+            "NFL": { endpoint: "football/nfl", type: "espn" },
+            "MLB": { endpoint: "baseball/mlb", type: "espn" },
+            "CFB": { endpoint: "football/college-football", type: "espn" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn" },
+            "MMA": { type: "scraped", category: "MMA" },
+            "Boxing": { type: "scraped", category: "Boxing" },
+            "Test": { type: "test" }
         };
 
         const CFB_MAP = {
@@ -125,14 +127,13 @@
         let globalLinks = [];
 
         async function initApp() {
-            // Preload links cache for cross-referencing
             try {
                 const res = await fetch('links.json');
                 if (res.ok) {
                     globalLinks = await res.json();
                 }
             } catch (e) {
-                console.log("Could not load links.json for matching:", e);
+                console.log("Could not load links.json:", e);
             }
             initTabs();
         }
@@ -183,23 +184,16 @@
 
         function findMatchingLink(game) {
             if (!globalLinks || globalLinks.length === 0) return null;
-            
             const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
             const homeFull = clean(game.homeTeam);
             const awayFull = clean(game.awayTeam);
-            
-            const homeParts = homeFull.split(' ');
-            const awayParts = awayFull.split(' ');
-            const homeNick = homeParts[homeParts.length - 1];
-            const awayNick = awayParts[awayParts.length - 1];
+            const homeNick = homeFull.split(' ').pop();
+            const awayNick = awayFull.split(' ').pop();
 
             for (let item of globalLinks) {
                 const title = item.title.toLowerCase();
-                // Match if both team nicknames/full names appear in the scraped title string
-                const matchesHome = title.includes(homeFull) || title.includes(homeNick);
-                const matchesAway = title.includes(awayFull) || title.includes(awayNick);
-
-                if (matchesHome && matchesAway) {
+                if ((title.includes(homeFull) || title.includes(homeNick)) && 
+                    (title.includes(awayFull) || title.includes(awayNick))) {
                     return item.href;
                 }
             }
@@ -210,25 +204,37 @@
             const container = document.getElementById('game-list');
             const filterBar = document.getElementById('filter-bar');
             filterBar.style.display = 'none';
+            const config = LEAGUES[league];
 
-            if (league === "Test") {
+            // Render Scraped Lists (MMA, Boxing, Test)
+            if (config.type === "scraped" || config.type === "test") {
                 container.className = "";
-                if (globalLinks.length > 0) {
-                    let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${globalLinks.length} total automated match(es):</p>`;
-                    globalLinks.forEach(item => {
+                const filteredItems = config.type === "scraped" 
+                    ? globalLinks.filter(item => item.category === config.category)
+                    : globalLinks;
+
+                if (filteredItems.length > 0) {
+                    let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${filteredItems.length} stream(s):</p>`;
+                    filteredItems.forEach(item => {
                         htmlOutput += `
                             <div class="competition-item">
-                                <strong>#${item.id}: ${item.title}</strong><br>
-                                <a href="${item.href}" target="_blank">${item.href}</a>
+                                <div>
+                                    <strong style="font-size: 0.9rem;">${item.title}</strong>
+                                    ${config.type === "test" ? `<br><span style="color: var(--muted); font-size: 0.75rem;">Category: ${item.category || 'Unknown'}</span>` : ''}
+                                </div>
+                                <a href="${item.href}" target="_blank">
+                                    <i class="fa-solid fa-play"></i> Watch
+                                </a>
                             </div>`;
                     });
                     container.innerHTML = htmlOutput;
                 } else {
-                    container.innerHTML = `<p class='loading'>No links found in cache file. Run the GitHub Action workflow.</p>`;
+                    container.innerHTML = `<p class='loading'>No links found for ${league}. Run the GitHub Action workflow.</p>`;
                 }
                 return;
             }
 
+            // Render ESPN Schedule Leagues (NFL, MLB, CFB, CBB)
             container.className = "loading";
             container.innerHTML = "Fetching schedule...";
 
@@ -240,9 +246,7 @@
             }
 
             try {
-                const config = LEAGUES[league];
                 const dateParam = getDateParam(league);
-                
                 let urls = [];
                 if (league === "CFB") {
                     urls = [
@@ -258,7 +262,6 @@
                 responses.forEach(r => { if (r.events) rawEvents = rawEvents.concat(r.events); });
 
                 const gameMap = new Map();
-
                 rawEvents.forEach(event => {
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
@@ -303,9 +306,7 @@
                         conferences: Array.from(confSet)
                     };
 
-                    // Cross reference and attach link if available
                     gameObj.streamLink = findMatchingLink(gameObj);
-
                     gameMap.set(event.id, gameObj);
                 });
 
@@ -323,7 +324,7 @@
         function setupConferenceFilter(games) {
             const filterBar = document.getElementById('filter-bar');
             const select = document.getElementById('conf-select');
-            if (LEAGUES[activeLeague].type !== "college") {
+            if (LEAGUES[activeLeague].type !== "espn" || activeLeague !== "CFB") {
                 filterBar.style.display = 'none';
                 return;
             }
