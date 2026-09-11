@@ -113,12 +113,33 @@
 
         function getDateParam(leagueKey) {
             const now = new Date();
-            const formatDate = (d) => d.toISOString().split('T')[0].replace(/-/g, '');
+            const formatDate = (d) => {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}${month}${day}`;
+            };
 
             if (leagueKey === "MLB") {
                 return formatDate(now);
+            } else if (leagueKey === "NFL") {
+                // Dynamically target Today through the upcoming Monday
+                const dayOfWeek = now.getDay(); // 0: Sun, 1: Mon, ..., 4: Thu, 5: Fri, 6: Sat
+                let daysUntilMonday = 0;
+
+                if (dayOfWeek === 1) { // Monday
+                    daysUntilMonday = 0;
+                } else if (dayOfWeek === 0) { // Sunday
+                    daysUntilMonday = 1;
+                } else { // Tuesday through Saturday
+                    daysUntilMonday = (1 + 7 - dayOfWeek) % 7;
+                }
+
+                const endMonday = new Date(now);
+                endMonday.setDate(now.getDate() + daysUntilMonday);
+                return `${formatDate(now)}-${formatDate(endMonday)}`;
             } else {
-                // Extended 7-day window for NFL, CFB, and CBB
+                // College (CFB/CBB): Rolling 7 days
                 const nextWeek = new Date(now);
                 nextWeek.setDate(now.getDate() + 7);
                 return `${formatDate(now)}-${formatDate(nextWeek)}`;
@@ -161,41 +182,21 @@
                     const comp = event.competitions[0];
                     const state = event.status.type.state.toLowerCase();
 
-                    // Only discard games that are strictly completed/final
+                    // Filter out completed games
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
                     const home = comp.competitors.find(c => c.homeAway === 'home') || {};
                     const away = comp.competitors.find(c => c.homeAway === 'away') || {};
 
-                    // Conference Extraction Logic
+                    // Extract Conference Names
                     const confSet = new Set();
+                    const homeGroup = home.team?.conferenceId || home.team?.groups?.[0]?.name;
+                    const awayGroup = away.team?.conferenceId || away.team?.groups?.[0]?.name;
 
-                    const extractConfName = (teamObj) => {
-                        if (!teamObj || !teamObj.team) return null;
-                        const t = teamObj.team;
-                        if (t.conference && typeof t.conference === 'object') {
-                            return t.conference.name || t.conference.shortName || null;
-                        }
-                        if (t.groups && Array.isArray(t.groups)) {
-                            const group = t.groups.find(g => g.name && isNaN(g.name));
-                            if (group) return group.name;
-                        }
-                        return null;
-                    };
-
-                    const homeConf = extractConfName(home);
-                    const awayConf = extractConfName(away);
-
-                    if (homeConf && isNaN(homeConf)) confSet.add(homeConf);
-                    if (awayConf && isNaN(awayConf)) confSet.add(awayConf);
-
-                    if (confSet.size === 0 && comp.conferenceGroup?.name && isNaN(comp.conferenceGroup.name)) {
-                        confSet.add(comp.conferenceGroup.name);
-                    }
-                    if (confSet.size === 0) {
-                        confSet.add("Other / Non-Conference");
-                    }
+                    if (homeGroup) confSet.add(homeGroup);
+                    if (awayGroup) confSet.add(awayGroup);
+                    if (confSet.size === 0) confSet.add("Other / Non-Conference");
 
                     const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
                     const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
