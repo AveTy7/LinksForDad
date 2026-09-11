@@ -31,8 +31,15 @@ def scrape_links():
                 
                 elements = page.query_selector_all("a.competition")
                 for el in elements:
-                    title = el.get_attribute("title") or "No Title"
+                    # Check title attribute first, then fall back to visible text inside the element
+                    title = el.get_attribute("title")
+                    if not title or title.strip() == "":
+                        title = el.inner_text().strip()
+                    if not title:
+                        title = "No Title"
+                        
                     href = el.get_attribute("href") or "#"
+                    
                     all_data.append({
                         "id": global_id, 
                         "category": src['category'],
