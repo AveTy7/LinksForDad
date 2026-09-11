@@ -162,42 +162,30 @@
 
             if (league === "Test") {
                 container.className = "loading";
-                container.innerHTML = "Automatically fetching competitions...";
+                container.innerHTML = "Loading automated links...";
                 
                 try {
-                    const targetUrl = 'https://mybuffstreams.plus/home5';
-                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+                    const response = await fetch('links.json');
+                    if (!response.ok) throw new Error("Failed to load local links cache");
+                    const items = await response.json();
                     
-                    const response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error("Proxy fetch failed");
-
-                    const rawHtml = await response.text();
-
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(rawHtml, 'text/html');
-                    const elements = doc.querySelectorAll('a.competition');
-
                     container.className = "";
-                    if (elements.length > 0) {
-                        let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${elements.length} match(es):</p>`;
-                        
-                        elements.forEach((el, index) => {
-                            const title = el.getAttribute('title') || 'No Title Provided';
-                            const href = el.getAttribute('href') || '#';
-
+                    if (items.length > 0) {
+                        let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${items.length} match(es):</p>`;
+                        items.forEach(item => {
                             htmlOutput += `
                                 <div class="competition-item">
-                                    <strong>#${index + 1}: ${title}</strong><br>
-                                    <a href="${href}" target="_blank">${href}</a>
+                                    <strong>#${item.id}: ${item.title}</strong><br>
+                                    <a href="${item.href}" target="_blank">${item.href}</a>
                                 </div>`;
                         });
                         container.innerHTML = htmlOutput;
                     } else {
-                        container.innerHTML = `<p class='loading'>Could not locate any elements with class="competition". (Cloudflare block active)</p>`;
+                        container.innerHTML = `<p class='loading'>No links found in cache file.</p>`;
                     }
                 } catch (err) {
                     console.error(err);
-                    container.innerHTML = `<p class='loading'>Automatic fetch blocked by target site security. Check console for details.</p>`;
+                    container.innerHTML = `<p class='loading'>Could not load links.json. Run the GitHub Action first.</p>`;
                 }
                 return;
             }
