@@ -62,15 +62,6 @@
         #game-list { min-height: 200px; }
         .loading { text-align: center; color: var(--muted); padding: 40px; }
         
-        textarea { 
-            width: 100%; height: 120px; background: var(--bg); color: var(--text); 
-            border: 1px solid var(--border); padding: 8px; font-family: monospace; 
-            font-size: 0.75rem; margin-bottom: 10px; border-radius: 6px; 
-        }
-        .parse-btn { 
-            background: var(--accent); color: white; border: none; padding: 8px 16px; 
-            border-radius: 6px; cursor: pointer; font-weight: 600; margin-bottom: 16px; 
-        }
         .competition-item {
             background: var(--card);
             border: 1px solid var(--border);
@@ -78,11 +69,8 @@
             padding: 12px;
             margin-bottom: 8px;
             font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        .competition-item a { color: #60a5fa; text-decoration: none; word-break: break-all; }
+        .competition-item a { color: #60a5fa; text-decoration: none; word-break: break-all; font-weight: 600; }
         .competition-item a:hover { text-decoration: underline; }
     </style>
 </head>
@@ -173,13 +161,45 @@
             filterBar.style.display = 'none';
 
             if (league === "Test") {
-                container.className = "";
-                container.innerHTML = `
-                    <p style="margin-bottom: 8px; font-size: 0.85rem; color: var(--muted);">Paste source HTML here to extract all elements with class="competition":</p>
-                    <textarea id="html-input" placeholder="Paste source code..."></textarea>
-                    <button class="parse-btn" onclick="extractCompetitions()">Extract All &lt;a class=&quot;competition&quot;&gt;</button>
-                    <div id="parse-output"></div>
-                `;
+                container.className = "loading";
+                container.innerHTML = "Automatically fetching competitions...";
+                
+                try {
+                    const targetUrl = 'https://mybuffstreams.plus/home5';
+                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+                    
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error("Proxy fetch failed");
+
+                    const data = await response.json();
+                    const rawHtml = data.contents;
+
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(rawHtml, 'text/html');
+                    const elements = doc.querySelectorAll('a.competition');
+
+                    container.className = "";
+                    if (elements.length > 0) {
+                        let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${elements.length} match(es):</p>`;
+                        
+                        elements.forEach((el, index) => {
+                            const title = el.getAttribute('title') || 'No Title Provided';
+                            const href = el.getAttribute('href') || '#';
+
+                            htmlOutput += `
+                                <div class="competition-item">
+                                    <strong>#${index + 1}: ${title}</strong><br>
+                                    <a href="${href}" target="_blank">${href}</a>
+                                </div>`;
+                        });
+                        container.innerHTML = htmlOutput;
+                    } else {
+                        container.innerHTML = `<p class='loading'>Could not locate any elements with class="competition".</p>`;
+                    }
+                } catch (err) {
+                    console.error(err);
+                    container.innerHTML = `<p class='loading'>Automatic fetch blocked or timed out. Check connection.</p>`;
+                }
                 return;
             }
 
@@ -266,39 +286,6 @@
             } catch (err) {
                 console.error(err);
                 container.innerHTML = "<p class='loading'>Failed to load schedule data.</p>";
-            }
-        }
-
-        function extractCompetitions() {
-            const rawHtml = document.getElementById('html-input').value;
-            const outputContainer = document.getElementById('parse-output');
-            
-            // Parse text into a live DOM Document safely
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(rawHtml, 'text/html');
-            
-            // Query all instances deeply embedded or surface-level
-            const elements = doc.querySelectorAll('a.competition');
-
-            if (elements.length > 0) {
-                let htmlOutput = `<p style="margin-bottom: 10px; color: var(--muted); font-size: 0.8rem;">Found ${elements.length} match(es):</p>`;
-                
-                elements.forEach((el, index) => {
-                    const title = el.getAttribute('title') || 'No Title';
-                    const href = el.getAttribute('href') || '#';
-                    const innerSnippet = el.innerHTML.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-                    htmlOutput += `
-                        <div class="competition-item">
-                            <div>
-                                <strong>#${index + 1}: ${title}</strong><br>
-                                <a href="${href}" target="_blank">${href}</a>
-                            </div>
-                        </div>`;
-                });
-                outputContainer.innerHTML = htmlOutput;
-            } else {
-                outputContainer.innerHTML = `<p style="color: #f87171; font-size: 0.85rem;">No elements matching &lt;a class="competition"&gt; were found in the text.</p>`;
             }
         }
 
