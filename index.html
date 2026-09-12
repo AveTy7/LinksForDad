@@ -83,12 +83,34 @@
             display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto;
         }
         .weight-class-row {
-            display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border);
-            font-size: 0.78rem; align-items: center;
+            display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--border);
+            font-size: 0.8rem; align-items: center; background: var(--bg); border-radius: 8px; margin-bottom: 4px;
         }
-        .weight-class-row:last-child { border-bottom: none; }
-        .weight-name { font-weight: 700; color: var(--muted); width: 35%; }
+        .weight-name { font-weight: 700; color: #60a5fa; width: 35%; }
         .weight-champs { width: 65%; text-align: right; font-weight: 600; }
+
+        /* UFC Expandable Accordion Styles */
+        .ufc-division-card {
+            background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+        }
+        .ufc-division-header {
+            padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            font-weight: 700; font-size: 0.85rem; color: var(--text); background: rgba(30, 41, 59, 0.5);
+        }
+        .ufc-division-header:hover { background: rgba(37, 99, 235, 0.15); }
+        .ufc-champ-tag { color: #f59e0b; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
+        
+        .ufc-rankings-list {
+            display: none; padding: 10px 14px; border-top: 1px solid var(--border); background: var(--card);
+            font-size: 0.78rem;
+        }
+        .ufc-division-card.expanded .ufc-rankings-list { display: block; }
+        .ufc-rank-row {
+            display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+        }
+        .ufc-rank-row:last-child { border-bottom: none; }
+        .rank-num { color: var(--muted); font-weight: 700; width: 25px; }
+        .rank-name { flex: 1; font-weight: 600; }
 
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
@@ -171,18 +193,62 @@
             { weight: "Featherweight", champions: "Rafael Espinoza (WBO), Brandon Figueroa (WBC)" }
         ];
 
-        const UFC_RANKINGS_DATA = [
-            { weight: "Heavyweight", champions: "Champion: Tom Aspinall | Interim: Ciryl Gane" },
-            { weight: "Light Heavyweight", champions: "Champion: Carlos Ulberg" },
-            { weight: "Middleweight", champions: "Champion: Sean Strickland" },
-            { weight: "Welterweight", champions: "Champion: Islam Makhachev" },
-            { weight: "Lightweight", champions: "Champion: Justin Gaethje" },
-            { weight: "Featherweight", champions: "Champion: Alexander Volkanovski" },
-            { weight: "Bantamweight", champions: "Champion: Petr Yan" },
-            { weight: "Flyweight", champions: "Champion: Joshua Van" },
-            { weight: "Women's Bantamweight", champions: "Champion: Kayla Harrison" },
-            { weight: "Women's Flyweight", champions: "Champion: Valentina Shevchenko" },
-            { weight: "Women's Strawweight", champions: "Champion: Mackenzie Dern" }
+        const UFC_FULL_RANKINGS = [
+            {
+                weight: "Heavyweight",
+                champion: "Tom Aspinall",
+                rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura"]
+            },
+            {
+                weight: "Light Heavyweight",
+                champion: "Carlos Ulberg",
+                rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz"]
+            },
+            {
+                weight: "Middleweight",
+                champion: "Sean Strickland",
+                rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "CaioBorralho", "Robert Whittaker"]
+            },
+            {
+                weight: "Welterweight",
+                champion: "Islam Makhachev",
+                rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards"]
+            },
+            {
+                weight: "Lightweight",
+                champion: "Justin Gaethje",
+                rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett"]
+            },
+            {
+                weight: "Featherweight",
+                champion: "Alexander Volkanovski",
+                rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal"]
+            },
+            {
+                weight: "Bantamweight",
+                champion: "Petr Yan",
+                rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo"]
+            },
+            {
+                weight: "Flyweight",
+                champion: "Joshua Van",
+                rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno"]
+            },
+            {
+                weight: "Women's Bantamweight",
+                champion: "Kayla Harrison",
+                rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington"]
+            },
+            {
+                weight: "Women's Flyweight",
+                champion: "Valentina Shevchenko",
+                rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber"]
+            },
+            {
+                weight: "Women's Strawweight",
+                champion: "Mackenzie Dern",
+                rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Manon Fiorot", "Erin Blanchfield", "Julianna Peña", "Alexa Grasso"]
+            }
         ];
 
         const CFB_MAP = {
@@ -241,6 +307,10 @@
                 if(actionbar) actionbar.style.display = 'flex';
                 if(listcontent) listcontent.style.display = 'block';
             }
+        }
+
+        function toggleUfcDivision(cardElement) {
+            cardElement.classList.toggle('expanded');
         }
 
         function getDateParam(leagueKey) {
@@ -325,21 +395,34 @@
                 topActionHtml = `
                     <div class="top-action-bar" id="top-action-container">
                         <button class="top-action-btn" onclick="toggleSubpage(true)">
-                            <i class="fa-solid fa-trophy"></i> View UFC Champions & Rankings
+                            <i class="fa-solid fa-trophy"></i> View UFC Champions & Full Rankings
                         </button>
                     </div>
                 `;
                 subpageHtml = `
                     <div class="subpage-container" id="subpage-view">
                         <div class="subpage-header">
-                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Division Champions</span>
+                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Full Rankings (Click Champion to Expand)</span>
                             <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
                         </div>
                         <div class="champions-grid">
-                            ${UFC_RANKINGS_DATA.map(ur => `
-                                <div class="weight-class-row">
-                                    <span class="weight-name">${ur.weight}</span>
-                                    <span class="weight-champs">${ur.champions}</span>
+                            ${UFC_FULL_RANKINGS.map(div => `
+                                <div class="ufc-division-card" onclick="toggleUfcDivision(this)">
+                                    <div class="ufc-division-header">
+                                        <span>${div.weight}</span>
+                                        <span class="ufc-champ-tag">
+                                            <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 6px;"></i>
+                                        </span>
+                                    </div>
+                                    <div class="ufc-rankings-list">
+                                        <div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Division Contenders:</div>
+                                        ${div.rankings.map((fighter, idx) => `
+                                            <div class="ufc-rank-row">
+                                                <span class="rank-num">#${idx + 1}</span>
+                                                <span class="rank-name">${fighter}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
@@ -537,8 +620,8 @@
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Current Boxing Champions</button></div>`;
                 subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${BOXING_CHAMPIONS.map(bc => `<div class="weight-class-row"><span class="weight-name">${bc.weight}</span><span class="weight-champs">${bc.champions}</span></div>`).join('')}</div></div>`;
             } else if (config.isUfcRankings) {
-                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Rankings</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Division Champions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${UFC_RANKINGS_DATA.map(ur => `<div class="weight-class-row"><span class="weight-name">${ur.weight}</span><span class="weight-champs">${ur.champions}</span></div>`).join('')}</div></div>`;
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Full Rankings</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Full Rankings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${UFC_FULL_RANKINGS.map(div => `<div class="ufc-division-card" onclick="toggleUfcDivision(this)"><div class="ufc-division-header"><span>${div.weight}</span><span class="ufc-champ-tag"><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 6px;"></i></span></div><div class="ufc-rankings-list"><div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Division Contenders:</div>${div.rankings.map((fighter, idx) => `<div class="ufc-rank-row"><span class="rank-num">#${idx + 1}</span><span class="rank-name">${fighter}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
             } else if (config.standingsUrl) {
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${activeLeague} Standings</button></div>`;
                 subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${activeLeague} Standings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="standings-iframe-wrap"><iframe src="${config.standingsUrl}" loading="lazy"></iframe></div></div>`;
