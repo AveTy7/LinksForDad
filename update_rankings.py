@@ -186,8 +186,7 @@ def scrape_ufc():
         rank_text = cols[0].get_text(strip=True)
         fighter_name = clean_text(cols[1].get_text(strip=True))
 
-        # Check if the row represents the champion
-        if rank_text in ["C", "IC"] or "C" == rank_text:
+        if rank_text in ["C", "IC"]:
           if fighter_name and fighter_name != "Fighter":
             champion = fighter_name
         elif rank_text.isdigit():
@@ -209,4 +208,4 @@ if __name__ == "__main__":
 
   with open("rankings.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4)
-  print("Successfully updated rankings.json with restored UFC structure.")
+  print("Successfully updated rankings.json with restored UFC list structure.")
