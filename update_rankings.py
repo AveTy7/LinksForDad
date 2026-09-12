@@ -208,4 +208,4 @@ if __name__ == "__main__":
 
   with open("rankings.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4)
-  print("Successfully updated rankings.json with restored UFC list structure.")
+  print("Successfully updated rankings.json.")
