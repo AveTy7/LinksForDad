@@ -7,18 +7,34 @@ from bs4 import BeautifulSoup
 def clean_text(text):
   if not text:
     return ""
-  # Remove Wikipedia citation brackets like [1]
   text = re.sub(r"\[\d+\]", "", text)
-  # Remove dates like "July 1, 2026" or "December 13, 2025"
   text = re.sub(
       r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}",
       "",
       text,
   )
-  # Clean up trailing parentheses or extra dashes left behind from date removal
   text = re.sub(r"\s*-\s*$", "", text)
   text = re.sub(r"\s*\(\s*\)", "", text)
   return text.strip()
+
+
+def format_fighter_cell(cell_text):
+  cleaned = clean_text(cell_text)
+  if not cleaned or cleaned.lower() == "vacant":
+    return "vacant"
+
+  # Pattern to match record format like "34-2", "27-0-1", or "21-1" inside the string
+  match = re.search(
+      r"(\d+\s*[-–]\s*\d+(?:\s*[-–]\s*\d+)?(?:\s*\(\s*\d+\s*\))?)", cleaned
+  )
+  if match:
+    record = match.group(1).strip()
+    name = cleaned.replace(record, "").strip()
+    name = re.sub(r"\s*\(.*?\)", "", name).strip()  # remove leftover notes like Super champion
+    if name and record:
+      return f"{name}<br>{record}"
+
+  return cleaned
 
 
 def scrape_boxing():
@@ -59,17 +75,23 @@ def scrape_boxing():
               or "Heavyweight" in pot_weight
               or "Cruiserweight" in pot_weight
               or "Middleweight" in pot_weight
+              or "Welterweight" in pot_weight
+              or "Light" in pot_weight
+              or "Featherweight" in pot_weight
+              or "Bantamweight" in pot_weight
+              or "Flyweight" in pot_weight
+              or "Strawweight" in pot_weight
           ):
             weight_name = pot_weight.split("(")[0].strip()
-            wba = clean_text(cols[1].get_text(strip=True))
-            wbc = clean_text(cols[2].get_text(strip=True))
-            ibf = clean_text(cols[3].get_text(strip=True))
-            wbo = clean_text(cols[4].get_text(strip=True))
+            wba = format_fighter_cell(cols[1].get_text(strip=True))
+            wbc = format_fighter_cell(cols[2].get_text(strip=True))
+            ibf = format_fighter_cell(cols[3].get_text(strip=True))
+            wbo = format_fighter_cell(cols[4].get_text(strip=True))
           else:
-            wba = clean_text(cols[0].get_text(strip=True))
-            wbc = clean_text(cols[1].get_text(strip=True))
-            ibf = clean_text(cols[2].get_text(strip=True))
-            wbo = clean_text(cols[3].get_text(strip=True))
+            wba = format_fighter_cell(cols[0].get_text(strip=True))
+            wbc = format_fighter_cell(cols[1].get_text(strip=True))
+            ibf = format_fighter_cell(cols[2].get_text(strip=True))
+            wbo = format_fighter_cell(cols[3].get_text(strip=True))
 
           boxing_data.append({
               "weight": weight_name,
@@ -151,4 +173,4 @@ if __name__ == "__main__":
 
   with open("rankings.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4)
-  print("Successfully updated rankings.json with cleaned data.")
+  print("Successfully updated rankings.json with proper divisions and records.")
