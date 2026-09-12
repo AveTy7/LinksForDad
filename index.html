@@ -2,176 +2,157 @@
 <html lang="en" class="dark skin-midnight">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Schedule Hub (MST)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
+            --bg: #0b0f19;
+            --card: #131d31;
             --accent: #2563eb;
             --text: #f8fafc;
             --muted: #94a3b8;
-            --border: #334155;
+            --border: #1e293b;
             --live: #22c55e;
             --stream: #10b981;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
-        body { background: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
-        header { text-align: center; margin-bottom: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 16px; max-width: 600px; margin: 0 auto; }
         
-        .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 12px; }
+        header { text-align: center; margin-bottom: 16px; }
+        header h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
+        header p { color: var(--muted); font-size: 0.75rem; margin-top: 2px; }
+
+        .tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
         
         .tab-btn {
             background: var(--card); color: var(--muted); border: 1px solid var(--border);
-            padding: 8px 16px; border-radius: 20px; font-weight: 600; white-space: nowrap; cursor: pointer;
+            padding: 6px 14px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; cursor: pointer;
         }
         .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-        
+
         .filter-container {
-            margin-bottom: 16px;
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--card);
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            margin-bottom: 12px; display: none; align-items: center; justify-content: space-between;
+            background: var(--card); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
         }
-        .filter-label { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+        .filter-label { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
         .conference-select {
             background: var(--bg); color: var(--text); border: 1px solid var(--border);
-            padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; outline: none;
-            max-width: 60%;
+            padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; outline: none; max-width: 60%;
         }
 
         .top-action-bar {
-            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 12px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 10px; margin-bottom: 12px;
         }
         .top-action-btn {
-            background: var(--accent); color: white; border: none;
-            padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700;
-            display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center; cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            background: var(--accent); color: white; border: none; width: 100%;
+            padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
         }
-        .top-action-btn:hover { opacity: 0.9; }
+        .top-action-btn:hover { filter: brightness(1.1); }
 
         .subpage-container {
-            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 16px; margin-bottom: 12px; display: none; width: 100%;
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 12px; margin-bottom: 12px; display: none;
         }
         .subpage-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
-            border-bottom: 1px solid var(--border); padding-bottom: 10px; gap: 10px; flex-wrap: wrap;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+            border-bottom: 1px solid var(--border); padding-bottom: 8px;
         }
-        .subpage-title { font-size: 0.95rem; font-weight: 700; color: #60a5fa; display: flex; align-items: center; gap: 6px; word-break: break-word; flex: 1; }
+        .subpage-title { font-size: 0.85rem; font-weight: 700; color: #60a5fa; display: flex; align-items: center; gap: 6px; }
         .close-subpage-btn {
-            background: var(--border); color: var(--text); border: none; padding: 6px 12px;
-            border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+            background: var(--border); color: var(--text); border: none; padding: 4px 10px;
+            border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
         }
-        .close-subpage-btn:hover { background: #475569; }
+        .close-subpage-btn:hover { background: #334155; }
 
         .standings-iframe-wrap {
-            position: relative; width: 100%; height: 500px; border-radius: 8px; overflow: hidden; background: #fff;
+            position: relative; width: 100%; height: 450px; border-radius: 8px; overflow: hidden; background: #fff;
         }
-        .standings-iframe-wrap iframe {
-            width: 100%; height: 100%; border: none;
-        }
+        .standings-iframe-wrap iframe { width: 100%; height: 100%; border: none; }
 
-        .champions-grid {
-            display: flex; flex-direction: column; gap: 10px; max-height: 520px; overflow-y: auto; padding-right: 4px;
-        }
-        .champions-grid::-webkit-scrollbar { width: 6px; }
-        .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .champions-grid { display: flex; flex-direction: column; gap: 6px; max-height: 440px; overflow-y: auto; padding-right: 2px; }
+        .champions-grid::-webkit-scrollbar { width: 4px; }
+        .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
         .weight-class-row {
-            display: flex; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border);
-            font-size: 0.82rem; align-items: center; background: var(--bg); border-radius: 8px; gap: 12px;
+            display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--border);
+            font-size: 0.78rem; align-items: center; background: var(--bg); border-radius: 6px;
         }
-        .weight-name { font-weight: 700; color: #60a5fa; width: 38%; word-break: break-word; }
-        .weight-champs { width: 62%; text-align: right; font-weight: 600; word-break: break-word; }
+        .weight-name { font-weight: 700; color: #60a5fa; width: 35%; }
+        .weight-champs { width: 65%; text-align: right; font-weight: 600; color: var(--text); }
 
-        /* UFC Expandable Accordion Styles */
-        .ufc-division-card {
-            background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+        /* Clean UFC Accordion */
+        .ufc-div-card {
+            background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
         }
-        .ufc-division-header {
-            padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
-            font-weight: 700; font-size: 0.85rem; color: var(--text); background: rgba(30, 41, 59, 0.6); gap: 10px;
+        .ufc-div-header {
+            padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
         }
-        .ufc-division-header:hover { background: rgba(37, 99, 235, 0.15); }
-        .ufc-title-group { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
-        .ufc-div-name { font-size: 0.85rem; font-weight: 700; color: var(--text); }
-        .ufc-champ-tag { color: #f59e0b; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; font-weight: 600; word-break: break-word; }
-        .ufc-chevron { font-size: 0.75rem; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
-        .ufc-division-card.expanded .ufc-chevron { transform: rotate(180deg); }
+        .ufc-div-header:hover { background: rgba(37, 99, 235, 0.08); }
+        .ufc-div-title { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+        .ufc-champ-preview { font-size: 0.75rem; color: #f59e0b; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         
-        .ufc-rankings-list {
-            display: none; padding: 12px 14px; border-top: 1px solid var(--border); background: var(--card);
-            font-size: 0.8rem;
+        .ufc-rankings-body {
+            display: none; padding: 8px 12px; border-top: 1px solid var(--border); background: rgba(15, 23, 42, 0.5);
         }
-        .ufc-division-card.expanded .ufc-rankings-list { display: block; }
+        .ufc-div-card.expanded .ufc-rankings-body { display: block; }
         .ufc-rank-row {
-            display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(51, 65, 85, 0.4); gap: 10px;
+            display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem; border-bottom: 1px solid rgba(30, 41, 59, 0.5);
         }
         .ufc-rank-row:last-child { border-bottom: none; }
-        .rank-num { color: var(--muted); font-weight: 700; width: 30px; flex-shrink: 0; }
-        .rank-name { flex: 1; font-weight: 600; word-break: break-word; }
+        .rank-num { color: var(--muted); font-weight: 700; width: 30px; }
+        .rank-name { flex: 1; font-weight: 600; text-align: right; }
 
         .card {
-            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 12px 16px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 10px 14px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;
         }
         .card-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         
         .team { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
         .team.away { justify-content: flex-end; text-align: right; }
-        .team img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
+        .team img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; }
         
         .team-text-stack { display: flex; flex-direction: column; min-width: 0; }
         .team.away .team-text-stack { align-items: flex-end; }
         .team.home .team-text-stack { align-items: flex-start; }
         
-        .team-city { font-size: 0.6rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .team-name { font-size: 0.78rem; font-weight: 700; line-height: 1.1; }
+        .team-city { font-size: 0.55rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+        .team-name { font-size: 0.75rem; font-weight: 700; line-height: 1.1; }
         
-        .info { text-align: center; padding: 0 4px; min-width: 95px; flex-shrink: 0; }
-        .time { color: #60a5fa; font-weight: 600; font-size: 0.65rem; }
-        .status { color: var(--muted); font-size: 0.6rem; font-weight: 600; margin-top: 1px; }
+        .info { text-align: center; padding: 0 4px; min-width: 85px; flex-shrink: 0; }
+        .time { color: #60a5fa; font-weight: 600; font-size: 0.6rem; }
+        .status { color: var(--muted); font-size: 0.55rem; font-weight: 600; }
         .status.live { color: var(--live); font-weight: 700; }
         
         .stream-link-container {
-            border-top: 1px solid var(--border);
-            padding-top: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            align-items: center;
+            border-top: 1px solid var(--border); padding-top: 6px; display: flex; flex-wrap: gap; gap: 6px;
         }
         .stream-btn {
             background: var(--stream); color: white; text-decoration: none;
-            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+            padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;
             display: inline-flex; align-items: center; gap: 4px;
         }
-        .stream-btn:hover { opacity: 0.9; }
+        .stream-btn:hover { filter: brightness(1.1); }
 
-        #game-list { min-height: 200px; }
-        .loading { text-align: center; color: var(--muted); padding: 40px; }
+        #game-list { min-height: 150px; }
+        .loading { text-align: center; color: var(--muted); padding: 30px; font-size: 0.8rem; }
     </style>
 </head>
-<body class="page-home layout-fluid">
+<body>
 
-    <header class="site-header header-sticky">
+    <header>
         <h2>Sports Schedule Hub</h2>
-        <p style="color: var(--muted); font-size: 0.8rem;">Live & Upcoming Games • Times in MST</p>
+        <p>Live & Upcoming Games • Times in MST</p>
     </header>
 
     <div class="tabs" id="tab-bar"></div>
 
     <div class="filter-container" id="filter-bar">
-        <span class="filter-label">Filter by Conference:</span>
+        <span class="filter-label">Conference:</span>
         <select class="conference-select" id="conf-select" onchange="filterByConference()">
             <option value="ALL">All Conferences</option>
         </select>
@@ -191,72 +172,28 @@
         };
 
         const BOXING_CHAMPIONS = [
-            { weight: "Heavyweight", champions: "Oleksandr Usyk (The Ring), Filip Hrgović (IBF)" },
-            { weight: "Cruiserweight", champions: "David Benavidez (WBA/WBO)" },
-            { weight: "Light Heavyweight", champions: "Artur Beterbiev / Unified division" },
-            { weight: "Super Middleweight", champions: "Saúl 'Canelo' Álvarez / Contested elites" },
-            { weight: "Middleweight", champions: "Erislandy Lara (WBA), Janibek Alimkhanuly (WBO/IBF)" },
-            { weight: "Welterweight", champions: "Jaron Ennis (WBA/IBF/WBO)" },
-            { weight: "Lightweight", champions: "Gervonta Davis (WBA), Shakur Stevenson (WBC)" },
-            { weight: "Featherweight", champions: "Rafael Espinoza (WBO), Brandon Figueroa (WBC)" }
+            { weight: "Heavyweight", champions: "Oleksandr Usyk, Filip Hrgović" },
+            { weight: "Cruiserweight", champions: "David Benavidez" },
+            { weight: "Light Heavyweight", champions: "Artur Beterbiev" },
+            { weight: "Super Middleweight", champions: "Saúl 'Canelo' Álvarez" },
+            { weight: "Middleweight", champions: "Erislandy Lara, Janibek Alimkhanuly" },
+            { weight: "Welterweight", champions: "Jaron Ennis" },
+            { weight: "Lightweight", champions: "Gervonta Davis, Shakur Stevenson" },
+            { weight: "Featherweight", champions: "Rafael Espinoza, Brandon Figueroa" }
         ];
 
         const UFC_FULL_RANKINGS = [
-            {
-                weight: "Heavyweight",
-                champion: "Tom Aspinall",
-                rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik", "Alexander Romanov"]
-            },
-            {
-                weight: "Light Heavyweight",
-                champion: "Carlos Ulberg",
-                rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir", "Aleksandar Rakić"]
-            },
-            {
-                weight: "Middleweight",
-                champion: "Sean Strickland",
-                rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze", "Jared Cannonier"]
-            },
-            {
-                weight: "Welterweight",
-                champion: "Islam Makhachev",
-                rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns", "Geoff Neal"]
-            },
-            {
-                weight: "Lightweight",
-                champion: "Justin Gaethje",
-                rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker", "Jalin Turner"]
-            },
-            {
-                weight: "Featherweight",
-                champion: "Alexander Volkanovski",
-                rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze", "Calvin Kattar"]
-            },
-            {
-                weight: "Bantamweight",
-                champion: "Petr Yan",
-                rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font", "Kyler Phillips"]
-            },
-            {
-                weight: "Flyweight",
-                champion: "Joshua Van",
-                rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott", "Amir Albazi"]
-            },
-            {
-                weight: "Women's Bantamweight",
-                champion: "Kayla Harrison",
-                rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate", "Pannie Kianzad"]
-            },
-            {
-                weight: "Women's Flyweight",
-                champion: "Valentina Shevchenko",
-                rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva", "Tracy Cortez"]
-            },
-            {
-                weight: "Women's Strawweight",
-                champion: "Mackenzie Dern",
-                rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade", "Piera Rodriguez"]
-            }
+            { weight: "Heavyweight", champion: "Tom Aspinall", rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik", "Alexander Romanov"] },
+            { weight: "Light Heavyweight", champion: "Carlos Ulberg", rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir", "Aleksandar Rakić"] },
+            { weight: "Middleweight", champion: "Sean Strickland", rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze", "Jared Cannonier"] },
+            { weight: "Welterweight", champion: "Islam Makhachev", rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns", "Geoff Neal"] },
+            { weight: "Lightweight", champion: "Justin Gaethje", rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker", "Jalin Turner"] },
+            { weight: "Featherweight", champion: "Alexander Volkanovski", rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze", "Calvin Kattar"] },
+            { weight: "Bantamweight", champion: "Petr Yan", rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font", "Kyler Phillips"] },
+            { weight: "Flyweight", champion: "Joshua Van", rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott", "Amir Albazi"] },
+            { weight: "Women's Bantamweight", champion: "Kayla Harrison", rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate", "Pannie Kianzad"] },
+            { weight: "Women's Flyweight", champion: "Valentina Shevchenko", rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva", "Tracy Cortez"] },
+            { weight: "Women's Strawweight", champion: "Mackenzie Dern", rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade", "Piera Rodriguez"] }
         ];
 
         const CFB_MAP = {
@@ -273,9 +210,7 @@
         async function initApp() {
             try {
                 const res = await fetch('links.json');
-                if (res.ok) {
-                    globalLinks = await res.json();
-                }
+                if (res.ok) globalLinks = await res.json();
             } catch (e) {
                 console.log("Could not load links.json:", e);
             }
@@ -317,50 +252,35 @@
             }
         }
 
-        function toggleUfcDivision(cardElement) {
-            cardElement.classList.toggle('expanded');
+        function toggleUfcDivision(el) {
+            el.classList.toggle('expanded');
         }
 
         function getDateParam(leagueKey) {
             const now = new Date();
-            const formatDate = (d) => {
-                const year = d.getFullYear();
-                const month = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${year}${month}${day}`;
-            };
-
-            if (leagueKey === "MLB") {
-                return formatDate(now);
-            } else if (leagueKey === "NFL") {
-                const dayOfWeek = now.getDay(); 
-                let daysUntilMonday = dayOfWeek === 1 ? 0 : dayOfWeek === 0 ? 1 : (1 + 7 - dayOfWeek) % 7;
-                const endMonday = new Date(now);
-                endMonday.setDate(now.getDate() + daysUntilMonday);
-                return `${formatDate(now)}-${formatDate(endMonday)}`;
+            const fmt = (d) => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+            if (leagueKey === "MLB") return fmt(now);
+            if (leagueKey === "NFL") {
+                const dow = now.getDay(); 
+                let dAdd = dow === 1 ? 0 : dow === 0 ? 1 : (1 + 7 - dow) % 7;
+                const end = new Date(now); end.setDate(now.getDate() + dAdd);
+                return `${fmt(now)}-${fmt(end)}`;
             } else {
-                const nextWeek = new Date(now);
-                nextWeek.setDate(now.getDate() + 7);
-                return `${formatDate(now)}-${formatDate(nextWeek)}`;
+                const next = new Date(now); next.setDate(now.getDate() + 7);
+                return `${fmt(now)}-${fmt(next)}`;
             }
         }
 
         function findMatchingLinks(game) {
             if (!globalLinks || globalLinks.length === 0) return [];
             const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
-            const homeFull = clean(game.homeTeam);
-            const awayFull = clean(game.awayTeam);
-            const homeNick = homeFull.split(' ').pop();
-            const awayNick = awayFull.split(' ').pop();
-
+            const hF = clean(game.homeTeam), aF = clean(game.awayTeam);
+            const hN = hF.split(' ').pop(), aN = aF.split(' ').pop();
             const matches = [];
             for (let item of globalLinks) {
-                const title = item.title.toLowerCase();
-                if ((title.includes(homeFull) || title.includes(homeNick)) && 
-                    (title.includes(awayFull) || title.includes(awayNick))) {
-                    if (!matches.includes(item.href)) {
-                        matches.push(item.href);
-                    }
+                const t = item.title.toLowerCase();
+                if ((t.includes(hF) || t.includes(hN)) && (t.includes(aF) || t.includes(aN))) {
+                    if (!matches.includes(item.href)) matches.push(item.href);
                 }
             }
             return matches;
@@ -368,69 +288,35 @@
 
         async function fetchLeagueData(league) {
             const container = document.getElementById('game-list');
-            const filterBar = document.getElementById('filter-bar');
-            filterBar.style.display = 'none';
+            document.getElementById('filter-bar').style.display = 'none';
             const config = LEAGUES[league];
 
-            let topActionHtml = "";
-            let subpageHtml = "";
+            let topActionHtml = "", subpageHtml = "";
 
             if (config.isBoxing) {
-                topActionHtml = `
-                    <div class="top-action-bar" id="top-action-container">
-                        <button class="top-action-btn" onclick="toggleSubpage(true)">
-                            <i class="fa-solid fa-belt"></i> View Current Boxing Champions
-                        </button>
-                    </div>
-                `;
-                subpageHtml = `
-                    <div class="subpage-container" id="subpage-view">
-                        <div class="subpage-header">
-                            <span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</span>
-                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
-                        </div>
-                        <div class="champions-grid">
-                            ${BOXING_CHAMPIONS.map(bc => `
-                                <div class="weight-class-row">
-                                    <span class="weight-name">${bc.weight}</span>
-                                    <span class="weight-champs">${bc.champions}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Current Boxing Champions</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${BOXING_CHAMPIONS.map(bc => `<div class="weight-class-row"><span class="weight-name">${bc.weight}</span><span class="weight-champs">${bc.champions}</span></div>`).join('')}</div></div>`;
             } else if (config.isUfcRankings) {
-                topActionHtml = `
-                    <div class="top-action-bar" id="top-action-container">
-                        <button class="top-action-btn" onclick="toggleSubpage(true)">
-                            <i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings
-                        </button>
-                    </div>
-                `;
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings</button></div>`;
                 subpageHtml = `
                     <div class="subpage-container" id="subpage-view">
                         <div class="subpage-header">
-                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Rankings (Click to Expand)</span>
-                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
+                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Top 10</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button>
                         </div>
                         <div class="champions-grid">
                             ${UFC_FULL_RANKINGS.map(div => `
-                                <div class="ufc-division-card" onclick="toggleUfcDivision(this)">
-                                    <div class="ufc-division-header">
-                                        <div class="ufc-title-group">
-                                            <span class="ufc-div-name">${div.weight}</span>
-                                            <span class="ufc-champ-tag">
-                                                <i class="fa-solid fa-crown"></i> Champ: ${div.champion}
-                                            </span>
-                                        </div>
-                                        <i class="fa-solid fa-chevron-down ufc-chevron"></i>
+                                <div class="ufc-div-card" onclick="toggleUfcDivision(this)">
+                                    <div class="ufc-div-header">
+                                        <span class="ufc-div-title">${div.weight}</span>
+                                        <span class="ufc-champ-preview"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span>
                                     </div>
-                                    <div class="ufc-rankings-list">
-                                        <div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Top 10 Contenders:</div>
-                                        ${div.rankings.map((fighter, idx) => `
+                                    <div class="ufc-rankings-body">
+                                        <div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 10 Contenders:</div>
+                                        ${div.rankings.map((f, i) => `
                                             <div class="ufc-rank-row">
-                                                <span class="rank-num">#${idx + 1}</span>
-                                                <span class="rank-name">${fighter}</span>
+                                                <span class="rank-num">#${i + 1}</span>
+                                                <span class="rank-name">${f}</span>
                                             </div>
                                         `).join('')}
                                     </div>
@@ -440,58 +326,32 @@
                     </div>
                 `;
             } else if (config.standingsUrl) {
-                topActionHtml = `
-                    <div class="top-action-bar" id="top-action-container">
-                        <button class="top-action-btn" onclick="toggleSubpage(true)">
-                            <i class="fa-solid fa-table-list"></i> View ${league} Standings
-                        </button>
-                    </div>
-                `;
-                subpageHtml = `
-                    <div class="subpage-container" id="subpage-view">
-                        <div class="subpage-header">
-                            <span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${league} Standings</span>
-                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
-                        </div>
-                        <div class="standings-iframe-wrap">
-                            <iframe src="${config.standingsUrl}" loading="lazy"></iframe>
-                        </div>
-                    </div>
-                `;
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${league} Standings</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${league} Standings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="standings-iframe-wrap"><iframe src="${config.standingsUrl}" loading="lazy"></iframe></div></div>`;
             }
 
-            // Render Scraped Event Leagues (NBA, MMA, Boxing)
             if (config.type === "scraped") {
                 container.className = "";
                 const filteredItems = globalLinks.filter(item => item.category === config.category);
-
                 let listHtml = topActionHtml + subpageHtml + `<div id="list-content-container">`;
                 if (filteredItems.length > 0) {
                     listHtml += filteredItems.map(item => `
                         <div class="card">
-                            <div style="font-size: 0.9rem; font-weight: 700; width: 100%; text-align: left; padding: 2px 0;">
-                                ${item.title}
-                            </div>
+                            <div style="font-size: 0.8rem; font-weight: 700;">${item.title}</div>
                             <div class="stream-link-container">
-                                <div style="display: flex; flex-direction: column; margin-right: auto;">
-                                    <span style="color: #60a5fa; font-weight: 600; font-size: 0.75rem;">${item.time || 'Upcoming'}</span>
-                                    <span style="color: var(--muted); font-size: 0.65rem; font-weight: 600;">SCHEDULED</span>
-                                </div>
-                                <a href="${item.href}" target="_blank" class="stream-btn">
-                                    <i class="fa-solid fa-play"></i> Watch Stream
-                                </a>
+                                <span style="color: #60a5fa; font-weight: 600; font-size: 0.7rem; margin-right:auto;">${item.time || 'Upcoming'}</span>
+                                <a href="${item.href}" target="_blank" class="stream-btn"><i class="fa-solid fa-play"></i> Watch</a>
                             </div>
                         </div>
                     `).join('');
                 } else {
-                    listHtml += `<p class='loading'>No events found for ${league}. Run the GitHub Action workflow.</p>`;
+                    listHtml += `<p class='loading'>No events found.</p>`;
                 }
                 listHtml += `</div>`;
                 container.innerHTML = listHtml;
                 return;
             }
 
-            // Render ESPN Schedule Leagues (NFL, MLB, CFB, CBB)
             container.className = "loading";
             container.innerHTML = "Fetching schedule...";
 
@@ -504,15 +364,10 @@
 
             try {
                 const dateParam = getDateParam(league);
-                let urls = [];
-                if (league === "CFB") {
-                    urls = [
-                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`,
-                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`
-                    ];
-                } else {
-                    urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
-                }
+                const urls = league === "CFB" ? [
+                    `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`,
+                    `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`
+                ] : [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
 
                 const responses = await Promise.all(urls.map(u => fetch(u).then(r => r.json())));
                 let rawEvents = [];
@@ -529,75 +384,52 @@
                     const away = comp.competitors.find(c => c.homeAway === 'away') || {};
 
                     const confSet = new Set();
-                    const resolveConf = (teamData) => {
-                        const teamName = teamData.team?.displayName || "";
-                        const shortName = teamData.team?.shortDisplayName || "";
-                        if (teamName.includes("Notre Dame") || shortName === "Notre Dame" || shortName === "UConn") return "Independents";
-                        const rawId = String(teamData.team?.conferenceId || teamData.conferenceId || "");
-                        if (CFB_MAP[rawId]) return CFB_MAP[rawId];
-                        return teamData.team?.conference?.name || teamData.team?.conference?.shortName || null;
+                    const resolveConf = (td) => {
+                        const tn = td.team?.displayName || "", sn = td.team?.shortDisplayName || "";
+                        if (tn.includes("Notre Dame") || sn === "Notre Dame" || sn === "UConn") return "Independents";
+                        const rId = String(td.team?.conferenceId || td.conferenceId || "");
+                        return CFB_MAP[rId] || td.team?.conference?.name || null;
                     };
-
-                    const homeConf = resolveConf(home);
-                    const awayConf = resolveConf(away);
-                    if (homeConf) confSet.add(homeConf);
-                    if (awayConf) confSet.add(awayConf);
+                    const hConf = resolveConf(home), aConf = resolveConf(away);
+                    if (hConf) confSet.add(hConf);
+                    if (aConf) confSet.add(aConf);
                     if (confSet.size === 0) confSet.add("General / Other");
-
-                    const homeRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
-                    const awayRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
 
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
 
-                    const formatTeamDetails = (teamData, rankPrefix) => {
-                        const location = teamData.team?.location || "";
-                        const name = teamData.team?.name || teamData.team?.displayName || "TBD";
-                        
-                        if (location && teamData.team?.displayName?.startsWith(location)) {
-                            const mascot = teamData.team.displayName.replace(location, "").trim();
-                            return { city: `${rankPrefix}${location}`, name: mascot || name };
+                    const getTeam = (td, rank) => {
+                        const loc = td.team?.location || "";
+                        const name = td.team?.name || td.team?.displayName || "TBD";
+                        let city = loc, mascot = name;
+                        if (loc && td.team?.displayName?.startsWith(loc)) {
+                            mascot = td.team.displayName.replace(loc, "").trim();
                         }
-                        
-                        const parts = (teamData.team?.displayName || "TBD").split(' ');
-                        if (parts.length > 1) {
-                            const city = parts.slice(0, -1).join(' ');
-                            const mascot = parts[parts.length - 1];
-                            return { city: `${rankPrefix}${city}`, name: mascot };
-                        }
-                        return { city: "", name: `${rankPrefix}${teamData.team?.displayName || 'TBD'}` };
+                        return { city: `${rank}${city}`, name: mascot };
                     };
 
-                    const homeDetails = formatTeamDetails(home, homeRank);
-                    const awayDetails = formatTeamDetails(away, awayRank);
+                    const hRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
+                    const aRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
 
-                    const gameObj = {
-                        id: event.id,
-                        utcTime: dateObj.getTime(),
+                    const gObj = {
+                        id: event.id, utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
-                        statusState: state,
-                        statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
-                        homeCity: homeDetails.city,
-                        homeTeam: homeDetails.name,
-                        homeLogo: home.team?.logo || '',
-                        awayCity: awayDetails.city,
-                        awayTeam: awayDetails.name,
-                        awayLogo: away.team?.logo || '',
+                        statusState: state, statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
+                        homeCity: getTeam(home, hRank).city, homeTeam: getTeam(home, hRank).name, homeLogo: home.team?.logo || '',
+                        awayCity: getTeam(away, aRank).city, awayTeam: getTeam(away, aRank).name, awayLogo: away.team?.logo || '',
                         conferences: Array.from(confSet)
                     };
-
-                    gameObj.streamLinks = findMatchingLinks(gameObj);
-                    gameMap.set(event.id, gameObj);
+                    gObj.streamLinks = findMatchingLinks(gObj);
+                    gameMap.set(event.id, gObj);
                 });
 
                 currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
                 cache[league] = currentGames;
                 setupConferenceFilter(currentGames);
                 renderGames(currentGames, topActionHtml, subpageHtml);
-
             } catch (err) {
                 console.error(err);
-                container.innerHTML = "<p class='loading'>Failed to load schedule data.</p>";
+                container.innerHTML = "<p class='loading'>Failed to load data.</p>";
             }
         }
 
@@ -608,53 +440,38 @@
                 filterBar.style.display = 'none';
                 return;
             }
-            const allConferences = new Set();
-            games.forEach(g => g.conferences.forEach(c => allConferences.add(c)));
-            const sortedConfs = Array.from(allConferences).sort();
+            const confs = new Set();
+            games.forEach(g => g.conferences.forEach(c => confs.add(c)));
             select.innerHTML = '<option value="ALL">All Conferences</option>';
-            sortedConfs.forEach(conf => {
+            Array.from(confs).sort().forEach(c => {
                 const opt = document.createElement('option');
-                opt.value = conf;
-                opt.innerText = conf;
+                opt.value = c; opt.innerText = c;
                 select.appendChild(opt);
             });
             filterBar.style.display = 'flex';
         }
 
         function filterByConference() {
-            const selectedConf = document.getElementById('conf-select').value;
+            const sel = document.getElementById('conf-select').value;
             const config = LEAGUES[activeLeague];
-            let topActionHtml = "";
-            let subpageHtml = "";
-
-            if (config.isBoxing) {
-                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Current Boxing Champions</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${BOXING_CHAMPIONS.map(bc => `<div class="weight-class-row"><span class="weight-name">${bc.weight}</span><span class="weight-champs">${bc.champions}</span></div>`).join('')}</div></div>`;
-            } else if (config.isUfcRankings) {
+            let topActionHtml = "", subpageHtml = "";
+            // Rebuild minimal headers for views
+            if (config.isUfcRankings) {
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Rankings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${UFC_FULL_RANKINGS.map(div => `<div class="ufc-division-card" onclick="toggleUfcDivision(this)"><div class="ufc-division-header"><div class="ufc-title-group"><span class="ufc-div-name">${div.weight}</span><span class="ufc-champ-tag"><i class="fa-solid fa-crown"></i> Champ: ${div.champion}</span></div><i class="fa-solid fa-chevron-down ufc-chevron"></i></div><div class="ufc-rankings-list"><div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Top 10 Contenders:</div>${div.rankings.map((fighter, idx) => `<div class="ufc-rank-row"><span class="rank-num">#${idx + 1}</span><span class="rank-name">${fighter}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
-            } else if (config.standingsUrl) {
-                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${activeLeague} Standings</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${activeLeague} Standings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="standings-iframe-wrap"><iframe src="${config.standingsUrl}" loading="lazy"></iframe></div></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${UFC_FULL_RANKINGS.map(div => `<div class="ufc-div-card" onclick="toggleUfcDivision(this)"><div class="ufc-div-header"><span class="ufc-div-title">${div.weight}</span><span class="ufc-champ-preview"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span></div><div class="ufc-rankings-body"><div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 10 Contenders:</div>${div.rankings.map((f, i) => `<div class="ufc-rank-row"><span class="rank-num">#${i + 1}</span><span class="rank-name">${f}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
             }
-
-            if (selectedConf === "ALL") {
-                renderGames(currentGames, topActionHtml, subpageHtml);
-            } else {
-                const filtered = currentGames.filter(g => g.conferences.includes(selectedConf));
-                renderGames(filtered, topActionHtml, subpageHtml);
-            }
+            if (sel === "ALL") renderGames(currentGames, topActionHtml, subpageHtml);
+            else renderGames(currentGames.filter(g => g.conferences.includes(sel)), topActionHtml, subpageHtml);
         }
 
         function renderGames(games, topActionHtml = "", subpageHtml = "") {
             const container = document.getElementById('game-list');
             container.className = "";
-            
-            let htmlContent = topActionHtml + subpageHtml + `<div id="list-content-container">`;
+            let html = topActionHtml + subpageHtml + `<div id="list-content-container">`;
             if (!games.length) {
-                htmlContent += "<p class='loading'>No games or categories scheduled for this view.</p>";
+                html += "<p class='loading'>No games scheduled.</p>";
             } else {
-                htmlContent += games.map(g => `
+                html += games.map(g => `
                     <div class="card">
                         <div class="card-main">
                             <div class="team away">
@@ -676,21 +493,16 @@
                                 </div>
                             </div>
                         </div>
-                        ${g.streamLinks && g.streamLinks.length > 0 ? `
+                        ${g.streamLinks && g.streamLinks.length ? `
                             <div class="stream-link-container">
-                                ${g.streamLinks.map((link, idx) => `
-                                    <a href="${link}" target="_blank" class="stream-btn">
-                                        <i class="fa-solid fa-play"></i> Stream ${idx + 1}
-                                    </a>
-                                `).join('')}
+                                ${g.streamLinks.map((l, i) => `<a href="${l}" target="_blank" class="stream-btn"><i class="fa-solid fa-play"></i> Stream ${i+1}</a>`).join('')}
                             </div>
                         ` : ''}
                     </div>
                 `).join('');
             }
-            htmlContent += `</div>`;
-
-            container.innerHTML = htmlContent;
+            html += `</div>`;
+            container.innerHTML = html;
         }
 
         initApp();
