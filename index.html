@@ -68,11 +68,6 @@
         }
         .close-subpage-btn:hover { background: #334155; }
 
-        .standings-iframe-wrap {
-            position: relative; width: 100%; height: 450px; border-radius: 8px; overflow: hidden; background: #fff;
-        }
-        .standings-iframe-wrap iframe { width: 100%; height: 100%; border: none; }
-
         .champions-grid { display: flex; flex-direction: column; gap: 6px; max-height: 440px; overflow-y: auto; padding-right: 2px; }
         .champions-grid::-webkit-scrollbar { width: 4px; }
         .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
@@ -84,16 +79,16 @@
         .weight-name { font-weight: 700; color: #60a5fa; width: 35%; }
         .weight-champs { width: 65%; text-align: right; font-weight: 600; color: var(--text); }
 
-        /* Clean UFC Accordion */
+        /* Accordion Structure for Standings/Rankings */
         .ufc-div-card {
-            background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+            background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
         }
         .ufc-div-header {
             padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
         }
         .ufc-div-header:hover { background: rgba(37, 99, 235, 0.08); }
         .ufc-div-title { font-size: 0.8rem; font-weight: 700; color: var(--text); }
-        .ufc-champ-preview { font-size: 0.75rem; color: #f59e0b; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .ufc-champ-preview { font-size: 0.75rem; color: #60a5fa; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         
         .ufc-rankings-body {
             display: none; padding: 8px 12px; border-top: 1px solid var(--border); background: rgba(15, 23, 42, 0.5);
@@ -103,8 +98,8 @@
             display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem; border-bottom: 1px solid rgba(30, 41, 59, 0.5);
         }
         .ufc-rank-row:last-child { border-bottom: none; }
-        .rank-num { color: var(--muted); font-weight: 700; width: 30px; }
-        .rank-name { flex: 1; font-weight: 600; text-align: right; }
+        .rank-num { color: var(--muted); font-weight: 700; width: 120px; }
+        .rank-name { flex: 1; font-weight: 600; text-align: right; color: var(--text); }
 
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 10px;
@@ -162,13 +157,51 @@
 
     <script>
         const LEAGUES = {
-            "NFL": { endpoint: "football/nfl", type: "espn", standingsUrl: "https://www.espn.com/nfl/standings" },
-            "NBA": { type: "scraped", category: "NBA", standingsUrl: "https://www.espn.com/nba/standings" },
-            "MLB": { endpoint: "baseball/mlb", type: "espn", standingsUrl: "https://www.espn.com/mlb/standings" },
-            "CFB": { endpoint: "football/college-football", type: "espn", standingsUrl: "https://www.espn.com/college-football/standings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", standingsUrl: "https://www.espn.com/mens-college-basketball/standings" },
+            "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
+            "NBA": { type: "scraped", category: "NBA", hasStandings: true, standingsLabel: "NBA Standings" },
+            "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
+        };
+
+        const STANDINGS_DATA = {
+            "NFL": [
+                { division: "AFC East", teams: ["Buffalo Bills", "New York Jets", "Miami Dolphins", "New England Patriots"] },
+                { division: "AFC North", teams: ["Baltimore Ravens", "Pittsburgh Steelers", "Cincinnati Bengals", "Cleveland Browns"] },
+                { division: "AFC South", teams: ["Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans"] },
+                { division: "AFC West", teams: ["Kansas City Chiefs", "Los Angeles Chargers", "Denver Broncos", "Las Vegas Raiders"] },
+                { division: "NFC East", teams: ["Philadelphia Eagles", "Dallas Cowboys", "Washington Commanders", "New York Giants"] },
+                { division: "NFC North", teams: ["Detroit Lions", "Green Bay Packers", "Minnesota Vikings", "Chicago Bears"] },
+                { division: "NFC South", teams: ["Tampa Bay Buccaneers", "Atlanta Falcons", "New Orleans Saints", "Carolina Panthers"] },
+                { division: "NFC West", teams: ["San Francisco 49ers", "Los Angeles Rams", "Arizona Cardinals", "Seattle Seahawks"] }
+            ],
+            "NBA": [
+                { division: "Eastern - Atlantic", teams: ["Boston Celtics", "New York Knicks", "Philadelphia 76ers", "Brooklyn Nets", "Toronto Raptors"] },
+                { division: "Eastern - Central", teams: ["Cleveland Cavaliers", "Milwaukee Bucks", "Indiana Pacers", "Chicago Bulls", "Detroit Pistons"] },
+                { division: "Eastern - Southeast", teams: ["Orlando Magic", "Miami Heat", "Atlanta Hawks", "Charlotte Hornets", "Washington Wizards"] },
+                { division: "Western - Northwest", teams: ["Oklahoma City Thunder", "Denver Broncos / Timberwolves", "Utah Jazz", "Portland Trail Blazers"] },
+                { division: "Western - Pacific", teams: ["Los Angeles Lakers", "Golden State Warriors", "Phoenix Suns", "Los Angeles Clippers", "Sacramento Kings"] },
+                { division: "Western - Southwest", teams: ["Dallas Mavericks", "Houston Rockets", "Memphis Grizzlies", "New Orleans Pelicans", "San Antonio Spurs"] }
+            ],
+            "MLB": [
+                { division: "AL East", teams: ["New York Yankees", "Baltimore Orioles", "Boston Red Sox", "Tampa Bay Rays", "Toronto Blue Jays"] },
+                { division: "AL Central", teams: ["Cleveland Guardians", "Minnesota Twins", "Kansas City Royals", "Detroit Tigers", "Chicago White Sox"] },
+                { division: "AL West", teams: ["Houston Astros", "Seattle Seahawks / Rangers", "Oakland Athletics", "Los Angeles Angels"] },
+                { division: "NL East", teams: ["Philadelphia Eagles / Braves", "Philadelphia Phillies", "New York Mets", "Washington Nationals", "Miami Marlins"] },
+                { division: "NL Central", teams: ["Milwaukee Brewers", "Chicago Cubs", "St. Louis Cardinals", "Cincinnati Reds", "Pittsburgh Pirates"] },
+                { division: "NL West", teams: ["Los Angeles Dodgers", "San Diego Padres", "Arizona Diamondbacks", "San Francisco Giants", "Colorado Rockies"] }
+            ],
+            "CFB": [
+                { division: "SEC", teams: ["Georgia Bulldogs", "Texas Longhorns", "Alabama Crimson Tide", "Ole Miss Rebels", "Tennessee Volunteers", "LSU Tigers"] },
+                { division: "Big Ten", teams: ["Ohio State Buckeyes", "Oregon Ducks", "Penn State Nittany Lions", "Michigan Wolverines", "USC Trojans"] },
+                { division: "Big 12", teams: ["Utah Utes", "Kansas State Wildcats", "Iowa State Cyclones", "Oklahoma State Cowboys", "Arizona Wildcats"] },
+                { division: "ACC", teams: ["Miami Hurricanes", "Clemson Tigers", "Florida State Seminoles", "Louisville Cardinals", "NC State Wolfpack"] }
+            ],
+            "CBB": [
+                { division: "Top Tier Conferences", teams: ["Big East", "Big 12", "SEC", "Big Ten", "ACC", "Pac-12 / WCC"] }
+            ]
         };
 
         const BOXING_CHAMPIONS = [
@@ -325,9 +358,35 @@
                         </div>
                     </div>
                 `;
-            } else if (config.standingsUrl) {
-                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${league} Standings</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${league} Standings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="standings-iframe-wrap"><iframe src="${config.standingsUrl}" loading="lazy"></iframe></div></div>`;
+            } else if (config.hasStandings) {
+                const leagueStandings = STANDINGS_DATA[league] || [];
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${config.standingsLabel}</button></div>`;
+                subpageHtml = `
+                    <div class="subpage-container" id="subpage-view">
+                        <div class="subpage-header">
+                            <span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${config.standingsLabel}</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button>
+                        </div>
+                        <div class="champions-grid">
+                            ${leagueStandings.map(div => `
+                                <div class="ufc-div-card" onclick="toggleUfcDivision(this)">
+                                    <div class="ufc-div-header">
+                                        <span class="ufc-div-title">${div.division}</span>
+                                        <span class="ufc-champ-preview">View Teams <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span>
+                                    </div>
+                                    <div class="ufc-rankings-body">
+                                        ${div.teams.map((t, i) => `
+                                            <div class="ufc-rank-row">
+                                                <span class="rank-num">Team ${i + 1}</span>
+                                                <span class="rank-name">${t}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
             }
 
             if (config.type === "scraped") {
@@ -455,11 +514,16 @@
             const sel = document.getElementById('conf-select').value;
             const config = LEAGUES[activeLeague];
             let topActionHtml = "", subpageHtml = "";
-            // Rebuild minimal headers for views
+            
             if (config.isUfcRankings) {
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings</button></div>`;
                 subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${UFC_FULL_RANKINGS.map(div => `<div class="ufc-div-card" onclick="toggleUfcDivision(this)"><div class="ufc-div-header"><span class="ufc-div-title">${div.weight}</span><span class="ufc-champ-preview"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span></div><div class="ufc-rankings-body"><div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 10 Contenders:</div>${div.rankings.map((f, i) => `<div class="ufc-rank-row"><span class="rank-num">#${i + 1}</span><span class="rank-name">${f}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
+            } else if (config.hasStandings) {
+                const leagueStandings = STANDINGS_DATA[activeLeague] || [];
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${config.standingsLabel}</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${config.standingsLabel}</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${leagueStandings.map(div => `<div class="ufc-div-card" onclick="toggleUfcDivision(this)"><div class="ufc-div-header"><span class="ufc-div-title">${div.division}</span><span class="ufc-champ-preview">View Teams <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span></div><div class="ufc-rankings-body">${div.teams.map((t, i) => `<div class="ufc-rank-row"><span class="rank-num">Team ${i + 1}</span><span class="rank-name">${t}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
             }
+
             if (sel === "ALL") renderGames(currentGames, topActionHtml, subpageHtml);
             else renderGames(currentGames.filter(g => g.conferences.includes(sel)), topActionHtml, subpageHtml);
         }
