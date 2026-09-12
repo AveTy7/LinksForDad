@@ -13,8 +13,6 @@ def clean_text(text):
       "",
       text,
   )
-  text = re.sub(r"\s*-\s*$", "", text)
-  text = re.sub(r"\s*\(\s*\)", "", text)
   return text.strip()
 
 
@@ -23,18 +21,30 @@ def format_fighter_cell(cell_text):
   if not cleaned or cleaned.lower() == "vacant":
     return "vacant"
 
-  # Pattern to match record format like "34-2", "27-0-1", or "21-1" inside the string
+  # Replace "Super champion" or "Super" indicator with a subtle crown symbol or highlight
+  is_super = False
+  if "super champion" in cleaned.lower():
+    is_super = True
+    cleaned = re.sub(r"super champion", "", cleaned, flags=re.IGNORECASE)
+
   match = re.search(
       r"(\d+\s*[-–]\s*\d+(?:\s*[-–]\s*\d+)?(?:\s*\(\s*\d+\s*\))?)", cleaned
   )
+  record = ""
   if match:
     record = match.group(1).strip()
-    name = cleaned.replace(record, "").strip()
-    name = re.sub(r"\s*\(.*?\)", "", name).strip()  # remove leftover notes like Super champion
-    if name and record:
-      return f"{name}<br>{record}"
+    cleaned = cleaned.replace(record, "").strip()
 
-  return cleaned
+  name = re.sub(r"\s*\(.*?\)", "", cleaned).strip()
+  if not name:
+    return cleaned
+
+  # Format output with name, subtle super indicator, and record on next line
+  super_badge = ' <span style="color: #fbbf24; font-size: 0.85em;" title="Super Champion">★</span>' if is_super else ""
+  
+  if record:
+    return f"{name}{super_badge}<br>{record}"
+  return f"{name}{super_badge}"
 
 
 def scrape_boxing():
@@ -54,34 +64,22 @@ def scrape_boxing():
     header_row = rows[0].get_text()
     if "WBA" in header_row and "WBC" in header_row:
       weight_name = "Division"
-      prev = table.find_previous(["h3", "h4", "span"])
-      if prev:
-        headline = prev.find("span", {"class": "mw-headline"})
+      
+      # Search preceding headers or table captions/rows for the exact division name
+      prev = table.find_previous(["h3", "h4", "span", "th"])
+      while prev:
+        headline = prev.find("span", {"class": "mw-headline"}) if hasattr(prev, "find") else None
         raw_head = headline.get_text() if headline else prev.get_text()
-        weight_name = (
-            raw_head.split("(")[0]
-            .replace("Men's", "")
-            .replace("Women's", "")
-            .strip()
-        )
+        if raw_head and any(w in raw_head for w in ["weight", "Heavy", "Cruiser", "Light", "Middle", "Welter", "Feather", "Bantam", "Fly", "Straw"]):
+          weight_name = raw_head.split("(")[0].replace("Men's", "").replace("Women's", "").strip()
+          break
+        prev = prev.find_previous(["h3", "h4", "span", "th"])
 
       for row in rows[1:]:
         cols = row.find_all(["th", "td"])
         if len(cols) >= 5:
           pot_weight = cols[0].get_text(strip=True)
-          if (
-              "lb" in pot_weight
-              or "kg" in pot_weight
-              or "Heavyweight" in pot_weight
-              or "Cruiserweight" in pot_weight
-              or "Middleweight" in pot_weight
-              or "Welterweight" in pot_weight
-              or "Light" in pot_weight
-              or "Featherweight" in pot_weight
-              or "Bantamweight" in pot_weight
-              or "Flyweight" in pot_weight
-              or "Strawweight" in pot_weight
-          ):
+          if any(term in pot_weight for term in ["lb", "kg", "Heavyweight", "Cruiserweight", "Middleweight", "Welterweight", "Light", "Featherweight", "Bantamweight", "Flyweight", "Strawweight"]):
             weight_name = pot_weight.split("(")[0].strip()
             wba = format_fighter_cell(cols[1].get_text(strip=True))
             wbc = format_fighter_cell(cols[2].get_text(strip=True))
@@ -173,4 +171,4 @@ if __name__ == "__main__":
 
   with open("rankings.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4)
-  print("Successfully updated rankings.json with proper divisions and records.")
+  print("Successfully updated rankings.json with division names and star indicators.")
