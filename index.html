@@ -95,7 +95,7 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
-        /* UFC Accordion with max-height override for full top 10 display */
+        /* UFC Accordion with internal scrollable body for full top 10 display */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
         }
@@ -110,11 +110,15 @@
             max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 12px; background: rgba(15, 23, 42, 0.5);
         }
         .ufc-div-card.expanded .ufc-rankings-body {
-            max-height: 420px; /* Fully expanded to display all 10 rankings without clipping */
+            max-height: 240px; /* Fixed height container to trigger scrolling for the top 10 list */
+            overflow-y: auto;    /* Makes the contenders section vertically scrollable */
             padding: 10px 12px;
             border-top: 1px solid var(--border);
-            overflow-y: auto;
         }
+        /* Custom scrollbar styling for the UFC rankings list */
+        .ufc-rankings-body::-webkit-scrollbar { width: 4px; }
+        .ufc-rankings-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
         .ufc-rank-row {
             display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.75rem; border-bottom: 1px solid rgba(30, 41, 59, 0.5);
         }
