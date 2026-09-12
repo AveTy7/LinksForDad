@@ -95,7 +95,7 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
-        /* UFC Accordion with internal scrollable body for full top 10 display */
+        /* UFC Accordion with expanded body sized properly to show full top 10 list with scroll */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
         }
@@ -110,7 +110,7 @@
             max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 12px; background: rgba(15, 23, 42, 0.5);
         }
         .ufc-div-card.expanded .ufc-rankings-body {
-            max-height: 240px; /* Fixed height container to trigger scrolling for the top 10 list */
+            max-height: 320px; /* Increased height so all 10 contenders fit cleanly without prematurely clipping */
             overflow-y: auto;    /* Makes the contenders section vertically scrollable */
             padding: 10px 12px;
             border-top: 1px solid var(--border);
@@ -401,7 +401,12 @@
         }
 
         function toggleUfcDivision(el) {
-            el.classList.toggle('expanded');
+            const wasExpanded = el.classList.contains('expanded');
+            // Optional: close other open accordions if you want only one open at a time, or leave as-is for independent toggling.
+            document.querySelectorAll('.ufc-div-card').forEach(card => card.classList.remove('expanded'));
+            if (!wasExpanded) {
+                el.classList.add('expanded');
+            }
         }
 
         function getDateParam(leagueKey) {
