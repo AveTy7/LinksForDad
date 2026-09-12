@@ -1,11 +1,130 @@
 {
     "boxing": [
         {
-            "weight": "Murat Gassiev34\u20132 (1) (27 KO)July 1, 2026",
-            "wba": "Agit Kabayel27\u20130 (19 KO)June 27, 2026",
-            "wbc": "Filip Hrgovi\u010721\u20131 (16 KO)August 29, 2026",
-            "ibf": "Daniel Dubois23\u20133 (22 KO)May 9, 2026",
-            "wbo": "Oleksandr Usyk25\u20130 (16 KO)August 20, 2022"
+            "weight": "Division",
+            "wba": "Murat Gassiev34\u20132 (1) (27 KO)July 1, 2026",
+            "wbc": "Agit Kabayel27\u20130 (19 KO)June 27, 2026",
+            "ibf": "Filip Hrgovi\u010721\u20131 (16 KO)August 29, 2026",
+            "wbo": "Daniel Dubois23\u20133 (22 KO)May 9, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "",
+            "wbc": "Ryad Merhy36\u20133 (29 KO)May 30, 2026",
+            "ibf": "",
+            "wbo": ""
+        },
+        {
+            "weight": "Division",
+            "wba": "David BenavidezSuper champion32\u20130 (26 KO)May 2, 2026",
+            "wbc": "Noel Mikaelian28\u20133 (12 KO)December 13, 2025",
+            "ibf": "vacant",
+            "wbo": "David Benavidez32\u20130 (26 KO)May 2, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "Dmitry BivolSuper champion25\u20131 (12 KO)February 22, 2025",
+            "wbc": "David Benavidez32\u20130 (26 KO)April 7, 2025",
+            "ibf": "Dmitry Bivol25\u20131 (12 KO)February 22, 2025",
+            "wbo": "Dmitry Bivol25\u20131 (12 KO)February 22, 2025"
+        },
+        {
+            "weight": "Division",
+            "wba": "Jaime Munguia46\u20132 (35 KO)May 2, 2026",
+            "wbc": "Christian M'billi29\u20130\u20131 (24 KO)January 27, 2026",
+            "ibf": "Osleys Iglesias15\u20130 (14 KO)April 9, 2026",
+            "wbo": "Hamzah Sheeraz23\u20130\u20131 (19 KO)May 23, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "Erislandy Lara32\u20133\u20133 (19 KO)May 1, 2021",
+            "wbc": "Carlos Adames25\u20131\u20131 (18 KO)May 7, 2024",
+            "ibf": "Aaron McKenna21-0 (10 KO)August 8, 2026",
+            "wbo": "Denzel Bentley22\u20133\u20131 (18 KO)July 20, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "Jaron Ennis36\u20130 (1) (32 KO)June 27, 2026",
+            "wbc": "Sebastian Fundora24\u20131\u20131 (16 KO)March 30, 2024",
+            "ibf": "Josh Kelly18\u20131\u20131 (9 KO)January 31, 2026",
+            "wbo": "Jaron Ennis36\u20130 (1) (32 KO)June 27, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "Teofimo LopezSuper champion23\u20132 (13 KO)August 22, 2026",
+            "wbc": "Ryan Garcia25\u20132 (1) (20 KO)February 22, 2026",
+            "ibf": "Liam Paro28\u20131 (16 KO)June 24, 2026",
+            "wbo": "Devin Haney33\u20130 (1) (15 KO)November 22, 2025"
+        },
+        {
+            "weight": "Division",
+            "wba": "Gary Antuanne Russell19\u20131 (17 KO)March 1, 2025",
+            "wbc": "Dalton Smith19-0 (14 KO)January 10, 2026",
+            "ibf": "vacant",
+            "wbo": "Shakur Stevenson25\u20130 (11 KO)January 31, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "vacant",
+            "wbc": "William Zepeda34\u20131 (27 KO)August 1, 2026",
+            "ibf": "vacant",
+            "wbo": "Abdullah Mason21\u20130 (18 KO)November 22, 2025"
+        },
+        {
+            "weight": "Division",
+            "wba": "Anthony CacaceSuper Champion26\u20131 (9 KO)March 14, 2026",
+            "wbc": "O'Shaquie Foster25\u20133 (12 KO)November 2, 2024",
+            "ibf": "Emanuel Navarrete40\u20132\u20131 (1) (33 KO)February 28, 2026",
+            "wbo": "Emanuel Navarrete40\u20132\u20131 (1) (33 KO)August 12, 2023"
+        },
+        {
+            "weight": "Division",
+            "wba": "Brandon Figueroa27\u20132\u20131 (20 KO)February 7, 2026",
+            "wbc": "Bruce Carrington18\u20130 (10 KO)January 31, 2026",
+            "ibf": "Angelo Leo26\u20131 (12 KO)August 10, 2024",
+            "wbo": "Rafael Espinoza28\u20130 (24 KO)December 9, 2023"
+        },
+        {
+            "weight": "Division",
+            "wba": "Naoya InoueSuper champion33\u20130 (27 KO)December 26, 2023",
+            "wbc": "Naoya Inoue33\u20130 (27 KO)July 25, 2023",
+            "ibf": "Naoya Inoue33\u20130 (27 KO)December 26, 2023",
+            "wbo": "Naoya Inoue33\u20130 (27 KO)July 25, 2023"
+        },
+        {
+            "weight": "Division",
+            "wba": "Jesse RodriguezSuper champion24\u20130 (17 KO)June 13, 2026",
+            "wbc": "Takuma Inoue22\u20132 (5 KO)November 24, 2025",
+            "ibf": "Jos\u00e9 Salas17\u20130 (11 KO)December 13, 2025",
+            "wbo": "Christian Medina27\u20134 (19 KO)September 14, 2025"
+        },
+        {
+            "weight": "Division",
+            "wba": "David Jim\u00e9nez18\u20131 (12 KO)April 20, 2024",
+            "wbc": "vacant",
+            "ibf": "Andrew Moloney29\u20134 (1) (18 KO)June 6, 2026",
+            "wbo": "Kenshiro Teraji26\u20132 (16 KO)July 20, 2026"
+        },
+        {
+            "weight": "Division",
+            "wba": "Ricardo Sandoval27\u20132 (18 KO)July 30, 2025",
+            "wbc": "Ricardo Sandoval27\u20132 (18 KO)July 30, 2025",
+            "ibf": "Masamichi Yabuki20\u20134 (18 KO)March 29, 2025",
+            "wbo": "Anthony Olascuaga12\u20131 (9 KO)July 20, 2024"
+        },
+        {
+            "weight": "Division",
+            "wba": "Daiya Kira5\u20130 (4 KO)September 2, 2026",
+            "wbc": "Shokichi Iwata17\u20132 (14 KO)March 15, 2026",
+            "ibf": "Thanongsak Simsri40\u20131 (35 KO)June 19, 2025",
+            "wbo": "Ren\u00e9 Santiago16\u20134 (9 KO)March 13, 2025"
+        },
+        {
+            "weight": "Division",
+            "wba": "Oscar CollazoSuper champion15\u20130 (12 KO)November 16, 2024",
+            "wbc": "Siyakholwa Kuse10\u20133\u20131 (4 KO)May 16, 2026",
+            "ibf": "Pedro Taduran20\u20134\u20131 (14 KO)July 28, 2024",
+            "wbo": "Oscar Collazo15\u20130 (12 KO)May 27, 2023"
         }
     ],
     "ufc": [
