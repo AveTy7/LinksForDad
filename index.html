@@ -98,7 +98,7 @@
         /* UFC Accordion: Fixes flex shrinking so collapsed cards stay full height and expanded lists scroll safely inside */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
-            flex-shrink: 0; /* Prevents unexpanded tabs from getting squished when another tab expands */
+            flex-shrink: 0;
         }
         .ufc-div-header {
             padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
@@ -112,12 +112,11 @@
         }
         .ufc-div-card.expanded .ufc-rankings-body {
             display: block;
-            max-height: 260px; /* Constrains the scrollable height so the list scrolls neatly without blowing out the container */
-            overflow-y: auto;    /* Enables smooth scrolling through all 10 contenders */
+            max-height: 260px;
+            overflow-y: auto;
             padding: 10px 12px;
             border-top: 1px solid var(--border);
         }
-        /* Custom scrollbar styling for the UFC rankings list */
         .ufc-rankings-body::-webkit-scrollbar { width: 4px; }
         .ufc-rankings-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
@@ -195,22 +194,22 @@
 
         const STANDINGS_DATA = {
             "NFL": [
-                { division: "AFC East", teams: [{ name: "Buffalo Bills", w: 12, l: 5, pct: ".706" }, { name: "Miami Dolphins", w: 8, l: 9, pct: ".471" }, { name: "New York Jets", w: 5, l: 12, pct: ".294" }, { name: "New England Patriots", w: 4, l: 13, pct: ".235" }] },
-                { division: "AFC North", teams: [{ name: "Baltimore Ravens", w: 12, l: 5, pct: ".706" }, { name: "Pittsburgh Steelers", w: 10, l: 7, pct: ".588" }, { name: "Cincinnati Bengals", w: 9, l: 8, pct: ".529" }, { name: "Cleveland Browns", w: 3, l: 14, pct: ".176" }] },
-                { division: "AFC South", teams: [{ name: "Houston Texans", w: 10, l: 7, pct: ".588" }, { name: "Indianapolis Colts", w: 9, l: 8, pct: ".529" }, { name: "Jacksonville Jaguars", w: 4, l: 13, pct: ".235" }, { name: "Tennessee Titans", w: 3, l: 14, pct: ".176" }] },
-                { division: "AFC West", teams: [{ name: "Kansas City Chiefs", w: 14, l: 3, pct: ".824" }, { name: "Los Angeles Chargers", w: 9, l: 8, pct: ".529" }, { name: "Denver Broncos", w: 8, l: 9, pct: ".471" }, { name: "Las Vegas Raiders", w: 4, l: 13, pct: ".235" }] },
-                { division: "NFC East", teams: [{ name: "Philadelphia Eagles", w: 11, l: 6, pct: ".647" }, { name: "Washington Commanders", w: 10, l: 7, pct: ".588" }, { name: "Dallas Cowboys", w: 7, l: 10, pct: ".412" }, { name: "New York Giants", w: 3, l: 14, pct: ".176" }] },
-                { division: "NFC North", teams: [{ name: "Detroit Lions", w: 15, l: 2, pct: ".882" }, { name: "Green Bay Packers", w: 11, l: 6, pct: ".647" }, { name: "Minnesota Vikings", w: 10, l: 7, pct: ".588" }, { name: "Chicago Bears", w: 5, l: 12, pct: ".294" }] },
-                { division: "NFC South", teams: [{ name: "Tampa Bay Buccaneers", w: 9, l: 8, pct: ".529" }, { name: "Atlanta Falcons", w: 8, l: 9, pct: ".471" }, { name: "New Orleans Saints", w: 5, l: 12, pct: ".294" }, { name: "Carolina Panthers", w: 3, l: 14, pct: ".176" }] },
-                { division: "NFC West", teams: [{ name: "San Francisco 49ers", w: 12, l: 5, pct: ".706" }, { name: "Los Angeles Rams", w: 10, l: 7, pct: ".588" }, { name: "Arizona Cardinals", w: 8, l: 9, pct: ".471" }, { name: "Seattle Seahawks", w: 7, l: 10, pct: ".412" }] }
+                { division: "AFC East", teams: [{ name: "Buffalo Bills", w: 12, l: 5, pct: ".706" }, { name: "New England Patriots", w: 10, l: 7, pct: ".588" }, { name: "Miami Dolphins", w: 8, l: 9, pct: ".471" }, { name: "New York Jets", w: 5, l: 12, pct: ".294" }] },
+                { division: "AFC North", teams: [{ name: "Baltimore Ravens", w: 13, l: 4, pct: ".765" }, { name: "Pittsburgh Steelers", w: 10, l: 7, pct: ".588" }, { name: "Cincinnati Bengals", w: 9, l: 8, pct: ".529" }, { name: "Cleveland Browns", w: 8, l: 9, pct: ".471" }] },
+                { division: "AFC South", teams: [{ name: "Houston Texans", w: 11, l: 6, pct: ".647" }, { name: "Indianapolis Colts", w: 9, l: 8, pct: ".529" }, { name: "Tennessee Titans", w: 6, l: 11, pct: ".353" }, { name: "Jacksonville Jaguars", w: 5, l: 12, pct: ".294" }] },
+                { division: "AFC West", teams: [{ name: "Kansas City Chiefs", w: 15, l: 2, pct: ".882" }, { name: "Los Angeles Chargers", w: 10, l: 7, pct: ".588" }, { name: "Denver Broncos", w: 9, l: 8, pct: ".471" }, { name: "Las Vegas Raiders", w: 4, l: 13, pct: ".235" }] },
+                { division: "NFC East", teams: [{ name: "Philadelphia Eagles", w: 14, l: 3, pct: ".824" }, { name: "Washington Commanders", w: 11, l: 6, pct: ".647" }, { name: "Dallas Cowboys", w: 8, l: 9, pct: ".471" }, { name: "New York Giants", w: 4, l: 13, pct: ".235" }] },
+                { division: "NFC North", teams: [{ name: "Detroit Lions", w: 14, l: 3, pct: ".824" }, { name: "Green Bay Packers", w: 11, l: 6, pct: ".647" }, { name: "Minnesota Vikings", w: 10, l: 7, pct: ".588" }, { name: "Chicago Bears", w: 8, l: 9, pct: ".471" }] },
+                { division: "NFC South", teams: [{ name: "Tampa Bay Buccaneers", w: 10, l: 7, pct: ".588" }, { name: "Atlanta Falcons", w: 9, l: 8, pct: ".529" }, { name: "New Orleans Saints", w: 7, l: 10, pct: ".412" }, { name: "Carolina Panthers", w: 4, l: 13, pct: ".235" }] },
+                { division: "NFC West", teams: [{ name: "San Francisco 49ers", w: 12, l: 5, pct: ".706" }, { name: "Seattle Seahawks", w: 10, l: 7, pct: ".588" }, { name: "Los Angeles Rams", w: 9, l: 8, pct: ".529" }, { name: "Arizona Cardinals", w: 7, l: 10, pct: ".412" }] }
             ],
             "NBA": [
-                { division: "Eastern - Atlantic", teams: [{ name: "Boston Celtics", w: 56, l: 26, pct: ".683" }, { name: "New York Knicks", w: 53, l: 29, pct: ".646" }, { name: "Philadelphia 76ers", w: 45, l: 37, pct: ".549" }, { name: "Brooklyn Nets", w: 20, l: 62, pct: ".244" }, { name: "Toronto Raptors", w: 46, l: 36, pct: ".561" }] },
-                { division: "Eastern - Central", teams: [{ name: "Cleveland Cavaliers", w: 52, l: 30, pct: ".634" }, { name: "Milwaukee Bucks", w: 32, l: 50, pct: ".390" }, { name: "Indiana Pacers", w: 19, l: 63, pct: ".232" }, { name: "Chicago Bulls", w: 31, l: 51, pct: ".378" }, { name: "Detroit Pistons", w: 60, l: 22, pct: ".732" }] },
-                { division: "Eastern - Southeast", teams: [{ name: "Orlando Magic", w: 45, l: 37, pct: ".549" }, { name: "Miami Heat", w: 43, l: 39, pct: ".524" }, { name: "Atlanta Hawks", w: 46, l: 36, pct: ".561" }, { name: "Charlotte Hornets", w: 44, l: 38, pct: ".537" }, { name: "Washington Wizards", w: 17, l: 65, pct: ".207" }] },
-                { division: "Western - Northwest", teams: [{ name: "Oklahoma City Thunder", w: 64, l: 18, pct: ".780" }, { name: "Denver Nuggets", w: 54, l: 28, pct: ".659" }, { name: "Minnesota Timberwolves", w: 49, l: 33, pct: ".598" }, { name: "Utah Jazz", w: 22, l: 60, pct: ".268" }, { name: "Portland Trail Blazers", w: 42, l: 40, pct: ".512" }] },
+                { division: "Eastern - Atlantic", teams: [{ name: "Boston Celtics", w: 56, l: 26, pct: ".683" }, { name: "New York Knicks", w: 53, l: 29, pct: ".646" }, { name: "Toronto Raptors", w: 46, l: 36, pct: ".561" }, { name: "Philadelphia 76ers", w: 45, l: 37, pct: ".549" }, { name: "Brooklyn Nets", w: 20, l: 62, pct: ".244" }] },
+                { division: "Eastern - Central", teams: [{ name: "Detroit Pistons", w: 60, l: 22, pct: ".732" }, { name: "Cleveland Cavaliers", w: 52, l: 30, pct: ".634" }, { name: "Milwaukee Bucks", w: 32, l: 50, pct: ".390" }, { name: "Chicago Bulls", w: 31, l: 51, pct: ".378" }, { name: "Indiana Pacers", w: 19, l: 63, pct: ".232" }] },
+                { division: "Eastern - Southeast", teams: [{ name: "Orlando Magic", w: 45, l: 37, pct: ".549" }, { name: "Atlanta Hawks", w: 46, l: 36, pct: ".561" }, { name: "Charlotte Hornets", w: 44, l: 38, pct: ".537" }, { name: "Miami Heat", w: 43, l: 39, pct: ".524" }, { name: "Washington Wizards", w: 17, l: 65, pct: ".207" }] },
+                { division: "Western - Northwest", teams: [{ name: "Oklahoma City Thunder", w: 64, l: 18, pct: ".780" }, { name: "Denver Nuggets", w: 54, l: 28, pct: ".659" }, { name: "Minnesota Timberwolves", w: 49, l: 33, pct: ".598" }, { name: "Portland Trail Blazers", w: 42, l: 40, pct: ".512" }, { name: "Utah Jazz", w: 22, l: 60, pct: ".268" }] },
                 { division: "Western - Pacific", teams: [{ name: "Los Angeles Lakers", w: 53, l: 29, pct: ".646" }, { name: "Phoenix Suns", w: 45, l: 37, pct: ".549" }, { name: "Los Angeles Clippers", w: 42, l: 40, pct: ".512" }, { name: "Golden State Warriors", w: 37, l: 45, pct: ".451" }, { name: "Sacramento Kings", w: 22, l: 60, pct: ".268" }] },
-                { division: "Western - Southwest", teams: [{ name: "San Antonio Spurs", w: 62, l: 20, pct: ".756" }, { name: "Houston Rockets", w: 52, l: 30, pct: ".634" }, { name: "Memphis Grizzlies", w: 25, l: 57, pct: ".305" }, { name: "New Orleans Pelicans", w: 26, l: 56, pct: ".317" }, { name: "Dallas Mavericks", w: 26, l: 56, pct: ".317" }] }
+                { division: "Western - Southwest", teams: [{ name: "San Antonio Spurs", w: 62, l: 20, pct: ".756" }, { name: "Houston Rockets", w: 52, l: 30, pct: ".634" }, { name: "New Orleans Pelicans", w: 26, l: 56, pct: ".317" }, { name: "Dallas Mavericks", w: 26, l: 56, pct: ".317" }, { name: "Memphis Grizzlies", w: 25, l: 57, pct: ".305" }] }
             ],
             "MLB": [
                 { division: "AL East", teams: [{ name: "New York Yankees", w: 85, l: 62, pct: ".578" }, { name: "Tampa Bay Rays", w: 88, l: 59, pct: ".599" }, { name: "Boston Red Sox", w: 80, l: 68, pct: ".541" }, { name: "Toronto Blue Jays", w: 73, l: 75, pct: ".493" }, { name: "Baltimore Orioles", w: 72, l: 76, pct: ".486" }] },
@@ -222,19 +221,19 @@
             ],
             "CFB": {
                 "AP Top 25": [
-                    { name: "1. Georgia Bulldogs", w: 11, l: 3, pct: ".786" }, { name: "2. Ohio State Buckeyes", w: 12, l: 2, pct: ".857" },
-                    { name: "3. Oregon Ducks", w: 13, l: 1, pct: ".929" }, { name: "4. Texas Longhorns", w: 13, l: 2, pct: ".867" },
-                    { name: "5. Penn State Nittany Lions", w: 11, l: 3, pct: ".786" }, { name: "6. Notre Dame Fighting Irish", w: 11, l: 2, pct: ".846" },
-                    { name: "7. Clemson Tigers", w: 10, l: 3, pct: ".769" }, { name: "8. Alabama Crimson Tide", w: 9, l: 4, pct: ".692" },
-                    { name: "9. Ole Miss Rebels", w: 10, l: 3, pct: ".769" }, { name: "10. Tennessee Volunteers", w: 10, l: 3, pct: ".769" },
-                    { name: "11. Miami Hurricanes", w: 10, l: 3, pct: ".769" }, { name: "12. Indiana Hoosiers", w: 11, l: 2, pct: ".846" },
-                    { name: "13. Boise State Broncos", w: 12, l: 2, pct: ".857" }, { name: "14. Arizona State Sun Devils", w: 11, l: 3, pct: ".786" },
-                    { name: "15. SMU Mustangs", w: 11, l: 3, pct: ".786" }, { name: "16. Kansas State Wildcats", w: 9, l: 4, pct: ".692" },
-                    { name: "17. Iowa State Cyclones", w: 11, l: 3, pct: ".786" }, { name: "18. BYU Cougars", w: 11, l: 2, pct: ".846" },
-                    { name: "19. Texas A&M Aggies", w: 8, l: 5, pct: ".615" }, { name: "20. Army Black Knights", w: 12, l: 2, pct: ".857" },
-                    { name: "21. Colorado Buffaloes", w: 9, l: 4, pct: ".692" }, { name: "22. Illinois Fighting Illini", w: 10, l: 3, pct: ".769" },
-                    { name: "23. Syracuse Orange", w: 10, l: 3, pct: ".769" }, { name: "24. Missouri Tigers", w: 10, l: 3, pct: ".769" },
-                    { name: "25. South Carolina Gamecocks", w: 9, l: 4, pct: ".692" }
+                    { name: "1. Ohio State Buckeyes", w: 1, l: 0, pct: "1.000" }, { name: "2. Georgia Bulldogs", w: 1, l: 0, pct: "1.000" },
+                    { name: "3. Notre Dame Fighting Irish", w: 1, l: 0, pct: "1.000" }, { name: "4. Texas Longhorns", w: 1, l: 0, pct: "1.000" },
+                    { name: "5. Indiana Hoosiers", w: 1, l: 0, pct: "1.000" }, { name: "6. Oregon Ducks", w: 1, l: 0, pct: "1.000" },
+                    { name: "7. Miami Hurricanes", w: 1, l: 0, pct: "1.000" }, { name: "8. LSU Tigers", w: 1, l: 0, pct: "1.000" },
+                    { name: "9. Ole Miss Rebels", w: 1, l: 0, pct: "1.000" }, { name: "10. Texas A&M Aggies", w: 1, l: 0, pct: "1.000" },
+                    { name: "11. Oklahoma Sooners", w: 1, l: 0, pct: "1.000" }, { name: "12. Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" },
+                    { name: "13. Texas Tech Red Raiders", w: 1, l: 0, pct: "1.000" }, { name: "14. USC Trojans", w: 2, l: 0, pct: "1.000" },
+                    { name: "15. BYU Cougars", w: 1, l: 0, pct: "1.000" }, { name: "16. Penn State Nittany Lions", w: 1, l: 0, pct: "1.000" },
+                    { name: "17. SMU Mustangs", w: 1, l: 0, pct: "1.000" }, { name: "18. Tennessee Volunteers", w: 1, l: 0, pct: "1.000" },
+                    { name: "19. Washington Huskies", w: 1, l: 0, pct: "1.000" }, { name: "20. Utah Utes", w: 1, l: 0, pct: "1.000" },
+                    { name: "21. Iowa Hawkeyes", w: 1, l: 0, pct: "1.000" }, { name: "22. Houston Cougars", w: 1, l: 0, pct: "1.000" },
+                    { name: "23. Missouri Tigers", w: 1, l: 0, pct: "1.000" }, { name: "24. Louisville Cardinals", w: 0, l: 1, pct: ".000" },
+                    { name: "25. Virginia Cavaliers", w: 1, l: 0, pct: "1.000" }
                 ],
                 "FCS": [
                     { name: "1. South Dakota State Jackrabbits", w: 14, l: 1, pct: ".933" },
@@ -249,41 +248,40 @@
                     { name: "10. Furman Paladins", w: 10, l: 3, pct: ".769" }
                 ],
                 "SEC": [
-                    { name: "Texas Longhorns", w: 13, l: 2, pct: ".867" }, { name: "Georgia Bulldogs", w: 11, l: 3, pct: ".786" },
-                    { name: "Ole Miss Rebels", w: 10, l: 3, pct: ".769" }, { name: "Tennessee Volunteers", w: 10, l: 3, pct: ".769" },
-                    { name: "Alabama Crimson Tide", w: 9, l: 4, pct: ".692" }, { name: "Texas A&M Aggies", w: 8, l: 5, pct: ".615" },
-                    { name: "Missouri Tigers", w: 10, l: 3, pct: ".769" }, { name: "South Carolina Gamecocks", w: 9, l: 4, pct: ".692" }
+                    { name: "Georgia Bulldogs", w: 1, l: 0, pct: "1.000" }, { name: "Texas Longhorns", w: 1, l: 0, pct: "1.000" },
+                    { name: "LSU Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Ole Miss Rebels", w: 1, l: 0, pct: "1.000" },
+                    { name: "Texas A&M Aggies", w: 1, l: 0, pct: "1.000" }, { name: "Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" },
+                    { name: "Tennessee Volunteers", w: 1, l: 0, pct: "1.000" }, { name: "Missouri Tigers", w: 1, l: 0, pct: "1.000" }
                 ],
                 "Big Ten": [
-                    { name: "Oregon Ducks", w: 13, l: 1, pct: ".929" }, { name: "Ohio State Buckeyes", w: 12, l: 2, pct: ".857" },
-                    { name: "Penn State Nittany Lions", w: 11, l: 3, pct: ".786" }, { name: "Indiana Hoosiers", w: 11, l: 2, pct: ".846" },
-                    { name: "Illinois Fighting Illini", w: 10, l: 3, pct: ".769" }, { name: "Michigan Wolverines", w: 8, l: 5, pct: ".615" }
+                    { name: "Ohio State Buckeyes", w: 1, l: 0, pct: "1.000" }, { name: "Indiana Hoosiers", w: 1, l: 0, pct: "1.000" },
+                    { name: "Oregon Ducks", w: 1, l: 0, pct: "1.000" }, { name: "Penn State Nittany Lions", w: 1, l: 0, pct: "1.000" },
+                    { name: "Washington Huskies", w: 1, l: 0, pct: "1.000" }, { name: "Iowa Hawkeyes", w: 1, l: 0, pct: "1.000" }
                 ],
                 "Big 12": [
-                    { name: "Arizona State Sun Devils", w: 11, l: 3, pct: ".786" }, { name: "Kansas State Wildcats", w: 9, l: 4, pct: ".692" },
-                    { name: "Iowa State Cyclones", w: 11, l: 3, pct: ".786" }, { name: "BYU Cougars", w: 11, l: 2, pct: ".846" },
-                    { name: "Colorado Buffaloes", w: 9, l: 4, pct: ".692" }
+                    { name: "Texas Tech Red Raiders", w: 1, l: 0, pct: "1.000" }, { name: "BYU Cougars", w: 1, l: 0, pct: "1.000" },
+                    { name: "Houston Cougars", w: 1, l: 0, pct: "1.000" }, { name: "Utah Utes", w: 1, l: 0, pct: "1.000" }
                 ],
                 "ACC": [
-                    { name: "Clemson Tigers", w: 10, l: 3, pct: ".769" }, { name: "Miami Hurricanes", w: 10, l: 3, pct: ".769" },
-                    { name: "SMU Mustangs", w: 11, l: 3, pct: ".786" }, { name: "Syracuse Orange", w: 10, l: 3, pct: ".769" }
+                    { name: "Miami Hurricanes", w: 1, l: 0, pct: "1.000" }, { name: "SMU Mustangs", w: 1, l: 0, pct: "1.000" },
+                    { name: "Louisville Cardinals", w: 0, l: 1, pct: ".000" }, { name: "Virginia Cavaliers", w: 1, l: 0, pct: "1.000" }
                 ]
             },
             "CBB": {
                 "AP Top 25": [
-                    { name: "1. UConn Huskies", w: 37, l: 3, pct: ".925" }, { name: "2. Houston Cougars", w: 32, l: 5, pct: ".865" },
-                    { name: "3. Purdue Boilermakers", w: 34, l: 5, pct: ".872" }, { name: "4. North Carolina Tar Heels", w: 29, l: 8, pct: ".784" },
-                    { name: "5. Tennessee Volunteers", w: 27, l: 9, pct: ".750" }, { name: "6. Arizona Wildcats", w: 27, l: 9, pct: ".750" },
-                    { name: "7. Iowa State Cyclones", w: 29, l: 8, pct: ".784" }, { name: "8. Marquette Golden Eagles", w: 27, l: 10, pct: ".730" },
-                    { name: "9. Baylor Bears", w: 24, l: 11, pct: ".686" }, { name: "10. Creighton Bluejays", w: 25, l: 10, pct: ".714" },
-                    { name: "11. Duke Blue Devils", w: 27, l: 9, pct: ".750" }, { name: "12. Auburn Tigers", w: 27, l: 8, pct: ".771" },
-                    { name: "13. Illinois Fighting Illini", w: 29, l: 9, pct: ".763" }, { name: "14. Alabama Crimson Tide", w: 25, l: 12, pct: ".676" },
-                    { name: "15. Kansas Jayhawks", w: 23, l: 11, pct: ".676" }, { name: "16. Kentucky Wildcats", w: 23, l: 10, pct: ".697" },
-                    { name: "17. Saint Mary's Gaels", w: 26, l: 8, pct: ".765" }, { name: "18. South Carolina Gamecocks", w: 26, l: 8, pct: ".765" },
-                    { name: "19. Washington State Cougars", w: 25, l: 10, pct: ".714" }, { name: "20. Utah State Aggies", w: 28, l: 7, pct: ".800" },
-                    { name: "21. Wisconsin Badgers", w: 22, l: 14, pct: ".611" }, { name: "22. Texas Tech Red Raiders", w: 23, l: 11, pct: ".676" },
-                    { name: "23. San Diego State Aztecs", w: 26, l: 11, pct: ".703" }, { name: "24. Florida Gators", w: 24, l: 12, pct: ".667" },
-                    { name: "25. BYU Cougars", w: 23, l: 11, pct: ".676" }
+                    { name: "1. Michigan Wolverines", w: 37, l: 3, pct: ".925" }, { name: "2. UConn Huskies", w: 34, l: 6, pct: ".850" },
+                    { name: "3. Arizona Wildcats", w: 36, l: 3, pct: ".923" }, { name: "4. Duke Blue Devils", w: 35, l: 3, pct: ".921" },
+                    { name: "5. Illinois Fighting Illini", w: 28, l: 9, pct: ".757" }, { name: "6. Purdue Boilermakers", w: 30, l: 9, pct: ".769" },
+                    { name: "7. Houston Cougars", w: 30, l: 7, pct: ".811" }, { name: "8. Iowa State Cyclones", w: 29, l: 8, pct: ".784" },
+                    { name: "9. Florida Gators", w: 27, l: 8, pct: ".771" }, { name: "10. St. John's Red Storm", w: 30, l: 7, pct: ".811" },
+                    { name: "11. Michigan State Spartans", w: 27, l: 8, pct: ".771" }, { name: "12. Tennessee Volunteers", w: 25, l: 12, pct: ".676" },
+                    { name: "13. Arkansas Razorbacks", w: 28, l: 9, pct: ".757" }, { name: "14. Nebraska Cornhuskers", w: 28, l: 7, pct: ".800" },
+                    { name: "15. Iowa Hawkeyes", w: 24, l: 13, pct: ".649" }, { name: "16. Alabama Crimson Tide", w: 25, l: 10, pct: ".714" },
+                    { name: "17. Virginia Cavaliers", w: 30, l: 6, pct: ".833" }, { name: "18. Gonzaga Bulldogs", w: 31, l: 4, pct: ".886" },
+                    { name: "19. Vanderbilt Commodores", w: 27, l: 9, pct: ".750" }, { name: "20. Kansas Jayhawks", w: 24, l: 11, pct: ".686" },
+                    { name: "21. Texas Tech Red Raiders", w: 23, l: 11, pct: ".676" }, { name: "22. Texas Longhorns", w: 21, l: 15, pct: ".583" },
+                    { name: "23. Louisville Cardinals", w: 24, l: 11, pct: ".686" }, { name: "24. Miami Hurricanes", w: 26, l: 9, pct: ".743" },
+                    { name: "25. Wisconsin Badgers", w: 24, l: 11, pct: ".686" }
                 ],
                 "FCS": [
                     { name: "1. Nova Southeastern Sharks", w: 36, l: 0, pct: "1.000" },
@@ -293,26 +291,28 @@
                     { name: "5. Black Hills State", w: 27, l: 8, pct: ".771" }
                 ],
                 "Big East": [
-                    { name: "UConn Huskies", w: 37, l: 3, pct: ".925" }, { name: "Marquette Golden Eagles", w: 27, l: 10, pct: ".730" },
-                    { name: "Creighton Bluejays", w: 25, l: 10, pct: ".714" }, { name: "Seton Hall Pirates", w: 25, l: 12, pct: ".676" }
+                    { name: "UConn Huskies", w: 34, l: 6, pct: ".850" }, { name: "St. John's Red Storm", w: 30, l: 7, pct: ".811" },
+                    { name: "Marquette Golden Eagles", w: 27, l: 10, pct: ".730" }, { name: "Creighton Bluejays", w: 25, l: 10, pct: ".714" }
                 ],
                 "Big 12": [
-                    { name: "Houston Cougars", w: 32, l: 5, pct: ".865" }, { name: "Iowa State Cyclones", w: 29, l: 8, pct: ".784" },
-                    { name: "Baylor Bears", w: 24, l: 11, pct: ".686" }, { name: "Kansas Jayhawks", w: 23, l: 11, pct: ".676" },
-                    { name: "Texas Tech Red Raiders", w: 23, l: 11, pct: ".676" }, { name: "BYU Cougars", w: 23, l: 11, pct: ".676" }
+                    { name: "Houston Cougars", w: 30, l: 7, pct: ".811" }, { name: "Iowa State Cyclones", w: 29, l: 8, pct: ".784" },
+                    { name: "Kansas Jayhawks", w: 24, l: 11, pct: ".686" }, { name: "Texas Tech Red Raiders", w: 23, l: 11, pct: ".676" },
+                    { name: "Texas Longhorns", w: 21, l: 15, pct: ".583" }
                 ],
                 "SEC": [
-                    { name: "Tennessee Volunteers", w: 27, l: 9, pct: ".750" }, { name: "Auburn Tigers", w: 27, l: 8, pct: ".771" },
-                    { name: "Alabama Crimson Tide", w: 25, l: 12, pct: ".676" }, { name: "Kentucky Wildcats", w: 23, l: 10, pct: ".697" },
-                    { name: "South Carolina Gamecocks", w: 26, l: 8, pct: ".765" }, { name: "Florida Gators", w: 24, l: 12, pct: ".667" }
+                    { name: "Florida Gators", w: 27, l: 8, pct: ".771" }, { name: "Tennessee Volunteers", w: 25, l: 12, pct: ".676" },
+                    { name: "Arkansas Razorbacks", w: 28, l: 9, pct: ".757" }, { name: "Alabama Crimson Tide", w: 25, l: 10, pct: ".714" },
+                    { name: "Vanderbilt Commodores", w: 27, l: 9, pct: ".750" }
                 ],
                 "Big Ten": [
-                    { name: "Purdue Boilermakers", w: 34, l: 5, pct: ".872" }, { name: "Illinois Fighting Illini", w: 29, l: 9, pct: ".763" },
-                    { name: "Wisconsin Badgers", w: 22, l: 14, pct: ".611" }, { name: "Nebraska Cornhuskers", w: 23, l: 11, pct: ".676" }
+                    { name: "Michigan Wolverines", w: 37, l: 3, pct: ".925" }, { name: "Illinois Fighting Illini", w: 28, l: 9, pct: ".757" },
+                    { name: "Purdue Boilermakers", w: 30, l: 9, pct: ".769" }, { name: "Michigan State Spartans", w: 27, l: 8, pct: ".771" },
+                    { name: "Nebraska Cornhuskers", w: 28, l: 7, pct: ".800" }, { name: "Iowa Hawkeyes", w: 24, l: 13, pct: ".649" },
+                    { name: "Wisconsin Badgers", w: 24, l: 11, pct: ".686" }
                 ],
                 "ACC": [
-                    { name: "North Carolina Tar Heels", w: 29, l: 8, pct: ".784" }, { name: "Duke Blue Devils", w: 27, l: 9, pct: ".750" },
-                    { name: "Clemson Tigers", w: 24, l: 12, pct: ".667" }, { name: "Virginia Cavaliers", w: 23, l: 11, pct: ".676" }
+                    { name: "Duke Blue Devils", w: 35, l: 3, pct: ".921" }, { name: "Virginia Cavaliers", w: 30, l: 6, pct: ".833" },
+                    { name: "Louisville Cardinals", w: 24, l: 11, pct: ".686" }, { name: "Miami Hurricanes", w: 26, l: 9, pct: ".743" }
                 ]
             }
         };
