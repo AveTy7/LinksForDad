@@ -1,189 +1,214 @@
 {
     "boxing": [
         {
-            "weight": "Heavyweight",
-            "wba": "Tyson Fury",
-            "wbc": "Oleksandr Usyk",
-            "ibf": "Oleksandr Usyk",
-            "wbo": "Oleksandr Usyk"
-        },
-        {
-            "weight": "Cruiserweight",
-            "wba": "Gilberto Ramirez",
-            "wbc": "Noel Mikaelyan",
-            "ibf": "Jai Opetaia",
-            "wbo": "Chris Billam-Smith"
-        },
-        {
-            "weight": "Light Heavyweight",
-            "wba": "Dmitry Bivol",
-            "wbc": "Artur Beterbiev",
-            "ibf": "Artur Beterbiev",
-            "wbo": "Artur Beterbiev"
-        },
-        {
-            "weight": "Super Middleweight",
-            "wba": "Saúl Álvarez",
-            "wbc": "Saúl Álvarez",
-            "ibf": "Saúl Álvarez",
-            "wbo": "Saúl Álvarez"
-        },
-        {
-            "weight": "Middleweight",
-            "wba": "Erislandy Lara",
-            "wbc": "Carlos Adames",
-            "ibf": "Janibek Alimkhanuly",
-            "wbo": "Janibek Alimkhanuly"
-        },
-        {
-            "weight": "Welterweight",
-            "wba": "Eimantas Stanionis",
-            "wbc": "Mario Barrios",
-            "ibf": "Jaron Ennis",
-            "wbo": "Brian Norman Jr."
-        },
-        {
-            "weight": "Lightweight",
-            "wba": "Gervonta Davis",
-            "wbc": "Shakur Stevenson",
-            "ibf": "Vasiliy Lomachenko",
-            "wbo": "Denys Berinchyk"
-        },
-        {
-            "weight": "Featherweight",
-            "wba": "Nick Ball",
-            "wbc": "Rey Vargas",
-            "ibf": "Angelo Leo",
-            "wbo": "Rafael Espinoza"
+            "weight": "Murat Gassiev34\u20132 (1) (27 KO)July 1, 2026",
+            "wba": "Agit Kabayel27\u20130 (19 KO)June 27, 2026",
+            "wbc": "Filip Hrgovi\u010721\u20131 (16 KO)August 29, 2026",
+            "ibf": "Daniel Dubois23\u20133 (22 KO)May 9, 2026",
+            "wbo": "Oleksandr Usyk25\u20130 (16 KO)August 20, 2022"
         }
     ],
     "ufc": [
         {
-            "weight": "Heavyweight",
-            "champion": "Tom Aspinall",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Ciryl Gane",
-                "Alexander Volkov",
-                "Sergei Pavlovich",
-                "Curtis Blaydes",
-                "Waldo Cortes Acosta",
-                "Jailton Almeida",
-                "Marcin Tybura",
-                "Derrick Lewis",
-                "Tai Tuivasa",
-                "Sergey Spivak"
+                "Move up",
+                "No change",
+                "Move down",
+                "Not previously ranked"
             ]
         },
         {
-            "weight": "Light Heavyweight",
-            "champion": "Alex Pereira",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Magomed Ankalaev",
-                "Jamahal Hill",
-                "Jiri Prochazka",
-                "Jan Blachowicz",
-                "Aleksandar Rakic",
-                "Khalil Rountree Jr.",
-                "Volkan Oezdemir",
-                "Nikita Krylov",
-                "Azizbek Temirov",
-                "Dominick Reyes"
+                "ISO",
+                "Event"
             ]
         },
         {
-            "weight": "Middleweight",
-            "champion": "Dricus du Plessis",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Sean Strickland",
-                "Israel Adesanya",
-                "Robert Whittaker",
-                "Nasourdine Imavov",
-                "Marvin Vettori",
-                "Jared Cannonier",
-                "Brendan Allen",
-                "Paulo Costa",
-                "Roman Dolidze",
-                "Jack Hermansson"
+                "ISO",
+                "Event"
             ]
         },
         {
-            "weight": "Welterweight",
-            "champion": "Belal Muhammad",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Leon Edwards",
-                "Kamaru Usman",
-                "Shavkat Rakhmonov",
-                "Jack Della Maddalena",
-                "Colby Covington",
-                "Sean Brady",
-                "Ian Machado Garry",
-                "Gilbert Burns",
-                "Michael Morales",
-                "Joaquin Buckley"
+                "ISO",
+                "Event"
             ]
         },
         {
-            "weight": "Lightweight",
-            "champion": "Islam Makhachev",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Arman Tsarukyan",
-                "Charles Oliveira",
-                "Justin Gaethje",
-                "Dustin Poirier",
-                "Max Holloway",
-                "Dan Hooker",
-                "Beneil Dariush",
-                "Renato Moicano",
-                "Benoit Saint Denis",
-                "Mateusz Gamrot"
+                "ISO",
+                "Event"
             ]
         },
         {
-            "weight": "Featherweight",
-            "champion": "Ilia Topuria",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Alexander Volkanovski",
-                "Max Holloway",
-                "Movsar Evloev",
-                "Diego Lopes",
-                "Yair Rodriguez",
-                "Arnold Allen",
-                "Brian Ortega",
-                "Josh Emmett",
-                "Lerone Murphy",
-                "Calvin Kattar"
+                "ISO",
+                "Event"
             ]
         },
         {
-            "weight": "Bantamweight",
-            "champion": "Merab Dvalishvili",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Sean O'Malley",
-                "Cory Sandhagen",
-                "Petr Yan",
-                "Umar Nurmagomedov",
-                "Deiveson Figueiredo",
-                "Marlon Vera",
-                "Henry Cejudo",
-                "Song Yadong",
-                "Rob Font",
-                "Kyler Phillips"
+                "ISO",
+                "Event"
             ]
         },
         {
-            "weight": "Flyweight",
-            "champion": "Alexandre Pantoja",
+            "weight": "]",
+            "champion": "Vacant",
             "rankings": [
-                "Brandon Royval",
-                "Kai Asakura",
-                "Amir Albazi",
-                "Brandon Moreno",
-                "Manel Kape",
-                "Tatsuro Taira",
-                "Tim Elliott",
-                "Alex Perez",
-                "Steve Erceg",
-                "Bruno Silva"
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "",
+            "rankings": [
+                "ISO",
+                "Opponent"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "",
+            "rankings": [
+                "ISO",
+                "Opponent"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
+            ]
+        },
+        {
+            "weight": "]",
+            "champion": "Vacant",
+            "rankings": [
+                "ISO",
+                "Event"
             ]
         }
     ]
