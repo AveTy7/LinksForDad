@@ -12,24 +12,64 @@ def scrape_boxing():
   boxing_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
 
-  if tables:
-    table = tables[0]
-    rows = table.find_all("tr")[1:]
-    for row in rows:
-      cols = row.find_all(["th", "td"])
-      if len(cols) >= 5:
-        weight = cols[0].get_text(strip=True).split("[")[0]
-        wba = cols[1].get_text(strip=True).split("[")[0]
-        wbc = cols[2].get_text(strip=True).split("[")[0]
-        ibf = cols[3].get_text(strip=True).split("[")[0]
-        wbo = cols[4].get_text(strip=True).split("[")[0]
-        boxing_data.append({
-            "weight": weight,
-            "wba": wba,
-            "wbc": wbc,
-            "ibf": ibf,
-            "wbo": wbo,
-        })
+  for table in tables:
+    rows = table.find_all("tr")
+    if len(rows) < 2:
+      continue
+
+    # Identify weight class from the preceding h3 or table headers
+    weight_name = "Unknown"
+    prev_h3 = table.find_previous(["h3", "h4", "span"])
+    if prev_h3:
+      headline = prev_h3.find("span", {"class": "mw-headline"})
+      if headline:
+        weight_name = headline.get_text(strip=True)
+      else:
+        weight_name = prev_h3.get_text(strip=True)
+
+    # Clean up weight name string
+    weight_name = (
+        weight_name.split("(")[0]
+        .replace("Men's", "")
+        .replace("Women's", "")
+        .strip()
+    )
+
+    # Check if this table actually contains champion organizations (WBA, WBC, etc.)
+    header_row = rows[0].get_text()
+    if "WBA" in header_row and "WBC" in header_row:
+      # Look for the row containing the primary champions
+      for row in rows[1:]:
+        cols = row.find_all(["th", "td"])
+        # Standard layout has 5+ columns: Division/Notes + 4 major bodies
+        if len(cols) >= 5:
+          wba = cols[0].get_text(strip=True).split("[")[0]
+          wbc = cols[1].get_text(strip=True).split("[")[0]
+          ibf = cols[2].get_text(strip=True).split("[")[0]
+          wbo = cols[3].get_text(strip=True).split("[")[0]
+
+          # Sometimes the weight name is embedded in the first column
+          potential_weight = cols[0].get_text(strip=True)
+          if (
+              "lb" in potential_weight
+              or "kg" in potential_weight
+              or "Heavyweight" in potential_weight
+          ):
+            weight_name = potential_weight.split("(")[0].strip()
+            wba = cols[1].get_text(strip=True).split("[")[0]
+            wbc = cols[2].get_text(strip=True).split("[")[0]
+            ibf = cols[3].get_text(strip=True).split("[")[0]
+            wbo = cols[4].get_text(strip=True).split("[")[0]
+
+          boxing_data.append({
+              "weight": weight_name if weight_name else "Division",
+              "wba": wba,
+              "wbc": wbc,
+              "ibf": ibf,
+              "wbo": wbo,
+          })
+          break  # Found the champion row for this table
+
   return boxing_data
 
 
