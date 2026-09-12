@@ -378,30 +378,35 @@
             const config = LEAGUES[activeLeague];
             if (config.isBoxing) {
                 return {
-                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Major Boxing Champions & Top 5 Rankings</button></div>`,
+                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Major Boxing Champions</button></div>`,
                     subpage: `<div class="subpage-container" id="subpage-view">
                         <div class="subpage-header">
-                            <span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions & Rankings</span>
+                            <span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions</span>
                             <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button>
                         </div>
                         <div class="champions-grid">
-                            ${BOXING_CHAMPIONS.map(div => `
-                                <div class="ufc-div-card" onclick="toggleUfcDivision(this)">
-                                    <div class="ufc-div-header">
-                                        <span class="ufc-div-title">${div.weight}</span>
-                                        <span class="ufc-champ-preview"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span>
-                                    </div>
-                                    <div class="ufc-rankings-body">
-                                        <div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 5 Contenders / Belts:</div>
-                                        ${div.rankings.map((f, i) => `
-                                            <div class="ufc-rank-row">
-                                                <span class="rank-num">#${i + 1}</span>
-                                                <span class="rank-name">${f}</span>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            `).join('')}
+                            <table class="espn-standings-table">
+                                <thead>
+                                    <tr>
+                                        <th>Division</th>
+                                        <th>WBA</th>
+                                        <th>WBC</th>
+                                        <th>IBF</th>
+                                        <th>WBO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${BOXING_CHAMPIONS.map(div => `
+                                        <tr>
+                                            <td style="font-weight:700; color:#60a5fa;">${div.weight}</td>
+                                            <td>${div.wba}</td>
+                                            <td>${div.wbc}</td>
+                                            <td>${div.ibf}</td>
+                                            <td>${div.wbo}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
                         </div>
                     </div>`
                 };
@@ -638,7 +643,7 @@
                                 <div class="team-text-stack">
                                     <span class="team-city">${g.awayCity}</span>
                                     <span class="team-name">${g.awayTeam}</span>
-                                </div>
+                                 </div>
                                 <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
                             </div>
                             <div class="info">
