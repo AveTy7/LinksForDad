@@ -68,7 +68,7 @@
         }
         .close-subpage-btn:hover { background: #334155; }
 
-        .champions-grid { display: flex; flex-direction: column; gap: 6px; max-height: 440px; overflow-y: auto; padding-right: 2px; }
+        .champions-grid { display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; padding-right: 2px; }
         .champions-grid::-webkit-scrollbar { width: 4px; }
         .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
@@ -79,7 +79,23 @@
         .weight-name { font-weight: 700; color: #60a5fa; width: 35%; }
         .weight-champs { width: 65%; text-align: right; font-weight: 600; color: var(--text); }
 
-        /* Accordion Structure for Standings/Rankings */
+        /* ESPN-style Standings Table Layout */
+        .espn-standings-table {
+            width: 100%; border-collapse: collapse; background: var(--bg); border-radius: 6px; overflow: hidden; margin-bottom: 8px; font-size: 0.75rem;
+        }
+        .espn-standings-table th {
+            background: rgba(30, 41, 59, 0.7); color: var(--muted); text-align: left; padding: 6px 8px; font-weight: 700;
+        }
+        .espn-standings-table th.num-col, .espn-standings-table td.num-col { text-align: center; width: 40px; }
+        .espn-standings-table td {
+            padding: 6px 8px; border-bottom: 1px solid rgba(30, 41, 59, 0.4); color: var(--text);
+        }
+        .espn-standings-table tr:last-child td { border-bottom: none; }
+        .espn-div-title {
+            font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
+        }
+
+        /* Accordion Structure for UFC */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
         }
@@ -98,8 +114,8 @@
             display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem; border-bottom: 1px solid rgba(30, 41, 59, 0.5);
         }
         .ufc-rank-row:last-child { border-bottom: none; }
-        .rank-num { color: var(--muted); font-weight: 700; width: 120px; }
-        .rank-name { flex: 1; font-weight: 600; text-align: right; color: var(--text); }
+        .rank-num { color: var(--muted); font-weight: 700; width: 40px; }
+        .rank-name { flex: 1; font-weight: 600; text-align: left; color: var(--text); }
 
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 10px;
@@ -124,7 +140,7 @@
         .status.live { color: var(--live); font-weight: 700; }
         
         .stream-link-container {
-            border-top: 1px solid var(--border); padding-top: 6px; display: flex; flex-wrap: gap; gap: 6px;
+            border-top: 1px solid var(--border); padding-top: 6px; display: flex; flex-wrap: wrap; gap: 6px;
         }
         .stream-btn {
             background: var(--stream); color: white; text-decoration: none;
@@ -168,39 +184,163 @@
 
         const STANDINGS_DATA = {
             "NFL": [
-                { division: "AFC East", teams: ["Buffalo Bills", "New York Jets", "Miami Dolphins", "New England Patriots"] },
-                { division: "AFC North", teams: ["Baltimore Ravens", "Pittsburgh Steelers", "Cincinnati Bengals", "Cleveland Browns"] },
-                { division: "AFC South", teams: ["Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans"] },
-                { division: "AFC West", teams: ["Kansas City Chiefs", "Los Angeles Chargers", "Denver Broncos", "Las Vegas Raiders"] },
-                { division: "NFC East", teams: ["Philadelphia Eagles", "Dallas Cowboys", "Washington Commanders", "New York Giants"] },
-                { division: "NFC North", teams: ["Detroit Lions", "Green Bay Packers", "Minnesota Vikings", "Chicago Bears"] },
-                { division: "NFC South", teams: ["Tampa Bay Buccaneers", "Atlanta Falcons", "New Orleans Saints", "Carolina Panthers"] },
-                { division: "NFC West", teams: ["San Francisco 49ers", "Los Angeles Rams", "Arizona Cardinals", "Seattle Seahawks"] }
+                { 
+                    division: "AFC East", 
+                    teams: [
+                        { name: "Buffalo Bills", w: 11, l: 6, pct: ".647" },
+                        { name: "Miami Dolphins", w: 8, l: 9, pct: ".471" },
+                        { name: "New York Jets", w: 5, l: 12, pct: ".294" },
+                        { name: "New England Patriots", w: 4, l: 13, pct: ".235" }
+                    ]
+                },
+                { 
+                    division: "AFC North", 
+                    teams: [
+                        { name: "Baltimore Ravens", w: 12, l: 5, pct: ".706" },
+                        { name: "Pittsburgh Steelers", w: 10, l: 7, pct: ".588" },
+                        { name: "Cleveland Browns", w: 3, l: 14, pct: ".176" },
+                        { name: "Cincinnati Bengals", w: 9, l: 8, pct: ".529" }
+                    ]
+                },
+                { 
+                    division: "AFC South", 
+                    teams: [
+                        { name: "Houston Texans", w: 10, l: 7, pct: ".588" },
+                        { name: "Indianapolis Colts", w: 9, l: 8, pct: ".529" },
+                        { name: "Jacksonville Jaguars", w: 4, l: 13, pct: ".235" },
+                        { name: "Tennessee Titans", w: 3, l: 14, pct: ".176" }
+                    ]
+                },
+                { 
+                    division: "AFC West", 
+                    teams: [
+                        { name: "Kansas City Chiefs", w: 14, l: 3, pct: ".824" },
+                        { name: "Los Angeles Chargers", w: 9, l: 8, pct: ".529" },
+                        { name: "Denver Broncos", w: 8, l: 9, pct: ".471" },
+                        { name: "Las Vegas Raiders", w: 4, l: 13, pct: ".235" }
+                    ]
+                },
+                { 
+                    division: "NFC East", 
+                    teams: [
+                        { name: "Philadelphia Eagles", w: 11, l: 6, pct: ".647" },
+                        { name: "Washington Commanders", w: 10, l: 7, pct: ".588" },
+                        { name: "Dallas Cowboys", w: 7, l: 10, pct: ".412" },
+                        { name: "New York Giants", w: 3, l: 14, pct: ".176" }
+                    ]
+                },
+                { 
+                    division: "NFC North", 
+                    teams: [
+                        { name: "Detroit Lions", w: 15, l: 2, pct: ".882" },
+                        { name: "Green Bay Packers", w: 11, l: 6, pct: ".647" },
+                        { name: "Minnesota Vikings", w: 10, l: 7, pct: ".588" },
+                        { name: "Chicago Bears", w: 5, l: 12, pct: ".294" }
+                    ]
+                },
+                { 
+                    division: "NFC South", 
+                    teams: [
+                        { name: "Tampa Bay Buccaneers", w: 9, l: 8, pct: ".529" },
+                        { name: "Atlanta Falcons", w: 8, l: 9, pct: ".471" },
+                        { name: "New Orleans Saints", w: 5, l: 12, pct: ".294" },
+                        { name: "Carolina Panthers", w: 3, l: 14, pct: ".176" }
+                    ]
+                },
+                { 
+                    division: "NFC West", 
+                    teams: [
+                        { name: "San Francisco 49ers", w: 12, l: 5, pct: ".706" },
+                        { name: "Los Angeles Rams", w: 10, l: 7, pct: ".588" },
+                        { name: "Arizona Cardinals", w: 8, l: 9, pct: ".471" },
+                        { name: "Seattle Seahawks", w: 7, l: 10, pct: ".412" }
+                    ]
+                }
             ],
             "NBA": [
-                { division: "Eastern - Atlantic", teams: ["Boston Celtics", "New York Knicks", "Philadelphia 76ers", "Brooklyn Nets", "Toronto Raptors"] },
-                { division: "Eastern - Central", teams: ["Cleveland Cavaliers", "Milwaukee Bucks", "Indiana Pacers", "Chicago Bulls", "Detroit Pistons"] },
-                { division: "Eastern - Southeast", teams: ["Orlando Magic", "Miami Heat", "Atlanta Hawks", "Charlotte Hornets", "Washington Wizards"] },
-                { division: "Western - Northwest", teams: ["Oklahoma City Thunder", "Denver Broncos / Timberwolves", "Utah Jazz", "Portland Trail Blazers"] },
-                { division: "Western - Pacific", teams: ["Los Angeles Lakers", "Golden State Warriors", "Phoenix Suns", "Los Angeles Clippers", "Sacramento Kings"] },
-                { division: "Western - Southwest", teams: ["Dallas Mavericks", "Houston Rockets", "Memphis Grizzlies", "New Orleans Pelicans", "San Antonio Spurs"] }
+                {
+                    division: "Eastern Conference - Atlantic",
+                    teams: [
+                        { name: "Boston Celtics", w: 61, l: 21, pct: ".744" },
+                        { name: "New York Knicks", w: 50, l: 32, pct: ".610" },
+                        { name: "Philadelphia 76ers", w: 47, l: 35, pct: ".573" },
+                        { name: "Brooklyn Nets", w: 32, l: 50, pct: ".390" },
+                        { name: "Toronto Raptors", w: 25, l: 57, pct: ".305" }
+                    ]
+                },
+                {
+                    division: "Eastern Conference - Central",
+                    teams: [
+                        { name: "Milwaukee Bucks", w: 49, l: 33, pct: ".598" },
+                        { name: "Cleveland Cavaliers", w: 48, l: 34, pct: ".585" },
+                        { name: "Indiana Pacers", w: 47, l: 35, pct: ".573" },
+                        { name: "Chicago Bulls", w: 39, l: 43, pct: ".476" },
+                        { name: "Detroit Pistons", w: 14, l: 68, pct: ".171" }
+                    ]
+                },
+                {
+                    division: "Western Conference - Pacific",
+                    teams: [
+                        { name: "Oklahoma City Thunder", w: 57, l: 25, pct: ".695" },
+                        { name: "Denver Nuggets", w: 57, l: 25, pct: ".695" },
+                        { name: "Minnesota Timberwolves", w: 56, l: 26, pct: ".683" },
+                        { name: "Utah Jazz", w: 31, l: 51, pct: ".378" },
+                        { name: "Portland Trail Blazers", w: 21, l: 61, pct: ".256" }
+                    ]
+                }
             ],
             "MLB": [
-                { division: "AL East", teams: ["New York Yankees", "Baltimore Orioles", "Boston Red Sox", "Tampa Bay Rays", "Toronto Blue Jays"] },
-                { division: "AL Central", teams: ["Cleveland Guardians", "Minnesota Twins", "Kansas City Royals", "Detroit Tigers", "Chicago White Sox"] },
-                { division: "AL West", teams: ["Houston Astros", "Seattle Seahawks / Rangers", "Oakland Athletics", "Los Angeles Angels"] },
-                { division: "NL East", teams: ["Philadelphia Eagles / Braves", "Philadelphia Phillies", "New York Mets", "Washington Nationals", "Miami Marlins"] },
-                { division: "NL Central", teams: ["Milwaukee Brewers", "Chicago Cubs", "St. Louis Cardinals", "Cincinnati Reds", "Pittsburgh Pirates"] },
-                { division: "NL West", teams: ["Los Angeles Dodgers", "San Diego Padres", "Arizona Diamondbacks", "San Francisco Giants", "Colorado Rockies"] }
+                {
+                    division: "AL East",
+                    teams: [
+                        { name: "New York Yankees", w: 94, l: 68, pct: ".580" },
+                        { name: "Baltimore Orioles", w: 91, l: 71, pct: ".562" },
+                        { name: "Boston Red Sox", w: 81, l: 81, pct: ".500" },
+                        { name: "Tampa Bay Rays", w: 80, l: 82, pct: ".494" },
+                        { name: "Toronto Blue Jays", w: 74, l: 88, pct: ".457" }
+                    ]
+                },
+                {
+                    division: "NL West",
+                    teams: [
+                        { name: "Los Angeles Dodgers", w: 98, l: 64, pct: ".605" },
+                        { name: "San Diego Padres", w: 93, l: 69, pct: ".574" },
+                        { name: "Arizona Diamondbacks", w: 89, l: 73, pct: ".549" },
+                        { name: "San Francisco Giants", w: 80, l: 82, pct: ".494" },
+                        { name: "Colorado Rockies", w: 61, l: 101, pct: ".377" }
+                    ]
+                }
             ],
             "CFB": [
-                { division: "SEC", teams: ["Georgia Bulldogs", "Texas Longhorns", "Alabama Crimson Tide", "Ole Miss Rebels", "Tennessee Volunteers", "LSU Tigers"] },
-                { division: "Big Ten", teams: ["Ohio State Buckeyes", "Oregon Ducks", "Penn State Nittany Lions", "Michigan Wolverines", "USC Trojans"] },
-                { division: "Big 12", teams: ["Utah Utes", "Kansas State Wildcats", "Iowa State Cyclones", "Oklahoma State Cowboys", "Arizona Wildcats"] },
-                { division: "ACC", teams: ["Miami Hurricanes", "Clemson Tigers", "Florida State Seminoles", "Louisville Cardinals", "NC State Wolfpack"] }
+                {
+                    division: "SEC Leaders",
+                    teams: [
+                        { name: "Texas Longhorns", w: 13, l: 2, pct: ".867" },
+                        { name: "Georgia Bulldogs", w: 11, l: 3, pct: ".786" },
+                        { name: "Alabama Crimson Tide", w: 9, l: 4, pct: ".692" },
+                        { name: "Ole Miss Rebels", w: 10, l: 3, pct: ".769" }
+                    ]
+                },
+                {
+                    division: "Big Ten Leaders",
+                    teams: [
+                        { name: "Oregon Ducks", w: 13, l: 1, pct: ".929" },
+                        { name: "Ohio State Buckeyes", w: 12, l: 2, pct: ".857" },
+                        { name: "Penn State Nittany Lions", w: 11, l: 3, pct: ".786" },
+                        { name: "Michigan Wolverines", w: 8, l: 5, pct: ".615" }
+                    ]
+                }
             ],
             "CBB": [
-                { division: "Top Tier Conferences", teams: ["Big East", "Big 12", "SEC", "Big Ten", "ACC", "Pac-12 / WCC"] }
+                {
+                    division: "Top Conferences",
+                    teams: [
+                        { name: "Big 12", w: 0, l: 0, pct: ".000" },
+                        { name: "SEC", w: 0, l: 0, pct: ".000" },
+                        { name: "Big Ten", w: 0, l: 0, pct: ".000" },
+                        { name: "Big East", w: 0, l: 0, pct: ".000" }
+                    ]
+                }
             ]
         };
 
@@ -369,19 +509,28 @@
                         </div>
                         <div class="champions-grid">
                             ${leagueStandings.map(div => `
-                                <div class="ufc-div-card" onclick="toggleUfcDivision(this)">
-                                    <div class="ufc-div-header">
-                                        <span class="ufc-div-title">${div.division}</span>
-                                        <span class="ufc-champ-preview">View Teams <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span>
-                                    </div>
-                                    <div class="ufc-rankings-body">
-                                        ${div.teams.map((t, i) => `
-                                            <div class="ufc-rank-row">
-                                                <span class="rank-num">Team ${i + 1}</span>
-                                                <span class="rank-name">${t}</span>
-                                            </div>
-                                        `).join('')}
-                                    </div>
+                                <div>
+                                    <div class="espn-div-title">${div.division}</div>
+                                    <table class="espn-standings-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Team</th>
+                                                <th class="num-col">W</th>
+                                                <th class="num-col">L</th>
+                                                <th class="num-col">PCT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${div.teams.map(t => `
+                                                <tr>
+                                                    <td>${t.name}</td>
+                                                    <td class="num-col">${t.w}</td>
+                                                    <td class="num-col">${t.l}</td>
+                                                    <td class="num-col">${t.pct}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
                                 </div>
                             `).join('')}
                         </div>
@@ -521,7 +670,7 @@
             } else if (config.hasStandings) {
                 const leagueStandings = STANDINGS_DATA[activeLeague] || [];
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${config.standingsLabel}</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${config.standingsLabel}</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${leagueStandings.map(div => `<div class="ufc-div-card" onclick="toggleUfcDivision(this)"><div class="ufc-div-header"><span class="ufc-div-title">${div.division}</span><span class="ufc-champ-preview">View Teams <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span></div><div class="ufc-rankings-body">${div.teams.map((t, i) => `<div class="ufc-rank-row"><span class="rank-num">Team ${i + 1}</span><span class="rank-name">${t}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${config.standingsLabel}</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${leagueStandings.map(div => `<div><div class="espn-div-title">${div.division}</div><table class="espn-standings-table"><thead><tr><th>Team</th><th class="num-col">W</th><th class="num-col">L</th><th class="num-col">PCT</th></tr></thead><tbody>${div.teams.map(t => `<tr><td>${t.name}</td><td class="num-col">${t.w}</td><td class="num-col">${t.l}</td><td class="num-col">${t.pct}</td></tr>`).join('')}</tbody></table></div>`).join('')}</div></div>`;
             }
 
             if (sel === "ALL") renderGames(currentGames, topActionHtml, subpageHtml);
