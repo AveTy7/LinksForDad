@@ -155,43 +155,28 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
+    # Look for the preceding header of the wikitable which contains the division name
     weight_name = ""
-    elem = table
-    while elem and not weight_name:
-      elem = elem.previous_sibling
-      if elem and hasattr(elem, "name") and elem.name in ["h2", "h3", "h4"]:
-        headline = elem.find("span", {"class": "mw-headline"})
+    prev = table.find_previous(["h3", "h4", "span"])
+    while prev:
+      headline = prev.find("span", {"class": "mw-headline"})
+      raw_head = headline.get_text() if headline else prev.get_text()
+      if raw_head and not any(
+          bad in raw_head.lower()
+          for bad in ["contents", "meta", "history", "edit"]
+      ):
         weight_name = (
-            headline.get_text(strip=True)
-            if headline
-            else elem.get_text(strip=True)
+            raw_head.replace("Men's", "")
+            .replace("Women's", "")
+            .replace("rankings", "")
+            .strip()
         )
-
-    if not weight_name:
-      parent = table.parent
-      while parent and not weight_name:
-        prev_heading = parent.find_previous(["h2", "h3", "h4"])
-        if prev_heading:
-          headline = prev_heading.find("span", {"class": "mw-headline"})
-          weight_name = (
-              headline.get_text(strip=True)
-              if headline
-              else prev_heading.get_text(strip=True)
-          )
         break
+      prev = prev.find_previous(["h3", "h4", "span"])
 
-    weight_name = (
-        weight_name.replace("Men's", "")
-        .replace("Women's", "")
-        .replace("rankings", "")
-        .replace("[edit]", "")
-        .strip()
-    )
-
-    if (
-        not weight_name
-        or "pound" in weight_name.lower()
-        or "recent" in weight_name.lower()
+    if not weight_name or any(
+        term in weight_name.lower()
+        for term in ["pound", "contents", "meta", "history"]
     ):
       continue
 
@@ -211,7 +196,7 @@ def scrape_ufc():
           if fighter_name and fighter_name != champion:
             rankings.append(fighter_name)
 
-    if weight_name:
+    if weight_name and rankings:
       ufc_data.append({
           "weight": weight_name,
           "champion": champion,
