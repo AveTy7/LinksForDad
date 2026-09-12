@@ -95,7 +95,7 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
-        /* UFC Accordion with max-height expansion for full top 10 visibility */
+        /* UFC Accordion with fixed scrollable height to guarantee full top 10 display */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
         }
@@ -107,10 +107,10 @@
         .ufc-champ-preview { font-size: 0.75rem; color: #60a5fa; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         
         .ufc-rankings-body {
-            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 12px; border-top: 0px solid var(--border); background: rgba(15, 23, 42, 0.5);
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 12px; background: rgba(15, 23, 42, 0.5);
         }
         .ufc-div-card.expanded .ufc-rankings-body {
-            max-height: 500px; /* Large enough to comfortably fit all 10 items */
+            max-height: 280px; /* Safely fits 10 items with room to spare */
             padding: 10px 12px;
             border-top: 1px solid var(--border);
             overflow-y: auto;
@@ -304,17 +304,17 @@
         ];
 
         const UFC_FULL_RANKINGS = [
-            { weight: "Heavyweight", champion: "Tom Aspinall", rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik", "Alexander Romanov"] },
-            { weight: "Light Heavyweight", champion: "Carlos Ulberg", rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir", "Aleksandar Rakić"] },
-            { weight: "Middleweight", champion: "Sean Strickland", rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze", "Jared Cannonier"] },
-            { weight: "Welterweight", champion: "Islam Makhachev", rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns", "Geoff Neal"] },
-            { weight: "Lightweight", champion: "Justin Gaethje", rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker", "Jalin Turner"] },
-            { weight: "Featherweight", champion: "Alexander Volkanovski", rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze", "Calvin Kattar"] },
-            { weight: "Bantamweight", champion: "Petr Yan", rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font", "Kyler Phillips"] },
-            { weight: "Flyweight", champion: "Joshua Van", rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott", "Amir Albazi"] },
-            { weight: "Women's Bantamweight", champion: "Kayla Harrison", rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate", "Pannie Kianzad"] },
-            { weight: "Women's Flyweight", champion: "Valentina Shevchenko", rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva", "Tracy Cortez"] },
-            { weight: "Women's Strawweight", champion: "Mackenzie Dern", rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade", "Piera Rodriguez"] }
+            { weight: "Heavyweight", champion: "Tom Aspinall", rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik"] },
+            { weight: "Light Heavyweight", champion: "Carlos Ulberg", rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir"] },
+            { weight: "Middleweight", champion: "Sean Strickland", rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze"] },
+            { weight: "Welterweight", champion: "Islam Makhachev", rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns"] },
+            { weight: "Lightweight", champion: "Justin Gaethje", rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker"] },
+            { weight: "Featherweight", champion: "Alexander Volkanovski", rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze"] },
+            { weight: "Bantamweight", champion: "Petr Yan", rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font"] },
+            { weight: "Flyweight", champion: "Joshua Van", rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott"] },
+            { weight: "Women's Bantamweight", champion: "Kayla Harrison", rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate"] },
+            { weight: "Women's Flyweight", champion: "Valentina Shevchenko", rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva"] },
+            { weight: "Women's Strawweight", champion: "Mackenzie Dern", rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade"] }
         ];
 
         const CFB_MAP = {
@@ -362,14 +362,18 @@
             const actionbar = document.getElementById('top-action-container');
             const subpage = document.getElementById('subpage-view');
             const listcontent = document.getElementById('list-content-container');
+            const filterbar = document.getElementById('filter-bar');
+            
             if (open) {
                 if(actionbar) actionbar.style.display = 'none';
                 if(listcontent) listcontent.style.display = 'none';
+                if(filterbar) filterbar.style.display = 'none';
                 if(subpage) subpage.style.display = 'block';
             } else {
                 if(subpage) subpage.style.display = 'none';
                 if(actionbar) actionbar.style.display = 'flex';
                 if(listcontent) listcontent.style.display = 'block';
+                if((activeLeague === "CFB" || activeLeague === "CBB") && filterbar) filterbar.style.display = 'flex';
             }
         }
 
@@ -418,7 +422,7 @@
             }
 
             labelText.innerText = activeLeague === "CFB" ? "Rankings / Conf:" : "AP / Conf:";
-            const confs = Object.keys(STANDINGS_DATA[activeLeague]); // e.g., ["AP Top 25", "SEC", "Big Ten", ...]
+            const confs = Object.keys(STANDINGS_DATA[activeLeague]);
             
             select.innerHTML = '';
             confs.forEach(c => {
@@ -430,7 +434,7 @@
             filterBar.style.display = 'flex';
         }
 
-        function getSubpageContentHtml(selectedConf = "ALL") {
+        function getSubpageContentHtml(selectedConf = "AP Top 25") {
             const config = LEAGUES[activeLeague];
             if (config.isBoxing) {
                 return {
@@ -614,6 +618,43 @@
             let html = topActionHtml + subpageHtml + `<div id="list-content-container">`;
             
             if (activeLeague === "CFB" || activeLeague === "CBB") {
+                const filteredGames = (activeLeague === "CFB" && document.getElementById('conf-select').value !== "ALL") 
+                    ? currentGames.filter(g => g.conferences.includes(document.getElementById('conf-select').value))
+                    : currentGames;
+
+                if (!filteredGames.length) {
+                    html += "<p class='loading'>No games scheduled.</p>";
+                } else {
+                    html += filteredGames.map(g => `
+                        <div class="card">
+                            <div class="card-main">
+                                <div class="team away">
+                                    <div class="team-text-stack">
+                                        <span class="team-city">${g.awayCity}</span>
+                                        <span class="team-name">${g.awayTeam}</span>
+                                    </div>
+                                    <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
+                                </div>
+                                <div class="info">
+                                    <div class="time">${g.displayTime}</div>
+                                    <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
+                                </div>
+                                <div class="team home">
+                                    <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
+                                    <div class="team-text-stack">
+                                        <span class="team-city">${g.homeCity}</span>
+                                        <span class="team-name">${g.homeTeam}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            ${g.streamLinks && g.streamLinks.length ? `
+                                <div class="stream-link-container">
+                                    ${g.streamLinks.map((l, i) => `<a href="${l}" target="_blank" class="stream-btn"><i class="fa-solid fa-play"></i> Stream ${i+1}</a>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('');
+                }
                 html += `</div>`;
                 container.innerHTML = html;
                 return;
