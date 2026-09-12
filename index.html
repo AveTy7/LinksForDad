@@ -52,10 +52,16 @@
         }
         .card-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         
-        .team { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+        .team { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
         .team.away { justify-content: flex-end; text-align: right; }
-        .team img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
-        .team-name { font-size: 0.78rem; font-weight: 600; line-height: 1.2; word-break: break-word; }
+        .team img { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+        
+        .team-text-stack { display: flex; flex-direction: column; min-width: 0; }
+        .team.away .team-text-stack { align-items: flex-end; }
+        .team.home .team-text-stack { align-items: flex-start; }
+        
+        .team-city { font-size: 0.65rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .team-name { font-size: 0.82rem; font-weight: 700; line-height: 1.1; }
         
         .info { text-align: center; padding: 0 8px; min-width: 110px; flex-shrink: 0; }
         .time { color: #60a5fa; font-weight: 600; font-size: 0.75rem; }
@@ -287,15 +293,41 @@
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
 
+                    // Helper to split team name into location/school vs mascot name
+                    const formatTeamDetails = (teamData, rankPrefix) => {
+                        const location = teamData.team?.location || "";
+                        const name = teamData.team?.name || teamData.team?.displayName || "TBD";
+                        
+                        // If location exists and is part of the display name, separate them
+                        if (location && teamData.team?.displayName?.startsWith(location)) {
+                            const mascot = teamData.team.displayName.replace(location, "").trim();
+                            return { city: `${rankPrefix}${location}`, name: mascot || name };
+                        }
+                        
+                        // Fallback split logic for generic names
+                        const parts = (teamData.team?.displayName || "TBD").split(' ');
+                        if (parts.length > 1) {
+                            const city = parts.slice(0, -1).join(' ');
+                            const mascot = parts[parts.length - 1];
+                            return { city: `${rankPrefix}${city}`, name: mascot };
+                        }
+                        return { city: "", name: `${rankPrefix}${teamData.team?.displayName || 'TBD'}` };
+                    };
+
+                    const homeDetails = formatTeamDetails(home, homeRank);
+                    const awayDetails = formatTeamDetails(away, awayRank);
+
                     const gameObj = {
                         id: event.id,
                         utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
                         statusState: state,
                         statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
-                        homeTeam: `${homeRank}${home.team?.displayName || 'TBD'}`,
+                        homeCity: homeDetails.city,
+                        homeTeam: homeDetails.name,
                         homeLogo: home.team?.logo || '',
-                        awayTeam: `${awayRank}${away.team?.displayName || 'TBD'}`,
+                        awayCity: awayDetails.city,
+                        awayTeam: awayDetails.name,
                         awayLogo: away.team?.logo || '',
                         conferences: Array.from(confSet)
                     };
@@ -356,7 +388,10 @@
                 <div class="card">
                     <div class="card-main">
                         <div class="team away">
-                            <span class="team-name">${g.awayTeam}</span>
+                            <div class="team-text-stack">
+                                <span class="team-city">${g.awayCity}</span>
+                                <span class="team-name">${g.awayTeam}</span>
+                            </div>
                             <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
                         </div>
                         <div class="info">
@@ -365,7 +400,10 @@
                         </div>
                         <div class="team home">
                             <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
-                            <span class="team-name">${g.homeTeam}</span>
+                            <div class="team-text-stack">
+                                <span class="team-city">${g.homeCity}</span>
+                                <span class="team-name">${g.homeTeam}</span>
+                            </div>
                         </div>
                     </div>
                     ${g.streamLink ? `
