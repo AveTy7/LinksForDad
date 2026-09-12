@@ -46,6 +46,30 @@
             max-width: 60%;
         }
 
+        .top-action-bar {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 12px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .top-action-link {
+            background: var(--accent); color: white; text-decoration: none;
+            padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center;
+        }
+        .top-action-link:hover { opacity: 0.9; }
+
+        .champions-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 14px; margin-bottom: 12px;
+        }
+        .champions-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 6px; }
+        .weight-class-row {
+            display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.78rem;
+        }
+        .weight-class-row:last-child { border-bottom: none; }
+        .weight-name { font-weight: 700; color: var(--muted); width: 35%; }
+        .weight-champs { width: 65%; text-align: right; }
+
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
             padding: 12px 16px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;
@@ -107,14 +131,25 @@
 
     <script>
         const LEAGUES = {
-            "NFL": { endpoint: "football/nfl", type: "espn" },
-            "NBA": { type: "scraped", category: "NBA" },
-            "MLB": { endpoint: "baseball/mlb", type: "espn" },
-            "CFB": { endpoint: "football/college-football", type: "espn" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn" },
-            "MMA": { type: "scraped", category: "MMA" },
-            "Boxing": { type: "scraped", category: "Boxing" }
+            "NFL": { endpoint: "football/nfl", type: "espn", standings: "https://www.espn.com/nfl/standings" },
+            "NBA": { type: "scraped", category: "NBA", standings: "https://www.espn.com/nba/standings" },
+            "MLB": { endpoint: "baseball/mlb", type: "espn", standings: "https://www.espn.com/mlb/standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", standings: "https://www.espn.com/college-football/standings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", standings: "https://www.espn.com/mens-college-basketball/standings" },
+            "MMA": { type: "scraped", category: "MMA", standings: "https://www.ufc.com/rankings", standingsLabel: "View UFC Rankings" },
+            "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
+
+        const BOXING_CHAMPIONS = [
+            { weight: "Heavyweight", champions: "Oleksandr Usyk (WBC, WBA, WBO, IBF)" },
+            { weight: "Cruiserweight", champions: "Gilberto Ramirez (WBA), Chris Billam-Smith (WBO)" },
+            { weight: "Light Heavyweight", champions: "Artur Beterbiev (WBC, WBA, WBO, IBF)" },
+            { weight: "Super Middleweight", champions: "Saúl 'Canelo' Álvarez (WBC, WBA, WBO, IBF)" },
+            { weight: "Middleweight", champions: "Erislandy Lara (WBA), Janibek Alimkhanuly (WBO, IBF)" },
+            { weight: "Welterweight", champions: "Terence Crawford / Jaron Ennis / Mario Barrios" },
+            { weight: "Lightweight", champions: "Vasiliy Lomachenko (IBF), Gervonta Davis (WBA), Shakur Stevenson (WBC)" },
+            { weight: "Featherweight", champions: "Naoya Inoue / Super Bantam divisions apply" }
+        ];
 
         const CFB_MAP = {
             "1": "ACC", "4": "Big 12", "8": "SEC", "9": "Big Ten", "12": "Pac-12",
@@ -210,13 +245,38 @@
             filterBar.style.display = 'none';
             const config = LEAGUES[league];
 
+            let topHtml = "";
+            if (config.isBoxing) {
+                topHtml = `
+                    <div class="champions-card">
+                        <div class="champions-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</div>
+                        ${BOXING_CHAMPIONS.map(bc => `
+                            <div class="weight-class-row">
+                                <span class="weight-name">${bc.weight}</span>
+                                <span class="weight-champs">${bc.champions}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (config.standings) {
+                const label = config.standingsLabel || `View ${league} Standings`;
+                topHtml = `
+                    <div class="top-action-bar">
+                        <a href="${config.standings}" target="_blank" class="top-action-link">
+                            <i class="fa-solid fa-trophy"></i> ${label}
+                        </a>
+                    </div>
+                `;
+            }
+
             // Render Scraped Event Lists (NBA, MMA, Boxing)
             if (config.type === "scraped") {
                 container.className = "";
                 const filteredItems = globalLinks.filter(item => item.category === config.category);
 
+                let listHtml = topHtml;
                 if (filteredItems.length > 0) {
-                    container.innerHTML = filteredItems.map(item => `
+                    listHtml += filteredItems.map(item => `
                         <div class="card">
                             <div style="font-size: 0.9rem; font-weight: 700; width: 100%; text-align: left; padding: 2px 0;">
                                 ${item.title}
@@ -233,8 +293,9 @@
                         </div>
                     `).join('');
                 } else {
-                    container.innerHTML = `<p class='loading'>No events found for ${league}. Run the GitHub Action workflow.</p>`;
+                    listHtml += `<p class='loading'>No events found for ${league}. Run the GitHub Action workflow.</p>`;
                 }
+                container.innerHTML = listHtml;
                 return;
             }
 
@@ -245,7 +306,7 @@
             if (cache[league]) {
                 currentGames = cache[league];
                 setupConferenceFilter(currentGames);
-                renderGames(currentGames);
+                renderGames(currentGames, topHtml);
                 return;
             }
 
@@ -340,7 +401,7 @@
                 currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
                 cache[league] = currentGames;
                 setupConferenceFilter(currentGames);
-                renderGames(currentGames);
+                renderGames(currentGames, topHtml);
 
             } catch (err) {
                 console.error(err);
@@ -370,22 +431,39 @@
 
         function filterByConference() {
             const selectedConf = document.getElementById('conf-select').value;
+            const config = LEAGUES[activeLeague];
+            let topHtml = "";
+            if (config.standings) {
+                const label = config.standingsLabel || `View ${activeLeague} Standings`;
+                topHtml = `
+                    <div class="top-action-bar">
+                        <a href="${config.standings}" target="_blank" class="top-action-link">
+                            <i class="fa-solid fa-trophy"></i> ${label}
+                        </a>
+                    </div>
+                `;
+            }
+
             if (selectedConf === "ALL") {
-                renderGames(currentGames);
+                renderGames(currentGames, topHtml);
             } else {
                 const filtered = currentGames.filter(g => g.conferences.includes(selectedConf));
-                renderGames(filtered);
+                renderGames(filtered, topHtml);
             }
         }
 
-        function renderGames(games) {
+        function renderGames(games, topHtml = "") {
             const container = document.getElementById('game-list');
             container.className = "";
+            
+            let htmlContent = topHtml;
             if (!games.length) {
-                container.innerHTML = "<p class='loading'>No games or categories scheduled for this view.</p>";
+                htmlContent += "<p class='loading'>No games or categories scheduled for this view.</p>";
+                container.innerHTML = htmlContent;
                 return;
             }
-            container.innerHTML = games.map(g => `
+            
+            htmlContent += games.map(g => `
                 <div class="card">
                     <div class="card-main">
                         <div class="team away">
@@ -418,6 +496,8 @@
                     ` : ''}
                 </div>
             `).join('');
+
+            container.innerHTML = htmlContent;
         }
 
         initApp();
