@@ -72,23 +72,15 @@
         .champions-grid::-webkit-scrollbar { width: 4px; }
         .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-        .weight-class-row {
-            display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--border);
-            font-size: 0.78rem; align-items: center; background: var(--bg); border-radius: 6px;
-        }
-        .weight-name { font-weight: 700; color: #60a5fa; width: 35%; }
-        .weight-champs { width: 65%; text-align: right; font-weight: 600; color: var(--text); }
-
         /* ESPN-style Standings Table Layout */
         .espn-standings-table {
-            width: 100%; border-collapse: collapse; background: var(--bg); border-radius: 6px; overflow: hidden; margin-bottom: 8px; font-size: 0.75rem;
+            width: 100%; border-collapse: collapse; background: var(--bg); border-radius: 6px; overflow: hidden; margin-bottom: 8px; font-size: 0.70rem;
         }
         .espn-standings-table th {
-            background: rgba(30, 41, 59, 0.7); color: var(--muted); text-align: left; padding: 6px 8px; font-weight: 700;
+            background: rgba(30, 41, 59, 0.9); color: var(--muted); text-align: left; padding: 8px 6px; font-weight: 700;
         }
-        .espn-standings-table th.num-col, .espn-standings-table td.num-col { text-align: center; width: 40px; }
         .espn-standings-table td {
-            padding: 6px 8px; border-bottom: 1px solid rgba(30, 41, 59, 0.4); color: var(--text);
+            padding: 8px 6px; border-bottom: 1px solid rgba(30, 41, 59, 0.4); color: var(--text); vertical-align: middle;
         }
         .espn-standings-table tr:last-child td { border-bottom: none; }
         .espn-div-title {
@@ -225,97 +217,46 @@
                     { name: "3. Texas Longhorns", w: 1, l: 0, pct: "1.000" }, { name: "4. Oregon Ducks", w: 1, l: 0, pct: "1.000" },
                     { name: "5. Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" }, { name: "6. Ole Miss Rebels", w: 1, l: 0, pct: "1.000" },
                     { name: "7. Notre Dame Fighting Irish", w: 1, l: 0, pct: "1.000" }, { name: "8. Penn State Nittany Lions", w: 1, l: 0, pct: "1.000" },
-                    { name: "9. Michigan Wolverines", w: 1, l: 0, pct: "1.000" }, { name: "10. Missouri Tigers", w: 1, l: 0, pct: "1.000" },
-                    { name: "11. Utah Utes", w: 1, l: 0, pct: "1.000" }, { name: "12. Florida State Seminoles", w: 1, l: 0, pct: "1.000" },
-                    { name: "13. Tennessee Volunteers", w: 1, l: 0, pct: "1.000" }, { name: "14. Clemson Tigers", w: 1, l: 0, pct: "1.000" },
-                    { name: "15. Oklahoma Sooners", w: 1, l: 0, pct: "1.000" }, { name: "16. Oklahoma State Cowboys", w: 1, l: 0, pct: "1.000" },
-                    { name: "17. Kansas State Wildcats", w: 1, l: 0, pct: "1.000" }, { name: "18. LSU Tigers", w: 1, l: 0, pct: "1.000" },
-                    { name: "19. Kansas Jayhawks", w: 1, l: 0, pct: "1.000" }, { name: "20. Texas A&M Aggies", w: 1, l: 0, pct: "1.000" },
-                    { name: "21. Arizona Wildcats", w: 1, l: 0, pct: "1.000" }, { name: "22. Louisville Cardinals", w: 0, l: 1, pct: ".000" },
-                    { name: "23. NC State Wolfpack", w: 1, l: 0, pct: "1.000" }, { name: "24. USC Trojans", w: 2, l: 0, pct: "1.000" },
-                    { name: "25. Iowa Hawkeyes", w: 1, l: 0, pct: "1.000" }
+                    { name: "9. Michigan Wolverines", w: 1, l: 0, pct: "1.000" }, { name: "10. Missouri Tigers", w: 1, l: 0, pct: "1.000" }
                 ],
                 "FCS": [
                     { name: "1. South Dakota State Jackrabbits", w: 1, l: 0, pct: "1.000" },
-                    { name: "2. North Dakota State Bison", w: 1, l: 0, pct: "1.000" },
-                    { name: "3. Montana State Bobcats", w: 1, l: 0, pct: "1.000" },
-                    { name: "4. South Dakota Coyotes", w: 1, l: 0, pct: "1.000" },
-                    { name: "5. Villanova Wildcats", w: 1, l: 0, pct: "1.000" }
+                    { name: "2. North Dakota State Bison", w: 1, l: 0, pct: "1.000" }
                 ],
                 "SEC": [
-                    { name: "Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" }, { name: "Arkansas Razorbacks", w: 1, l: 0, pct: "1.000" },
-                    { name: "Auburn Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Florida Gators", w: 1, l: 0, pct: "1.000" },
-                    { name: "Georgia Bulldogs", w: 1, l: 0, pct: "1.000" }, { name: "Kentucky Wildcats", w: 1, l: 0, pct: "1.000" },
-                    { name: "LSU Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Mississippi State Bulldogs", w: 1, l: 0, pct: "1.000" },
-                    { name: "Missouri Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Oklahoma Sooners", w: 1, l: 0, pct: "1.000" },
-                    { name: "Ole Miss Rebels", w: 1, l: 0, pct: "1.000" }, { name: "South Carolina Gamecocks", w: 1, l: 0, pct: "1.000" },
-                    { name: "Tennessee Volunteers", w: 1, l: 0, pct: "1.000" }, { name: "Texas A&M Aggies", w: 1, l: 0, pct: "1.000" },
-                    { name: "Texas Longhorns", w: 1, l: 0, pct: "1.000" }, { name: "Vanderbilt Commodores", w: 1, l: 0, pct: "1.000" }
+                    { name: "Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" }, { name: "Georgia Bulldogs", w: 1, l: 0, pct: "1.000" }
                 ],
                 "Big Ten": [
-                    { name: "Illinois Fighting Illini", w: 1, l: 0, pct: "1.000" }, { name: "Indiana Hoosiers", w: 1, l: 0, pct: "1.000" },
-                    { name: "Iowa Hawkeyes", w: 1, l: 0, pct: "1.000" }, { name: "Maryland Terrapins", w: 1, l: 0, pct: "1.000" },
-                    { name: "Michigan Wolverines", w: 1, l: 0, pct: "1.000" }, { name: "Michigan State Spartans", w: 1, l: 0, pct: "1.000" },
-                    { name: "Minnesota Golden Gophers", w: 1, l: 0, pct: "1.000" }, { name: "Nebraska Cornhuskers", w: 1, l: 0, pct: "1.000" },
-                    { name: "Northwestern Wildcats", w: 1, l: 0, pct: "1.000" }, { name: "Ohio State Buckeyes", w: 1, l: 0, pct: "1.000" },
-                    { name: "Oregon Ducks", w: 1, l: 0, pct: "1.000" }, { name: "Penn State Nittany Lions", w: 1, l: 0, pct: "1.000" },
-                    { name: "Purdue Boilermakers", w: 1, l: 0, pct: "1.000" }, { name: "Rutgers Scarlet Knights", w: 1, l: 0, pct: "1.000" },
-                    { name: "UCLA Bruins", w: 1, l: 0, pct: "1.000" }, { name: "USC Trojans", w: 2, l: 0, pct: "1.000" },
-                    { name: "Washington Huskies", w: 1, l: 0, pct: "1.000" }, { name: "Wisconsin Badgers", w: 1, l: 0, pct: "1.000" }
+                    { name: "Ohio State Buckeyes", w: 1, l: 0, pct: "1.000" }, { name: "Michigan Wolverines", w: 1, l: 0, pct: "1.000" }
                 ],
                 "Big 12": [
-                    { name: "Arizona Wildcats", w: 1, l: 0, pct: "1.000" }, { name: "Arizona State Sun Devils", w: 1, l: 0, pct: "1.000" },
-                    { name: "Baylor Bears", w: 1, l: 0, pct: "1.000" }, { name: "BYU Cougars", w: 1, l: 0, pct: "1.000" },
-                    { name: "UCF Knights", w: 1, l: 0, pct: "1.000" }, { name: "Cincinnati Bearcats", w: 1, l: 0, pct: "1.000" },
-                    { name: "Colorado Buffaloes", w: 1, l: 0, pct: "1.000" }, { name: "Houston Cougars", w: 1, l: 0, pct: "1.000" },
-                    { name: "Iowa State Cyclones", w: 1, l: 0, pct: "1.000" }, { name: "Kansas Jayhawks", w: 1, l: 0, pct: "1.000" },
-                    { name: "Kansas State Wildcats", w: 1, l: 0, pct: "1.000" }, { name: "Oklahoma State Cowboys", w: 1, l: 0, pct: "1.000" },
-                    { name: "TCU Horned Frogs", w: 1, l: 0, pct: "1.000" }, { name: "Texas Tech Red Raiders", w: 1, l: 0, pct: "1.000" },
-                    { name: "Utah Utes", w: 1, l: 0, pct: "1.000" }, { name: "West Virginia Mountaineers", w: 1, l: 0, pct: "1.000" }
+                    { name: "Utah Utes", w: 1, l: 0, pct: "1.000" }, { name: "Kansas State Wildcats", w: 1, l: 0, pct: "1.000" }
                 ],
                 "ACC": [
-                    { name: "Boston College Eagles", w: 1, l: 0, pct: "1.000" }, { name: "California Golden Bears", w: 1, l: 0, pct: "1.000" },
-                    { name: "Clemson Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Duke Blue Devils", w: 1, l: 0, pct: "1.000" },
-                    { name: "Florida State Seminoles", w: 1, l: 0, pct: "1.000" }, { name: "Georgia Tech Yellow Jackets", w: 1, l: 0, pct: "1.000" },
-                    { name: "Louisville Cardinals", w: 0, l: 1, pct: ".000" }, { name: "Miami Hurricanes", w: 1, l: 0, pct: "1.000" },
-                    { name: "North Carolina Tar Heels", w: 1, l: 0, pct: "1.000" }, { name: "NC State Wolfpack", w: 1, l: 0, pct: "1.000" },
-                    { name: "Pittsburgh Panthers", w: 1, l: 0, pct: "1.000" }, { name: "SMU Mustangs", w: 1, l: 0, pct: "1.000" },
-                    { name: "Stanford Cardinal", w: 1, l: 0, pct: "1.000" }, { name: "Syracuse Orange", w: 1, l: 0, pct: "1.000" },
-                    { name: "Virginia Cavaliers", w: 1, l: 0, pct: "1.000" }, { name: "Virginia Tech Hokies", w: 1, l: 0, pct: "1.000" },
-                    { name: "Wake Forest Demon Deacons", w: 1, l: 0, pct: "1.000" }
+                    { name: "Clemson Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Florida State Seminoles", w: 1, l: 0, pct: "1.000" }
                 ]
             },
             "CBB": {
                 "AP Top 25": [
-                    { name: "1. UConn Huskies", w: 0, l: 0, pct: ".000" }, { name: "2. Houston Cougars", w: 0, l: 0, pct: ".000" },
-                    { name: "3. Purdue Boilermakers", w: 0, l: 0, pct: ".000" }, { name: "4. North Carolina Tar Heels", w: 0, l: 0, pct: ".000" },
-                    { name: "5. Iowa State Cyclones", w: 0, l: 0, pct: ".000" }, { name: "6. Duke Blue Devils", w: 0, l: 0, pct: ".000" },
-                    { name: "7. Arizona Wildcats", w: 0, l: 0, pct: ".000" }, { name: "8. Tennessee Volunteers", w: 0, l: 0, pct: ".000" },
-                    { name: "9. Kansas Jayhawks", w: 0, l: 0, pct: ".000" }, { name: "10. Kentucky Wildcats", w: 0, l: 0, pct: ".000" }
+                    { name: "1. UConn Huskies", w: 0, l: 0, pct: ".000" }, { name: "2. Houston Cougars", w: 0, l: 0, pct: ".000" }
                 ],
                 "FCS": [
-                    { name: "1. Nova Southeastern Sharks", w: 0, l: 0, pct: ".000" },
-                    { name: "2. Northwest Missouri State", w: 0, l: 0, pct: ".000" }
+                    { name: "1. Nova Southeastern Sharks", w: 0, l: 0, pct: ".000" }
                 ],
                 "Big East": [
-                    { name: "UConn Huskies", w: 0, l: 0, pct: ".000" }, { name: "Marquette Golden Eagles", w: 0, l: 0, pct: ".000" },
-                    { name: "Creighton Bluejays", w: 0, l: 0, pct: ".000" }, { name: "St. John's Red Storm", w: 0, l: 0, pct: ".000" }
+                    { name: "UConn Huskies", w: 0, l: 0, pct: ".000" }
                 ],
                 "Big 12": [
-                    { name: "Houston Cougars", w: 0, l: 0, pct: ".000" }, { name: "Iowa State Cyclones", w: 0, l: 0, pct: ".000" },
-                    { name: "Kansas Jayhawks", w: 0, l: 0, pct: ".000" }, { name: "Baylor Bears", w: 0, l: 0, pct: ".000" }
+                    { name: "Houston Cougars", w: 0, l: 0, pct: ".000" }
                 ],
                 "SEC": [
-                    { name: "Tennessee Volunteers", w: 0, l: 0, pct: ".000" }, { name: "Kentucky Wildcats", w: 0, l: 0, pct: ".000" },
-                    { name: "Alabama Crimson Tide", w: 0, l: 0, pct: ".000" }, { name: "Auburn Tigers", w: 0, l: 0, pct: ".000" }
+                    { name: "Tennessee Volunteers", w: 0, l: 0, pct: ".000" }
                 ],
                 "Big Ten": [
-                    { name: "Purdue Boilermakers", w: 0, l: 0, pct: ".000" }, { name: "Illinois Fighting Illini", w: 0, l: 0, pct: ".000" },
-                    { name: "Michigan State Spartans", w: 0, l: 0, pct: ".000" }, { name: "Wisconsin Badgers", w: 0, l: 0, pct: ".000" }
+                    { name: "Purdue Boilermakers", w: 0, l: 0, pct: ".000" }
                 ],
                 "ACC": [
-                    { name: "North Carolina Tar Heels", w: 0, l: 0, pct: ".000" }, { name: "Duke Blue Devils", w: 0, l: 0, pct: ".000" },
-                    { name: "Clemson Tigers", w: 0, l: 0, pct: ".000" }, { name: "Virginia Cavaliers", w: 0, l: 0, pct: ".000" }
+                    { name: "North Carolina Tar Heels", w: 0, l: 0, pct: ".000" }
                 ]
             }
         };
@@ -504,7 +445,7 @@
 
                 return {
                     topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${label}</button></div>`,
-                    subpage: `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${label}</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${standingsToRender.map(div => `<div><div class="espn-div-title">${div.division}</div><table class="espn-standings-table"><thead><tr><th>Team</th><th class="num-col">W</th><th class="num-col">L</th><th class="num-col">PCT</th></tr></thead><tbody>${div.teams.map(t => `<tr><td>${t.name}</td><td class="num-col">${t.w}</td><td class="num-col">${t.l}</td><td class="num-col">${t.pct}</td></tr>`).join('')}</tbody></table></div>`).join('')}</div></div>`
+                    subpage: `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${label}</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${standingsToRender.map(div => `<div><div class="espn-div-title">${div.division}</div><table class="espn-standings-table"><thead><tr><th>Team</th><th class="num-col" style="text-align:center; width:40px;">W</th><th class="num-col" style="text-align:center; width:40px;">L</th><th class="num-col" style="text-align:center; width:50px;">PCT</th></tr></thead><tbody>${div.teams.map(t => `<tr><td>${t.name}</td><td class="num-col" style="text-align:center;">${t.w}</td><td class="num-col" style="text-align:center;">${t.l}</td><td class="num-col" style="text-align:center;">${t.pct}</td></tr>`).join('')}</tbody></table></div>`).join('')}</div></div>`
                 };
             }
             return { topAction: "", subpage: "" };
