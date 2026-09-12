@@ -156,25 +156,43 @@ def scrape_ufc():
       continue
 
     weight_name = ""
-    caption = table.find("caption")
-    if caption:
-      weight_name = caption.get_text(strip=True)
-    else:
-      prev = table.find_previous(["h3", "h4", "span"])
-      if prev:
-        headline = prev.find("span", {"class": "mw-headline"})
-        raw_head = headline.get_text() if headline else prev.get_text()
+    elem = table
+    while elem and not weight_name:
+      elem = elem.previous_sibling
+      if elem and hasattr(elem, "name") and elem.name in ["h2", "h3", "h4"]:
+        headline = elem.find("span", {"class": "mw-headline"})
         weight_name = (
-            raw_head.replace("Men's", "")
-            .replace("Women's", "")
-            .replace("rankings", "")
-            .strip()
+            headline.get_text(strip=True)
+            if headline
+            else elem.get_text(strip=True)
         )
 
-    if not weight_name or weight_name.lower() in [
-        "pound-for-pound",
-        "pound for pound",
-    ]:
+    if not weight_name:
+      parent = table.parent
+      while parent and not weight_name:
+        prev_heading = parent.find_previous(["h2", "h3", "h4"])
+        if prev_heading:
+          headline = prev_heading.find("span", {"class": "mw-headline"})
+          weight_name = (
+              headline.get_text(strip=True)
+              if headline
+              else prev_heading.get_text(strip=True)
+          )
+        break
+
+    weight_name = (
+        weight_name.replace("Men's", "")
+        .replace("Women's", "")
+        .replace("rankings", "")
+        .replace("[edit]", "")
+        .strip()
+    )
+
+    if (
+        not weight_name
+        or "pound" in weight_name.lower()
+        or "recent" in weight_name.lower()
+    ):
       continue
 
     champion = "Vacant"
