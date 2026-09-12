@@ -1,8 +1,33 @@
 {
     "boxing": [
-        { "weight": "Heavyweight", "champion": "Murat Gassiev / Agit Kabayel", "rankings": ["1. Jarrell Miller / Tyson Fury", "2. Tyson Fury / Anthony Joshua", "3. Anthony Joshua / Frank Sanchez", "4. Vartan Arutyunyan / Deontay Wilder", "5. Nelson Hysa / Moses Itauma"] }
+        {
+            "weight": "Heavyweight",
+            "champion": "Murat Gassiev (WBA) / Agit Kabayel (WBC)",
+            "rankings": [
+                "Jarrell Miller (WBA) / Tyson Fury (WBC)",
+                "Tyson Fury (WBA) / Anthony Joshua (WBC)",
+                "Anthony Joshua (WBA) / Frank Sanchez (WBC)",
+                "Vartan Arutyunyan (WBA) / Deontay Wilder (WBC)",
+                "Nelson Hysa (WBA) / Moses Itauma (WBC)"
+            ]
+        }
     ],
     "ufc": [
-        { "weight": "Heavyweight", "champion": "Tom Aspinall", "rankings": ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta"] }
+        {
+            "weight": "Heavyweight",
+            "champion": "Tom Aspinall",
+            "rankings": [
+                "Ciryl Gane",
+                "Alexander Volkov",
+                "Sergei Pavlovich",
+                "Curtis Blaydes",
+                "Waldo Cortes Acosta",
+                "Jailton Almeida",
+                "Marcin Tybura",
+                "Derrick Lewis",
+                "Tai Tuivasa",
+                "Sergey Spivak"
+            ]
+        }
     ]
 }
