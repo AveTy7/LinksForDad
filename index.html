@@ -72,7 +72,6 @@
         .champions-grid::-webkit-scrollbar { width: 4px; }
         .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-        /* ESPN-style Standings Table Layout */
         .espn-standings-table {
             width: 100%; border-collapse: collapse; background: var(--bg); border-radius: 6px; overflow: hidden; margin-bottom: 8px; font-size: 0.70rem;
         }
@@ -87,7 +86,6 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
-        /* UFC Accordion */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
             flex-shrink: 0;
@@ -176,7 +174,7 @@
     <script>
         const LEAGUES = {
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
-            "NBA": { type: "scraped", category: "NBA", hasStandings: true, standingsLabel: "NBA Standings" },
+            "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings" },
             "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings" },
             "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings" },
@@ -184,116 +182,9 @@
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
 
-        const STANDINGS_DATA = {
-            "NFL": [
-                { division: "AFC East", teams: [{ name: "Buffalo Bills", w: 0, l: 0, pct: ".000" }, { name: "Miami Dolphins", w: 0, l: 0, pct: ".000" }, { name: "New York Jets", w: 0, l: 0, pct: ".000" }, { name: "New England Patriots", w: 0, l: 1, pct: ".000" }] },
-                { division: "AFC North", teams: [{ name: "Baltimore Ravens", w: 0, l: 0, pct: ".000" }, { name: "Cincinnati Bengals", w: 0, l: 0, pct: ".000" }, { name: "Cleveland Browns", w: 0, l: 0, pct: ".000" }, { name: "Pittsburgh Steelers", w: 0, l: 0, pct: ".000" }] },
-                { division: "AFC South", teams: [{ name: "Houston Texans", w: 0, l: 0, pct: ".000" }, { name: "Indianapolis Colts", w: 0, l: 0, pct: ".000" }, { name: "Jacksonville Jaguars", w: 0, l: 0, pct: ".000" }, { name: "Tennessee Titans", w: 0, l: 0, pct: ".000" }] },
-                { division: "AFC West", teams: [{ name: "Denver Broncos", w: 0, l: 0, pct: ".000" }, { name: "Kansas City Chiefs", w: 0, l: 0, pct: ".000" }, { name: "Las Vegas Raiders", w: 0, l: 0, pct: ".000" }, { name: "Los Angeles Chargers", w: 0, l: 0, pct: ".000" }] },
-                { division: "NFC East", teams: [{ name: "Dallas Cowboys", w: 0, l: 0, pct: ".000" }, { name: "New York Giants", w: 0, l: 0, pct: ".000" }, { name: "Philadelphia Eagles", w: 0, l: 0, pct: ".000" }, { name: "Washington Commanders", w: 0, l: 0, pct: ".000" }] },
-                { division: "NFC North", teams: [{ name: "Chicago Bears", w: 0, l: 0, pct: ".000" }, { name: "Detroit Lions", w: 0, l: 0, pct: ".000" }, { name: "Green Bay Packers", w: 0, l: 0, pct: ".000" }, { name: "Minnesota Vikings", w: 0, l: 0, pct: ".000" }] },
-                { division: "NFC South", teams: [{ name: "Atlanta Falcons", w: 0, l: 0, pct: ".000" }, { name: "Carolina Panthers", w: 0, l: 0, pct: ".000" }, { name: "New Orleans Saints", w: 0, l: 0, pct: ".000" }, { name: "Tampa Bay Buccaneers", w: 0, l: 0, pct: ".000" }] },
-                { division: "NFC West", teams: [{ name: "Arizona Cardinals", w: 0, l: 0, pct: ".000" }, { name: "Los Angeles Rams", w: 0, l: 1, pct: ".000" }, { name: "San Francisco 49ers", w: 1, l: 0, pct: "1.000" }, { name: "Seattle Seahawks", w: 1, l: 0, pct: "1.000" }] }
-            ],
-            "NBA": [
-                { division: "Eastern - Atlantic", teams: [{ name: "Boston Celtics", w: 0, l: 0, pct: ".000" }, { name: "Brooklyn Nets", w: 0, l: 0, pct: ".000" }, { name: "New York Knicks", w: 0, l: 0, pct: ".000" }, { name: "Philadelphia 76ers", w: 0, l: 0, pct: ".000" }, { name: "Toronto Raptors", w: 0, l: 0, pct: ".000" }] },
-                { division: "Eastern - Central", teams: [{ name: "Chicago Bulls", w: 0, l: 0, pct: ".000" }, { name: "Cleveland Cavaliers", w: 0, l: 0, pct: ".000" }, { name: "Detroit Pistons", w: 0, l: 0, pct: ".000" }, { name: "Indiana Pacers", w: 0, l: 0, pct: ".000" }, { name: "Milwaukee Bucks", w: 0, l: 0, pct: ".000" }] },
-                { division: "Eastern - Southeast", teams: [{ name: "Atlanta Hawks", w: 0, l: 0, pct: ".000" }, { name: "Charlotte Hornets", w: 0, l: 0, pct: ".000" }, { name: "Miami Heat", w: 0, l: 0, pct: ".000" }, { name: "Orlando Magic", w: 0, l: 0, pct: ".000" }, { name: "Washington Wizards", w: 0, l: 0, pct: ".000" }] },
-                { division: "Western - Northwest", teams: [{ name: "Denver Nuggets", w: 0, l: 0, pct: ".000" }, { name: "Minnesota Timberwolves", w: 0, l: 0, pct: ".000" }, { name: "Oklahoma City Thunder", w: 0, l: 0, pct: ".000" }, { name: "Portland Trail Blazers", w: 0, l: 0, pct: ".000" }, { name: "Utah Jazz", w: 0, l: 0, pct: ".000" }] },
-                { division: "Western - Pacific", teams: [{ name: "Golden State Warriors", w: 0, l: 0, pct: ".000" }, { name: "Los Angeles Clippers", w: 0, l: 0, pct: ".000" }, { name: "Los Angeles Lakers", w: 0, l: 0, pct: ".000" }, { name: "Phoenix Suns", w: 0, l: 0, pct: ".000" }, { name: "Sacramento Kings", w: 0, l: 0, pct: ".000" }] },
-                { division: "Western - Southwest", teams: [{ name: "Dallas Mavericks", w: 0, l: 0, pct: ".000" }, { name: "Houston Rockets", w: 0, l: 0, pct: ".000" }, { name: "Memphis Grizzlies", w: 0, l: 0, pct: ".000" }, { name: "New Orleans Pelicans", w: 0, l: 0, pct: ".000" }, { name: "San Antonio Spurs", w: 0, l: 0, pct: ".000" }] }
-            ],
-            "MLB": [
-                { division: "AL East", teams: [{ name: "Tampa Bay Rays", w: 88, l: 59, pct: ".599" }, { name: "New York Yankees", w: 85, l: 62, pct: ".578" }, { name: "Boston Red Sox", w: 80, l: 68, pct: ".541" }, { name: "Toronto Blue Jays", w: 73, l: 75, pct: ".493" }, { name: "Baltimore Orioles", w: 72, l: 76, pct: ".486" }] },
-                { division: "AL Central", teams: [{ name: "Chicago White Sox", w: 75, l: 72, pct: ".510" }, { name: "Cleveland Guardians", w: 75, l: 73, pct: ".507" }, { name: "Minnesota Twins", w: 69, l: 78, pct: ".469" }, { name: "Detroit Tigers", w: 68, l: 79, pct: ".463" }, { name: "Kansas City Royals", w: 66, l: 82, pct: ".446" }] },
-                { division: "AL West", teams: [{ name: "Houston Astros", w: 75, l: 73, pct: ".507" }, { name: "Texas Rangers", w: 72, l: 76, pct: ".486" }, { name: "Seattle Mariners", w: 69, l: 79, pct: ".466" }, { name: "Athletics", w: 60, l: 88, pct: ".405" }, { name: "Los Angeles Angels", w: 56, l: 91, pct: ".381" }] },
-                { division: "NL East", teams: [{ name: "Atlanta Braves", w: 87, l: 61, pct: ".588" }, { name: "Philadelphia Phillies", w: 82, l: 66, pct: ".554" }, { name: "Miami Marlins", w: 72, l: 76, pct: ".486" }, { name: "New York Mets", w: 68, l: 79, pct: ".463" }, { name: "Washington Nationals", w: 68, l: 81, pct: ".456" }] },
-                { division: "NL Central", teams: [{ name: "Milwaukee Brewers", w: 92, l: 56, pct: ".622" }, { name: "Chicago Cubs", w: 82, l: 66, pct: ".554" }, { name: "Pittsburgh Pirates", w: 74, l: 74, pct: ".500" }, { name: "St. Louis Cardinals", w: 73, l: 75, pct: ".493" }, { name: "Cincinnati Reds", w: 69, l: 78, pct: ".469" }] },
-                { division: "NL West", teams: [{ name: "Los Angeles Dodgers", w: 90, l: 57, pct: ".612" }, { name: "San Diego Padres", w: 79, l: 68, pct: ".537" }, { name: "Arizona Diamondbacks", w: 79, l: 69, pct: ".534" }, { name: "San Francisco Giants", w: 62, l: 86, pct: ".419" }, { name: "Colorado Rockies", w: 55, l: 92, pct: ".374" }] }
-            ],
-            "CFB": {
-                "AP Top 25": [
-                    { name: "1. Georgia Bulldogs", w: 1, l: 0, pct: "1.000" }, { name: "2. Ohio State Buckeyes", w: 1, l: 0, pct: "1.000" },
-                    { name: "3. Texas Longhorns", w: 1, l: 0, pct: "1.000" }, { name: "4. Oregon Ducks", w: 1, l: 0, pct: "1.000" },
-                    { name: "5. Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" }, { name: "6. Ole Miss Rebels", w: 1, l: 0, pct: "1.000" },
-                    { name: "7. Notre Dame Fighting Irish", w: 1, l: 0, pct: "1.000" }, { name: "8. Penn State Nittany Lions", w: 1, l: 0, pct: "1.000" },
-                    { name: "9. Michigan Wolverines", w: 1, l: 0, pct: "1.000" }, { name: "10. Missouri Tigers", w: 1, l: 0, pct: "1.000" }
-                ],
-                "FCS": [
-                    { name: "1. South Dakota State Jackrabbits", w: 1, l: 0, pct: "1.000" },
-                    { name: "2. North Dakota State Bison", w: 1, l: 0, pct: "1.000" }
-                ],
-                "SEC": [
-                    { name: "Alabama Crimson Tide", w: 1, l: 0, pct: "1.000" }, { name: "Georgia Bulldogs", w: 1, l: 0, pct: "1.000" }
-                ],
-                "Big Ten": [
-                    { name: "Ohio State Buckeyes", w: 1, l: 0, pct: "1.000" }, { name: "Michigan Wolverines", w: 1, l: 0, pct: "1.000" }
-                ],
-                "Big 12": [
-                    { name: "Utah Utes", w: 1, l: 0, pct: "1.000" }, { name: "Kansas State Wildcats", w: 1, l: 0, pct: "1.000" }
-                ],
-                "ACC": [
-                    { name: "Clemson Tigers", w: 1, l: 0, pct: "1.000" }, { name: "Florida State Seminoles", w: 1, l: 0, pct: "1.000" }
-                ]
-            },
-            "CBB": {
-                "AP Top 25": [
-                    { name: "1. UConn Huskies", w: 0, l: 0, pct: ".000" }, { name: "2. Houston Cougars", w: 0, l: 0, pct: ".000" }
-                ],
-                "FCS": [
-                    { name: "1. Nova Southeastern Sharks", w: 0, l: 0, pct: ".000" }
-                ],
-                "Big East": [
-                    { name: "UConn Huskies", w: 0, l: 0, pct: ".000" }
-                ],
-                "Big 12": [
-                    { name: "Houston Cougars", w: 0, l: 0, pct: ".000" }
-                ],
-                "SEC": [
-                    { name: "Tennessee Volunteers", w: 0, l: 0, pct: ".000" }
-                ],
-                "Big Ten": [
-                    { name: "Purdue Boilermakers", w: 0, l: 0, pct: ".000" }
-                ],
-                "ACC": [
-                    { name: "North Carolina Tar Heels", w: 0, l: 0, pct: ".000" }
-                ]
-            }
-        };
-
-        const BOXING_CHAMPIONS = [
-            { weight: "Heavyweight", wbc: "Agit Kabayel", wba: "Murat Gassiev", ibf: "Filip Hrgović", wbo: "Daniel Dubois" },
-            { weight: "Cruiserweight", wbc: "Noel Mikaelian", wba: "David Benavidez", ibf: "Vacant", wbo: "David Benavidez" },
-            { weight: "Light Heavyweight", wbc: "David Benavidez", wba: "Dmitry Bivol", ibf: "Dmitry Bivol", wbo: "Dmitry Bivol" },
-            { weight: "Super Middleweight", wbc: "Christian Mbilli", wba: "Jaime Munguia", ibf: "Osleys Iglesias", wbo: "Hamzah Sheeraz" },
-            { weight: "Middleweight", wbc: "Carlos Adames", wba: "Erislandy Lara", ibf: "Aaron McKenna", wbo: "Denzel Bentley" },
-            { weight: "Junior Middleweight", wbc: "Sebastian Fundora", wba: "Jaron Ennis", ibf: "Josh Kelly", wbo: "Jaron Ennis" },
-            { weight: "Welterweight", wbc: "Ryan Garcia", wba: "Teofimo Lopez", ibf: "Liam Paro", wbo: "Devin Haney" },
-            { weight: "Junior Welterweight", wbc: "Dalton Smith", wba: "Gary Antuanne Russell", ibf: "Vacant", wbo: "Shakur Stevenson" },
-            { weight: "Lightweight", wbc: "William Zepeda", wba: "Vacant", ibf: "Vacant", wbo: "Abdullah Mason" },
-            { weight: "Junior Lightweight", wbc: "O'Shaquie Foster", wba: "Anthony Cacace", ibf: "Emanuel Navarrete", wbo: "Emanuel Navarrete" },
-            { weight: "Featherweight", wbc: "Bruce Carrington", wba: "Brandon Figueroa", ibf: "Angelo Leo", wbo: "Rafael Espinoza" },
-            { weight: "Super Bantamweight", wbc: "Naoya Inoue", wba: "Naoya Inoue", ibf: "Naoya Inoue", wbo: "Naoya Inoue" },
-            { weight: "Bantamweight", wbc: "Takuma Inoue", wba: "Jesse Rodriguez", ibf: "José Salas Reyes", wbo: "Cristian Medina" },
-            { weight: "Junior Bantamweight", wbc: "Vacant", wba: "David Jimenez", ibf: "Andrew Moloney", wbo: "Kenshiro Teraji" },
-            { weight: "Flyweight", wbc: "Ricardo Sandoval", wba: "Ricardo Sandoval", ibf: "Masamichi Yabuki", wbo: "Anthony Olascuaga" },
-            { weight: "Junior Flyweight", wbc: "Shokichi Iwata", wba: "Daiya Kira", ibf: "Thanongsak Simsri", wbo: "René Santiago" },
-            { weight: "Strawweight", wbc: "Siyakholwa Kuse", wba: "Oscar Collazo", ibf: "Pedro Taduran", wbo: "Oscar Collazo" }
-        ];
-
-        const UFC_FULL_RANKINGS = [
-            { weight: "Heavyweight", champion: "Tom Aspinall", rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik", "Tai Tuivasa"] },
-            { weight: "Light Heavyweight", champion: "Carlos Ulberg", rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir", "Dominick Reyes"] },
-            { weight: "Middleweight", champion: "Sean Strickland", rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze", "Jared Cannonier"] },
-            { weight: "Welterweight", champion: "Islam Makhachev", rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns", "Geoff Neal"] },
-            { weight: "Lightweight", champion: "Justin Gaethje", rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker", "Rafael Fiziev"] },
-            { weight: "Featherweight", champion: "Alexander Volkanovski", rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze", "Calvin Kattar"] },
-            { weight: "Bantamweight", champion: "Petr Yan", rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font", "Henry Cejudo"] },
-            { weight: "Flyweight", champion: "Joshua Van", rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott", "Amir Albazi"] },
-            { weight: "Women's Bantamweight", champion: "Kayla Harrison", rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate", "Piera Rodriguez"] },
-            { weight: "Women's Flyweight", champion: "Valentina Shevchenko", rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva", "Tracy Cortez"] },
-            { weight: "Women's Strawweight", champion: "Mackenzie Dern", rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade", "Marina Rodriguez"] }
-        ];
+        let STANDINGS_DATA = {};
+        let BOXING_CHAMPIONS = [];
+        let UFC_FULL_RANKINGS = [];
 
         const CFB_MAP = {
             "1": "ACC", "4": "Big 12", "8": "SEC", "9": "Big Ten", "12": "Pac-12",
@@ -313,7 +204,68 @@
             } catch (e) {
                 console.log("Could not load links.json:", e);
             }
+
+            await loadExternalData();
             initTabs();
+        }
+
+        async function loadExternalData() {
+            try {
+                const rankRes = await fetch('rankings.json');
+                if (rankRes.ok) {
+                    const rankData = await rankRes.json();
+                    BOXING_CHAMPIONS = rankData.boxing || [];
+                    UFC_FULL_RANKINGS = rankData.ufc || [];
+                }
+            } catch (e) {
+                console.log("Could not load rankings.json:", e);
+            }
+
+            // Fetch live standings from ESPN API endpoints
+            const fetchStandingsEndpoint = async (leagueKey, url) => {
+                try {
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        STANDINGS_DATA[leagueKey] = parseEspnStandings(data);
+                    }
+                } catch (err) {
+                    console.log(`Failed to fetch standings for ${leagueKey}:`, err);
+                }
+            };
+
+            await Promise.all([
+                fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings"),
+                fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings"),
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings")
+            ]);
+        }
+
+        function parseEspnStandings(data) {
+            let divisionsResult = [];
+            const processGroup = (group) => {
+                if (group.standings && group.standings.entries) {
+                    let divName = group.name || group.abbreviation || "Standings";
+                    let teams = group.standings.entries.map(entry => {
+                        let name = entry.team.displayName;
+                        let stats = entry.stats || [];
+                        let w = stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0;
+                        let l = stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0;
+                        let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || ".000";
+                        return { name, w, l, pct };
+                    });
+                    divisionsResult.push({ division: divName, teams });
+                }
+                if (group.children) {
+                    group.children.forEach(sub => processGroup(sub));
+                }
+            };
+            if (data.children) {
+                data.children.forEach(c => processGroup(c));
+            } else if (data.standings?.children) {
+                data.standings.children.forEach(c => processGroup(c));
+            }
+            return divisionsResult;
         }
 
         function initTabs() {
@@ -404,15 +356,13 @@
             }
 
             labelText.innerText = "Rankings / Conf:";
-            const confs = Object.keys(STANDINGS_DATA[activeLeague]);
+            const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
             
             select.innerHTML = '';
             confs.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
-                if (c === "AP Top 25") opt.innerText = "AP Top 25 Rankings";
-                else if (c === "FCS") opt.innerText = "FCS Rankings (General/Other)";
-                else opt.innerText = c;
+                opt.innerText = c;
                 select.appendChild(opt);
             });
             filterBar.style.display = 'flex';
@@ -422,8 +372,32 @@
             const config = LEAGUES[activeLeague];
             if (config.isBoxing) {
                 return {
-                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Major Boxing Champions & Belts</button></div>`,
-                    subpage: `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid"><table class="espn-standings-table"><thead><tr><th>Weight Division</th><th>WBC</th><th>WBA</th><th>IBF</th><th>WBO</th></tr></thead><tbody>${BOXING_CHAMPIONS.map(bc => `<tr><td><strong>${bc.weight}</strong></td><td>${bc.wbc}</td><td>${bc.wba}</td><td>${bc.ibf}</td><td>${bc.wbo}</td></tr>`).join('')}</tbody></table></div></div>`
+                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Major Boxing Champions & Top 5 Rankings</button></div>`,
+                    subpage: `<div class="subpage-container" id="subpage-view">
+                        <div class="subpage-header">
+                            <span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions & Rankings</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button>
+                        </div>
+                        <div class="champions-grid">
+                            ${BOXING_CHAMPIONS.map(div => `
+                                <div class="ufc-div-card" onclick="toggleUfcDivision(this)">
+                                    <div class="ufc-div-header">
+                                        <span class="ufc-div-title">${div.weight}</span>
+                                        <span class="ufc-champ-preview"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size:0.65rem;"></i></span>
+                                    </div>
+                                    <div class="ufc-rankings-body">
+                                        <div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 5 Contenders / Belts:</div>
+                                        ${div.rankings.map((f, i) => `
+                                            <div class="ufc-rank-row">
+                                                <span class="rank-num">#${i + 1}</span>
+                                                <span class="rank-name">${f}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`
                 };
             } else if (config.isUfcRankings) {
                 return {
@@ -435,10 +409,10 @@
                 let label = config.standingsLabel;
 
                 if (activeLeague === "CFB" || activeLeague === "CBB") {
-                    const dataObj = STANDINGS_DATA[activeLeague];
+                    const dataObj = STANDINGS_DATA[activeLeague] || {};
                     const targetKey = selectedConf && dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                    standingsToRender = [{ division: targetKey === "AP Top 25" ? `${activeLeague} AP Top 25 Rankings` : targetKey === "FCS" ? `${activeLeague} FCS Rankings` : `${targetKey} Conference Standings`, teams: dataObj[targetKey] }];
-                    label = targetKey === "AP Top 25" ? `${activeLeague} AP Top 25` : targetKey === "FCS" ? `${activeLeague} FCS Rankings` : `${targetKey} Standings`;
+                    standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
+                    label = `${targetKey} Standings`;
                 } else {
                     standingsToRender = STANDINGS_DATA[activeLeague] || [];
                 }
@@ -580,8 +554,7 @@
             Array.from(confs).sort().forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
-                if (c === "FCS") opt.innerText = "FCS Rankings (General/Other)";
-                else opt.innerText = c;
+                opt.innerText = c;
                 select.appendChild(opt);
             });
             filterBar.style.display = 'flex';
