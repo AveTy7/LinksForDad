@@ -52,23 +52,24 @@
         }
         .top-action-btn {
             background: var(--accent); color: white; border: none;
-            padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;
-            display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center; cursor: pointer;
+            padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center; cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
         .top-action-btn:hover { opacity: 0.9; }
 
         .subpage-container {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 16px; margin-bottom: 12px; display: none;
+            padding: 16px; margin-bottom: 12px; display: none; width: 100%;
         }
         .subpage-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
-            border-bottom: 1px solid var(--border); padding-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+            border-bottom: 1px solid var(--border); padding-bottom: 10px; gap: 10px; flex-wrap: wrap;
         }
-        .subpage-title { font-size: 0.95rem; font-weight: 700; color: #60a5fa; display: flex; align-items: center; gap: 6px; }
+        .subpage-title { font-size: 0.95rem; font-weight: 700; color: #60a5fa; display: flex; align-items: center; gap: 6px; word-break: break-word; flex: 1; }
         .close-subpage-btn {
-            background: var(--border); color: var(--text); border: none; padding: 4px 10px;
-            border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            background: var(--border); color: var(--text); border: none; padding: 6px 12px;
+            border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0;
         }
         .close-subpage-btn:hover { background: #475569; }
 
@@ -80,37 +81,44 @@
         }
 
         .champions-grid {
-            display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 10px; max-height: 520px; overflow-y: auto; padding-right: 4px;
         }
+        .champions-grid::-webkit-scrollbar { width: 6px; }
+        .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
         .weight-class-row {
-            display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--border);
-            font-size: 0.8rem; align-items: center; background: var(--bg); border-radius: 8px; margin-bottom: 4px;
+            display: flex; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border);
+            font-size: 0.82rem; align-items: center; background: var(--bg); border-radius: 8px; gap: 12px;
         }
-        .weight-name { font-weight: 700; color: #60a5fa; width: 35%; }
-        .weight-champs { width: 65%; text-align: right; font-weight: 600; }
+        .weight-name { font-weight: 700; color: #60a5fa; width: 38%; word-break: break-word; }
+        .weight-champs { width: 62%; text-align: right; font-weight: 600; word-break: break-word; }
 
         /* UFC Expandable Accordion Styles */
         .ufc-division-card {
-            background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+            background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
         }
         .ufc-division-header {
-            padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
-            font-weight: 700; font-size: 0.85rem; color: var(--text); background: rgba(30, 41, 59, 0.5);
+            padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            font-weight: 700; font-size: 0.85rem; color: var(--text); background: rgba(30, 41, 59, 0.6); gap: 10px;
         }
         .ufc-division-header:hover { background: rgba(37, 99, 235, 0.15); }
-        .ufc-champ-tag { color: #f59e0b; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
+        .ufc-title-group { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+        .ufc-div-name { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+        .ufc-champ-tag { color: #f59e0b; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; font-weight: 600; word-break: break-word; }
+        .ufc-chevron { font-size: 0.75rem; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+        .ufc-division-card.expanded .ufc-chevron { transform: rotate(180deg); }
         
         .ufc-rankings-list {
-            display: none; padding: 10px 14px; border-top: 1px solid var(--border); background: var(--card);
-            font-size: 0.78rem;
+            display: none; padding: 12px 14px; border-top: 1px solid var(--border); background: var(--card);
+            font-size: 0.8rem;
         }
         .ufc-division-card.expanded .ufc-rankings-list { display: block; }
         .ufc-rank-row {
-            display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+            display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(51, 65, 85, 0.4); gap: 10px;
         }
         .ufc-rank-row:last-child { border-bottom: none; }
-        .rank-num { color: var(--muted); font-weight: 700; width: 25px; }
-        .rank-name { flex: 1; font-weight: 600; }
+        .rank-num { color: var(--muted); font-weight: 700; width: 30px; flex-shrink: 0; }
+        .rank-name { flex: 1; font-weight: 600; word-break: break-word; }
 
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
@@ -197,57 +205,57 @@
             {
                 weight: "Heavyweight",
                 champion: "Tom Aspinall",
-                rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura"]
+                rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik", "Alexander Romanov"]
             },
             {
                 weight: "Light Heavyweight",
                 champion: "Carlos Ulberg",
-                rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz"]
+                rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir", "Aleksandar Rakić"]
             },
             {
                 weight: "Middleweight",
                 champion: "Sean Strickland",
-                rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "CaioBorralho", "Robert Whittaker"]
+                rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze", "Jared Cannonier"]
             },
             {
                 weight: "Welterweight",
                 champion: "Islam Makhachev",
-                rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards"]
+                rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns", "Geoff Neal"]
             },
             {
                 weight: "Lightweight",
                 champion: "Justin Gaethje",
-                rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett"]
+                rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker", "Jalin Turner"]
             },
             {
                 weight: "Featherweight",
                 champion: "Alexander Volkanovski",
-                rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal"]
+                rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze", "Calvin Kattar"]
             },
             {
                 weight: "Bantamweight",
                 champion: "Petr Yan",
-                rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo"]
+                rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font", "Kyler Phillips"]
             },
             {
                 weight: "Flyweight",
                 champion: "Joshua Van",
-                rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno"]
+                rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott", "Amir Albazi"]
             },
             {
                 weight: "Women's Bantamweight",
                 champion: "Kayla Harrison",
-                rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington"]
+                rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate", "Pannie Kianzad"]
             },
             {
                 weight: "Women's Flyweight",
                 champion: "Valentina Shevchenko",
-                rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber"]
+                rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva", "Tracy Cortez"]
             },
             {
                 weight: "Women's Strawweight",
                 champion: "Mackenzie Dern",
-                rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Manon Fiorot", "Erin Blanchfield", "Julianna Peña", "Alexa Grasso"]
+                rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade", "Piera Rodriguez"]
             }
         ];
 
@@ -395,27 +403,30 @@
                 topActionHtml = `
                     <div class="top-action-bar" id="top-action-container">
                         <button class="top-action-btn" onclick="toggleSubpage(true)">
-                            <i class="fa-solid fa-trophy"></i> View UFC Champions & Full Rankings
+                            <i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings
                         </button>
                     </div>
                 `;
                 subpageHtml = `
                     <div class="subpage-container" id="subpage-view">
                         <div class="subpage-header">
-                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Full Rankings (Click Champion to Expand)</span>
+                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Rankings (Click to Expand)</span>
                             <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
                         </div>
                         <div class="champions-grid">
                             ${UFC_FULL_RANKINGS.map(div => `
                                 <div class="ufc-division-card" onclick="toggleUfcDivision(this)">
                                     <div class="ufc-division-header">
-                                        <span>${div.weight}</span>
-                                        <span class="ufc-champ-tag">
-                                            <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 6px;"></i>
-                                        </span>
+                                        <div class="ufc-title-group">
+                                            <span class="ufc-div-name">${div.weight}</span>
+                                            <span class="ufc-champ-tag">
+                                                <i class="fa-solid fa-crown"></i> Champ: ${div.champion}
+                                            </span>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-down ufc-chevron"></i>
                                     </div>
                                     <div class="ufc-rankings-list">
-                                        <div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Division Contenders:</div>
+                                        <div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Top 10 Contenders:</div>
                                         ${div.rankings.map((fighter, idx) => `
                                             <div class="ufc-rank-row">
                                                 <span class="rank-num">#${idx + 1}</span>
@@ -620,8 +631,8 @@
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Current Boxing Champions</button></div>`;
                 subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${BOXING_CHAMPIONS.map(bc => `<div class="weight-class-row"><span class="weight-name">${bc.weight}</span><span class="weight-champs">${bc.champions}</span></div>`).join('')}</div></div>`;
             } else if (config.isUfcRankings) {
-                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Full Rankings</button></div>`;
-                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Full Rankings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${UFC_FULL_RANKINGS.map(div => `<div class="ufc-division-card" onclick="toggleUfcDivision(this)"><div class="ufc-division-header"><span>${div.weight}</span><span class="ufc-champ-tag"><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> ${div.champion} <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 6px;"></i></span></div><div class="ufc-rankings-list"><div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Division Contenders:</div>${div.rankings.map((fighter, idx) => `<div class="ufc-rank-row"><span class="rank-num">#${idx + 1}</span><span class="rank-name">${fighter}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Divisions & Rankings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${UFC_FULL_RANKINGS.map(div => `<div class="ufc-division-card" onclick="toggleUfcDivision(this)"><div class="ufc-division-header"><div class="ufc-title-group"><span class="ufc-div-name">${div.weight}</span><span class="ufc-champ-tag"><i class="fa-solid fa-crown"></i> Champ: ${div.champion}</span></div><i class="fa-solid fa-chevron-down ufc-chevron"></i></div><div class="ufc-rankings-list"><div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px;">Top 10 Contenders:</div>${div.rankings.map((fighter, idx) => `<div class="ufc-rank-row"><span class="rank-num">#${idx + 1}</span><span class="rank-name">${fighter}</span></div>`).join('')}</div></div>`).join('')}</div></div>`;
             } else if (config.standingsUrl) {
                 topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${activeLeague} Standings</button></div>`;
                 subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${activeLeague} Standings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="standings-iframe-wrap"><iframe src="${config.standingsUrl}" loading="lazy"></iframe></div></div>`;
