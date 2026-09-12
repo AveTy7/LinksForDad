@@ -95,9 +95,10 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
-        /* UFC Accordion with expanded body sized properly to show full top 10 list with scroll */
+        /* UFC Accordion: Fixes flex shrinking so collapsed cards stay full height and expanded lists scroll safely inside */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
+            flex-shrink: 0; /* Prevents unexpanded tabs from getting squished when another tab expands */
         }
         .ufc-div-header {
             padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
@@ -107,11 +108,12 @@
         .ufc-champ-preview { font-size: 0.75rem; color: #60a5fa; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         
         .ufc-rankings-body {
-            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 12px; background: rgba(15, 23, 42, 0.5);
+            display: none; padding: 0 12px; background: rgba(15, 23, 42, 0.5);
         }
         .ufc-div-card.expanded .ufc-rankings-body {
-            max-height: 320px; /* Increased height so all 10 contenders fit cleanly without prematurely clipping */
-            overflow-y: auto;    /* Makes the contenders section vertically scrollable */
+            display: block;
+            max-height: 260px; /* Constrains the scrollable height so the list scrolls neatly without blowing out the container */
+            overflow-y: auto;    /* Enables smooth scrolling through all 10 contenders */
             padding: 10px 12px;
             border-top: 1px solid var(--border);
         }
@@ -402,7 +404,6 @@
 
         function toggleUfcDivision(el) {
             const wasExpanded = el.classList.contains('expanded');
-            // Optional: close other open accordions if you want only one open at a time, or leave as-is for independent toggling.
             document.querySelectorAll('.ufc-div-card').forEach(card => card.classList.remove('expanded'));
             if (!wasExpanded) {
                 el.classList.add('expanded');
