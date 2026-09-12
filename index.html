@@ -95,7 +95,7 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
-        /* UFC Accordion with fixed scrollable height to guarantee full top 10 display */
+        /* UFC Accordion with max-height override for full top 10 display */
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
         }
@@ -110,7 +110,7 @@
             max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 12px; background: rgba(15, 23, 42, 0.5);
         }
         .ufc-div-card.expanded .ufc-rankings-body {
-            max-height: 280px; /* Safely fits 10 items with room to spare */
+            max-height: 420px; /* Fully expanded to display all 10 rankings without clipping */
             padding: 10px 12px;
             border-top: 1px solid var(--border);
             overflow-y: auto;
@@ -230,6 +230,18 @@
                     { name: "23. Syracuse Orange", w: 10, l: 3, pct: ".769" }, { name: "24. Missouri Tigers", w: 10, l: 3, pct: ".769" },
                     { name: "25. South Carolina Gamecocks", w: 9, l: 4, pct: ".692" }
                 ],
+                "FCS": [
+                    { name: "1. South Dakota State Jackrabbits", w: 14, l: 1, pct: ".933" },
+                    { name: "2. North Dakota State Bison", w: 11, l: 4, pct: ".733" },
+                    { name: "3. Montana State Bobcats", w: 12, l: 1, pct: ".923" },
+                    { name: "4. Idaho Vandals", w: 9, l: 4, pct: ".692" },
+                    { name: "5. South Dakota Coyotes", w: 10, l: 3, pct: ".769" },
+                    { name: "6. Villanova Wildcats", w: 10, l: 3, pct: ".769" },
+                    { name: "7. Sacramento State Hornets", w: 8, l: 5, pct: ".615" },
+                    { name: "8. Albany Great Danes", w: 11, l: 4, pct: ".733" },
+                    { name: "9. Montana Grizzlies", w: 13, l: 2, pct: ".867" },
+                    { name: "10. Furman Paladins", w: 10, l: 3, pct: ".769" }
+                ],
                 "SEC": [
                     { name: "Texas Longhorns", w: 13, l: 2, pct: ".867" }, { name: "Georgia Bulldogs", w: 11, l: 3, pct: ".786" },
                     { name: "Ole Miss Rebels", w: 10, l: 3, pct: ".769" }, { name: "Tennessee Volunteers", w: 10, l: 3, pct: ".769" },
@@ -266,6 +278,13 @@
                     { name: "21. Wisconsin Badgers", w: 22, l: 14, pct: ".611" }, { name: "22. Texas Tech Red Raiders", w: 23, l: 11, pct: ".676" },
                     { name: "23. San Diego State Aztecs", w: 26, l: 11, pct: ".703" }, { name: "24. Florida Gators", w: 24, l: 12, pct: ".667" },
                     { name: "25. BYU Cougars", w: 23, l: 11, pct: ".676" }
+                ],
+                "FCS": [
+                    { name: "1. Nova Southeastern Sharks", w: 36, l: 0, pct: "1.000" },
+                    { name: "2. Northwest Missouri State", w: 31, l: 3, pct: ".912" },
+                    { name: "3. West Liberty Hilltoppers", w: 29, l: 6, pct: ".829" },
+                    { name: "4. Indiana University of PA", w: 28, l: 4, pct: ".875" },
+                    { name: "5. Black Hills State", w: 27, l: 8, pct: ".771" }
                 ],
                 "Big East": [
                     { name: "UConn Huskies", w: 37, l: 3, pct: ".925" }, { name: "Marquette Golden Eagles", w: 27, l: 10, pct: ".730" },
@@ -304,17 +323,17 @@
         ];
 
         const UFC_FULL_RANKINGS = [
-            { weight: "Heavyweight", champion: "Tom Aspinall", rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik"] },
-            { weight: "Light Heavyweight", champion: "Carlos Ulberg", rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir"] },
-            { weight: "Middleweight", champion: "Sean Strickland", rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze"] },
-            { weight: "Welterweight", champion: "Islam Makhachev", rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns"] },
-            { weight: "Lightweight", champion: "Justin Gaethje", rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker"] },
-            { weight: "Featherweight", champion: "Alexander Volkanovski", rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze"] },
-            { weight: "Bantamweight", champion: "Petr Yan", rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font"] },
-            { weight: "Flyweight", champion: "Joshua Van", rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott"] },
-            { weight: "Women's Bantamweight", champion: "Kayla Harrison", rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate"] },
-            { weight: "Women's Flyweight", champion: "Valentina Shevchenko", rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva"] },
-            { weight: "Women's Strawweight", champion: "Mackenzie Dern", rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade"] }
+            { weight: "Heavyweight", champion: "Tom Aspinall", rankings: ["Ciryl Gane", "Alexander Volkov", "Sergei Pavlovich", "Curtis Blaydes", "Waldo Cortes Acosta", "Serghei Spivac", "Derrick Lewis", "Marcin Tybura", "Jairzinho Rozenstruik", "Tai Tuivasa"] },
+            { weight: "Light Heavyweight", champion: "Carlos Ulberg", rankings: ["Magomed Ankalaev", "Jiří Procházka", "Alex Pereira", "Khalil Rountree Jr.", "Paulo Costa", "Jamahal Hill", "Azamat Murzakanov", "Jan Błachowicz", "Volkan Oezdemir", "Dominick Reyes"] },
+            { weight: "Middleweight", champion: "Sean Strickland", rankings: ["Khamzat Chimaev", "Dricus Du Plessis", "Nassourdine Imavov", "Brendan Allen", "Israel Adesanya", "Anthony Hernandez", "Caio Borralho", "Robert Whittaker", "Roman Dolidze", "Jared Cannonier"] },
+            { weight: "Welterweight", champion: "Islam Makhachev", rankings: ["Carlos Prates", "Ian Machado Garry", "Michael Morales", "Jack Della Maddalena", "Sean Brady", "Gabriel Bonfim", "Belal Muhammad", "Leon Edwards", "Gilbert Burns", "Geoff Neal"] },
+            { weight: "Lightweight", champion: "Justin Gaethje", rankings: ["Ilia Topuria", "Arman Tsarukyan", "Charles Oliveira", "Max Holloway", "Benoît Saint Denis", "Mateusz Gamrot", "Renato Moicano", "Paddy Pimblett", "Dan Hooker", "Rafael Fiziev"] },
+            { weight: "Featherweight", champion: "Alexander Volkanovski", rankings: ["Movsar Evloev", "Diego Lopes", "Lerone Murphy", "Aljamain Sterling", "Arnold Allen", "Jean Silva", "Pat Sabatini", "Youssef Zalal", "Giga Chikadze", "Calvin Kattar"] },
+            { weight: "Bantamweight", champion: "Petr Yan", rankings: ["Merab Dvalishvili", "Umar Nurmagomedov", "Sean O'Malley", "Cory Sandhagen", "Mario Bautista", "Song Yadong", "David Martinez", "Deiveson Figueiredo", "Rob Font", "Henry Cejudo"] },
+            { weight: "Flyweight", champion: "Joshua Van", rankings: ["Alexandre Pantoja", "Manel Kape", "Tatsuro Taira", "Brandon Royval", "Lone'er Kavanagh", "Asu Almabayev", "Kyoji Horiguchi", "Brandon Moreno", "Tim Elliott", "Amir Albazi"] },
+            { weight: "Women's Bantamweight", champion: "Kayla Harrison", rankings: ["Joselyne Edwards", "Norma Dumont", "Luana Santos", "Julianna Peña", "Ailin Perez", "Yana Santos", "Jacqueline Cavalcanti", "Raquel Pennington", "Miesha Tate", "Piera Rodriguez"] },
+            { weight: "Women's Flyweight", champion: "Valentina Shevchenko", rankings: ["Natalia Silva", "Manon Fiorot", "Alexa Grasso", "Erin Blanchfield", "Zhang Weili", "Jasmine Jasudavicius", "Rose Namajunas", "Maycee Barber", "Karine Silva", "Tracy Cortez"] },
+            { weight: "Women's Strawweight", champion: "Mackenzie Dern", rankings: ["Zhang Weili", "Tatiana Suarez", "Virna Jandiroba", "Denise Gomes", "Amanda Lemos", "Luana Pinheiro", "Loopy Godinez", "Tabatha Ricci", "Jessica Andrade", "Marina Rodriguez"] }
         ];
 
         const CFB_MAP = {
@@ -421,14 +440,16 @@
                 return;
             }
 
-            labelText.innerText = activeLeague === "CFB" ? "Rankings / Conf:" : "AP / Conf:";
+            labelText.innerText = "Rankings / Conf:";
             const confs = Object.keys(STANDINGS_DATA[activeLeague]);
             
             select.innerHTML = '';
             confs.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
-                opt.innerText = c === "AP Top 25" ? "AP Top 25 Rankings" : c;
+                if (c === "AP Top 25") opt.innerText = "AP Top 25 Rankings";
+                else if (c === "FCS") opt.innerText = "FCS Rankings (General/Other)";
+                else opt.innerText = c;
                 select.appendChild(opt);
             });
             filterBar.style.display = 'flex';
@@ -453,8 +474,8 @@
                 if (activeLeague === "CFB" || activeLeague === "CBB") {
                     const dataObj = STANDINGS_DATA[activeLeague];
                     const targetKey = selectedConf && dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                    standingsToRender = [{ division: targetKey === "AP Top 25" ? `${activeLeague} AP Top 25 Rankings` : `${targetKey} Conference Standings`, teams: dataObj[targetKey] }];
-                    label = targetKey === "AP Top 25" ? `${activeLeague} AP Top 25` : `${targetKey} Standings`;
+                    standingsToRender = [{ division: targetKey === "AP Top 25" ? `${activeLeague} AP Top 25 Rankings` : targetKey === "FCS" ? `${activeLeague} FCS Rankings` : `${targetKey} Conference Standings`, teams: dataObj[targetKey] }];
+                    label = targetKey === "AP Top 25" ? `${activeLeague} AP Top 25` : targetKey === "FCS" ? `${activeLeague} FCS Rankings` : `${targetKey} Standings`;
                 } else {
                     standingsToRender = STANDINGS_DATA[activeLeague] || [];
                 }
@@ -533,12 +554,14 @@
                         const tn = td.team?.displayName || "", sn = td.team?.shortDisplayName || "";
                         if (tn.includes("Notre Dame") || sn === "Notre Dame" || sn === "UConn") return "Independents";
                         const rId = String(td.team?.conferenceId || td.conferenceId || "");
-                        return CFB_MAP[rId] || td.team?.conference?.name || null;
+                        const mapped = CFB_MAP[rId] || td.team?.conference?.name || null;
+                        if (mapped === "FCS") return "FCS";
+                        return mapped;
                     };
                     const hConf = resolveConf(home), aConf = resolveConf(away);
                     if (hConf) confSet.add(hConf);
                     if (aConf) confSet.add(aConf);
-                    if (confSet.size === 0) confSet.add("General / Other");
+                    if (confSet.size === 0) confSet.add("FCS");
 
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
@@ -583,17 +606,19 @@
             const select = document.getElementById('conf-select');
             const labelText = document.getElementById('filter-label-text');
 
-            if (activeLeague !== "CFB") {
-                if (activeLeague !== "CBB") filterBar.style.display = 'none';
+            if (activeLeague !== "CFB" && activeLeague !== "CBB") {
+                filterBar.style.display = 'none';
                 return;
             }
-            labelText.innerText = "Conference:";
+            labelText.innerText = "Rankings / Conf:";
             const confs = new Set();
             games.forEach(g => g.conferences.forEach(c => confs.add(c)));
             select.innerHTML = '<option value="ALL">All Conferences</option>';
             Array.from(confs).sort().forEach(c => {
                 const opt = document.createElement('option');
-                opt.value = c; opt.innerText = c;
+                opt.value = c; 
+                if (c === "FCS") opt.innerText = "FCS Rankings (General/Other)";
+                else opt.innerText = c;
                 select.appendChild(opt);
             });
             filterBar.style.display = 'flex';
@@ -618,8 +643,9 @@
             let html = topActionHtml + subpageHtml + `<div id="list-content-container">`;
             
             if (activeLeague === "CFB" || activeLeague === "CBB") {
-                const filteredGames = (activeLeague === "CFB" && document.getElementById('conf-select').value !== "ALL") 
-                    ? currentGames.filter(g => g.conferences.includes(document.getElementById('conf-select').value))
+                const selectedFilter = document.getElementById('conf-select').value;
+                const filteredGames = (selectedFilter && selectedFilter !== "ALL") 
+                    ? currentGames.filter(g => g.conferences.includes(selectedFilter))
                     : currentGames;
 
                 if (!filteredGames.length) {
