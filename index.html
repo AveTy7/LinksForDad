@@ -52,20 +52,21 @@
         }
         .card-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         
-        .team { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+        .team { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
         .team.away { justify-content: flex-end; text-align: right; }
-        .team img { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+        .team img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
         
         .team-text-stack { display: flex; flex-direction: column; min-width: 0; }
         .team.away .team-text-stack { align-items: flex-end; }
         .team.home .team-text-stack { align-items: flex-start; }
         
-        .team-city { font-size: 0.65rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .team-name { font-size: 0.82rem; font-weight: 700; line-height: 1.1; }
+        .team-city { font-size: 0.6rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .team-name { font-size: 0.78rem; font-weight: 700; line-height: 1.1; }
         
-        .info { text-align: center; padding: 0 8px; min-width: 110px; flex-shrink: 0; }
-        .time { color: #60a5fa; font-weight: 600; font-size: 0.75rem; }
-        .status { color: var(--muted); font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
+        /* Reduced size and padding for the middle date/time block to give teams more room */
+        .info { text-align: center; padding: 0 4px; min-width: 95px; flex-shrink: 0; }
+        .time { color: #60a5fa; font-weight: 600; font-size: 0.65rem; }
+        .status { color: var(--muted); font-size: 0.6rem; font-weight: 600; margin-top: 1px; }
         .status.live { color: var(--live); font-weight: 700; }
         
         .stream-link-container {
@@ -293,18 +294,15 @@
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
 
-                    // Helper to split team name into location/school vs mascot name
                     const formatTeamDetails = (teamData, rankPrefix) => {
                         const location = teamData.team?.location || "";
                         const name = teamData.team?.name || teamData.team?.displayName || "TBD";
                         
-                        // If location exists and is part of the display name, separate them
                         if (location && teamData.team?.displayName?.startsWith(location)) {
                             const mascot = teamData.team.displayName.replace(location, "").trim();
                             return { city: `${rankPrefix}${location}`, name: mascot || name };
                         }
                         
-                        // Fallback split logic for generic names
                         const parts = (teamData.team?.displayName || "TBD").split(' ');
                         if (parts.length > 1) {
                             const city = parts.slice(0, -1).join(' ');
