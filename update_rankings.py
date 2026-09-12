@@ -13,7 +13,6 @@ def scrape_boxing():
   tables = soup.find_all("table", {"class": "wikitable"})
 
   if tables:
-    # Typically the first main table contains the men's or primary champions
     table = tables[0]
     rows = table.find_all("tr")[1:]
     for row in rows:
@@ -43,26 +42,26 @@ def scrape_ufc():
   ufc_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
 
-  # Wikipedia UFC rankings page lists weight classes in separate tables
   for table in tables:
     rows = table.find_all("tr")
     if len(rows) < 3:
       continue
 
-    # Try to extract weight class name from the table header or preceding heading
     weight_name = "Unknown"
     caption = table.find("caption")
     if caption:
       weight_name = caption.get_text(strip=True)
     else:
-      prev_h3 = table.find_previous("h3")
+      prev_h3 = table.find_previous(["h3", "h4", "span"])
       if prev_h3:
+        headline = prev_h3.find("span", {"class": "mw-headline"})
+        if headline:
+          weight_name = headline.get_text(strip=True)
+        else:
+          weight_name = prev_h3.get_text(strip=True)
+
         weight_name = (
-            prev_h3.find("span", {"class": "mw-headline"})
-            .get_text(strip=True)
-            .replace("Men's", "")
-            .replace("Women's", "")
-            .strip()
+            weight_name.replace("Men's", "").replace("Women's", "").strip()
         )
 
     champion = "Vacant"
@@ -85,11 +84,11 @@ def scrape_ufc():
           ):
             rankings.append(fighter_name)
 
-    if weight_name != "Unknown":
+    if weight_name and weight_name != "Unknown":
       ufc_data.append({
           "weight": weight_name,
           "champion": champion,
-          "rankings": rankings[:10],  # Keep top 10
+          "rankings": rankings[:10],
       })
 
   return ufc_data
