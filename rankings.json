@@ -1,92 +1,60 @@
 {
     "boxing": [
-        { 
-            "weight": "Heavyweight", 
-            "champion": "Murat Gassiev (WBA) / Agit Kabayel (WBC)", 
-            "rankings": [
-                "Jarrell Miller (WBA) / Tyson Fury (WBC)", 
-                "Tyson Fury (WBA) / Anthony Joshua (WBC)", 
-                "Anthony Joshua (WBA) / Frank Sanchez (WBC)", 
-                "Vartan Arutyunyan (WBA) / Deontay Wilder (WBC)", 
-                "Nelson Hysa (WBA) / Moses Itauma (WBC)"
-            ] 
+        {
+            "weight": "Heavyweight",
+            "wba": "Tyson Fury",
+            "wbc": "Oleksandr Usyk",
+            "ibf": "Oleksandr Usyk",
+            "wbo": "Oleksandr Usyk"
         },
-        { 
-            "weight": "Cruiserweight", 
-            "champion": "David Benavidez (WBA/WBO)", 
-            "rankings": [
-                "Jai Opetaia (WBA/WBC)", 
-                "Leonardo Mosquea (WBA) / Chris Billam-Smith (WBC)", 
-                "Chris Billam-Smith (WBA) / Robin Sirwan Safar (WBC)", 
-                "Lenar Perez (WBA) / Viddal Riley (WBC)", 
-                "Muslim Gadzhimagomedov (WBA) / Gilberto Ramirez (WBC)"
-            ] 
+        {
+            "weight": "Cruiserweight",
+            "wba": "Gilberto Ramirez",
+            "wbc": "Noel Mikaelyan",
+            "ibf": "Jai Opetaia",
+            "wbo": "Chris Billam-Smith"
         },
-        { 
-            "weight": "Light Heavyweight", 
-            "champion": "Dmitry Bivol (WBA/IBF/WBO)", 
-            "rankings": [
-                "David Benavidez (WBC) / Albert Ramirez (WBA)", 
-                "Artur Beterbiev (WBC/IBF)", 
-                "Ben Whittaker (WBC/IBF)", 
-                "Joshua Buatsi (WBC)", 
-                "Imam Khataev (IBF) / Willy Hutchinson (WBC)"
-            ] 
+        {
+            "weight": "Light Heavyweight",
+            "wba": "Dmitry Bivol",
+            "wbc": "Artur Beterbiev",
+            "ibf": "Artur Beterbiev",
+            "wbo": "Artur Beterbiev"
         },
-        { 
-            "weight": "Super Middleweight", 
-            "champion": "Christian Mbilli (WBC)", 
-            "rankings": [
-                "Saúl 'Canelo' Álvarez (WBC/IBF)", 
-                "Jacob Bank (WBC) / Bektemir Melikuziev (WBA)", 
-                "Diego Pacheco (WBC)", 
-                "Kevin Lele Sadjo (WBC)", 
-                "Bektemir Melikuziev (WBC)"
-            ] 
+        {
+            "weight": "Super Middleweight",
+            "wba": "Saúl Álvarez",
+            "wbc": "Saúl Álvarez",
+            "ibf": "Saúl Álvarez",
+            "wbo": "Saúl Álvarez"
         },
-        { 
-            "weight": "Middleweight", 
-            "champion": "Carlos Adames (WBC) / Erislandy Lara (WBA)", 
-            "rankings": [
-                "Jesus Ramos (WBC) / Yoenli Hernandez (WBA)", 
-                "Meiirim Nursultanov (WBC) / Vadim Tukov (WBA)", 
-                "Yoenli Hernandez (WBC) / Shane Mosley Jr (WBA)", 
-                "Tim Tszyu (WBC) / Yoelvis Gomez (WBA)", 
-                "Bilel Jkitou (WBC) / Andreas Katzourakis (WBA)"
-            ] 
+        {
+            "weight": "Middleweight",
+            "wba": "Erislandy Lara",
+            "wbc": "Carlos Adames",
+            "ibf": "Janibek Alimkhanuly",
+            "wbo": "Janibek Alimkhanuly"
         },
-        { 
-            "weight": "Welterweight", 
-            "champion": "Jaron Ennis (WBA/WBO)", 
-            "rankings": [
-                "Sebastian Fundora (WBC)", 
-                "Vergil Ortiz (WBA Interim)", 
-                "Josh Kelly (IBF)", 
-                "Teofimo Lopez (WBA Super)", 
-                "Ryan Garcia (WBC)"
-            ] 
+        {
+            "weight": "Welterweight",
+            "wba": "Eimantas Stanionis",
+            "wbc": "Mario Barrios",
+            "ibf": "Jaron Ennis",
+            "wbo": "Brian Norman Jr."
         },
-        { 
-            "weight": "Lightweight", 
-            "champion": "William Zepeda (WBC)", 
-            "rankings": [
-                "Shakur Stevenson (WBO)", 
-                "Teofimo Lopez (WBA)", 
-                "Devin Haney (WBO)", 
-                "Liam Paro (IBF)", 
-                "Ryan Garcia (WBC)"
-            ] 
+        {
+            "weight": "Lightweight",
+            "wba": "Gervonta Davis",
+            "wbc": "Shakur Stevenson",
+            "ibf": "Vasiliy Lomachenko",
+            "wbo": "Denys Berinchyk"
         },
-        { 
-            "weight": "Featherweight", 
-            "champion": "Brandon Figueroa (WBA)", 
-            "rankings": [
-                "Rafael Espinoza (WBO)", 
-                "Bruce Carrington (WBC)", 
-                "Angelo Leo (IBF)", 
-                "Rey Vargas (WBC)", 
-                "Nick Ball (WBA)"
-            ] 
+        {
+            "weight": "Featherweight",
+            "wba": "Nick Ball",
+            "wbc": "Rey Vargas",
+            "ibf": "Angelo Leo",
+            "wbo": "Rafael Espinoza"
         }
     ],
     "ufc": [
