@@ -1,127 +1,127 @@
 {
     "boxing": [
         {
-            "weight": "",
+            "weight": "Heavyweight",
             "wba": "Murat Gassiev<br>34\u20132 (1)",
             "wbc": "Agit Kabayel<br>27\u20130",
             "ibf": "Filip Hrgovi\u0107<br>21\u20131",
             "wbo": "Daniel Dubois<br>23\u20133"
         },
         {
-            "weight": "",
+            "weight": "Bridgerweight",
             "wba": "vacant",
             "wbc": "Ryad Merhy<br>36\u20133",
             "ibf": "vacant",
             "wbo": "vacant"
         },
         {
-            "weight": "",
-            "wba": "David BenavidezSuper champion<br>32\u20130",
+            "weight": "Cruiserweight/Junior heavyweight",
+            "wba": "David Benavidez <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>32\u20130",
             "wbc": "Noel Mikaelian<br>28\u20133",
             "ibf": "vacant",
             "wbo": "David Benavidez<br>32\u20130"
         },
         {
-            "weight": "",
-            "wba": "Dmitry BivolSuper champion<br>25\u20131",
+            "weight": "Light heavyweight",
+            "wba": "Dmitry Bivol <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>25\u20131",
             "wbc": "David Benavidez<br>32\u20130",
             "ibf": "Dmitry Bivol<br>25\u20131",
             "wbo": "Dmitry Bivol<br>25\u20131"
         },
         {
-            "weight": "",
+            "weight": "Super middleweight",
             "wba": "Jaime Munguia<br>46\u20132",
             "wbc": "Christian M'billi<br>29\u20130\u20131",
             "ibf": "Osleys Iglesias<br>15\u20130",
             "wbo": "Hamzah Sheeraz<br>23\u20130\u20131"
         },
         {
-            "weight": "",
+            "weight": "Middleweight",
             "wba": "Erislandy Lara<br>32\u20133\u20133",
             "wbc": "Carlos Adames<br>25\u20131\u20131",
             "ibf": "Aaron McKenna<br>21-0",
             "wbo": "Denzel Bentley<br>22\u20133\u20131"
         },
         {
-            "weight": "",
+            "weight": "Super welterweight / Junior middleweight",
             "wba": "Jaron Ennis<br>36\u20130 (1)",
             "wbc": "Sebastian Fundora<br>24\u20131\u20131",
             "ibf": "Josh Kelly<br>18\u20131\u20131",
             "wbo": "Jaron Ennis<br>36\u20130 (1)"
         },
         {
-            "weight": "",
-            "wba": "Teofimo LopezSuper champion<br>23\u20132",
+            "weight": "Welterweight",
+            "wba": "Teofimo Lopez <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>23\u20132",
             "wbc": "Ryan Garcia<br>25\u20132 (1)",
             "ibf": "Liam Paro<br>28\u20131",
             "wbo": "Devin Haney<br>33\u20130 (1)"
         },
         {
-            "weight": "",
+            "weight": "Super lightweight/Junior welterweight",
             "wba": "Gary Antuanne Russell<br>19\u20131",
             "wbc": "Dalton Smith<br>19-0",
             "ibf": "vacant",
             "wbo": "Shakur Stevenson<br>25\u20130"
         },
         {
-            "weight": "",
+            "weight": "Lightweight",
             "wba": "vacant",
             "wbc": "William Zepeda<br>34\u20131",
             "ibf": "vacant",
             "wbo": "Abdullah Mason<br>21\u20130"
         },
         {
-            "weight": "",
-            "wba": "Anthony CacaceSuper Champion<br>26\u20131",
+            "weight": "Super featherweight/Junior lightweight",
+            "wba": "Anthony Cacace <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>26\u20131",
             "wbc": "O'Shaquie Foster<br>25\u20133",
             "ibf": "Emanuel Navarrete<br>40\u20132\u20131 (1)",
             "wbo": "Emanuel Navarrete<br>40\u20132\u20131 (1)"
         },
         {
-            "weight": "",
+            "weight": "Featherweight",
             "wba": "Brandon Figueroa<br>27\u20132\u20131",
             "wbc": "Bruce Carrington<br>18\u20130",
             "ibf": "Angelo Leo<br>26\u20131",
             "wbo": "Rafael Espinoza<br>28\u20130"
         },
         {
-            "weight": "",
-            "wba": "Naoya InoueSuper champion<br>33\u20130",
+            "weight": "Super bantamweight/Junior featherweight",
+            "wba": "Naoya Inoue <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>33\u20130",
             "wbc": "Naoya Inoue<br>33\u20130",
             "ibf": "Naoya Inoue<br>33\u20130",
             "wbo": "Naoya Inoue<br>33\u20130"
         },
         {
-            "weight": "",
-            "wba": "Jesse RodriguezSuper champion<br>24\u20130",
+            "weight": "Bantamweight",
+            "wba": "Jesse Rodriguez <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>24\u20130",
             "wbc": "Takuma Inoue<br>22\u20132",
             "ibf": "Jos\u00e9 Salas<br>17\u20130",
             "wbo": "Christian Medina<br>27\u20134"
         },
         {
-            "weight": "",
+            "weight": "Super flyweight/Junior bantamweight",
             "wba": "David Jim\u00e9nez<br>18\u20131",
             "wbc": "vacant",
             "ibf": "Andrew Moloney<br>29\u20134 (1)",
             "wbo": "Kenshiro Teraji<br>26\u20132"
         },
         {
-            "weight": "",
+            "weight": "Flyweight",
             "wba": "Ricardo Sandoval<br>27\u20132",
             "wbc": "Ricardo Sandoval<br>27\u20132",
             "ibf": "Masamichi Yabuki<br>20\u20134",
             "wbo": "Anthony Olascuaga<br>12\u20131"
         },
         {
-            "weight": "",
+            "weight": "Light flyweight/Junior flyweight",
             "wba": "Daiya Kira<br>5\u20130",
             "wbc": "Shokichi Iwata<br>17\u20132",
             "ibf": "Thanongsak Simsri<br>40\u20131",
             "wbo": "Ren\u00e9 Santiago<br>16\u20134"
         },
         {
-            "weight": "",
-            "wba": "Oscar CollazoSuper champion<br>15\u20130",
+            "weight": "Minimumweight/Mini flyweight/Strawweight",
+            "wba": "Oscar Collazo <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>15\u20130",
             "wbc": "Siyakholwa Kuse<br>10\u20133\u20131",
             "ibf": "Pedro Taduran<br>20\u20134\u20131",
             "wbo": "Oscar Collazo<br>15\u20130"
