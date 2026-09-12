@@ -50,25 +50,45 @@
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
             padding: 12px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
         }
-        .top-action-link {
-            background: var(--accent); color: white; text-decoration: none;
+        .top-action-btn {
+            background: var(--accent); color: white; border: none;
             padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;
-            display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center;
+            display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center; cursor: pointer;
         }
-        .top-action-link:hover { opacity: 0.9; }
+        .top-action-btn:hover { opacity: 0.9; }
 
-        .champions-card {
+        .subpage-container {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 14px; margin-bottom: 12px;
+            padding: 16px; margin-bottom: 12px; display: none;
         }
-        .champions-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 6px; }
+        .subpage-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+            border-bottom: 1px solid var(--border); padding-bottom: 8px;
+        }
+        .subpage-title { font-size: 0.95rem; font-weight: 700; color: #60a5fa; display: flex; align-items: center; gap: 6px; }
+        .close-subpage-btn {
+            background: var(--border); color: var(--text); border: none; padding: 4px 10px;
+            border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+        }
+        .close-subpage-btn:hover { background: #475569; }
+
+        .standings-iframe-wrap {
+            position: relative; width: 100%; height: 500px; border-radius: 8px; overflow: hidden; background: #fff;
+        }
+        .standings-iframe-wrap iframe {
+            width: 100%; height: 100%; border: none;
+        }
+
+        .champions-grid {
+            display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto;
+        }
         .weight-class-row {
             display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border);
-            font-size: 0.78rem;
+            font-size: 0.78rem; align-items: center;
         }
         .weight-class-row:last-child { border-bottom: none; }
         .weight-name { font-weight: 700; color: var(--muted); width: 35%; }
-        .weight-champs { width: 65%; text-align: right; }
+        .weight-champs { width: 65%; text-align: right; font-weight: 600; }
 
         .card {
             background: var(--card); border: 1px solid var(--border); border-radius: 12px;
@@ -131,24 +151,38 @@
 
     <script>
         const LEAGUES = {
-            "NFL": { endpoint: "football/nfl", type: "espn", standings: "https://www.espn.com/nfl/standings" },
-            "NBA": { type: "scraped", category: "NBA", standings: "https://www.espn.com/nba/standings" },
-            "MLB": { endpoint: "baseball/mlb", type: "espn", standings: "https://www.espn.com/mlb/standings" },
-            "CFB": { endpoint: "football/college-football", type: "espn", standings: "https://www.espn.com/college-football/standings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", standings: "https://www.espn.com/mens-college-basketball/standings" },
-            "MMA": { type: "scraped", category: "MMA", standings: "https://www.ufc.com/rankings", standingsLabel: "View UFC Rankings" },
+            "NFL": { endpoint: "football/nfl", type: "espn", standingsUrl: "https://www.espn.com/nfl/standings" },
+            "NBA": { type: "scraped", category: "NBA", standingsUrl: "https://www.espn.com/nba/standings" },
+            "MLB": { endpoint: "baseball/mlb", type: "espn", standingsUrl: "https://www.espn.com/mlb/standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", standingsUrl: "https://www.espn.com/college-football/standings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", standingsUrl: "https://www.espn.com/mens-college-basketball/standings" },
+            "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
 
         const BOXING_CHAMPIONS = [
-            { weight: "Heavyweight", champions: "Oleksandr Usyk (WBC, WBA, WBO, IBF)" },
-            { weight: "Cruiserweight", champions: "Gilberto Ramirez (WBA), Chris Billam-Smith (WBO)" },
-            { weight: "Light Heavyweight", champions: "Artur Beterbiev (WBC, WBA, WBO, IBF)" },
-            { weight: "Super Middleweight", champions: "Saúl 'Canelo' Álvarez (WBC, WBA, WBO, IBF)" },
-            { weight: "Middleweight", champions: "Erislandy Lara (WBA), Janibek Alimkhanuly (WBO, IBF)" },
-            { weight: "Welterweight", champions: "Terence Crawford / Jaron Ennis / Mario Barrios" },
-            { weight: "Lightweight", champions: "Vasiliy Lomachenko (IBF), Gervonta Davis (WBA), Shakur Stevenson (WBC)" },
-            { weight: "Featherweight", champions: "Naoya Inoue / Super Bantam divisions apply" }
+            { weight: "Heavyweight", champions: "Oleksandr Usyk (The Ring), Filip Hrgović (IBF)" },
+            { weight: "Cruiserweight", champions: "David Benavidez (WBA/WBO)" },
+            { weight: "Light Heavyweight", champions: "Artur Beterbiev / Unified division" },
+            { weight: "Super Middleweight", champions: "Saúl 'Canelo' Álvarez / Contested elites" },
+            { weight: "Middleweight", champions: "Erislandy Lara (WBA), Janibek Alimkhanuly (WBO/IBF)" },
+            { weight: "Welterweight", champions: "Jaron Ennis (WBA/IBF/WBO)" },
+            { weight: "Lightweight", champions: "Gervonta Davis (WBA), Shakur Stevenson (WBC)" },
+            { weight: "Featherweight", champions: "Rafael Espinoza (WBO), Brandon Figueroa (WBC)" }
+        ];
+
+        const UFC_RANKINGS_DATA = [
+            { weight: "Heavyweight", champions: "Champion: Tom Aspinall | Interim: Ciryl Gane" },
+            { weight: "Light Heavyweight", champions: "Champion: Carlos Ulberg" },
+            { weight: "Middleweight", champions: "Champion: Sean Strickland" },
+            { weight: "Welterweight", champions: "Champion: Islam Makhachev" },
+            { weight: "Lightweight", champions: "Champion: Justin Gaethje" },
+            { weight: "Featherweight", champions: "Champion: Alexander Volkanovski" },
+            { weight: "Bantamweight", champions: "Champion: Petr Yan" },
+            { weight: "Flyweight", champions: "Champion: Joshua Van" },
+            { weight: "Women's Bantamweight", champions: "Champion: Kayla Harrison" },
+            { weight: "Women's Flyweight", champions: "Champion: Valentina Shevchenko" },
+            { weight: "Women's Strawweight", champions: "Champion: Mackenzie Dern" }
         ];
 
         const CFB_MAP = {
@@ -192,6 +226,21 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             fetchLeagueData(league);
+        }
+
+        function toggleSubpage(open) {
+            const actionbar = document.getElementById('top-action-container');
+            const subpage = document.getElementById('subpage-view');
+            const listcontent = document.getElementById('list-content-container');
+            if (open) {
+                if(actionbar) actionbar.style.display = 'none';
+                if(listcontent) listcontent.style.display = 'none';
+                if(subpage) subpage.style.display = 'block';
+            } else {
+                if(subpage) subpage.style.display = 'none';
+                if(actionbar) actionbar.style.display = 'flex';
+                if(listcontent) listcontent.style.display = 'block';
+            }
         }
 
         function getDateParam(leagueKey) {
@@ -245,36 +294,84 @@
             filterBar.style.display = 'none';
             const config = LEAGUES[league];
 
-            let topHtml = "";
+            let topActionHtml = "";
+            let subpageHtml = "";
+
             if (config.isBoxing) {
-                topHtml = `
-                    <div class="champions-card">
-                        <div class="champions-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</div>
-                        ${BOXING_CHAMPIONS.map(bc => `
-                            <div class="weight-class-row">
-                                <span class="weight-name">${bc.weight}</span>
-                                <span class="weight-champs">${bc.champions}</span>
-                            </div>
-                        `).join('')}
+                topActionHtml = `
+                    <div class="top-action-bar" id="top-action-container">
+                        <button class="top-action-btn" onclick="toggleSubpage(true)">
+                            <i class="fa-solid fa-belt"></i> View Current Boxing Champions
+                        </button>
                     </div>
                 `;
-            } else if (config.standings) {
-                const label = config.standingsLabel || `View ${league} Standings`;
-                topHtml = `
-                    <div class="top-action-bar">
-                        <a href="${config.standings}" target="_blank" class="top-action-link">
-                            <i class="fa-solid fa-trophy"></i> ${label}
-                        </a>
+                subpageHtml = `
+                    <div class="subpage-container" id="subpage-view">
+                        <div class="subpage-header">
+                            <span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
+                        </div>
+                        <div class="champions-grid">
+                            ${BOXING_CHAMPIONS.map(bc => `
+                                <div class="weight-class-row">
+                                    <span class="weight-name">${bc.weight}</span>
+                                    <span class="weight-champs">${bc.champions}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (config.isUfcRankings) {
+                topActionHtml = `
+                    <div class="top-action-bar" id="top-action-container">
+                        <button class="top-action-btn" onclick="toggleSubpage(true)">
+                            <i class="fa-solid fa-trophy"></i> View UFC Champions & Rankings
+                        </button>
+                    </div>
+                `;
+                subpageHtml = `
+                    <div class="subpage-container" id="subpage-view">
+                        <div class="subpage-header">
+                            <span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Division Champions</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
+                        </div>
+                        <div class="champions-grid">
+                            ${UFC_RANKINGS_DATA.map(ur => `
+                                <div class="weight-class-row">
+                                    <span class="weight-name">${ur.weight}</span>
+                                    <span class="weight-champs">${ur.champions}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (config.standingsUrl) {
+                topActionHtml = `
+                    <div class="top-action-bar" id="top-action-container">
+                        <button class="top-action-btn" onclick="toggleSubpage(true)">
+                            <i class="fa-solid fa-table-list"></i> View ${league} Standings
+                        </button>
+                    </div>
+                `;
+                subpageHtml = `
+                    <div class="subpage-container" id="subpage-view">
+                        <div class="subpage-header">
+                            <span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${league} Standings</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button>
+                        </div>
+                        <div class="standings-iframe-wrap">
+                            <iframe src="${config.standingsUrl}" loading="lazy"></iframe>
+                        </div>
                     </div>
                 `;
             }
 
-            // Render Scraped Event Lists (NBA, MMA, Boxing)
+            // Render Scraped Event Leagues (NBA, MMA, Boxing)
             if (config.type === "scraped") {
                 container.className = "";
                 const filteredItems = globalLinks.filter(item => item.category === config.category);
 
-                let listHtml = topHtml;
+                let listHtml = topActionHtml + subpageHtml + `<div id="list-content-container">`;
                 if (filteredItems.length > 0) {
                     listHtml += filteredItems.map(item => `
                         <div class="card">
@@ -295,6 +392,7 @@
                 } else {
                     listHtml += `<p class='loading'>No events found for ${league}. Run the GitHub Action workflow.</p>`;
                 }
+                listHtml += `</div>`;
                 container.innerHTML = listHtml;
                 return;
             }
@@ -306,7 +404,7 @@
             if (cache[league]) {
                 currentGames = cache[league];
                 setupConferenceFilter(currentGames);
-                renderGames(currentGames, topHtml);
+                renderGames(currentGames, topActionHtml, subpageHtml);
                 return;
             }
 
@@ -401,7 +499,7 @@
                 currentGames = Array.from(gameMap.values()).sort((a, b) => a.utcTime - b.utcTime);
                 cache[league] = currentGames;
                 setupConferenceFilter(currentGames);
-                renderGames(currentGames, topHtml);
+                renderGames(currentGames, topActionHtml, subpageHtml);
 
             } catch (err) {
                 console.error(err);
@@ -432,70 +530,71 @@
         function filterByConference() {
             const selectedConf = document.getElementById('conf-select').value;
             const config = LEAGUES[activeLeague];
-            let topHtml = "";
-            if (config.standings) {
-                const label = config.standingsLabel || `View ${activeLeague} Standings`;
-                topHtml = `
-                    <div class="top-action-bar">
-                        <a href="${config.standings}" target="_blank" class="top-action-link">
-                            <i class="fa-solid fa-trophy"></i> ${label}
-                        </a>
-                    </div>
-                `;
+            let topActionHtml = "";
+            let subpageHtml = "";
+
+            if (config.isBoxing) {
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Current Boxing Champions</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions by Weight Class</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${BOXING_CHAMPIONS.map(bc => `<div class="weight-class-row"><span class="weight-name">${bc.weight}</span><span class="weight-champs">${bc.champions}</span></div>`).join('')}</div></div>`;
+            } else if (config.isUfcRankings) {
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Rankings</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-trophy"></i> UFC Division Champions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="champions-grid">${UFC_RANKINGS_DATA.map(ur => `<div class="weight-class-row"><span class="weight-name">${ur.weight}</span><span class="weight-champs">${ur.champions}</span></div>`).join('')}</div></div>`;
+            } else if (config.standingsUrl) {
+                topActionHtml = `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${activeLeague} Standings</button></div>`;
+                subpageHtml = `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${activeLeague} Standings</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back to Schedule</button></div><div class="standings-iframe-wrap"><iframe src="${config.standingsUrl}" loading="lazy"></iframe></div></div>`;
             }
 
             if (selectedConf === "ALL") {
-                renderGames(currentGames, topHtml);
+                renderGames(currentGames, topActionHtml, subpageHtml);
             } else {
                 const filtered = currentGames.filter(g => g.conferences.includes(selectedConf));
-                renderGames(filtered, topHtml);
+                renderGames(filtered, topActionHtml, subpageHtml);
             }
         }
 
-        function renderGames(games, topHtml = "") {
+        function renderGames(games, topActionHtml = "", subpageHtml = "") {
             const container = document.getElementById('game-list');
             container.className = "";
             
-            let htmlContent = topHtml;
+            let htmlContent = topActionHtml + subpageHtml + `<div id="list-content-container">`;
             if (!games.length) {
                 htmlContent += "<p class='loading'>No games or categories scheduled for this view.</p>";
-                container.innerHTML = htmlContent;
-                return;
-            }
-            
-            htmlContent += games.map(g => `
-                <div class="card">
-                    <div class="card-main">
-                        <div class="team away">
-                            <div class="team-text-stack">
-                                <span class="team-city">${g.awayCity}</span>
-                                <span class="team-name">${g.awayTeam}</span>
+            } else {
+                htmlContent += games.map(g => `
+                    <div class="card">
+                        <div class="card-main">
+                            <div class="team away">
+                                <div class="team-text-stack">
+                                    <span class="team-city">${g.awayCity}</span>
+                                    <span class="team-name">${g.awayTeam}</span>
+                                </div>
+                                <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
                             </div>
-                            <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
-                        </div>
-                        <div class="info">
-                            <div class="time">${g.displayTime}</div>
-                            <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
-                        </div>
-                        <div class="team home">
-                            <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
-                            <div class="team-text-stack">
-                                <span class="team-city">${g.homeCity}</span>
-                                <span class="team-name">${g.homeTeam}</span>
+                            <div class="info">
+                                <div class="time">${g.displayTime}</div>
+                                <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
+                            </div>
+                            <div class="team home">
+                                <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
+                                <div class="team-text-stack">
+                                    <span class="team-city">${g.homeCity}</span>
+                                    <span class="team-name">${g.homeTeam}</span>
+                                </div>
                             </div>
                         </div>
+                        ${g.streamLinks && g.streamLinks.length > 0 ? `
+                            <div class="stream-link-container">
+                                ${g.streamLinks.map((link, idx) => `
+                                    <a href="${link}" target="_blank" class="stream-btn">
+                                        <i class="fa-solid fa-play"></i> Stream ${idx + 1}
+                                    </a>
+                                `).join('')}
+                            </div>
+                        ` : ''}
                     </div>
-                    ${g.streamLinks && g.streamLinks.length > 0 ? `
-                        <div class="stream-link-container">
-                            ${g.streamLinks.map((link, idx) => `
-                                <a href="${link}" target="_blank" class="stream-btn">
-                                    <i class="fa-solid fa-play"></i> Stream ${idx + 1}
-                                </a>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-                </div>
-            `).join('');
+                `).join('');
+            }
+            htmlContent += `</div>`;
 
             container.innerHTML = htmlContent;
         }
