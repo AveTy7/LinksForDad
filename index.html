@@ -321,14 +321,23 @@
         };
 
         const BOXING_CHAMPIONS = [
-            { weight: "Heavyweight", champions: "Oleksandr Usyk, Filip Hrgović" },
-            { weight: "Cruiserweight", champions: "David Benavidez" },
-            { weight: "Light Heavyweight", champions: "Artur Beterbiev" },
-            { weight: "Super Middleweight", champions: "Saúl 'Canelo' Álvarez" },
-            { weight: "Middleweight", champions: "Erislandy Lara, Janibek Alimkhanuly" },
-            { weight: "Welterweight", champions: "Jaron Ennis" },
-            { weight: "Lightweight", champions: "Gervonta Davis, Shakur Stevenson" },
-            { weight: "Featherweight", champions: "Rafael Espinoza, Brandon Figueroa" }
+            { weight: "Heavyweight", wbc: "Agit Kabayel", wba: "Murat Gassiev", ibf: "Filip Hrgović", wbo: "Daniel Dubois" },
+            { weight: "Cruiserweight", wbc: "Noel Mikaelian", wba: "David Benavidez", ibf: "Vacant", wbo: "David Benavidez" },
+            { weight: "Light Heavyweight", wbc: "David Benavidez", wba: "Dmitry Bivol", ibf: "Dmitry Bivol", wbo: "Dmitry Bivol" },
+            { weight: "Super Middleweight", wbc: "Christian Mbilli", wba: "Jaime Munguia", ibf: "Osleys Iglesias", wbo: "Hamzah Sheeraz" },
+            { weight: "Middleweight", wbc: "Carlos Adames", wba: "Erislandy Lara", ibf: "Aaron McKenna", wbo: "Denzel Bentley" },
+            { weight: "Junior Middleweight", wbc: "Sebastian Fundora", wba: "Jaron Ennis", ibf: "Josh Kelly", wbo: "Jaron Ennis" },
+            { weight: "Welterweight", wbc: "Ryan Garcia", wba: "Teofimo Lopez", ibf: "Liam Paro", wbo: "Devin Haney" },
+            { weight: "Junior Welterweight", wbc: "Dalton Smith", wba: "Gary Antuanne Russell", ibf: "Vacant", wbo: "Shakur Stevenson" },
+            { weight: "Lightweight", wbc: "William Zepeda", wba: "Vacant", ibf: "Vacant", wbo: "Abdullah Mason" },
+            { weight: "Junior Lightweight", wbc: "O'Shaquie Foster", wba: "Anthony Cacace", ibf: "Emanuel Navarrete", wbo: "Emanuel Navarrete" },
+            { weight: "Featherweight", wbc: "Bruce Carrington", wba: "Brandon Figueroa", ibf: "Angelo Leo", wbo: "Rafael Espinoza" },
+            { weight: "Super Bantamweight", wbc: "Naoya Inoue", wba: "Naoya Inoue", ibf: "Naoya Inoue", wbo: "Naoya Inoue" },
+            { weight: "Bantamweight", wbc: "Takuma Inoue", wba: "Jesse Rodriguez", ibf: "José Salas Reyes", wbo: "Cristian Medina" },
+            { weight: "Junior Bantamweight", wbc: "Vacant", wba: "David Jimenez", ibf: "Andrew Moloney", wbo: "Kenshiro Teraji" },
+            { weight: "Flyweight", wbc: "Ricardo Sandoval", wba: "Ricardo Sandoval", ibf: "Masamichi Yabuki", wbo: "Anthony Olascuaga" },
+            { weight: "Junior Flyweight", wbc: "Shokichi Iwata", wba: "Daiya Kira", ibf: "Thanongsak Simsri", wbo: "René Santiago" },
+            { weight: "Strawweight", wbc: "Siyakholwa Kuse", wba: "Oscar Collazo", ibf: "Pedro Taduran", wbo: "Oscar Collazo" }
         ];
 
         const UFC_FULL_RANKINGS = [
@@ -472,8 +481,8 @@
             const config = LEAGUES[activeLeague];
             if (config.isBoxing) {
                 return {
-                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Current Boxing Champions</button></div>`,
-                    subpage: `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${BOXING_CHAMPIONS.map(bc => `<div class="weight-class-row"><span class="weight-name">${bc.weight}</span><span class="weight-champs">${bc.champions}</span></div>`).join('')}</div></div>`
+                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-belt"></i> View Major Boxing Champions & Belts</button></div>`,
+                    subpage: `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-belt"></i> Major Boxing Champions</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid"><table class="espn-standings-table"><thead><tr><th>Weight Division</th><th>WBC</th><th>WBA</th><th>IBF</th><th>WBO</th></tr></thead><tbody>${BOXING_CHAMPIONS.map(bc => `<tr><td><strong>${bc.weight}</strong></td><td>${bc.wbc}</td><td>${bc.wba}</td><td>${bc.ibf}</td><td>${bc.wbo}</td></tr>`).join('')}</tbody></table></div></div>`
                 };
             } else if (config.isUfcRankings) {
                 return {
