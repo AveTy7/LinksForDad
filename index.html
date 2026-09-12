@@ -68,7 +68,14 @@
         }
         .close-subpage-btn:hover { background: #334155; }
 
-        .champions-grid { display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; padding-right: 2px; }
+        .champions-grid { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            max-height: 75vh; 
+            overflow-y: auto; 
+            padding-right: 2px; 
+        }
         .champions-grid::-webkit-scrollbar { width: 4px; }
         .champions-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
@@ -221,7 +228,6 @@
                 console.log("Could not load rankings.json:", e);
             }
 
-            // Fetch live standings from ESPN API endpoints
             const fetchStandingsEndpoint = async (leagueKey, url) => {
                 try {
                     const res = await fetch(url);
@@ -644,7 +650,7 @@
                                 <div class="team-text-stack">
                                     <span class="team-city">${g.homeCity}</span>
                                     <span class="team-name">${g.homeTeam}</span>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         ${g.streamLinks && g.streamLinks.length ? `
