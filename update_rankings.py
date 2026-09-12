@@ -1,6 +1,24 @@
 import json
+import re
 import requests
 from bs4 import BeautifulSoup
+
+
+def clean_text(text):
+  if not text:
+    return ""
+  # Remove Wikipedia citation brackets like [1]
+  text = re.sub(r"\[\d+\]", "", text)
+  # Remove dates like "July 1, 2026" or "December 13, 2025"
+  text = re.sub(
+      r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}",
+      "",
+      text,
+  )
+  # Clean up trailing parentheses or extra dashes left behind from date removal
+  text = re.sub(r"\s*-\s*$", "", text)
+  text = re.sub(r"\s*\(\s*\)", "", text)
+  return text.strip()
 
 
 def scrape_boxing():
@@ -23,9 +41,9 @@ def scrape_boxing():
       prev = table.find_previous(["h3", "h4", "span"])
       if prev:
         headline = prev.find("span", {"class": "mw-headline"})
+        raw_head = headline.get_text() if headline else prev.get_text()
         weight_name = (
-            (headline.get_text() if headline else prev.get_text())
-            .split("(")[0]
+            raw_head.split("(")[0]
             .replace("Men's", "")
             .replace("Women's", "")
             .strip()
@@ -39,17 +57,19 @@ def scrape_boxing():
               "lb" in pot_weight
               or "kg" in pot_weight
               or "Heavyweight" in pot_weight
+              or "Cruiserweight" in pot_weight
+              or "Middleweight" in pot_weight
           ):
             weight_name = pot_weight.split("(")[0].strip()
-            wba = cols[1].get_text(strip=True).split("[")[0].split("(")[0].strip()
-            wbc = cols[2].get_text(strip=True).split("[")[0].split("(")[0].strip()
-            ibf = cols[3].get_text(strip=True).split("[")[0].split("(")[0].strip()
-            wbo = cols[4].get_text(strip=True).split("[")[0].split("(")[0].strip()
+            wba = clean_text(cols[1].get_text(strip=True))
+            wbc = clean_text(cols[2].get_text(strip=True))
+            ibf = clean_text(cols[3].get_text(strip=True))
+            wbo = clean_text(cols[4].get_text(strip=True))
           else:
-            wba = cols[0].get_text(strip=True).split("[")[0].split("(")[0].strip()
-            wbc = cols[1].get_text(strip=True).split("[")[0].split("(")[0].strip()
-            ibf = cols[2].get_text(strip=True).split("[")[0].split("(")[0].strip()
-            wbo = cols[3].get_text(strip=True).split("[")[0].split("(")[0].strip()
+            wba = clean_text(cols[0].get_text(strip=True))
+            wbc = clean_text(cols[1].get_text(strip=True))
+            ibf = clean_text(cols[2].get_text(strip=True))
+            wbo = clean_text(cols[3].get_text(strip=True))
 
           boxing_data.append({
               "weight": weight_name,
@@ -76,7 +96,7 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
-    weight_name = "Unknown"
+    weight_name = ""
     caption = table.find("caption")
     if caption:
       weight_name = caption.get_text(strip=True)
@@ -84,33 +104,39 @@ def scrape_ufc():
       prev = table.find_previous(["h3", "h4", "span"])
       if prev:
         headline = prev.find("span", {"class": "mw-headline"})
+        raw_head = headline.get_text() if headline else prev.get_text()
         weight_name = (
-            (headline.get_text() if headline else prev.get_text())
-            .replace("Men's", "")
+            raw_head.replace("Men's", "")
             .replace("Women's", "")
+            .replace("rankings", "")
             .strip()
         )
+
+    if not weight_name or weight_name.lower() in [
+        "pound-for-pound",
+        "pound for pound",
+    ]:
+      continue
 
     champion = "Vacant"
     rankings = []
 
     for row in rows:
-      text = row.get_text()
       cols = row.find_all(["th", "td"])
-      if "C" in row.get_text() and len(cols) > 1:
-        # Check if it's the champion row
-        cell_text = cols[0].get_text(strip=True)
-        if cell_text == "C" or "C" in cell_text:
-          champion = cols[1].get_text(strip=True).split("[")[0].strip()
-      
+      row_text = row.get_text()
+
       if len(cols) >= 2:
-        fighter_name = cols[1].get_text(strip=True).split("[")[0].strip()
         rank_text = cols[0].get_text(strip=True)
-        if rank_text.isdigit():
+        fighter_name = clean_text(cols[1].get_text(strip=True))
+
+        if "C" == rank_text or rank_text.startswith("C\n") or "Champion" in row_text:
+          if fighter_name and fighter_name != "Fighter":
+            champion = fighter_name
+        elif rank_text.isdigit():
           if fighter_name and fighter_name != champion:
             rankings.append(fighter_name)
 
-    if weight_name and weight_name != "Unknown":
+    if weight_name:
       ufc_data.append({
           "weight": weight_name,
           "champion": champion,
@@ -125,4 +151,4 @@ if __name__ == "__main__":
 
   with open("rankings.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4)
-  print("Successfully updated rankings.json matching frontend layout.")
+  print("Successfully updated rankings.json with cleaned data.")
