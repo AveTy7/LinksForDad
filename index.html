@@ -63,7 +63,6 @@
         .team-city { font-size: 0.6rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         .team-name { font-size: 0.78rem; font-weight: 700; line-height: 1.1; }
         
-        /* Reduced size and padding for the middle date/time block to give teams more room */
         .info { text-align: center; padding: 0 4px; min-width: 95px; flex-shrink: 0; }
         .time { color: #60a5fa; font-weight: 600; font-size: 0.65rem; }
         .status { color: var(--muted); font-size: 0.6rem; font-weight: 600; margin-top: 1px; }
@@ -73,7 +72,8 @@
             border-top: 1px solid var(--border);
             padding-top: 8px;
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
             align-items: center;
         }
         .stream-btn {
@@ -183,22 +183,25 @@
             }
         }
 
-        function findMatchingLink(game) {
-            if (!globalLinks || globalLinks.length === 0) return null;
+        function findMatchingLinks(game) {
+            if (!globalLinks || globalLinks.length === 0) return [];
             const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
             const homeFull = clean(game.homeTeam);
             const awayFull = clean(game.awayTeam);
             const homeNick = homeFull.split(' ').pop();
             const awayNick = awayFull.split(' ').pop();
 
+            const matches = [];
             for (let item of globalLinks) {
                 const title = item.title.toLowerCase();
                 if ((title.includes(homeFull) || title.includes(homeNick)) && 
                     (title.includes(awayFull) || title.includes(awayNick))) {
-                    return item.href;
+                    if (!matches.includes(item.href)) {
+                        matches.push(item.href);
+                    }
                 }
             }
-            return null;
+            return matches;
         }
 
         async function fetchLeagueData(league) {
@@ -219,7 +222,7 @@
                                 ${item.title}
                             </div>
                             <div class="stream-link-container">
-                                <div style="display: flex; flex-direction: column;">
+                                <div style="display: flex; flex-direction: column; margin-right: auto;">
                                     <span style="color: #60a5fa; font-weight: 600; font-size: 0.75rem;">${item.time || 'Upcoming'}</span>
                                     <span style="color: var(--muted); font-size: 0.65rem; font-weight: 600;">SCHEDULED</span>
                                 </div>
@@ -330,7 +333,7 @@
                         conferences: Array.from(confSet)
                     };
 
-                    gameObj.streamLink = findMatchingLink(gameObj);
+                    gameObj.streamLinks = findMatchingLinks(gameObj);
                     gameMap.set(event.id, gameObj);
                 });
 
@@ -404,11 +407,13 @@
                             </div>
                         </div>
                     </div>
-                    ${g.streamLink ? `
+                    ${g.streamLinks && g.streamLinks.length > 0 ? `
                         <div class="stream-link-container">
-                            <a href="${g.streamLink}" target="_blank" class="stream-btn">
-                                <i class="fa-solid fa-play"></i> Watch Stream
-                            </a>
+                            ${g.streamLinks.map((link, idx) => `
+                                <a href="${link}" target="_blank" class="stream-btn">
+                                    <i class="fa-solid fa-play"></i> Stream ${idx + 1}
+                                </a>
+                            `).join('')}
                         </div>
                     ` : ''}
                 </div>
