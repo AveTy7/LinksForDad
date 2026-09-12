@@ -218,7 +218,7 @@
 
         async function loadExternalData() {
             try {
-                const rankRes = await fetch('rankings.json');
+                const rankRes = await fetch('rankings.json?v=' + Date.now());
                 if (rankRes.ok) {
                     const rankData = await rankRes.json();
                     BOXING_CHAMPIONS = rankData.boxing || [];
