@@ -8,6 +8,7 @@ def clean_text(text):
   if not text:
     return ""
   text = re.sub(r"\[\d+\]", "", text)
+  text = re.sub(r"\[edit\]", "", text, flags=re.IGNORECASE)
   text = re.sub(
       r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}",
       "",
@@ -51,6 +52,13 @@ def scrape_ufc():
   response = requests.get(url, headers=headers)
   soup = BeautifulSoup(response.text, "html.parser")
 
+  # Remove Wikipedia edit links and bracket artifacts completely
+  for element in soup.find_all(
+      ["span", "div"],
+      {"class": ["mw-editsection", "reference", "external"]}
+  ):
+    element.decompose()
+
   ufc_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
 
@@ -59,31 +67,26 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
-    # Look for a caption or any preceding heading for the division name
     weight_name = ""
     caption = table.find("caption")
     if caption:
-      weight_name = caption.get_text(strip=True)
+      weight_name = clean_text(caption.get_text())
 
     if not weight_name:
       prev = table.find_previous(["h3", "h4", "span"])
       while prev:
-        headline = (
-            prev.find("span", {"class": "mw-headline"})
-            if hasattr(prev, "find")
-            else None
-        )
+        headline = prev.find("span", {"class": "mw-headline"})
         raw_head = (
             headline.get_text(strip=True)
             if headline
             else prev.get_text(strip=True)
         )
-        if raw_head and "pound" not in raw_head.lower():
+        cleaned_head = clean_text(raw_head)
+        if cleaned_head and "pound" not in cleaned_head.lower():
           weight_name = (
-              raw_head.replace("Men's", "")
+              cleaned_head.replace("Men's", "")
               .replace("Women's", "")
               .replace("rankings", "")
-              .replace("[edit]", "")
               .strip()
           )
           break
@@ -98,23 +101,27 @@ def scrape_ufc():
     for row in rows:
       cols = row.find_all(["th", "td"])
       if len(cols) >= 2:
-        rank_text = cols[0].get_text(strip=True)
-        fighter_name = clean_text(cols[1].get_text(strip=True))
+        rank_text = clean_text(cols[0].get_text())
+        fighter_name = clean_text(cols[1].get_text())
 
         if rank_text in ["C", "IC"]:
           if fighter_name and fighter_name != "Fighter":
             champion = fighter_name
         elif rank_text.isdigit():
           rank_num = int(rank_text)
-          if 1 <= rank_num <= 10:
+          if 1 <= rank_num <= 15:
             if fighter_name and fighter_name != champion:
               rankings.append(fighter_name)
 
     if weight_name:
       ufc_data.append({
           "weight": weight_name,
+          "division": weight_name,
+          "name": weight_name,
           "champion": champion,
           "rankings": rankings[:10],
+          "contenders": rankings[:10],
+          "top10": rankings[:10],
       })
 
   return ufc_data
@@ -125,6 +132,12 @@ def scrape_boxing():
   headers = {"User-Agent": "Mozilla/5.0"}
   response = requests.get(url, headers=headers)
   soup = BeautifulSoup(response.text, "html.parser")
+
+  for element in soup.find_all(
+      ["span", "div"],
+      {"class": ["mw-editsection", "reference", "external"]}
+  ):
+    element.decompose()
 
   boxing_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
@@ -139,14 +152,11 @@ def scrape_boxing():
       weight_name = "Division"
       prev = table.find_previous(["h3", "h4", "span", "th"])
       while prev:
-        headline = (
-            prev.find("span", {"class": "mw-headline"})
-            if hasattr(prev, "find")
-            else None
-        )
+        headline = prev.find("span", {"class": "mw-headline"}) if hasattr(prev, "find") else None
         raw_head = headline.get_text() if headline else prev.get_text()
-        if raw_head and any(
-            w in raw_head
+        cleaned_head = clean_text(raw_head)
+        if cleaned_head and any(
+            w in cleaned_head
             for w in [
                 "weight",
                 "Heavy",
@@ -161,7 +171,7 @@ def scrape_boxing():
             ]
         ):
           weight_name = (
-              raw_head.split("(")[0]
+              cleaned_head.split("(")[0]
               .replace("Men's", "")
               .replace("Women's", "")
               .strip()
@@ -172,7 +182,7 @@ def scrape_boxing():
       for row in rows[1:]:
         cols = row.find_all(["th", "td"])
         if len(cols) >= 5:
-          pot_weight = cols[0].get_text(strip=True)
+          pot_weight = clean_text(cols[0].get_text())
           if any(
               term in pot_weight
               for term in [
@@ -190,15 +200,15 @@ def scrape_boxing():
               ]
           ):
             weight_name = pot_weight.split("(")[0].strip()
-            wba = format_fighter_cell(cols[1].get_text(strip=True))
-            wbc = format_fighter_cell(cols[2].get_text(strip=True))
-            ibf = format_fighter_cell(cols[3].get_text(strip=True))
-            wbo = format_fighter_cell(cols[4].get_text(strip=True))
+            wba = format_fighter_cell(cols[1].get_text())
+            wbc = format_fighter_cell(cols[2].get_text())
+            ibf = format_fighter_cell(cols[3].get_text())
+            wbo = format_fighter_cell(cols[4].get_text())
           else:
-            wba = format_fighter_cell(cols[0].get_text(strip=True))
-            wbc = format_fighter_cell(cols[1].get_text(strip=True))
-            ibf = format_fighter_cell(cols[2].get_text(strip=True))
-            wbo = format_fighter_cell(cols[3].get_text(strip=True))
+            wba = format_fighter_cell(cols[0].get_text())
+            wbc = format_fighter_cell(cols[1].get_text())
+            ibf = format_fighter_cell(cols[2].get_text())
+            wbo = format_fighter_cell(cols[3].get_text())
 
           boxing_data.append({
               "weight": weight_name,
