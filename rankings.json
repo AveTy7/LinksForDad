@@ -130,8 +130,9 @@
     "ufc": [
         {
             "weight": "Heavyweight",
-            "champion": "Ciryl Gane",
+            "champion": "Champion: Tom Aspinall",
             "rankings": [
+                "Ciryl Gane \u2021 (Interim Champion)",
                 "Alexander Volkov",
                 "Sergei Pavlovich",
                 "Alex Pereira",
@@ -140,13 +141,12 @@
                 "Waldo Cortes-Acosta",
                 "Vitor Petrino",
                 "Mario Pinto",
-                "Valter Walker",
-                "Curtis Blaydes"
+                "Valter Walker"
             ]
         },
         {
             "weight": "Light Heavyweight",
-            "champion": "Carlos Ulberg",
+            "champion": "Champion: Carlos Ulberg",
             "rankings": [
                 "Alex Pereira",
                 "Magomed Ankalaev",
@@ -162,7 +162,7 @@
         },
         {
             "weight": "Middleweight",
-            "champion": "Sean Strickland",
+            "champion": "Champion: Sean Strickland",
             "rankings": [
                 "Khamzat Chimaev",
                 "Dricus du Plessis",
@@ -178,7 +178,7 @@
         },
         {
             "weight": "Welterweight",
-            "champion": "Islam Makhachev",
+            "champion": "Champion: Islam Makhachev",
             "rankings": [
                 "Carlos Prates",
                 "Ian Machado Garry",
@@ -194,7 +194,7 @@
         },
         {
             "weight": "Lightweight",
-            "champion": "Justin Gaethje",
+            "champion": "Champion: Justin Gaethje",
             "rankings": [
                 "Ilia Topuria",
                 "Arman Tsarukyan",
@@ -210,7 +210,7 @@
         },
         {
             "weight": "Featherweight",
-            "champion": "Alexander Volkanovski",
+            "champion": "Champion: Alexander Volkanovski",
             "rankings": [
                 "Movsar Evloev",
                 "Diego Lopes",
@@ -226,7 +226,7 @@
         },
         {
             "weight": "Bantamweight",
-            "champion": "Petr Yan",
+            "champion": "Champion: Petr Yan",
             "rankings": [
                 "Merab Dvalishvili",
                 "Song Yadong",
@@ -242,7 +242,7 @@
         },
         {
             "weight": "Flyweight",
-            "champion": "Joshua Van",
+            "champion": "Champion: Joshua Van",
             "rankings": [
                 "Alexandre Pantoja",
                 "Manel Kape",
@@ -258,7 +258,7 @@
         },
         {
             "weight": "Women's Bantamweight",
-            "champion": "Kayla Harrison",
+            "champion": "Champion: Kayla Harrison",
             "rankings": [
                 "Joselyne Edwards",
                 "Norma Dumont",
@@ -274,7 +274,7 @@
         },
         {
             "weight": "Women's Flyweight",
-            "champion": "Valentina Shevchenko",
+            "champion": "Champion: Valentina Shevchenko",
             "rankings": [
                 "Nat\u00e1lia Silva",
                 "Manon Fiorot",
@@ -290,7 +290,7 @@
         },
         {
             "weight": "Women's Strawweight",
-            "champion": "Mackenzie Dern",
+            "champion": "Champion: Mackenzie Dern",
             "rankings": [
                 "Zhang Weili",
                 "Virna Jandiroba",
