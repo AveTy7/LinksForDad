@@ -289,6 +289,7 @@
                 }
             };
 
+            // Use individual try/catch execution via Promise.allSettled so one failed fetch doesn't crash the entire app loader
             await Promise.allSettled([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
@@ -396,7 +397,7 @@
                         if (idx === 2) {
                             t.gb = "-";
                         } else if (idx < 2) {
-                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
+                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
                             let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
