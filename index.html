@@ -222,7 +222,6 @@
             "151": "American Athletic", "80": "FBS Independents"
         };
 
-        // Known major FCS conferences/keywords to help manually detect FCS teams/games if ID is missing
         const FCS_KEYWORDS = [
             "fcs", "big sky", "mvfc", "caa", "ivy", "meac", "swac", "socon", 
             "southland", "ovc", "pioneer", "patriot", "nec", "asun", "fbc",
@@ -883,21 +882,21 @@
                     let hConf = resolveConf(home);
                     let aConf = resolveConf(away);
 
-                    // Manual Fallback: if either team name/abbreviation contains typical FCS markers or if source is explicitly FCS
-                    const isTeamFcsName = (td) => {
-                        const name = (td.team?.displayName || td.team?.name || "").toLowerCase();
-                        const abbreviation = (td.team?.abbreviation || "").toLowerCase();
-                        // Add heuristic checks if necessary, or rely on IDs/conference names
-                        return false;
+                    // Cross-reference with loaded conference standings table names to normalize standard conference names (e.g., "Big Ten Conference")
+                    const availableConfs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
+                    const matchToStandingsName = (cName) => {
+                        if (!cName) return null;
+                        if (cName === "FCS") return "FCS";
+                        const found = availableConfs.find(ac => ac.toLowerCase() === cName.toLowerCase() || ac.toLowerCase().includes(cName.toLowerCase()) || cName.toLowerCase().includes(ac.toLowerCase()));
+                        return found || cName;
                     };
 
-                    if (hConf) confSet.add(hConf);
-                    if (aConf) confSet.add(aConf);
+                    if (hConf) confSet.add(matchToStandingsName(hConf));
+                    if (aConf) confSet.add(matchToStandingsName(aConf));
 
                     if (event._isFcsSource || confSet.has("FCS") || hConf === "FCS" || aConf === "FCS") {
                         confSet.add("FCS");
                     } else if (confSet.size === 0) {
-                        // Default fallback category if completely unknown
                         confSet.add("FCS");
                     }
 
@@ -970,14 +969,7 @@
         function filterByConference() {
             updateTopActionBar();
             const sel = document.getElementById('conf-select').value;
-
-            if (activeLeague === "CFB" || activeLeague === "CBB") {
-                renderGames([]);
-                return;
-            }
-
-            if (sel === "ALL") renderGames(currentGames);
-            else renderGames(currentGames.filter(g => g.conferences.includes(sel)));
+            renderGames(currentGames);
         }
 
         function renderGames(games) {
@@ -988,7 +980,7 @@
             if (activeLeague === "CFB" || activeLeague === "CBB") {
                 const selectedFilter = document.getElementById('conf-select').value;
                 const filteredGames = (selectedFilter && selectedFilter !== "ALL") 
-                    ? currentGames.filter(g => g.conferences.includes(selectedFilter))
+                    ? currentGames.filter(g => g.conferences.some(c => c.toLowerCase() === selectedFilter.toLowerCase() || c.toLowerCase().includes(selectedFilter.toLowerCase()) || selectedFilter.toLowerCase().includes(c.toLowerCase())))
                     : currentGames;
 
                 if (!filteredGames.length) {
