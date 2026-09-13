@@ -146,6 +146,11 @@
         .status { color: var(--muted); font-size: 0.55rem; font-weight: 600; }
         .status.live { color: var(--live); font-weight: 700; }
         
+        .live-score {
+            font-size: 0.9rem; font-weight: 800; color: var(--text);
+            padding: 0 6px; letter-spacing: 1px; white-space: nowrap;
+        }
+
         .stream-link-container {
             border-top: 1px solid var(--border); padding-top: 6px; display: flex; flex-wrap: wrap; gap: 6px;
         }
@@ -267,10 +272,8 @@
                         return { name, w, l, pct, rawPct };
                     });
                     
-                    // Sort division teams by win % descending to establish leader
                     teams.sort((a, b) => b.rawPct - a.rawPct);
 
-                    // Calculate Games Behind (GB) relative to the division leader
                     if (teams.length > 0) {
                         let leader = teams[0];
                         teams.forEach(t => {
@@ -321,7 +324,6 @@
                 });
                 allContenders.sort((a, b) => b.rawPct - a.rawPct);
 
-                // Calculate Wild Card Games Behind/Ahead relative to the 3rd place team (index 2)
                 if (allContenders.length > 0) {
                     let thirdPlaceTeam = allContenders.length >= 3 ? allContenders[2] : allContenders[allContenders.length - 1];
 
@@ -329,11 +331,9 @@
                         if (idx === 2) {
                             t.gb = "-";
                         } else if (idx < 2) {
-                            // Ahead of 3rd place: ((t.w - 3rd.w) + (3rd.l - t.l)) / 2
                             let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            // Behind 3rd place: ((3rd.w - t.w) + (t.l - 3rd.l)) / 2
                             let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
@@ -698,12 +698,16 @@
                     const hRank = home.curatedRank?.current && home.curatedRank.current < 99 ? `(${home.curatedRank.current}) ` : '';
                     const aRank = away.curatedRank?.current && away.curatedRank.current < 99 ? `(${away.curatedRank.current}) ` : '';
 
+                    const homeScore = home.score !== undefined ? home.score : "0";
+                    const awayScore = away.score !== undefined ? away.score : "0";
+
                     const gObj = {
                         id: event.id, utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
-                        statusState: state, statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
-                        homeCity: getTeam(home, hRank).city, homeTeam: getTeam(home, hRank).name, homeLogo: home.team?.logo || '',
-                        awayCity: getTeam(away, aRank).city, awayTeam: getTeam(away, aRank).name, awayLogo: away.team?.logo || '',
+                        statusState: state, 
+                        statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
+                        homeCity: getTeam(home, hRank).city, homeTeam: getTeam(home, hRank).name, homeLogo: home.team?.logo || '', homeScore: homeScore,
+                        awayCity: getTeam(away, aRank).city, awayTeam: getTeam(away, aRank).name, awayLogo: away.team?.logo || '', awayScore: awayScore,
                         conferences: Array.from(confSet)
                     };
                     gObj.streamLinks = findMatchingLinks(gObj);
@@ -769,7 +773,13 @@
                 if (!filteredGames.length) {
                     html += "<p class='loading'>No games scheduled.</p>";
                 } else {
-                    html += filteredGames.map(g => `
+                    html += filteredGames.map(g => {
+                        const isLive = g.statusState === 'in';
+                        const centerContent = isLive 
+                            ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status live">${g.statusDetail}</div>`
+                            : `<div class="time">${g.displayTime}</div><div class="status">UPCOMING</div>`;
+
+                        return `
                         <div class="card">
                             <div class="card-main">
                                 <div class="team away">
@@ -780,8 +790,7 @@
                                     <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
                                 </div>
                                 <div class="info">
-                                    <div class="time">${g.displayTime}</div>
-                                    <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
+                                    ${centerContent}
                                 </div>
                                 <div class="team home">
                                     <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
@@ -797,7 +806,7 @@
                                 </div>
                             ` : ''}
                         </div>
-                    `).join('');
+                    `;}).join('');
                 }
                 html += `</div>`;
                 container.innerHTML = html;
@@ -807,7 +816,13 @@
             if (!games.length) {
                 html += "<p class='loading'>No games scheduled.</p>";
             } else {
-                html += games.map(g => `
+                html += games.map(g => {
+                    const isLive = g.statusState === 'in';
+                    const centerContent = isLive 
+                        ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status live">${g.statusDetail}</div>`
+                        : `<div class="time">${g.displayTime}</div><div class="status">UPCOMING</div>`;
+
+                    return `
                     <div class="card">
                         <div class="card-main">
                             <div class="team away">
@@ -818,8 +833,7 @@
                                 <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
                             </div>
                             <div class="info">
-                                <div class="time">${g.displayTime}</div>
-                                <div class="status ${g.statusState === 'in' ? 'live' : ''}">${g.statusDetail}</div>
+                                ${centerContent}
                             </div>
                             <div class="team home">
                                 <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
@@ -835,7 +849,7 @@
                             </div>
                         ` : ''}
                     </div>
-                `).join('');
+                `;}).join('');
             }
             html += `</div>`;
             container.innerHTML = html;
