@@ -247,7 +247,6 @@
                 fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA)
             ]);
 
-            // Compute precise MLB Wild Card from parsed level-3 division data
             if (STANDINGS_DATA["MLB"]) {
                 WILDCARD_DATA["MLB"] = computeMlbWildCard(STANDINGS_DATA["MLB"]);
             }
@@ -285,17 +284,13 @@
         }
 
         function computeMlbWildCard(divisions) {
-            // Group divisions by League (American League vs National League based on division name)
             const leagues = { "American League": [], "National League": [] };
 
             divisions.forEach(div => {
                 let lKey = div.division.includes("National") ? "National League" : "American League";
-                // Sort division teams by win % descending to identify the leader
                 let sortedTeams = [...div.teams].sort((a, b) => b.rawPct - a.rawPct);
                 if (sortedTeams.length > 0) {
-                    // Leader is the first team
                     let leader = sortedTeams[0];
-                    // Rest are non-leaders (potential wildcard contenders)
                     let nonLeaders = sortedTeams.slice(1);
                     leagues[lKey].push({
                         divisionName: div.division,
@@ -311,7 +306,6 @@
                 leagues[leagueName].forEach(dObj => {
                     allContenders.push(...dObj.contenders);
                 });
-                // Sort all non-leader teams strictly by highest win percentage
                 allContenders.sort((a, b) => b.rawPct - a.rawPct);
 
                 if (allContenders.length > 0) {
@@ -362,7 +356,7 @@
                     const titleElement = subpage.querySelector('.subpage-title');
                     if (viewType === 'wildcard') {
                         titleElement.innerHTML = `<i class="fa-solid fa-ranking-star"></i> MLB Wild Card Standings`;
-                        standingsContainer.innerHTML = renderStandingsHtml(WILDCARD_DATA[activeLeague] || []);
+                        standingsContainer.innerHTML = renderWildCardHtml(WILDCARD_DATA[activeLeague] || []);
                     } else {
                         titleElement.innerHTML = `<i class="fa-solid fa-table-list"></i> ${config.standingsLabel}`;
                         standingsContainer.innerHTML = renderStandingsHtml(STANDINGS_DATA[activeLeague] || []);
@@ -461,6 +455,40 @@
                                     <td class="num-col" style="text-align:center;">${t.pct}</td>
                                 </tr>
                             `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `).join('');
+        }
+
+        function renderWildCardHtml(standingsArray) {
+            return standingsArray.map(div => `
+                <div>
+                    <div class="espn-div-title">${div.division}</div>
+                    <table class="espn-standings-table">
+                        <thead>
+                            <tr>
+                                <th style="width:28px; text-align:center;">#</th>
+                                <th>Team</th>
+                                <th class="num-col" style="text-align:center; width:40px;">W</th>
+                                <th class="num-col" style="text-align:center; width:40px;">L</th>
+                                <th class="num-col" style="text-align:center; width:50px;">PCT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${div.teams.map((t, idx) => {
+                                let rankDisplay = idx < 3 ? `<strong>${idx + 1}.</strong>` : `${idx + 1}.`;
+                                let rowStyle = idx < 3 ? `background: rgba(37, 99, 235, 0.12);` : '';
+                                return `
+                                    <tr style="${rowStyle}">
+                                        <td style="text-align:center; color: ${idx < 3 ? '#60a5fa' : 'var(--muted)'};">${rankDisplay}</td>
+                                        <td>${t.name}</td>
+                                        <td class="num-col" style="text-align:center;">${t.w}</td>
+                                        <td class="num-col" style="text-align:center;">${t.l}</td>
+                                        <td class="num-col" style="text-align:center;">${t.pct}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
                         </tbody>
                     </table>
                 </div>
