@@ -208,7 +208,7 @@ def scrape_boxing():
             ibf = format_fighter_cell(cols[3].get_text(strip=True))
             wbo = format_fighter_cell(cols[4].get_text(strip=True))
           else:
-            wba = format_fighter_cell(cols[0].get_text(strip=Type))
+            wba = format_fighter_cell(cols[0].get_text(strip=True))
             wbc = format_fighter_cell(cols[1].get_text(strip=True))
             ibf = format_fighter_cell(cols[2].get_text(strip=True))
             wbo = format_fighter_cell(cols[3].get_text(strip=True))
