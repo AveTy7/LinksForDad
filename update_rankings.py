@@ -7,12 +7,7 @@ from bs4 import BeautifulSoup
 def clean_text(text):
   if not text:
     return ""
-  text = re.sub(r"\[.*?\]", "", text)  # Removes all bracketed text like [1] or [edit]
-  text = re.sub(
-      r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}",
-      "",
-      text,
-  )
+  text = re.sub(r"\[.*?\]", "", text)
   return text.strip()
 
 
@@ -54,46 +49,34 @@ def scrape_ufc():
   ufc_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
 
-  valid_divisions = [
-      "Heavyweight",
-      "Light Heavyweight",
-      "Middleweight",
-      "Welterweight",
-      "Lightweight",
-      "Featherweight",
-      "Bantamweight",
-      "Flyweight",
-      "Women's Strawweight",
-      "Women's Flyweight",
-      "Women's Bantamweight",
-      "Women's Featherweight",
-  ]
-
   for table in tables:
     rows = table.find_all("tr")
     if len(rows) < 3:
       continue
 
-    # Find context text around the table to match the division name
-    context_text = ""
+    weight_name = ""
     caption = table.find("caption")
     if caption:
-      context_text += " " + caption.get_text()
+      weight_name = clean_text(caption.get_text())
 
-    prev = table.find_previous(["h3", "h4", "span", "div"])
-    steps = 0
-    while prev and steps < 3:
-      context_text += " " + prev.get_text()
-      prev = prev.find_previous(["h3", "h4", "span", "div"])
-      steps += 1
+    if not weight_name:
+      prev = table.find_previous(["h3", "h4", "span", "div"])
+      while prev:
+        text = clean_text(prev.get_text())
+        if text and len(text) < 30 and "pound" not in text.lower():
+          weight_name = text.replace("rankings", "").strip()
+          break
+        prev = prev.find_previous(["h3", "h4", "span", "div"])
 
-    cleaned_context = clean_text(context_text)
-    weight_name = ""
-    for div in valid_divisions:
-      if div.lower() in cleaned_context.lower():
-        weight_name = div
-        break
+    if not weight_name or "pound" in weight_name.lower():
+      continue
 
+    weight_name = (
+        weight_name.replace("Men's", "")
+        .replace("Women's", "")
+        .replace("rankings", "")
+        .strip()
+    )
     if not weight_name:
       continue
 
@@ -115,12 +98,11 @@ def scrape_ufc():
             if fighter_name and fighter_name != champion:
               rankings.append(fighter_name)
 
-    if weight_name:
-      ufc_data.append({
-          "weight": weight_name,
-          "champion": champion,
-          "rankings": rankings[:10],
-      })
+    ufc_data.append({
+        "weight": weight_name,
+        "champion": champion,
+        "rankings": rankings[:10],
+    })
 
   return ufc_data
 
