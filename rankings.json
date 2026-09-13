@@ -127,46 +127,5 @@
             "wbo": "Oscar CollazoMay 27, 2023<br>15\u20130"
         }
     ],
-    "ufc": [
-        {
-            "weight": "Heavyweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Middleweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Welterweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Lightweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Featherweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Bantamweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Flyweight",
-            "champion": "Vacant",
-            "rankings": []
-        },
-        {
-            "weight": "Strawweight",
-            "champion": "Vacant",
-            "rankings": []
-        }
-    ]
+    "ufc": []
 }
