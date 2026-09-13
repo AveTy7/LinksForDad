@@ -203,8 +203,8 @@
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
-            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings", standingsEndpoint: "football/college-football/standings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings", standingsEndpoint: "basketball/mens-college-basketball/standings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
@@ -290,6 +290,8 @@
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
+                fetchStandingsEndpoint("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings", STANDINGS_DATA),
+                fetchStandingsEndpoint("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings", STANDINGS_DATA),
                 fetchApRankings("CFB", LEAGUES["CFB"].rankEndpoint),
                 fetchApRankings("CBB", LEAGUES["CBB"].rankEndpoint)
             ]);
@@ -378,7 +380,7 @@
                             let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
+                            let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
                     });
