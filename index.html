@@ -44,12 +44,12 @@
 
         .top-action-bar {
             background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-            padding: 10px; margin-bottom: 12px;
+            padding: 10px; margin-bottom: 12px; display: flex; gap: 8px;
         }
         .top-action-btn {
-            background: var(--accent); color: white; border: none; width: 100%;
-            padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 700;
-            display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+            background: var(--accent); color: white; border: none; flex: 1;
+            padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
         }
         .top-action-btn:hover { filter: brightness(1.1); }
 
@@ -182,7 +182,7 @@
         const LEAGUES = {
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
-            "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings" },
+            "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
             "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings" },
             "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
@@ -190,6 +190,7 @@
         };
 
         let STANDINGS_DATA = {};
+        let WILDCARD_DATA = {};
         let BOXING_CHAMPIONS = [];
         let UFC_FULL_RANKINGS = [];
 
@@ -228,30 +229,29 @@
                 console.log("Could not load rankings.json:", e);
             }
 
-            const fetchStandingsEndpoint = async (leagueKey, url) => {
+            const fetchStandingsEndpoint = async (leagueKey, url, targetMap) => {
                 try {
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
-                        STANDINGS_DATA[leagueKey] = parseEspnStandings(data);
+                        targetMap[leagueKey] = parseEspnStandings(data);
                     }
                 } catch (err) {
                     console.log(`Failed to fetch standings for ${leagueKey}:`, err);
                 }
             };
 
-            // level=3 forces ESPN API to return standings grouped explicitly by division
             await Promise.all([
-                fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3"),
-                fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3"),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3")
+                fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
+                fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=2", WILDCARD_DATA)
             ]);
         }
 
         function parseEspnStandings(data) {
             let divisionsResult = [];
             const processGroup = (group) => {
-                // If the group contains entries directly, it's a division level
                 if (group.standings && group.standings.entries) {
                     let divName = group.name || group.abbreviation || "Division Standings";
                     let teams = group.standings.entries.map(entry => {
@@ -264,7 +264,6 @@
                     });
                     divisionsResult.push({ division: divName, teams });
                 }
-                // Recursively traverse nested children nodes to isolate divisions
                 if (group.children) {
                     group.children.forEach(sub => processGroup(sub));
                 }
@@ -300,7 +299,7 @@
             fetchLeagueData(league);
         }
 
-        function toggleSubpage(open) {
+        function toggleSubpage(open, viewType = 'standings') {
             const actionbar = document.getElementById('top-action-container');
             const subpage = document.getElementById('subpage-view');
             const listcontent = document.getElementById('list-content-container');
@@ -310,6 +309,21 @@
                 if(actionbar) actionbar.style.display = 'none';
                 if(listcontent) listcontent.style.display = 'none';
                 if(filterbar) filterbar.style.display = 'none';
+                
+                // Switch content inside subpage if wildcard view is triggered
+                const config = LEAGUES[activeLeague];
+                if (config.hasWildCard && subpage) {
+                    const standingsContainer = subpage.querySelector('.champions-grid');
+                    const titleElement = subpage.querySelector('.subpage-title');
+                    if (viewType === 'wildcard') {
+                        titleElement.innerHTML = `<i class="fa-solid fa-ranking-star"></i> MLB Wild Card Standings`;
+                        standingsContainer.innerHTML = renderStandingsHtml(WILDCARD_DATA[activeLeague] || []);
+                    } else {
+                        titleElement.innerHTML = `<i class="fa-solid fa-table-list"></i> ${config.standingsLabel}`;
+                        standingsContainer.innerHTML = renderStandingsHtml(STANDINGS_DATA[activeLeague] || []);
+                    }
+                }
+                
                 if(subpage) subpage.style.display = 'block';
             } else {
                 if(subpage) subpage.style.display = 'none';
@@ -380,6 +394,34 @@
             filterBar.style.display = 'flex';
         }
 
+        function renderStandingsHtml(standingsArray) {
+            return standingsArray.map(div => `
+                <div>
+                    <div class="espn-div-title">${div.division}</div>
+                    <table class="espn-standings-table">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th class="num-col" style="text-align:center; width:40px;">W</th>
+                                <th class="num-col" style="text-align:center; width:40px;">L</th>
+                                <th class="num-col" style="text-align:center; width:50px;">PCT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${div.teams.map(t => `
+                                <tr>
+                                    <td>${t.name}</td>
+                                    <td class="num-col" style="text-align:center;">${t.w}</td>
+                                    <td class="num-col" style="text-align:center;">${t.l}</td>
+                                    <td class="num-col" style="text-align:center;">${t.pct}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `).join('');
+        }
+
         function getSubpageContentHtml(selectedConf = "AP Top 25") {
             const config = LEAGUES[activeLeague];
             if (config.isBoxing) {
@@ -434,9 +476,25 @@
                     standingsToRender = STANDINGS_DATA[activeLeague] || [];
                 }
 
+                let topActionHtml = `<div class="top-action-bar" id="top-action-container">
+                    <button class="top-action-btn" onclick="toggleSubpage(true, 'standings')"><i class="fa-solid fa-table-list"></i> View ${label}</button>`;
+                
+                if (config.hasWildCard) {
+                    topActionHtml += `<button class="top-action-btn" style="background: #1e3a8a;" onclick="toggleSubpage(true, 'wildcard')"><i class="fa-solid fa-ranking-star"></i> Wild Card Race</button>`;
+                }
+                topActionHtml += `</div>`;
+
                 return {
-                    topAction: `<div class="top-action-bar" id="top-action-container"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-table-list"></i> View ${label}</button></div>`,
-                    subpage: `<div class="subpage-container" id="subpage-view"><div class="subpage-header"><span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${label}</span><button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button></div><div class="champions-grid">${standingsToRender.map(div => `<div><div class="espn-div-title">${div.division}</div><table class="espn-standings-table"><thead><tr><th>Team</th><th class="num-col" style="text-align:center; width:40px;">W</th><th class="num-col" style="text-align:center; width:40px;">L</th><th class="num-col" style="text-align:center; width:50px;">PCT</th></tr></thead><tbody>${div.teams.map(t => `<tr><td>${t.name}</td><td class="num-col" style="text-align:center;">${t.w}</td><td class="num-col" style="text-align:center;">${t.l}</td><td class="num-col" style="text-align:center;">${t.pct}</td></tr>`).join('')}</tbody></table></div>`).join('')}</div></div>`
+                    topAction: topActionHtml,
+                    subpage: `<div class="subpage-container" id="subpage-view">
+                        <div class="subpage-header">
+                            <span class="subpage-title"><i class="fa-solid fa-table-list"></i> ${label}</span>
+                            <button class="close-subpage-btn" onclick="toggleSubpage(false)">Back</button>
+                        </div>
+                        <div class="champions-grid">
+                            ${renderStandingsHtml(standingsToRender)}
+                        </div>
+                    </div>`
                 };
             }
             return { topAction: "", subpage: "" };
