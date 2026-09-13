@@ -342,16 +342,6 @@
             } else if (data.standings?.entries) {
                 processGroup(data);
             }
-            
-            // If the parser returned an array directly or a dictionary-like object structure for college conferences
-            if (Array.isArray(divisionsResult) && divisionsResult.length > 0 && typeof divisionsResult[0].division === 'string') {
-                // If it's a flat array of divisions, let's map it into a lookup dictionary if it's CFB/CBB, or leave as array
-                let dict = {};
-                divisionsResult.forEach(d => {
-                    dict[d.division] = d.teams;
-                });
-                return dict;
-            }
             return divisionsResult;
         }
 
@@ -390,7 +380,7 @@
                             let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
+                            let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
                     });
@@ -499,15 +489,12 @@
                             const selectedConf = document.getElementById('conf-select').value;
                             const dataObj = STANDINGS_DATA[activeLeague] || {};
                             if (selectedConf && selectedConf !== "ALL") {
-                                const teamsList = Array.isArray(dataObj) ? dataObj.find(d => d.division === selectedConf)?.teams : dataObj[selectedConf];
-                                standingsToRender = teamsList ? [{ division: selectedConf, teams: teamsList }] : [];
-                                label = `${selectedConf} Standings`;
+                                const targetKey = dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
+                                standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
+                                label = `${targetKey} Standings`;
                             } else {
-                                if (Array.isArray(dataObj)) {
-                                    standingsToRender = dataObj;
-                                } else {
-                                    standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
-                                }
+                                // Render all conferences when "ALL" is selected
+                                standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
                                 label = `${activeLeague} Standings (All Conferences)`;
                             }
                         } else {
@@ -576,8 +563,7 @@
             }
 
             labelText.innerText = "Rankings / Conf:";
-            const dataObj = STANDINGS_DATA[activeLeague];
-            const confs = Array.isArray(dataObj) ? dataObj.map(d => d.division) : (dataObj ? Object.keys(dataObj) : []);
+            const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
             
             select.innerHTML = '<option value="ALL">All Conferences</option>';
             confs.forEach(c => {
@@ -945,11 +931,11 @@
                                 </div>
                             </div>
                         </div>
-                        ` + (g.streamLinks && g.streamLinks.length ? `
+                        ${g.streamLinks && g.streamLinks.length ? `
                             <div class="stream-link-container">
                                 ${g.streamLinks.map((l, i) => `<a href="${l}" target="_blank" class="stream-btn"><i class="fa-solid fa-play"></i> Stream ${i+1}</a>`).join('')}
                             </div>
-                        ` : '') + `
+                        ` : ''}
                     </div>
                 `;}).join('');
             }
