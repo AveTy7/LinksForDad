@@ -10,6 +10,35 @@ def clean_text(text):
   return re.sub(r"\[.*?\]", "", text).strip()
 
 
+def format_fighter_cell(cell_text):
+  cleaned = clean_text(cell_text)
+  if not cleaned or cleaned.lower() == "vacant":
+    return "vacant"
+  is_super = False
+  if "super champion" in cleaned.lower():
+    is_super = True
+    cleaned = re.sub(r"super champion", "", cleaned, flags=re.IGNORECASE)
+  match = re.search(
+      r"(\d+\s*[-–]\s*\d+(?:\s*[-–]\s*\d+)?(?:\s*\(\s*\d+\s*\))?)", cleaned
+  )
+  record = ""
+  if match:
+    record = match.group(1).strip()
+    cleaned = cleaned.replace(record, "").strip()
+  name = re.sub(r"\s*\(.*?\)", "", cleaned).strip()
+  if not name:
+    return cleaned
+  super_badge = (
+      ' <span style="color: #fbbf24; font-size: 0.85em;" title="Super'
+      ' Champion">★</span>'
+      if is_super
+      else ""
+  )
+  if record:
+    return f"{name}{super_badge}<br>{record}"
+  return f"{name}{super_badge}"
+
+
 def scrape_ufc():
   url = "https://en.wikipedia.org/wiki/UFC_rankings"
   headers = {"User-Agent": "Mozilla/5.0"}
@@ -26,48 +55,26 @@ def scrape_ufc():
       "Featherweight",
       "Bantamweight",
       "Flyweight",
-      "Strawweight",
-      "Women's Strawweight",
-      "Women's Flyweight",
       "Women's Bantamweight",
-      "Women's Featherweight"
+      "Women's Flyweight",
+      "Women's Strawweight",
   ]
 
   tables = soup.find_all("table", {"class": "wikitable"})
-
+  valid_tables = []
   for table in tables:
     rows = table.find_all("tr")
-    if len(rows) < 3:
-      continue
+    if len(rows) > 5:
+      header_text = rows[0].get_text().lower()
+      if "fighter" in header_text or "rank" in header_text:
+        valid_tables.append(table)
 
-    weight_name = ""
-    
-    # 1. Check table caption first
-    caption = table.find("caption")
-    if caption:
-      cap_text = clean_text(caption.get_text())
-      match = next((d for d in divisions if d.lower() in cap_text.lower()), "")
-      if match:
-        weight_name = match
+  for idx, table in enumerate(valid_tables):
+    if idx >= len(divisions):
+      break
 
-    # 2. If no caption, check preceding headline spans or heading tags
-    if not weight_name:
-      curr = table
-      for _ in range(5):
-        curr = curr.find_previous(["h3", "h4", "span"])
-        if not curr:
-          break
-        text = clean_text(curr.get_text())
-        match = next((d for d in divisions if d.lower() in text.lower()), "")
-        if match:
-          weight_name = match
-          break
-
-    if not weight_name:
-      continue
-
-    if any(d["weight"] == weight_name for d in ufc_data):
-      continue
+    weight_name = divisions[idx]
+    rows = table.find_all("tr")
 
     champion = "Vacant"
     rankings = []
@@ -94,33 +101,6 @@ def scrape_ufc():
     })
 
   return ufc_data
-
-
-def format_fighter_cell(cell_text):
-  cleaned = clean_text(cell_text)
-  if not cleaned or cleaned.lower() == "vacant":
-    return "vacant"
-  is_super = "super champion" in cleaned.lower()
-  if is_super:
-    cleaned = re.sub(r"super champion", "", cleaned, flags=re.IGNORECASE)
-  match = re.search(
-      r"(\d+\s*[-–]\s*\d+(?:\s*[-–]\s*\d+)?(?:\s*\(\s*\d+\s*\))?)", cleaned
-  )
-  record = ""
-  if match:
-    record = match.group(1).strip()
-    cleaned = cleaned.replace(record, "").strip()
-  name = re.sub(r"\s*\(.*?\)", "", cleaned).strip()
-  if not name:
-    return cleaned
-  super_badge = (
-      ' <span style="color: #fbbf24; font-size: 0.85em;" title="Super Champion">★</span>'
-      if is_super
-      else ""
-  )
-  if record:
-    return f"{name}{super_badge}<br>{record}"
-  return f"{name}{super_badge}"
 
 
 def scrape_boxing():
