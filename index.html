@@ -266,6 +266,19 @@
                         let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
                         return { name, w, l, pct, rawPct };
                     });
+                    
+                    // Sort division teams by win % descending to establish leader
+                    teams.sort((a, b) => b.rawPct - a.rawPct);
+
+                    // Calculate Games Behind (GB) relative to the division leader
+                    if (teams.length > 0) {
+                        let leader = teams[0];
+                        teams.forEach(t => {
+                            let gb = ((leader.w - t.w) + (t.l - leader.l)) / 2;
+                            t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
+                        });
+                    }
+
                     divisionsResult.push({ division: divName, teams });
                 }
                 if (group.children) {
@@ -308,7 +321,24 @@
                 });
                 allContenders.sort((a, b) => b.rawPct - a.rawPct);
 
+                // Calculate Wild Card Games Behind/Ahead relative to the 3rd place team (index 2)
                 if (allContenders.length > 0) {
+                    let thirdPlaceTeam = allContenders.length >= 3 ? allContenders[2] : allContenders[allContenders.length - 1];
+
+                    allContenders.forEach((t, idx) => {
+                        if (idx === 2) {
+                            t.gb = "-";
+                        } else if (idx < 2) {
+                            // Ahead of 3rd place: ((t.w - 3rd.w) + (3rd.l - t.l)) / 2
+                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
+                            t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
+                        } else {
+                            // Behind 3rd place: ((3rd.w - t.w) + (t.l - 3rd.l)) / 2
+                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
+                            t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
+                        }
+                    });
+
                     result.push({
                         division: `${leagueName} Wild Card Race`,
                         teams: allContenders
@@ -441,9 +471,10 @@
                         <thead>
                             <tr>
                                 <th>Team</th>
-                                <th class="num-col" style="text-align:center; width:40px;">W</th>
-                                <th class="num-col" style="text-align:center; width:40px;">L</th>
-                                <th class="num-col" style="text-align:center; width:50px;">PCT</th>
+                                <th class="num-col" style="text-align:center; width:35px;">W</th>
+                                <th class="num-col" style="text-align:center; width:35px;">L</th>
+                                <th class="num-col" style="text-align:center; width:45px;">PCT</th>
+                                <th class="num-col" style="text-align:center; width:40px;">GB</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -453,6 +484,7 @@
                                     <td class="num-col" style="text-align:center;">${t.w}</td>
                                     <td class="num-col" style="text-align:center;">${t.l}</td>
                                     <td class="num-col" style="text-align:center;">${t.pct}</td>
+                                    <td class="num-col" style="text-align:center; color: var(--muted);">${t.gb}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -468,11 +500,12 @@
                     <table class="espn-standings-table">
                         <thead>
                             <tr>
-                                <th style="width:28px; text-align:center;">#</th>
+                                <th style="width:24px; text-align:center;">#</th>
                                 <th>Team</th>
-                                <th class="num-col" style="text-align:center; width:40px;">W</th>
-                                <th class="num-col" style="text-align:center; width:40px;">L</th>
-                                <th class="num-col" style="text-align:center; width:50px;">PCT</th>
+                                <th class="num-col" style="text-align:center; width:35px;">W</th>
+                                <th class="num-col" style="text-align:center; width:35px;">L</th>
+                                <th class="num-col" style="text-align:center; width:45px;">PCT</th>
+                                <th class="num-col" style="text-align:center; width:40px;">GB</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -486,6 +519,7 @@
                                         <td class="num-col" style="text-align:center;">${t.w}</td>
                                         <td class="num-col" style="text-align:center;">${t.l}</td>
                                         <td class="num-col" style="text-align:center;">${t.pct}</td>
+                                        <td class="num-col" style="text-align:center; color: var(--muted);">${t.gb}</td>
                                     </tr>
                                 `;
                             }).join('')}
