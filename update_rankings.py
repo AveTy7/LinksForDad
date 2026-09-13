@@ -103,8 +103,8 @@ def scrape_ufc():
             champion = fighter_name
         elif rank_text == "IC":
           if fighter_name and fighter_name.lower() != "fighter":
-            # Use a silver crown/badge element for Interim Champion in rankings
-            rankings.append(f'{fighter_name} <span style="color: #94a3b8; font-size: 0.85em;" title="Interim Champion">👑</span>')
+            # Use the same star style as boxing super champions for Interim Champion
+            rankings.append(f'{fighter_name} <span style="color: #fbbf24; font-size: 0.85em;" title="Interim Champion">★</span>')
         elif rank_text.isdigit():
           rank_num = int(rank_text)
           if 1 <= rank_num <= 15:
