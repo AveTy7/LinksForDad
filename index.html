@@ -246,10 +246,66 @@
                 }
             };
 
+            const fetchCollegeData = async (leagueKey, standingsUrl, rankingsUrl) => {
+                const dataObj = {};
+                try {
+                    const sRes = await fetch(standingsUrl);
+                    if (sRes.ok) {
+                        const sData = await sRes.json();
+                        let parsedDivs = parseEspnStandings(sData);
+                        parsedDivs.forEach(div => {
+                            dataObj[div.division] = div.teams;
+                        });
+                    }
+                } catch (e) {
+                    console.log(`Failed standings for ${leagueKey}:`, e);
+                }
+
+                try {
+                    const rRes = await fetch(rankingsUrl);
+                    if (rRes.ok) {
+                        const rData = await rRes.json();
+                        if (rData.rankings) {
+                            rData.rankings.forEach(poll => {
+                                if (poll.ranks && poll.ranks.length > 0) {
+                                    let pollName = poll.name || "Rankings";
+                                    if (pollName.toLowerCase().includes("ap")) pollName = "AP Top 25";
+                                    else if (pollName.toLowerCase().includes("fcs")) pollName = "FCS";
+
+                                    let rankTeams = poll.ranks.map(r => {
+                                        let name = r.team.displayName;
+                                        let record = r.recordSummary || "0-0";
+                                        let parts = record.split('-');
+                                        let w = Number(parts[0]) || 0;
+                                        let l = Number(parts[1]) || 0;
+                                        let pct = (w + l > 0) ? (w / (w + l)).toFixed(3) : ".000";
+                                        return {
+                                            name: name,
+                                            w: w,
+                                            l: l,
+                                            pct: pct,
+                                            gb: r.previousRank ? `(${r.previousRank})` : "-",
+                                            rank: r.current
+                                        };
+                                    });
+                                    dataObj[pollName] = rankTeams;
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.log(`Failed rankings for ${leagueKey}:`, e);
+                }
+
+                STANDINGS_DATA[leagueKey] = dataObj;
+            };
+
             await Promise.all([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA)
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
+                fetchCollegeData("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings", "https://site.api.espn.com/apis/v2/sports/football/college-football/rankings"),
+                fetchCollegeData("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/rankings")
             ]);
 
             if (STANDINGS_DATA["MLB"]) {
@@ -381,16 +437,11 @@
                 if(filterbar) filterbar.style.display = 'none';
                 
                 const config = LEAGUES[activeLeague];
-                if (config.hasWildCard && subpage) {
+                if (config.hasWildCard && subpage && viewType === 'wildcard') {
                     const standingsContainer = subpage.querySelector('.champions-grid');
                     const titleElement = subpage.querySelector('.subpage-title');
-                    if (viewType === 'wildcard') {
-                        titleElement.innerHTML = `<i class="fa-solid fa-ranking-star"></i> MLB Wild Card Standings`;
-                        standingsContainer.innerHTML = renderWildCardHtml(WILDCARD_DATA[activeLeague] || []);
-                    } else {
-                        titleElement.innerHTML = `<i class="fa-solid fa-table-list"></i> ${config.standingsLabel}`;
-                        standingsContainer.innerHTML = renderStandingsHtml(STANDINGS_DATA[activeLeague] || []);
-                    }
+                    titleElement.innerHTML = `<i class="fa-solid fa-ranking-star"></i> MLB Wild Card Standings`;
+                    standingsContainer.innerHTML = renderWildCardHtml(WILDCARD_DATA[activeLeague] || []);
                 }
                 
                 if(subpage) subpage.style.display = 'block';
@@ -451,35 +502,42 @@
             }
 
             labelText.innerText = "Rankings / Conf:";
-            const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
+            const dataObj = STANDINGS_DATA[activeLeague] || {};
+            const keys = Object.keys(dataObj);
             
-            select.innerHTML = '';
-            confs.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c; 
-                opt.innerText = c;
-                select.appendChild(opt);
+            select.innerHTML = '<option value="ALL">All Conferences</option>';
+            keys.forEach(c => {
+                if (c !== "AP Top 25") {
+                    const opt = document.createElement('option');
+                    opt.value = c; 
+                    opt.innerText = c;
+                    select.appendChild(opt);
+                }
             });
             filterBar.style.display = 'flex';
         }
 
         function renderStandingsHtml(standingsArray) {
-            return standingsArray.map(div => `
+            return standingsArray.map(div => {
+                const isRanking = div.division.includes("AP Top 25") || div.division.includes("FCS") || div.division.includes("Poll") || div.division.includes("Rankings");
+                return `
                 <div>
                     <div class="espn-div-title">${div.division}</div>
                     <table class="espn-standings-table">
                         <thead>
                             <tr>
+                                ${isRanking ? '<th style="width:28px; text-align:center;">#</th>' : ''}
                                 <th>Team</th>
                                 <th class="num-col" style="text-align:center; width:35px;">W</th>
                                 <th class="num-col" style="text-align:center; width:35px;">L</th>
-                                <th class="num-col" style="text-align:center; width:45px;">PCT</th>
-                                <th class="num-col" style="text-align:center; width:40px;">GB</th>
+                                <th class="num-col" style="text-align:center; width:45px;">${isRanking ? 'PTS' : 'PCT'}</th>
+                                <th class="num-col" style="text-align:center; width:40px;">${isRanking ? 'LW' : 'GB'}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${div.teams.map(t => `
+                            ${div.teams.map((t, idx) => `
                                 <tr>
+                                    ${isRanking ? `<td style="text-align:center; font-weight:700; color:#60a5fa;">${t.rank || idx + 1}</td>` : ''}
                                     <td>${t.name}</td>
                                     <td class="num-col" style="text-align:center;">${t.w}</td>
                                     <td class="num-col" style="text-align:center;">${t.l}</td>
@@ -490,7 +548,7 @@
                         </tbody>
                     </table>
                 </div>
-            `).join('');
+            `;}).join('');
         }
 
         function renderWildCardHtml(standingsArray) {
@@ -534,7 +592,7 @@
             return cellText.replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}/gi, '').trim();
         }
 
-        function getSubpageContentHtml(selectedConf = "AP Top 25") {
+        function getSubpageContentHtml(selectedConf = "ALL") {
             const config = LEAGUES[activeLeague];
             if (config.isBoxing) {
                 return {
@@ -581,9 +639,22 @@
 
                 if (activeLeague === "CFB" || activeLeague === "CBB") {
                     const dataObj = STANDINGS_DATA[activeLeague] || {};
-                    const targetKey = selectedConf && dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                    standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
-                    label = `${targetKey} Standings`;
+                    let targetKey = selectedConf;
+                    if (!targetKey || targetKey === "ALL") {
+                        targetKey = "AP Top 25";
+                    }
+                    if (!dataObj[targetKey]) {
+                        targetKey = Object.keys(dataObj)[0] || "AP Top 25";
+                    }
+                    standingsToRender = [{ division: targetKey, teams: dataObj[targetKey] || [] }];
+                    
+                    if (targetKey === "AP Top 25") {
+                        label = "AP Top 25 Rankings";
+                    } else if (targetKey === "FCS") {
+                        label = "FCS Rankings";
+                    } else {
+                        label = `${targetKey} Standings`;
+                    }
                 } else {
                     standingsToRender = STANDINGS_DATA[activeLeague] || [];
                 }
@@ -618,7 +689,7 @@
             const config = LEAGUES[league];
 
             setupCollegeFilter();
-            const subContent = getSubpageContentHtml("AP Top 25");
+            const subContent = getSubpageContentHtml("ALL");
 
             if (config.type === "scraped") {
                 container.className = "";
@@ -752,14 +823,17 @@
                 return;
             }
             labelText.innerText = "Rankings / Conf:";
-            const confs = new Set();
-            games.forEach(g => g.conferences.forEach(c => confs.add(c)));
+            const dataObj = STANDINGS_DATA[activeLeague] || {};
+            const keys = Object.keys(dataObj);
+
             select.innerHTML = '<option value="ALL">All Conferences</option>';
-            Array.from(confs).sort().forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c; 
-                opt.innerText = c;
-                select.appendChild(opt);
+            keys.forEach(c => {
+                if (c !== "AP Top 25") {
+                    const opt = document.createElement('option');
+                    opt.value = c; 
+                    opt.innerText = c;
+                    select.appendChild(opt);
+                }
             });
             filterBar.style.display = 'flex';
         }
