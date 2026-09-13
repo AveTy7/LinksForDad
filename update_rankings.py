@@ -52,7 +52,6 @@ def scrape_ufc():
   response = requests.get(url, headers=headers)
   soup = BeautifulSoup(response.text, "html.parser")
 
-  # Remove Wikipedia edit links and bracket artifacts completely
   for element in soup.find_all(
       ["span", "div"],
       {"class": ["mw-editsection", "reference", "external"]}
@@ -116,12 +115,8 @@ def scrape_ufc():
     if weight_name:
       ufc_data.append({
           "weight": weight_name,
-          "division": weight_name,
-          "name": weight_name,
           "champion": champion,
           "rankings": rankings[:10],
-          "contenders": rankings[:10],
-          "top10": rankings[:10],
       })
 
   return ufc_data
@@ -152,7 +147,11 @@ def scrape_boxing():
       weight_name = "Division"
       prev = table.find_previous(["h3", "h4", "span", "th"])
       while prev:
-        headline = prev.find("span", {"class": "mw-headline"}) if hasattr(prev, "find") else None
+        headline = (
+            prev.find("span", {"class": "mw-headline"})
+            if hasattr(prev, "find")
+            else None
+        )
         raw_head = headline.get_text() if headline else prev.get_text()
         cleaned_head = clean_text(raw_head)
         if cleaned_head and any(
