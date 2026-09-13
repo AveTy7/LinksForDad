@@ -219,8 +219,15 @@
         const CFB_MAP = {
             "1": "ACC", "4": "Big 12", "5": "Big Ten", "8": "SEC", "9": "Pac-12",
             "15": "Conference USA", "17": "MAC", "18": "MWC", "37": "Sun Belt", 
-            "151": "American Athletic", "80": "FBS Independents", "81": "FCS"
+            "151": "American Athletic", "80": "FBS Independents"
         };
+
+        // Known major FCS conferences/keywords to help manually detect FCS teams/games if ID is missing
+        const FCS_KEYWORDS = [
+            "fcs", "big sky", "mvfc", "caa", "ivy", "meac", "swac", "socon", 
+            "southland", "ovc", "pioneer", "patriot", "nec", "asun", "fbc",
+            "football championship"
+        ];
 
         let activeLeague = "NFL";
         const cache = {};
@@ -438,7 +445,7 @@
                             let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
+                            let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
                     });
@@ -655,15 +662,17 @@
                 return;
             }
 
-            labelText.innerText = "Rankings / Conf:";
+            labelText.innerText = "Conference:";
             const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
             
-            select.innerHTML = '<option value="ALL">Top 25 AP Rankings</option>';
+            select.innerHTML = '<option value="ALL">All Conferences</option><option value="FCS">FCS</option>';
             confs.sort().forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c; 
-                opt.innerText = c;
-                select.appendChild(opt);
+                if (c !== "FCS") {
+                    const opt = document.createElement('option');
+                    opt.value = c; 
+                    opt.innerText = c;
+                    select.appendChild(opt);
+                }
             });
             filterBar.style.display = 'flex';
         }
@@ -861,13 +870,34 @@
                     const resolveConf = (td) => {
                         const tn = td.team?.displayName || "", sn = td.team?.shortDisplayName || "";
                         if (tn.includes("Notre Dame") || sn === "Notre Dame" || sn === "UConn") return "Independents";
+                        
                         const rId = String(td.team?.conferenceId || td.conferenceId || "");
-                        return CFB_MAP[rId] || td.team?.conference?.name || null;
+                        if (CFB_MAP[rId]) return CFB_MAP[rId];
+                        
+                        const confName = (td.team?.conference?.name || "").toLowerCase();
+                        if (FCS_KEYWORDS.some(k => confName.includes(k))) return "FCS";
+
+                        return td.team?.conference?.name || null;
                     };
-                    const hConf = resolveConf(home), aConf = resolveConf(away);
+
+                    let hConf = resolveConf(home);
+                    let aConf = resolveConf(away);
+
+                    // Manual Fallback: if either team name/abbreviation contains typical FCS markers or if source is explicitly FCS
+                    const isTeamFcsName = (td) => {
+                        const name = (td.team?.displayName || td.team?.name || "").toLowerCase();
+                        const abbreviation = (td.team?.abbreviation || "").toLowerCase();
+                        // Add heuristic checks if necessary, or rely on IDs/conference names
+                        return false;
+                    };
+
                     if (hConf) confSet.add(hConf);
                     if (aConf) confSet.add(aConf);
-                    if (event._isFcsSource || confSet.size === 0) {
+
+                    if (event._isFcsSource || confSet.has("FCS") || hConf === "FCS" || aConf === "FCS") {
+                        confSet.add("FCS");
+                    } else if (confSet.size === 0) {
+                        // Default fallback category if completely unknown
                         confSet.add("FCS");
                     }
 
@@ -923,14 +953,16 @@
                 filterBar.style.display = 'none';
                 return;
             }
-            labelText.innerText = "Rankings / Conf:";
+            labelText.innerText = "Conference:";
             const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
-            select.innerHTML = '<option value="ALL">Top 25 AP Rankings</option>';
+            select.innerHTML = '<option value="ALL">All Conferences</option><option value="FCS">FCS</option>';
             confs.sort().forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c; 
-                opt.innerText = c;
-                select.appendChild(opt);
+                if (c !== "FCS") {
+                    const opt = document.createElement('option');
+                    opt.value = c; 
+                    opt.innerText = c;
+                    select.appendChild(opt);
+                }
             });
             filterBar.style.display = 'flex';
         }
