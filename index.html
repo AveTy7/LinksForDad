@@ -255,7 +255,10 @@
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
-                        targetMap[leagueKey] = parseEspnStandings(data);
+                        const parsed = parseEspnStandings(data);
+                        if (parsed && (Array.isArray(parsed) ? parsed.length > 0 : Object.keys(parsed).length > 0)) {
+                            targetMap[leagueKey] = parsed;
+                        }
                     }
                 } catch (err) {
                     console.log(`Failed to fetch standings for ${leagueKey}:`, err);
@@ -286,7 +289,8 @@
                 }
             };
 
-            await Promise.all([
+            // Use individual try/catch execution via Promise.allSettled so one failed fetch doesn't crash the entire app loader
+            await Promise.allSettled([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
@@ -297,11 +301,16 @@
             ]);
 
             if (STANDINGS_DATA["MLB"]) {
-                WILDCARD_DATA["MLB"] = computeMlbWildCard(STANDINGS_DATA["MLB"]);
+                try {
+                    WILDCARD_DATA["MLB"] = computeMlbWildCard(STANDINGS_DATA["MLB"]);
+                } catch (e) {
+                    console.log("Error computing MLB Wild Card:", e);
+                }
             }
         }
 
         function parseEspnStandings(data) {
+            if (!data) return null;
             let divisionsResult = {};
             const processGroup = (group) => {
                 if (group.standings && group.standings.entries) {
@@ -339,7 +348,6 @@
                 }
             };
 
-            // Support both array outputs or object/map groupings
             if (Array.isArray(data.children)) {
                 divisionsResult = {};
                 data.children.forEach(c => processGroup(c));
@@ -357,11 +365,12 @@
         }
 
         function computeMlbWildCard(divisions) {
+            if (!Array.isArray(divisions)) return [];
             const leagues = { "American League": [], "National League": [] };
 
             divisions.forEach(div => {
-                let lKey = div.division.includes("National") ? "National League" : "American League";
-                let sortedTeams = [...div.teams].sort((a, b) => b.rawPct - a.rawPct);
+                let lKey = div.division && div.division.includes("National") ? "National League" : "American League";
+                let sortedTeams = [...(div.teams || [])].sort((a, b) => b.rawPct - a.rawPct);
                 if (sortedTeams.length > 0) {
                     let leader = sortedTeams[0];
                     let nonLeaders = sortedTeams.slice(1);
@@ -388,7 +397,7 @@
                         if (idx === 2) {
                             t.gb = "-";
                         } else if (idx < 2) {
-                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
+                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
                             let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
@@ -486,7 +495,7 @@
                             </div>
                             <div class="ufc-rankings-body">
                                 <div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 10 Contenders:</div>
-                                ${div.rankings.map((f, i) => `<div class="ufc-rank-row"><span class="rank-num">#${i + 1}</span><span class="rank-name">${f}</span></div>`).join('')}
+                                ${(div.rankings || []).map((f, i) => `<div class="ufc-rank-row"><span class="rank-num">#${i + 1}</span><span class="rank-name">${f}</span></div>`).join('')}
                             </div>
                         </div>`).join('');
                 } else if (config.hasStandings) {
@@ -549,12 +558,12 @@
 
         function findMatchingLinks(game) {
             if (!globalLinks || globalLinks.length === 0) return [];
-            const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
+            const clean = (str) => (str || '').replace(/\(\d+\)\s*/, '').toLowerCase().trim();
             const hF = clean(game.homeTeam), aF = clean(game.awayTeam);
             const hN = hF.split(' ').pop(), aN = aF.split(' ').pop();
             const matches = [];
             for (let item of globalLinks) {
-                const t = item.title.toLowerCase();
+                const t = (item.title || '').toLowerCase();
                 if ((t.includes(hF) || t.includes(hN)) && (t.includes(aF) || t.includes(aN))) {
                     if (!matches.includes(item.href)) matches.push(item.href);
                 }
@@ -603,7 +612,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${div.teams.map(t => {
+                            ${(div.teams || []).map(t => {
                                 let apRank = (activeLeague === "CFB" || activeLeague === "CBB") ? getTeamApRank(t.name, t.shortName, t.mascot, activeLeague) : null;
                                 let rankBadge = apRank ? `<span class="ap-rank-badge">${apRank}</span>` : '';
                                 return `
@@ -623,6 +632,9 @@
         }
 
         function renderWildCardHtml(standingsArray) {
+            if (!standingsArray || standingsArray.length === 0) {
+                return `<div class="loading">No wildcard data available.</div>`;
+            }
             return standingsArray.map(div => `
                 <div>
                     <div class="espn-div-title">${div.division}</div>
@@ -638,7 +650,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${div.teams.map((t, idx) => {
+                            ${(div.teams || []).map((t, idx) => {
                                 let rankDisplay = idx < 3 ? `<strong>${idx + 1}.</strong>` : `${idx + 1}.`;
                                 let rowStyle = idx < 3 ? `background: rgba(37, 99, 235, 0.12);` : '';
                                 return `
@@ -747,10 +759,10 @@
                     urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
                 }
 
-                const responses = await Promise.all(urls.map((u, idx) => fetch(u).then(r => r.json()).then(data => ({ data, isFcsEndpoint: league === "CFB" && idx === 1 }))));
+                const responses = await Promise.all(urls.map((u, idx) => fetch(u).then(r => r.json()).then(data => ({ data, isFcsEndpoint: league === "CFB" && idx === 1 })).catch(() => ({ data: {}, isFcsEndpoint: false }))));
                 let rawEvents = [];
                 responses.forEach(resp => { 
-                    if (resp.data.events) {
+                    if (resp.data && resp.data.events) {
                         resp.data.events.forEach(ev => {
                             ev._isFcsSource = resp.isFcsEndpoint;
                             rawEvents.push(ev);
@@ -760,13 +772,14 @@
 
                 const gameMap = new Map();
                 rawEvents.forEach(event => {
-                    const comp = event.competitions[0];
-                    const state = event.status.type.state.toLowerCase();
+                    const comp = event.competitions?.[0];
+                    if (!comp) return;
+                    const state = event.status?.type?.state?.toLowerCase() || '';
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
-                    const home = comp.competitors.find(c => c.homeAway === 'home') || {};
-                    const away = comp.competitors.find(c => c.homeAway === 'away') || {};
+                    const home = comp.competitors?.find(c => c.homeAway === 'home') || {};
+                    const away = comp.competitors?.find(c => c.homeAway === 'away') || {};
 
                     const confSet = new Set();
                     const resolveConf = (td) => {
@@ -806,7 +819,7 @@
                         id: event.id, utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
                         statusState: state, 
-                        statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
+                        statusDetail: state === 'in' ? (event.status?.type?.detail || 'LIVE') : 'UPCOMING',
                         homeCity: getTeam(home, hRank).city, homeTeam: getTeam(home, hRank).name, homeLogo: home.team?.logo || '', homeScore: homeScore,
                         awayCity: getTeam(away, aRank).city, awayTeam: getTeam(away, aRank).name, awayLogo: away.team?.logo || '', awayScore: awayScore,
                         conferences: Array.from(confSet)
