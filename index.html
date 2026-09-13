@@ -203,15 +203,15 @@
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
-            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings", standingsEndpoint: "football/college-football/standings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings", standingsEndpoint: "basketball/mens-college-basketball/standings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
 
         let STANDINGS_DATA = {};
         let WILDCARD_DATA = {};
-        let AP_RANKINGS = {}; // Stores AP Top 25 maps for CFB/CBB
+        let AP_RANKINGS = {}; 
         let BOXING_CHAMPIONS = [];
         let UFC_FULL_RANKINGS = [];
 
@@ -263,11 +263,11 @@
             };
 
             const fetchApRankings = async (leagueKey, endpoint) => {
+                if (!endpoint) return;
                 try {
                     const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${endpoint}`);
                     if (res.ok) {
                         const data = await res.json();
-                        // Find AP Poll rankings
                         const poll = data.rankings?.find(p => p.name?.toLowerCase().includes("ap") || p.type === 1) || data.rankings?.[0];
                         if (poll && poll.ranks) {
                             const rankMap = {};
@@ -290,6 +290,8 @@
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
+                fetchStandingsEndpoint("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings", STANDINGS_DATA),
+                fetchStandingsEndpoint("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings", STANDINGS_DATA),
                 fetchApRankings("CFB", LEAGUES["CFB"].rankEndpoint),
                 fetchApRankings("CBB", LEAGUES["CBB"].rankEndpoint)
             ]);
@@ -300,14 +302,14 @@
         }
 
         function parseEspnStandings(data) {
-            let divisionsResult = [];
+            let divisionsResult = {};
             const processGroup = (group) => {
                 if (group.standings && group.standings.entries) {
                     let divName = group.name || group.abbreviation || "Division Standings";
                     let teams = group.standings.entries.map(entry => {
-                        let name = entry.team.displayName;
-                        let shortName = entry.team.shortDisplayName || "";
-                        let mascot = entry.team.name || "";
+                        let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
+                        let shortName = entry.team?.shortDisplayName || "";
+                        let mascot = entry.team?.name || "";
                         let stats = entry.stats || [];
                         let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
                         let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
@@ -326,18 +328,29 @@
                         });
                     }
 
-                    divisionsResult.push({ division: divName, teams });
+                    if (Array.isArray(divisionsResult)) {
+                        divisionsResult.push({ division: divName, teams });
+                    } else {
+                        divisionsResult[divName] = teams;
+                    }
                 }
                 if (group.children) {
                     group.children.forEach(sub => processGroup(sub));
                 }
             };
 
-            if (data.children) {
+            // Support both array outputs or object/map groupings
+            if (Array.isArray(data.children)) {
+                divisionsResult = {};
                 data.children.forEach(c => processGroup(c));
             } else if (data.standings?.children) {
+                divisionsResult = {};
                 data.standings.children.forEach(c => processGroup(c));
+            } else if (data.children) {
+                divisionsResult = {};
+                data.children.forEach(c => processGroup(c));
             } else if (data.standings?.entries) {
+                divisionsResult = [];
                 processGroup(data);
             }
             return divisionsResult;
@@ -487,11 +500,10 @@
                             const selectedConf = document.getElementById('conf-select').value;
                             const dataObj = STANDINGS_DATA[activeLeague] || {};
                             if (selectedConf && selectedConf !== "ALL") {
-                                const targetKey = dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                                standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
-                                label = `${targetKey} Standings`;
+                                const teamsList = dataObj[selectedConf] || [];
+                                standingsToRender = teamsList.length ? [{ division: selectedConf, teams: teamsList }] : [];
+                                label = `${selectedConf} Standings`;
                             } else {
-                                // Render all conferences when "ALL" is selected
                                 standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
                                 label = `${activeLeague} Standings (All Conferences)`;
                             }
@@ -574,6 +586,9 @@
         }
 
         function renderStandingsHtml(standingsArray) {
+            if (!standingsArray || standingsArray.length === 0) {
+                return `<div class="loading">No standings data available.</div>`;
+            }
             return standingsArray.map(div => `
                 <div>
                     <div class="espn-div-title">${div.division}</div>
@@ -821,10 +836,9 @@
                 return;
             }
             labelText.innerText = "Rankings / Conf:";
-            const confs = new Set();
-            games.forEach(g => g.conferences.forEach(c => confs.add(c)));
+            const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
             select.innerHTML = '<option value="ALL">All Conferences</option>';
-            Array.from(confs).sort().forEach(c => {
+            confs.sort().forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
                 opt.innerText = c;
