@@ -17,9 +17,6 @@ def scrape_ufc():
   soup = BeautifulSoup(response.text, "html.parser")
 
   ufc_data = []
-  
-  # Wikipedia's UFC rankings page groups tables under specific section headers
-  # Let's target the exact wikidatabases/tables by finding headers that match divisions
   divisions = [
       "Heavyweight",
       "Light Heavyweight",
@@ -43,25 +40,32 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
-    # Find the heading associated with this table
     weight_name = ""
-    curr = table
-    for _ in range(4):
-      curr = curr.find_previous(["h2", "h3", "h4", "span"])
-      if not curr:
-        break
-      text = clean_text(curr.get_text())
-      for div in divisions:
-        if div.lower() in text.lower():
-          weight_name = div
+    
+    # 1. Check table caption first
+    caption = table.find("caption")
+    if caption:
+      cap_text = clean_text(caption.get_text())
+      match = next((d for d in divisions if d.lower() in cap_text.lower()), "")
+      if match:
+        weight_name = match
+
+    # 2. If no caption, check preceding headline spans or heading tags
+    if not weight_name:
+      curr = table
+      for _ in range(5):
+        curr = curr.find_previous(["h3", "h4", "span"])
+        if not curr:
           break
-      if weight_name:
-        break
+        text = clean_text(curr.get_text())
+        match = next((d for d in divisions if d.lower() in text.lower()), "")
+        if match:
+          weight_name = match
+          break
 
     if not weight_name:
       continue
 
-    # Check if we already processed this division to avoid duplicates
     if any(d["weight"] == weight_name for d in ufc_data):
       continue
 
