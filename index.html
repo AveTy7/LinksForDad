@@ -93,6 +93,11 @@
             font-size: 0.8rem; font-weight: 700; color: #60a5fa; margin: 8px 0 4px 2px;
         }
 
+        .ap-rank-badge {
+            background: #2563eb; color: white; font-size: 0.60rem; font-weight: 700;
+            padding: 1px 5px; border-radius: 4px; margin-right: 5px; display: inline-block;
+        }
+
         .ufc-div-card {
             background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 6px;
             flex-shrink: 0;
@@ -198,14 +203,15 @@
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
-            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
 
         let STANDINGS_DATA = {};
         let WILDCARD_DATA = {};
+        let AP_RANKINGS = {}; // Stores AP Top 25 maps for CFB/CBB
         let BOXING_CHAMPIONS = [];
         let UFC_FULL_RANKINGS = [];
 
@@ -256,10 +262,36 @@
                 }
             };
 
+            const fetchApRankings = async (leagueKey, endpoint) => {
+                try {
+                    const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${endpoint}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        // Find AP Poll rankings
+                        const poll = data.rankings?.find(p => p.name?.toLowerCase().includes("ap") || p.type === 1) || data.rankings?.[0];
+                        if (poll && poll.ranks) {
+                            const rankMap = {};
+                            poll.ranks.forEach(r => {
+                                if (r.team && r.current) {
+                                    rankMap[r.team.displayName.toLowerCase()] = r.current;
+                                    rankMap[r.team.shortDisplayName?.toLowerCase()] = r.current;
+                                    rankMap[r.team.name?.toLowerCase()] = r.current;
+                                }
+                            });
+                            AP_RANKINGS[leagueKey] = rankMap;
+                        }
+                    }
+                } catch (err) {
+                    console.log(`Failed to fetch AP rankings for ${leagueKey}:`, err);
+                }
+            };
+
             await Promise.all([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA)
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
+                fetchApRankings("CFB", LEAGUES["CFB"].rankEndpoint),
+                fetchApRankings("CBB", LEAGUES["CBB"].rankEndpoint)
             ]);
 
             if (STANDINGS_DATA["MLB"]) {
@@ -274,12 +306,14 @@
                     let divName = group.name || group.abbreviation || "Division Standings";
                     let teams = group.standings.entries.map(entry => {
                         let name = entry.team.displayName;
+                        let shortName = entry.team.shortDisplayName || "";
+                        let mascot = entry.team.name || "";
                         let stats = entry.stats || [];
                         let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
                         let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
                         let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || ".000";
                         let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
-                        return { name, w, l, pct, rawPct };
+                        return { name, shortName, mascot, w, l, pct, rawPct };
                     });
                     
                     teams.sort((a, b) => b.rawPct - a.rawPct);
@@ -377,9 +411,16 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Hide subpage view when switching tabs
             toggleSubpage(false);
             fetchLeagueData(league);
+        }
+
+        function getTeamApRank(teamName, shortName, mascot, leagueKey) {
+            const rankMap = AP_RANKINGS[leagueKey];
+            if (!rankMap) return null;
+            return rankMap[teamName?.toLowerCase()] || 
+                   rankMap[shortName?.toLowerCase()] || 
+                   rankMap[mascot?.toLowerCase()] || null;
         }
 
         function toggleSubpage(open, viewType = 'standings') {
@@ -445,9 +486,15 @@
                         if (activeLeague === "CFB" || activeLeague === "CBB") {
                             const selectedConf = document.getElementById('conf-select').value;
                             const dataObj = STANDINGS_DATA[activeLeague] || {};
-                            const targetKey = selectedConf && selectedConf !== "ALL" && dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                            standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
-                            label = `${targetKey} Standings`;
+                            if (selectedConf && selectedConf !== "ALL") {
+                                const targetKey = dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
+                                standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
+                                label = `${targetKey} Standings`;
+                            } else {
+                                // Render all conferences when "ALL" is selected
+                                standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
+                                label = `${activeLeague} Standings (All Conferences)`;
+                            }
                         } else {
                             standingsToRender = STANDINGS_DATA[activeLeague] || [];
                         }
@@ -516,7 +563,7 @@
             labelText.innerText = "Rankings / Conf:";
             const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
             
-            select.innerHTML = '';
+            select.innerHTML = '<option value="ALL">All Conferences</option>';
             confs.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
@@ -541,15 +588,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${div.teams.map(t => `
-                                <tr>
-                                    <td>${t.name}</td>
-                                    <td class="num-col" style="text-align:center;">${t.w}</td>
-                                    <td class="num-col" style="text-align:center;">${t.l}</td>
-                                    <td class="num-col" style="text-align:center;">${t.pct}</td>
-                                    <td class="num-col" style="text-align:center; color: var(--muted);">${t.gb}</td>
-                                </tr>
-                            `).join('')}
+                            ${div.teams.map(t => {
+                                let apRank = (activeLeague === "CFB" || activeLeague === "CBB") ? getTeamApRank(t.name, t.shortName, t.mascot, activeLeague) : null;
+                                let rankBadge = apRank ? `<span class="ap-rank-badge">${apRank}</span>` : '';
+                                return `
+                                    <tr>
+                                        <td>${rankBadge}${t.name}</td>
+                                        <td class="num-col" style="text-align:center;">${t.w}</td>
+                                        <td class="num-col" style="text-align:center;">${t.l}</td>
+                                        <td class="num-col" style="text-align:center;">${t.pct}</td>
+                                        <td class="num-col" style="text-align:center; color: var(--muted);">${t.gb}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
                         </tbody>
                     </table>
                 </div>
@@ -609,9 +660,11 @@
                 let label = config.standingsLabel;
                 if (activeLeague === "CFB" || activeLeague === "CBB") {
                     const selectedConf = document.getElementById('conf-select').value;
-                    const dataObj = STANDINGS_DATA[activeLeague] || {};
-                    const targetKey = selectedConf && selectedConf !== "ALL" && dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                    label = `${targetKey || 'Conference'} Standings`;
+                    if (selectedConf && selectedConf !== "ALL") {
+                        label = `${selectedConf} Standings`;
+                    } else {
+                        label = `${activeLeague} Standings (All Conferences)`;
+                    }
                 }
 
                 let html = `<div class="top-action-bar">
