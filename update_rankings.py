@@ -155,28 +155,41 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
-    # Look for the preceding header of the wikitable which contains the division name
     weight_name = ""
     prev = table.find_previous(["h3", "h4", "span"])
     while prev:
-      headline = prev.find("span", {"class": "mw-headline"})
+      headline = (
+          prev.find("span", {"class": "mw-headline"})
+          if hasattr(prev, "find")
+          else None
+      )
       raw_head = headline.get_text() if headline else prev.get_text()
       if raw_head and not any(
-          bad in raw_head.lower()
-          for bad in ["contents", "meta", "history", "edit"]
+          b in raw_head.lower()
+          for b in [
+              "contents",
+              "meta",
+              "history",
+              "edit",
+              "navigation",
+              "performance",
+          ]
       ):
-        weight_name = (
+        cleaned_head = (
             raw_head.replace("Men's", "")
             .replace("Women's", "")
             .replace("rankings", "")
+            .replace("[edit]", "")
             .strip()
         )
-        break
+        if cleaned_head and len(cleaned_head) < 30:
+          weight_name = cleaned_head
+          break
       prev = prev.find_previous(["h3", "h4", "span"])
 
     if not weight_name or any(
         term in weight_name.lower()
-        for term in ["pound", "contents", "meta", "history"]
+        for term in ["pound", "contents", "meta", "history", "fighter"]
     ):
       continue
 
@@ -193,8 +206,10 @@ def scrape_ufc():
           if fighter_name and fighter_name != "Fighter":
             champion = fighter_name
         elif rank_text.isdigit():
-          if fighter_name and fighter_name != champion:
-            rankings.append(fighter_name)
+          rank_num = int(rank_text)
+          if 1 <= rank_num <= 10:
+            if fighter_name and fighter_name != champion:
+              rankings.append(fighter_name)
 
     if weight_name and rankings:
       ufc_data.append({
