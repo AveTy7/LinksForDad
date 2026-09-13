@@ -82,7 +82,6 @@ def scrape_ufc():
     for row in rows:
       cols = row.find_all(["th", "td"])
       if len(cols) >= 3:
-        # Search columns dynamically for rank and fighter name to handle new layout columns
         row_texts = [clean_text(c.get_text()) for c in cols]
         
         rank_text = ""
@@ -93,16 +92,19 @@ def scrape_ufc():
             rank_text = t
             break
             
-        # The fighter name is usually the longest text field that isn't a number or record format
         for t in row_texts:
           if t and t != rank_text and not t.isdigit() and not re.match(r"^\d+[-–]\d+", t):
             if len(t) > 2 and "UFC" not in t and "Win" not in t and "Loss" not in t:
               fighter_name = t
               break
 
-        if rank_text in ["C", "IC"]:
+        if rank_text == "C":
           if fighter_name and fighter_name.lower() != "fighter":
-            champion = fighter_name
+            champion = f"Champion: {fighter_name}"
+        elif rank_text == "IC":
+          if fighter_name and fighter_name.lower() != "fighter":
+            # Treat Interim Champion as #1 contender with an indicator symbol
+            rankings.append(f"{fighter_name} ‡ (Interim Champion)")
         elif rank_text.isdigit():
           rank_num = int(rank_text)
           if 1 <= rank_num <= 15:
