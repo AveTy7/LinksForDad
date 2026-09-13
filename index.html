@@ -203,15 +203,15 @@
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
-            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings", standingsEndpoint: "football/college-football/standings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings", standingsEndpoint: "basketball/mens-college-basketball/standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
 
         let STANDINGS_DATA = {};
         let WILDCARD_DATA = {};
-        let AP_RANKINGS = {}; 
+        let AP_RANKINGS = {}; // Stores AP Top 25 maps for CFB/CBB
         let BOXING_CHAMPIONS = [];
         let UFC_FULL_RANKINGS = [];
 
@@ -255,10 +255,7 @@
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
-                        const parsed = parseEspnStandings(data);
-                        if (parsed && (Array.isArray(parsed) ? parsed.length > 0 : Object.keys(parsed).length > 0)) {
-                            targetMap[leagueKey] = parsed;
-                        }
+                        targetMap[leagueKey] = parseEspnStandings(data);
                     }
                 } catch (err) {
                     console.log(`Failed to fetch standings for ${leagueKey}:`, err);
@@ -266,11 +263,11 @@
             };
 
             const fetchApRankings = async (leagueKey, endpoint) => {
-                if (!endpoint) return;
                 try {
                     const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${endpoint}`);
                     if (res.ok) {
                         const data = await res.json();
+                        // Find AP Poll rankings
                         const poll = data.rankings?.find(p => p.name?.toLowerCase().includes("ap") || p.type === 1) || data.rankings?.[0];
                         if (poll && poll.ranks) {
                             const rankMap = {};
@@ -289,36 +286,28 @@
                 }
             };
 
-            // Use individual try/catch execution via Promise.allSettled so one failed fetch doesn't crash the entire app loader
-            await Promise.allSettled([
+            await Promise.all([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings", STANDINGS_DATA),
-                fetchStandingsEndpoint("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings", STANDINGS_DATA),
                 fetchApRankings("CFB", LEAGUES["CFB"].rankEndpoint),
                 fetchApRankings("CBB", LEAGUES["CBB"].rankEndpoint)
             ]);
 
             if (STANDINGS_DATA["MLB"]) {
-                try {
-                    WILDCARD_DATA["MLB"] = computeMlbWildCard(STANDINGS_DATA["MLB"]);
-                } catch (e) {
-                    console.log("Error computing MLB Wild Card:", e);
-                }
+                WILDCARD_DATA["MLB"] = computeMlbWildCard(STANDINGS_DATA["MLB"]);
             }
         }
 
         function parseEspnStandings(data) {
-            if (!data) return null;
-            let divisionsResult = {};
+            let divisionsResult = [];
             const processGroup = (group) => {
                 if (group.standings && group.standings.entries) {
                     let divName = group.name || group.abbreviation || "Division Standings";
                     let teams = group.standings.entries.map(entry => {
-                        let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
-                        let shortName = entry.team?.shortDisplayName || "";
-                        let mascot = entry.team?.name || "";
+                        let name = entry.team.displayName;
+                        let shortName = entry.team.shortDisplayName || "";
+                        let mascot = entry.team.name || "";
                         let stats = entry.stats || [];
                         let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
                         let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
@@ -337,40 +326,29 @@
                         });
                     }
 
-                    if (Array.isArray(divisionsResult)) {
-                        divisionsResult.push({ division: divName, teams });
-                    } else {
-                        divisionsResult[divName] = teams;
-                    }
+                    divisionsResult.push({ division: divName, teams });
                 }
                 if (group.children) {
                     group.children.forEach(sub => processGroup(sub));
                 }
             };
 
-            if (Array.isArray(data.children)) {
-                divisionsResult = {};
+            if (data.children) {
                 data.children.forEach(c => processGroup(c));
             } else if (data.standings?.children) {
-                divisionsResult = {};
                 data.standings.children.forEach(c => processGroup(c));
-            } else if (data.children) {
-                divisionsResult = {};
-                data.children.forEach(c => processGroup(c));
             } else if (data.standings?.entries) {
-                divisionsResult = [];
                 processGroup(data);
             }
             return divisionsResult;
         }
 
         function computeMlbWildCard(divisions) {
-            if (!Array.isArray(divisions)) return [];
             const leagues = { "American League": [], "National League": [] };
 
             divisions.forEach(div => {
-                let lKey = div.division && div.division.includes("National") ? "National League" : "American League";
-                let sortedTeams = [...(div.teams || [])].sort((a, b) => b.rawPct - a.rawPct);
+                let lKey = div.division.includes("National") ? "National League" : "American League";
+                let sortedTeams = [...div.teams].sort((a, b) => b.rawPct - a.rawPct);
                 if (sortedTeams.length > 0) {
                     let leader = sortedTeams[0];
                     let nonLeaders = sortedTeams.slice(1);
@@ -397,7 +375,7 @@
                         if (idx === 2) {
                             t.gb = "-";
                         } else if (idx < 2) {
-                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
+                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
                             let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
@@ -495,7 +473,7 @@
                             </div>
                             <div class="ufc-rankings-body">
                                 <div style="font-size: 0.7rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Top 10 Contenders:</div>
-                                ${(div.rankings || []).map((f, i) => `<div class="ufc-rank-row"><span class="rank-num">#${i + 1}</span><span class="rank-name">${f}</span></div>`).join('')}
+                                ${div.rankings.map((f, i) => `<div class="ufc-rank-row"><span class="rank-num">#${i + 1}</span><span class="rank-name">${f}</span></div>`).join('')}
                             </div>
                         </div>`).join('');
                 } else if (config.hasStandings) {
@@ -509,10 +487,11 @@
                             const selectedConf = document.getElementById('conf-select').value;
                             const dataObj = STANDINGS_DATA[activeLeague] || {};
                             if (selectedConf && selectedConf !== "ALL") {
-                                const teamsList = dataObj[selectedConf] || [];
-                                standingsToRender = teamsList.length ? [{ division: selectedConf, teams: teamsList }] : [];
-                                label = `${selectedConf} Standings`;
+                                const targetKey = dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
+                                standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
+                                label = `${targetKey} Standings`;
                             } else {
+                                // Render all conferences when "ALL" is selected
                                 standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
                                 label = `${activeLeague} Standings (All Conferences)`;
                             }
@@ -558,12 +537,12 @@
 
         function findMatchingLinks(game) {
             if (!globalLinks || globalLinks.length === 0) return [];
-            const clean = (str) => (str || '').replace(/\(\d+\)\s*/, '').toLowerCase().trim();
+            const clean = (str) => str.replace(/\(\d+\)\s*/, '').toLowerCase().trim();
             const hF = clean(game.homeTeam), aF = clean(game.awayTeam);
             const hN = hF.split(' ').pop(), aN = aF.split(' ').pop();
             const matches = [];
             for (let item of globalLinks) {
-                const t = (item.title || '').toLowerCase();
+                const t = item.title.toLowerCase();
                 if ((t.includes(hF) || t.includes(hN)) && (t.includes(aF) || t.includes(aN))) {
                     if (!matches.includes(item.href)) matches.push(item.href);
                 }
@@ -595,9 +574,6 @@
         }
 
         function renderStandingsHtml(standingsArray) {
-            if (!standingsArray || standingsArray.length === 0) {
-                return `<div class="loading">No standings data available.</div>`;
-            }
             return standingsArray.map(div => `
                 <div>
                     <div class="espn-div-title">${div.division}</div>
@@ -612,7 +588,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${(div.teams || []).map(t => {
+                            ${div.teams.map(t => {
                                 let apRank = (activeLeague === "CFB" || activeLeague === "CBB") ? getTeamApRank(t.name, t.shortName, t.mascot, activeLeague) : null;
                                 let rankBadge = apRank ? `<span class="ap-rank-badge">${apRank}</span>` : '';
                                 return `
@@ -632,9 +608,6 @@
         }
 
         function renderWildCardHtml(standingsArray) {
-            if (!standingsArray || standingsArray.length === 0) {
-                return `<div class="loading">No wildcard data available.</div>`;
-            }
             return standingsArray.map(div => `
                 <div>
                     <div class="espn-div-title">${div.division}</div>
@@ -650,7 +623,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${(div.teams || []).map((t, idx) => {
+                            ${div.teams.map((t, idx) => {
                                 let rankDisplay = idx < 3 ? `<strong>${idx + 1}.</strong>` : `${idx + 1}.`;
                                 let rowStyle = idx < 3 ? `background: rgba(37, 99, 235, 0.12);` : '';
                                 return `
@@ -759,10 +732,10 @@
                     urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
                 }
 
-                const responses = await Promise.all(urls.map((u, idx) => fetch(u).then(r => r.json()).then(data => ({ data, isFcsEndpoint: league === "CFB" && idx === 1 })).catch(() => ({ data: {}, isFcsEndpoint: false }))));
+                const responses = await Promise.all(urls.map((u, idx) => fetch(u).then(r => r.json()).then(data => ({ data, isFcsEndpoint: league === "CFB" && idx === 1 }))));
                 let rawEvents = [];
                 responses.forEach(resp => { 
-                    if (resp.data && resp.data.events) {
+                    if (resp.data.events) {
                         resp.data.events.forEach(ev => {
                             ev._isFcsSource = resp.isFcsEndpoint;
                             rawEvents.push(ev);
@@ -772,14 +745,13 @@
 
                 const gameMap = new Map();
                 rawEvents.forEach(event => {
-                    const comp = event.competitions?.[0];
-                    if (!comp) return;
-                    const state = event.status?.type?.state?.toLowerCase() || '';
+                    const comp = event.competitions[0];
+                    const state = event.status.type.state.toLowerCase();
                     if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
-                    const home = comp.competitors?.find(c => c.homeAway === 'home') || {};
-                    const away = comp.competitors?.find(c => c.homeAway === 'away') || {};
+                    const home = comp.competitors.find(c => c.homeAway === 'home') || {};
+                    const away = comp.competitors.find(c => c.homeAway === 'away') || {};
 
                     const confSet = new Set();
                     const resolveConf = (td) => {
@@ -819,7 +791,7 @@
                         id: event.id, utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
                         statusState: state, 
-                        statusDetail: state === 'in' ? (event.status?.type?.detail || 'LIVE') : 'UPCOMING',
+                        statusDetail: state === 'in' ? (event.status.type.detail || 'LIVE') : 'UPCOMING',
                         homeCity: getTeam(home, hRank).city, homeTeam: getTeam(home, hRank).name, homeLogo: home.team?.logo || '', homeScore: homeScore,
                         awayCity: getTeam(away, aRank).city, awayTeam: getTeam(away, aRank).name, awayLogo: away.team?.logo || '', awayScore: awayScore,
                         conferences: Array.from(confSet)
@@ -849,9 +821,10 @@
                 return;
             }
             labelText.innerText = "Rankings / Conf:";
-            const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
+            const confs = new Set();
+            games.forEach(g => g.conferences.forEach(c => confs.add(c)));
             select.innerHTML = '<option value="ALL">All Conferences</option>';
-            confs.sort().forEach(c => {
+            Array.from(confs).sort().forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
                 opt.innerText = c;
