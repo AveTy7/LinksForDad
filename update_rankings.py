@@ -66,7 +66,7 @@ def scrape_ufc():
     rows = table.find_all("tr")
     if len(rows) > 5:
       header_text = rows[0].get_text().lower()
-      if "fighter" in header_text or "rank" in header_text:
+      if "fighter" in header_text or "rank" in header_text or "iso" in header_text:
         valid_tables.append(table)
 
   for idx, table in enumerate(valid_tables):
@@ -81,18 +81,34 @@ def scrape_ufc():
 
     for row in rows:
       cols = row.find_all(["th", "td"])
-      if len(cols) >= 2:
-        rank_text = clean_text(cols[0].get_text())
-        fighter_name = clean_text(cols[1].get_text())
+      if len(cols) >= 3:
+        # Search columns dynamically for rank and fighter name to handle new layout columns
+        row_texts = [clean_text(c.get_text()) for c in cols]
+        
+        rank_text = ""
+        fighter_name = ""
+        
+        for t in row_texts:
+          if t in ["C", "IC"] or (t.isdigit() and 1 <= int(t) <= 15):
+            rank_text = t
+            break
+            
+        # The fighter name is usually the longest text field that isn't a number or record format
+        for t in row_texts:
+          if t and t != rank_text and not t.isdigit() and not re.match(r"^\d+[-–]\d+", t):
+            if len(t) > 2 and "UFC" not in t and "Win" not in t and "Loss" not in t:
+              fighter_name = t
+              break
 
         if rank_text in ["C", "IC"]:
-          if fighter_name and fighter_name != "Fighter":
+          if fighter_name and fighter_name.lower() != "fighter":
             champion = fighter_name
         elif rank_text.isdigit():
           rank_num = int(rank_text)
           if 1 <= rank_num <= 15:
-            if fighter_name and fighter_name != champion:
-              rankings.append(fighter_name)
+            if fighter_name and fighter_name != champion and fighter_name.lower() != "fighter":
+              if fighter_name not in rankings:
+                rankings.append(fighter_name)
 
     ufc_data.append({
         "weight": weight_name,
