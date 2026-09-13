@@ -215,12 +215,7 @@
         let RAW_AP_POLLS = {};
         let BOXING_CHAMPIONS = [];
         let UFC_FULL_RANKINGS = [];
-
-        const CFB_MAP = {
-            "1": "ACC", "4": "Big 12", "5": "Big Ten", "8": "SEC", "9": "Pac-12",
-            "15": "Conference USA", "17": "MAC", "18": "MWC", "37": "Sun Belt", 
-            "151": "American Athletic", "80": "FBS Independents"
-        };
+        let teamConfMap = {};
 
         const FCS_KEYWORDS = [
             "fcs", "big sky", "mvfc", "caa", "ivy", "meac", "swac", "socon", 
@@ -405,6 +400,20 @@
                 } catch (e) {
                     console.log("Error computing MLB Wild Card:", e);
                 }
+            }
+        }
+
+        function buildTeamConfMap(leagueKey) {
+            teamConfMap = {};
+            const dataObj = STANDINGS_DATA[leagueKey];
+            if (!dataObj) return;
+            for (const [confName, teams] of Object.entries(dataObj)) {
+                if (!Array.isArray(teams)) continue;
+                teams.forEach(t => {
+                    if (t.name) teamConfMap[t.name.toLowerCase().trim()] = confName;
+                    if (t.shortName) teamConfMap[t.shortName.toLowerCase().trim()] = confName;
+                    if (t.mascot) teamConfMap[t.mascot.toLowerCase().trim()] = confName;
+                });
             }
         }
 
@@ -796,6 +805,7 @@
             document.getElementById('filter-bar').style.display = 'none';
             const config = LEAGUES[league];
 
+            buildTeamConfMap(league);
             setupCollegeFilter();
             updateTopActionBar();
 
@@ -866,37 +876,35 @@
                     const away = comp.competitors?.find(c => c.homeAway === 'away') || {};
 
                     const confSet = new Set();
-                    const resolveConf = (td) => {
-                        const tn = td.team?.displayName || "", sn = td.team?.shortDisplayName || "";
-                        if (tn.includes("Notre Dame") || sn === "Notre Dame" || sn === "UConn") return "Independents";
+                    const resolveTeamConf = (td, isFcsSource) => {
+                        if (isFcsSource) return "FCS";
+                        const tn = (td.team?.displayName || "").toLowerCase().trim();
+                        const sn = (td.team?.shortDisplayName || "").toLowerCase().trim();
+                        const mn = (td.team?.name || "").toLowerCase().trim();
                         
-                        const rId = String(td.team?.conferenceId || td.conferenceId || "");
-                        if (CFB_MAP[rId]) return CFB_MAP[rId];
-                        
+                        if (teamConfMap[tn]) return teamConfMap[tn];
+                        if (teamConfMap[sn]) return teamConfMap[sn];
+                        if (teamConfMap[mn]) return teamConfMap[mn];
+
+                        for (const [key, conf] of Object.entries(teamConfMap)) {
+                            if (tn.includes(key) || key.includes(tn) || sn.includes(key) || key.includes(sn)) {
+                                return conf;
+                            }
+                        }
+
                         const confName = (td.team?.conference?.name || "").toLowerCase();
                         if (FCS_KEYWORDS.some(k => confName.includes(k))) return "FCS";
 
                         return td.team?.conference?.name || null;
                     };
 
-                    let hConf = resolveConf(home);
-                    let aConf = resolveConf(away);
+                    let hConf = resolveTeamConf(home, event._isFcsSource);
+                    let aConf = resolveTeamConf(away, event._isFcsSource);
 
-                    // Cross-reference with loaded conference standings table names to normalize standard conference names (e.g., "Big Ten Conference")
-                    const availableConfs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
-                    const matchToStandingsName = (cName) => {
-                        if (!cName) return null;
-                        if (cName === "FCS") return "FCS";
-                        const found = availableConfs.find(ac => ac.toLowerCase() === cName.toLowerCase() || ac.toLowerCase().includes(cName.toLowerCase()) || cName.toLowerCase().includes(ac.toLowerCase()));
-                        return found || cName;
-                    };
-
-                    if (hConf) confSet.add(matchToStandingsName(hConf));
-                    if (aConf) confSet.add(matchToStandingsName(aConf));
+                    if (hConf) confSet.add(hConf);
+                    if (aConf) confSet.add(aConf);
 
                     if (event._isFcsSource || confSet.has("FCS") || hConf === "FCS" || aConf === "FCS") {
-                        confSet.add("FCS");
-                    } else if (confSet.size === 0) {
                         confSet.add("FCS");
                     }
 
