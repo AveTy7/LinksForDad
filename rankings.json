@@ -130,58 +130,179 @@
     "ufc": [
         {
             "weight": "Heavyweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Ciryl Gane",
+            "rankings": [
+                "Alexander Volkov",
+                "Sergei Pavlovich",
+                "Alex Pereira",
+                "Rizvan Kuniev",
+                "Josh Hokit",
+                "Waldo Cortes-Acosta",
+                "Vitor Petrino",
+                "Mario Pinto",
+                "Valter Walker",
+                "Curtis Blaydes"
+            ]
         },
         {
             "weight": "Light Heavyweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Carlos Ulberg",
+            "rankings": [
+                "Alex Pereira",
+                "Magomed Ankalaev",
+                "Ji\u0159\u00ed Proch\u00e1zka",
+                "Paulo Costa",
+                "Jamahal Hill",
+                "Khalil Rountree Jr.",
+                "Navajo Stirling",
+                "Dominick Reyes",
+                "Reinier de Ridder",
+                "Azamat Murzakanov"
+            ]
         },
         {
             "weight": "Middleweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Sean Strickland",
+            "rankings": [
+                "Khamzat Chimaev",
+                "Dricus du Plessis",
+                "Nassourdine Imavov",
+                "Joe Pyfer",
+                "Brendan Allen",
+                "Caio Borralho",
+                "Gregory Rodrigues",
+                "Michael Page",
+                "Anthony Hernandez",
+                "Israel Adesanya"
+            ]
         },
         {
             "weight": "Welterweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Islam Makhachev",
+            "rankings": [
+                "Carlos Prates",
+                "Ian Machado Garry",
+                "Michael Morales",
+                "Jack Della Maddalena",
+                "Sean Brady",
+                "Gabriel Bonfim",
+                "Belal Muhammad",
+                "Leon Edwards",
+                "Joaquin Buckley",
+                "Uro\u0161 Medi\u0107"
+            ]
         },
         {
             "weight": "Lightweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Justin Gaethje",
+            "rankings": [
+                "Ilia Topuria",
+                "Arman Tsarukyan",
+                "Charles Oliveira",
+                "Max Holloway",
+                "Paddy Pimblett",
+                "Quillan Salkilld",
+                "Renato Moicano",
+                "Beno\u00eet Saint Denis",
+                "Mateusz Gamrot",
+                "Maur\u00edcio Ruffy"
+            ]
         },
         {
             "weight": "Featherweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Alexander Volkanovski",
+            "rankings": [
+                "Movsar Evloev",
+                "Diego Lopes",
+                "Lerone Murphy",
+                "Aljamain Sterling",
+                "Arnold Allen",
+                "Jean Silva",
+                "Pat Sabatini",
+                "Pavel Andrusca",
+                "Youssef Zalal",
+                "Kevin Vallejos"
+            ]
         },
         {
             "weight": "Bantamweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Petr Yan",
+            "rankings": [
+                "Merab Dvalishvili",
+                "Song Yadong",
+                "Sean O'Malley",
+                "Mario Bautista",
+                "Umar Nurmagomedov",
+                "Cory Sandhagen",
+                "David Mart\u00ednez",
+                "Raoni Barcelos",
+                "Farid Basharat",
+                "Marcus McGhee"
+            ]
         },
         {
             "weight": "Flyweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Joshua Van",
+            "rankings": [
+                "Alexandre Pantoja",
+                "Manel Kape",
+                "Brandon Royval",
+                "Tatsuro Taira",
+                "Asu Almabayev",
+                "Lone'er Kavanagh",
+                "Ramazan Temirov",
+                "Kyoji Horiguchi",
+                "Amir Albazi",
+                "Brandon Moreno"
+            ]
         },
         {
             "weight": "Women's Bantamweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Kayla Harrison",
+            "rankings": [
+                "Joselyne Edwards",
+                "Norma Dumont",
+                "Luana Santos",
+                "Ail\u00edn P\u00e9rez",
+                "Julianna Pe\u00f1a",
+                "Yana Santos",
+                "Jacqueline Cavalcanti",
+                "Michelle Montague",
+                "Melissa Croden",
+                "Karol Rosa"
+            ]
         },
         {
             "weight": "Women's Flyweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Valentina Shevchenko",
+            "rankings": [
+                "Nat\u00e1lia Silva",
+                "Manon Fiorot",
+                "Alexa Grasso",
+                "Erin Blanchfield",
+                "Zhang Weili",
+                "Wang Cong",
+                "Jasmine Jasudavicius",
+                "Rose Namajunas",
+                "Maycee Barber",
+                "Tracy Cortez"
+            ]
         },
         {
             "weight": "Women's Strawweight",
-            "champion": "Vacant",
-            "rankings": []
+            "champion": "Mackenzie Dern",
+            "rankings": [
+                "Zhang Weili",
+                "Virna Jandiroba",
+                "Tatiana Suarez",
+                "Denise Gomes",
+                "Gillian Robertson",
+                "Fatima Kline",
+                "Alexia Thainara",
+                "Piera Rodriguez",
+                "Yan Xiaonan",
+                "Mizuki Inoue"
+            ]
         }
     ]
 }
