@@ -289,7 +289,6 @@
                 }
             };
 
-            // Use individual try/catch execution via Promise.allSettled so one failed fetch doesn't crash the entire app loader
             await Promise.allSettled([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
@@ -312,6 +311,7 @@
         function parseEspnStandings(data) {
             if (!data) return null;
             let divisionsResult = {};
+
             const processGroup = (group) => {
                 if (group.standings && group.standings.entries) {
                     let divName = group.name || group.abbreviation || "Division Standings";
@@ -322,8 +322,8 @@
                         let stats = entry.stats || [];
                         let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
                         let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
-                        let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || ".000";
                         let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
+                        let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || rawPct.toFixed(3);
                         return { name, shortName, mascot, w, l, pct, rawPct };
                     });
                     
@@ -343,7 +343,8 @@
                         divisionsResult[divName] = teams;
                     }
                 }
-                if (group.children) {
+
+                if (group.children && Array.isArray(group.children)) {
                     group.children.forEach(sub => processGroup(sub));
                 }
             };
@@ -351,7 +352,7 @@
             if (Array.isArray(data.children)) {
                 divisionsResult = {};
                 data.children.forEach(c => processGroup(c));
-            } else if (data.standings?.children) {
+            } else if (data.standings?.children && Array.isArray(data.standings.children)) {
                 divisionsResult = {};
                 data.standings.children.forEach(c => processGroup(c));
             } else if (data.children) {
@@ -361,6 +362,7 @@
                 divisionsResult = [];
                 processGroup(data);
             }
+
             return divisionsResult;
         }
 
