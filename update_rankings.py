@@ -7,8 +7,7 @@ from bs4 import BeautifulSoup
 def clean_text(text):
   if not text:
     return ""
-  text = re.sub(r"\[\d+\]", "", text)
-  text = re.sub(r"\[edit\]", "", text, flags=re.IGNORECASE)
+  text = re.sub(r"\[.*?\]", "", text)  # Removes all bracketed text like [1] or [edit]
   text = re.sub(
       r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}",
       "",
@@ -52,46 +51,50 @@ def scrape_ufc():
   response = requests.get(url, headers=headers)
   soup = BeautifulSoup(response.text, "html.parser")
 
-  for element in soup.find_all(
-      ["span", "div"],
-      {"class": ["mw-editsection", "reference", "external"]}
-  ):
-    element.decompose()
-
   ufc_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
+
+  valid_divisions = [
+      "Heavyweight",
+      "Light Heavyweight",
+      "Middleweight",
+      "Welterweight",
+      "Lightweight",
+      "Featherweight",
+      "Bantamweight",
+      "Flyweight",
+      "Women's Strawweight",
+      "Women's Flyweight",
+      "Women's Bantamweight",
+      "Women's Featherweight",
+  ]
 
   for table in tables:
     rows = table.find_all("tr")
     if len(rows) < 3:
       continue
 
-    weight_name = ""
+    # Find context text around the table to match the division name
+    context_text = ""
     caption = table.find("caption")
     if caption:
-      weight_name = clean_text(caption.get_text())
+      context_text += " " + caption.get_text()
+
+    prev = table.find_previous(["h3", "h4", "span", "div"])
+    steps = 0
+    while prev and steps < 3:
+      context_text += " " + prev.get_text()
+      prev = prev.find_previous(["h3", "h4", "span", "div"])
+      steps += 1
+
+    cleaned_context = clean_text(context_text)
+    weight_name = ""
+    for div in valid_divisions:
+      if div.lower() in cleaned_context.lower():
+        weight_name = div
+        break
 
     if not weight_name:
-      prev = table.find_previous(["h3", "h4", "span"])
-      while prev:
-        headline = prev.find("span", {"class": "mw-headline"})
-        raw_head = (
-            headline.get_text(strip=True)
-            if headline
-            else prev.get_text(strip=True)
-        )
-        cleaned_head = clean_text(raw_head)
-        if cleaned_head and "pound" not in cleaned_head.lower():
-          weight_name = (
-              cleaned_head.replace("Men's", "")
-              .replace("Women's", "")
-              .replace("rankings", "")
-              .strip()
-          )
-          break
-        prev = prev.find_previous(["h3", "h4", "span"])
-
-    if not weight_name or "pound" in weight_name.lower():
       continue
 
     champion = "Vacant"
@@ -127,12 +130,6 @@ def scrape_boxing():
   headers = {"User-Agent": "Mozilla/5.0"}
   response = requests.get(url, headers=headers)
   soup = BeautifulSoup(response.text, "html.parser")
-
-  for element in soup.find_all(
-      ["span", "div"],
-      {"class": ["mw-editsection", "reference", "external"]}
-  ):
-    element.decompose()
 
   boxing_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
