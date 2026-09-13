@@ -531,7 +531,6 @@
 
         function cleanBoxerCell(cellText) {
             if (!cellText || cellText === "vacant") return cellText;
-            // Removes embedded dates like "July 1, 2026", "May 2, 2026", etc.
             return cellText.replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}/gi, '').trim();
         }
 
@@ -655,14 +654,26 @@
 
             try {
                 const dateParam = getDateParam(league);
-                const urls = league === "CFB" ? [
-                    `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=80&dates=${dateParam}&limit=300`,
-                    `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`
-                ] : [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
+                let urls = [];
+                if (league === "CFB") {
+                    urls = [
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`,
+                        `https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?groups=81&dates=${dateParam}&limit=300`
+                    ];
+                } else {
+                    urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
+                }
 
-                const responses = await Promise.all(urls.map(u => fetch(u).then(r => r.json())));
+                const responses = await Promise.all(urls.map((u, idx) => fetch(u).then(r => r.json()).then(data => ({ data, isFcsEndpoint: league === "CFB" && idx === 1 }))));
                 let rawEvents = [];
-                responses.forEach(r => { if (r.events) rawEvents = rawEvents.concat(r.events); });
+                responses.forEach(resp => { 
+                    if (resp.data.events) {
+                        resp.data.events.forEach(ev => {
+                            ev._isFcsSource = resp.isFcsEndpoint;
+                            rawEvents.push(ev);
+                        });
+                    } 
+                });
 
                 const gameMap = new Map();
                 rawEvents.forEach(event => {
@@ -679,13 +690,14 @@
                         const tn = td.team?.displayName || "", sn = td.team?.shortDisplayName || "";
                         if (tn.includes("Notre Dame") || sn === "Notre Dame" || sn === "UConn") return "Independents";
                         const rId = String(td.team?.conferenceId || td.conferenceId || "");
-                        const mapped = CFB_MAP[rId] || td.team?.conference?.name || null;
-                        if (mapped === "FCS") return "FCS";
-                        return mapped;
+                        return CFB_MAP[rId] || td.team?.conference?.name || null;
                     };
                     const hConf = resolveConf(home), aConf = resolveConf(away);
                     if (hConf) confSet.add(hConf);
                     if (aConf) confSet.add(aConf);
+                    if (event._isFcsSource) {
+                        confSet.add("FCS");
+                    }
                     if (confSet.size === 0) confSet.add("FCS");
 
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
