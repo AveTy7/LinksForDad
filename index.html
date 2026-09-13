@@ -244,9 +244,13 @@
             await Promise.all([
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=2", WILDCARD_DATA)
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA)
             ]);
+
+            // Compute precise MLB Wild Card from parsed level-3 division data
+            if (STANDINGS_DATA["MLB"]) {
+                WILDCARD_DATA["MLB"] = computeMlbWildCard(STANDINGS_DATA["MLB"]);
+            }
         }
 
         function parseEspnStandings(data) {
@@ -257,10 +261,11 @@
                     let teams = group.standings.entries.map(entry => {
                         let name = entry.team.displayName;
                         let stats = entry.stats || [];
-                        let w = stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0;
-                        let l = stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0;
+                        let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
+                        let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
                         let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || ".000";
-                        return { name, w, l, pct };
+                        let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
+                        return { name, w, l, pct, rawPct };
                     });
                     divisionsResult.push({ division: divName, teams });
                 }
@@ -277,6 +282,47 @@
                 processGroup(data);
             }
             return divisionsResult;
+        }
+
+        function computeMlbWildCard(divisions) {
+            // Group divisions by League (American League vs National League based on division name)
+            const leagues = { "American League": [], "National League": [] };
+
+            divisions.forEach(div => {
+                let lKey = div.division.includes("National") ? "National League" : "American League";
+                // Sort division teams by win % descending to identify the leader
+                let sortedTeams = [...div.teams].sort((a, b) => b.rawPct - a.rawPct);
+                if (sortedTeams.length > 0) {
+                    // Leader is the first team
+                    let leader = sortedTeams[0];
+                    // Rest are non-leaders (potential wildcard contenders)
+                    let nonLeaders = sortedTeams.slice(1);
+                    leagues[lKey].push({
+                        divisionName: div.division,
+                        leader: leader,
+                        contenders: nonLeaders
+                    });
+                }
+            });
+
+            let result = [];
+            Object.keys(leagues).forEach(leagueName => {
+                let allContenders = [];
+                leagues[leagueName].forEach(dObj => {
+                    allContenders.push(...dObj.contenders);
+                });
+                // Sort all non-leader teams strictly by highest win percentage
+                allContenders.sort((a, b) => b.rawPct - a.rawPct);
+
+                if (allContenders.length > 0) {
+                    result.push({
+                        division: `${leagueName} Wild Card Race`,
+                        teams: allContenders
+                    });
+                }
+            });
+
+            return result;
         }
 
         function initTabs() {
@@ -310,7 +356,6 @@
                 if(listcontent) listcontent.style.display = 'none';
                 if(filterbar) filterbar.style.display = 'none';
                 
-                // Switch content inside subpage if wildcard view is triggered
                 const config = LEAGUES[activeLeague];
                 if (config.hasWildCard && subpage) {
                     const standingsContainer = subpage.querySelector('.champions-grid');
