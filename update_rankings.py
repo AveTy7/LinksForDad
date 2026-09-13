@@ -59,13 +59,14 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
+    # Look for a caption or any preceding heading for the division name
     weight_name = ""
     caption = table.find("caption")
     if caption:
       weight_name = caption.get_text(strip=True)
 
     if not weight_name:
-      prev = table.find_previous(["h2", "h3", "h4", "span"])
+      prev = table.find_previous(["h3", "h4", "span"])
       while prev:
         headline = (
             prev.find("span", {"class": "mw-headline"})
@@ -77,32 +78,18 @@ def scrape_ufc():
             if headline
             else prev.get_text(strip=True)
         )
-        if raw_head and not any(
-            b in raw_head.lower()
-            for b in [
-                "contents",
-                "meta",
-                "history",
-                "edit",
-                "navigation",
-                "performance",
-                "top",
-                "pound",
-            ]
-        ):
+        if raw_head and "pound" not in raw_head.lower():
           weight_name = (
               raw_head.replace("Men's", "")
               .replace("Women's", "")
               .replace("rankings", "")
+              .replace("[edit]", "")
               .strip()
           )
           break
-        prev = prev.find_previous(["h2", "h3", "h4", "span"])
+        prev = prev.find_previous(["h3", "h4", "span"])
 
-    if not weight_name or any(
-        term in weight_name.lower()
-        for term in ["pound", "contents", "meta", "history", "fighter", "edit"]
-    ):
+    if not weight_name or "pound" in weight_name.lower():
       continue
 
     champion = "Vacant"
@@ -123,7 +110,7 @@ def scrape_ufc():
             if fighter_name and fighter_name != champion:
               rankings.append(fighter_name)
 
-    if weight_name and rankings:
+    if weight_name:
       ufc_data.append({
           "weight": weight_name,
           "champion": champion,
