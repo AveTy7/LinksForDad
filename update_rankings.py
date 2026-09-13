@@ -16,6 +16,35 @@ def clean_text(text):
   return text.strip()
 
 
+def format_fighter_cell(cell_text):
+  cleaned = clean_text(cell_text)
+  if not cleaned or cleaned.lower() == "vacant":
+    return "vacant"
+  is_super = False
+  if "super champion" in cleaned.lower():
+    is_super = True
+    cleaned = re.sub(r"super champion", "", cleaned, flags=re.IGNORECASE)
+  match = re.search(
+      r"(\d+\s*[-–]\s*\d+(?:\s*[-–]\s*\d+)?(?:\s*\(\s*\d+\s*\))?)", cleaned
+  )
+  record = ""
+  if match:
+    record = match.group(1).strip()
+    cleaned = cleaned.replace(record, "").strip()
+  name = re.sub(r"\s*\(.*?\)", "", cleaned).strip()
+  if not name:
+    return cleaned
+  super_badge = (
+      ' <span style="color: #fbbf24; font-size: 0.85em;" title="Super'
+      ' Champion">★</span>'
+      if is_super
+      else ""
+  )
+  if record:
+    return f"{name}{super_badge}<br>{record}"
+  return f"{name}{super_badge}"
+
+
 def scrape_ufc():
   url = "https://en.wikipedia.org/wiki/UFC_rankings"
   headers = {"User-Agent": "Mozilla/5.0"}
@@ -30,24 +59,50 @@ def scrape_ufc():
     if len(rows) < 3:
       continue
 
-    # Find the weight class name from preceding headers or captions
     weight_name = ""
     caption = table.find("caption")
     if caption:
       weight_name = caption.get_text(strip=True)
-    
+
     if not weight_name:
-      # Look upwards for headers
       prev = table.find_previous(["h2", "h3", "h4", "span"])
       while prev:
-        headline = prev.find("span", {"class": "mw-headline"}) if hasattr(prev, "find") else None
-        raw_head = headline.get_text(strip=True) if headline else prev.get_text(strip=True)
-        if raw_head and not any(b in raw_head.lower() for b in ["contents", "meta", "history", "edit", "navigation", "performance", "top", "pound"]):
-          weight_name = raw_head.replace("Men's", "").replace("Women's", "").replace("rankings", "").strip()
+        headline = (
+            prev.find("span", {"class": "mw-headline"})
+            if hasattr(prev, "find")
+            else None
+        )
+        raw_head = (
+            headline.get_text(strip=True)
+            if headline
+            else prev.get_text(strip=True)
+        )
+        if raw_head and not any(
+            b in raw_head.lower()
+            for b in [
+                "contents",
+                "meta",
+                "history",
+                "edit",
+                "navigation",
+                "performance",
+                "top",
+                "pound",
+            ]
+        ):
+          weight_name = (
+              raw_head.replace("Men's", "")
+              .replace("Women's", "")
+              .replace("rankings", "")
+              .strip()
+          )
           break
         prev = prev.find_previous(["h2", "h3", "h4", "span"])
 
-    if not weight_name or any(term in weight_name.lower() for term in ["pound", "contents", "meta", "history", "fighter", "edit"]):
+    if not weight_name or any(
+        term in weight_name.lower()
+        for term in ["pound", "contents", "meta", "history", "fighter", "edit"]
+    ):
       continue
 
     champion = "Vacant"
@@ -153,7 +208,7 @@ def scrape_boxing():
             ibf = format_fighter_cell(cols[3].get_text(strip=True))
             wbo = format_fighter_cell(cols[4].get_text(strip=True))
           else:
-            wba = format_fighter_cell(cols[0].get_text(strip=True))
+            wba = format_fighter_cell(cols[0].get_text(strip=Type))
             wbc = format_fighter_cell(cols[1].get_text(strip=True))
             ibf = format_fighter_cell(cols[2].get_text(strip=True))
             wbo = format_fighter_cell(cols[3].get_text(strip=True))
@@ -167,35 +222,6 @@ def scrape_boxing():
           })
           break
   return boxing_data
-
-
-def format_fighter_cell(cell_text):
-  cleaned = clean_text(cell_text)
-  if not cleaned or cleaned.lower() == "vacant":
-    return "vacant"
-  is_super = False
-  if "super champion" in cleaned.lower():
-    is_super = True
-    cleaned = re.sub(r"super champion", "", cleaned, flags=rwx := re.IGNORECASE)
-  match = re.search(
-      r"(\d+\s*[-–]\s*\d+(?:\s*[-–]\s*\d+)?(?:\s*\(\s*\d+\s*\))?)", cleaned
-  )
-  record = ""
-  if match:
-    record = match.group(1).strip()
-    cleaned = cleaned.replace(record, "").strip()
-  name = re.sub(r"\s*\(.*?\)", "", cleaned).strip()
-  if not name:
-    return cleaned
-  super_badge = (
-      ' <span style="color: #fbbf24; font-size: 0.85em;" title="Super'
-      ' Champion">★</span>'
-      if is_super
-      else ""
-  )
-  if record:
-    return f"{name}{super_badge}<br>{record}"
-  return f"{name}{super_badge}"
 
 
 if __name__ == "__main__":
