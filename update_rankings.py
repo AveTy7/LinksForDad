@@ -49,34 +49,40 @@ def scrape_ufc():
   ufc_data = []
   tables = soup.find_all("table", {"class": "wikitable"})
 
+  valid_divisions = [
+      "Heavyweight",
+      "Light Heavyweight",
+      "Middleweight",
+      "Welterweight",
+      "Lightweight",
+      "Featherweight",
+      "Bantamweight",
+      "Flyweight",
+      "Strawweight",
+      "Women's Strawweight",
+      "Women's Flyweight",
+      "Women's Bantamweight",
+      "Women's Featherweight",
+  ]
+
   for table in tables:
     rows = table.find_all("tr")
     if len(rows) < 3:
       continue
 
+    # Look backwards through preceding headers to find the exact division name
     weight_name = ""
-    caption = table.find("caption")
-    if caption:
-      weight_name = clean_text(caption.get_text())
+    curr = table
+    for _ in range(6):
+      curr = curr.find_previous(["h2", "h3", "h4", "span", "div", "caption"])
+      if not curr:
+        break
+      text = clean_text(curr.get_text())
+      matched = next((div for div in valid_divisions if div.lower() in text.lower()), "")
+      if matched:
+        weight_name = matched
+        break
 
-    if not weight_name:
-      prev = table.find_previous(["h3", "h4", "span", "div"])
-      while prev:
-        text = clean_text(prev.get_text())
-        if text and len(text) < 30 and "pound" not in text.lower():
-          weight_name = text.replace("rankings", "").strip()
-          break
-        prev = prev.find_previous(["h3", "h4", "span", "div"])
-
-    if not weight_name or "pound" in weight_name.lower():
-      continue
-
-    weight_name = (
-        weight_name.replace("Men's", "")
-        .replace("Women's", "")
-        .replace("rankings", "")
-        .strip()
-    )
     if not weight_name:
       continue
 
@@ -98,11 +104,13 @@ def scrape_ufc():
             if fighter_name and fighter_name != champion:
               rankings.append(fighter_name)
 
-    ufc_data.append({
-        "weight": weight_name,
-        "champion": champion,
-        "rankings": rankings[:10],
-    })
+    # Prevent duplicate entries if a table gets parsed twice
+    if not any(d["weight"] == weight_name for d in ufc_data):
+      ufc_data.append({
+          "weight": weight_name,
+          "champion": champion,
+          "rankings": rankings[:10],
+      })
 
   return ufc_data
 
