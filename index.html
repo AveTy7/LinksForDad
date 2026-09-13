@@ -212,6 +212,7 @@
         let STANDINGS_DATA = {};
         let WILDCARD_DATA = {};
         let AP_RANKINGS = {}; 
+        let RAW_AP_POLLS = {};
         let BOXING_CHAMPIONS = [];
         let UFC_FULL_RANKINGS = [];
 
@@ -250,18 +251,14 @@
                 console.log("Could not load rankings.json:", e);
             }
 
-            // Pro Standings Fetcher (NFL, NBA, MLB) using explicit children/group depth parsing
             const fetchProStandings = async (leagueKey, url) => {
                 try {
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
                         let divisionsResult = [];
-                        
-                        // Pro endpoints typically structure standings under data.children (e.g., AFC/NFC or Leagues -> Divisions)
                         const parseGroupNode = (node) => {
                             if (!node) return;
-                            // If this node has standings entries directly, it's a division/group
                             if (node.standings && node.standings.entries) {
                                 let divName = node.name || node.abbreviation || "Standings";
                                 let entries = node.standings.entries || [];
@@ -285,8 +282,6 @@
                                 }
                                 divisionsResult.push({ division: divName, teams });
                             }
-                            
-                            // Recurse children groups if present
                             if (node.children && Array.isArray(node.children)) {
                                 node.children.forEach(child => parseGroupNode(child));
                             }
@@ -307,7 +302,6 @@
                 }
             };
 
-            // College Standings Fetcher (CFB, CBB)
             const fetchCollegeStandings = async (leagueKey, url) => {
                 try {
                     const res = await fetch(url);
@@ -365,14 +359,23 @@
                         const poll = data.rankings?.find(p => p.name?.toLowerCase().includes("ap") || p.type === 1) || data.rankings?.[0];
                         if (poll && poll.ranks) {
                             const rankMap = {};
+                            const rawList = [];
                             poll.ranks.forEach(r => {
                                 if (r.team && r.current) {
                                     rankMap[r.team.displayName.toLowerCase()] = r.current;
                                     rankMap[r.team.shortDisplayName?.toLowerCase()] = r.current;
                                     rankMap[r.team.name?.toLowerCase()] = r.current;
+                                    rawList.push({
+                                        rank: r.current,
+                                        name: r.team.displayName || r.team.name,
+                                        record: r.recordSummary || (r.summary || ""),
+                                        previous: r.previous || r.current
+                                    });
                                 }
                             });
+                            rawList.sort((a, b) => a.rank - b.rank);
                             AP_RANKINGS[leagueKey] = rankMap;
+                            RAW_AP_POLLS[leagueKey] = rawList;
                         }
                     }
                 } catch (err) {
@@ -435,7 +438,7 @@
                             let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
+                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
                     });
@@ -543,12 +546,47 @@
                         if (activeLeague === "CFB" || activeLeague === "CBB") {
                             const selectedConf = document.getElementById('conf-select').value;
                             const dataObj = STANDINGS_DATA[activeLeague] || {};
-                            if (selectedConf && selectedConf !== "ALL") {
+                            if (selectedConf && selectedConf === "ALL") {
+                                const apList = RAW_AP_POLLS[activeLeague] || [];
+                                titleElement.innerHTML = `<i class="fa-solid fa-table-list"></i> Top 25 AP Rankings`;
+                                if (apList.length > 0) {
+                                    standingsContainer.innerHTML = `
+                                        <div>
+                                            <div class="espn-div-title">Associated Press (AP) Top 25</div>
+                                            <table class="espn-standings-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:30px; text-align:center;">Rank</th>
+                                                        <th>Team</th>
+                                                        <th style="text-align:center; width:60px;">Record</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${apList.map(item => `
+                                                        <tr>
+                                                            <td style="text-align:center; font-weight:700; color:#60a5fa;">#${item.rank}</td>
+                                                            <td>${item.name}</td>
+                                                            <td style="text-align:center; color:var(--muted);">${item.record || '-'}</td>
+                                                        </tr>
+                                                    `).join('')}
+                                                </tbody>
+                                            </table>
+                                        </div>`;
+                                } else {
+                                    standingsContainer.innerHTML = `<div class="loading">No AP ranking data available.</div>`;
+                                }
+                                if(subpage) subpage.style.display = 'block';
+                                return;
+                            } else if (selectedConf && selectedConf === "FCS") {
+                                const teamsList = dataObj["FCS"] || [];
+                                standingsToRender = teamsList.length ? [{ division: "FCS", teams: teamsList }] : [];
+                                label = `FCS Standings`;
+                            } else if (selectedConf && selectedConf !== "ALL") {
                                 const teamsList = dataObj[selectedConf] || [];
                                 standingsToRender = teamsList.length ? [{ division: selectedConf, teams: teamsList }] : [];
                                 label = `${selectedConf} Standings`;
                             } else {
-                                standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
+                                standingsToRender = Object.keys(dataObj).filter(k => k !== "FCS").map(k => ({ division: k, teams: dataObj[k] }));
                                 label = `${activeLeague} Standings (All Conferences)`;
                             }
                         } else {
@@ -620,8 +658,8 @@
             labelText.innerText = "Rankings / Conf:";
             const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
             
-            select.innerHTML = '<option value="ALL">All Conferences</option>';
-            confs.forEach(c => {
+            select.innerHTML = '<option value="ALL">Top 25 AP Rankings</option>';
+            confs.sort().forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
                 opt.innerText = c;
@@ -723,10 +761,12 @@
                 let label = config.standingsLabel;
                 if (activeLeague === "CFB" || activeLeague === "CBB") {
                     const selectedConf = document.getElementById('conf-select').value;
-                    if (selectedConf && selectedConf !== "ALL") {
+                    if (selectedConf && selectedConf === "ALL") {
+                        label = `Top 25 AP Rankings`;
+                    } else if (selectedConf && selectedConf !== "ALL") {
                         label = `${selectedConf} Standings`;
                     } else {
-                        label = `${activeLeague} Standings (All Conferences)`;
+                        label = `Top 25 AP Rankings`;
                     }
                 }
 
@@ -827,10 +867,9 @@
                     const hConf = resolveConf(home), aConf = resolveConf(away);
                     if (hConf) confSet.add(hConf);
                     if (aConf) confSet.add(aConf);
-                    if (event._isFcsSource) {
+                    if (event._isFcsSource || confSet.size === 0) {
                         confSet.add("FCS");
                     }
-                    if (confSet.size === 0) confSet.add("FCS");
 
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
@@ -886,7 +925,7 @@
             }
             labelText.innerText = "Rankings / Conf:";
             const confs = STANDINGS_DATA[activeLeague] ? Object.keys(STANDINGS_DATA[activeLeague]) : [];
-            select.innerHTML = '<option value="ALL">All Conferences</option>';
+            select.innerHTML = '<option value="ALL">Top 25 AP Rankings</option>';
             confs.sort().forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c; 
