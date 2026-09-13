@@ -240,18 +240,20 @@
                 }
             };
 
+            // level=3 forces ESPN API to return standings grouped explicitly by division
             await Promise.all([
-                fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings"),
-                fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings"),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings")
+                fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3"),
+                fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3"),
+                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3")
             ]);
         }
 
         function parseEspnStandings(data) {
             let divisionsResult = [];
             const processGroup = (group) => {
+                // If the group contains entries directly, it's a division level
                 if (group.standings && group.standings.entries) {
-                    let divName = group.name || group.abbreviation || "Standings";
+                    let divName = group.name || group.abbreviation || "Division Standings";
                     let teams = group.standings.entries.map(entry => {
                         let name = entry.team.displayName;
                         let stats = entry.stats || [];
@@ -262,14 +264,18 @@
                     });
                     divisionsResult.push({ division: divName, teams });
                 }
+                // Recursively traverse nested children nodes to isolate divisions
                 if (group.children) {
                     group.children.forEach(sub => processGroup(sub));
                 }
             };
+
             if (data.children) {
                 data.children.forEach(c => processGroup(c));
             } else if (data.standings?.children) {
                 data.standings.children.forEach(c => processGroup(c));
+            } else if (data.standings?.entries) {
+                processGroup(data);
             }
             return divisionsResult;
         }
