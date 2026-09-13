@@ -203,8 +203,8 @@
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
-            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings", standingsEndpoint: "football/college-football/standings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings", standingsEndpoint: "basketball/mens-college-basketball/standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: false, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings" },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: false, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings" },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
@@ -290,8 +290,6 @@
                 fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
                 fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings", STANDINGS_DATA),
-                fetchStandingsEndpoint("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings", STANDINGS_DATA),
                 fetchApRankings("CFB", LEAGUES["CFB"].rankEndpoint),
                 fetchApRankings("CBB", LEAGUES["CBB"].rankEndpoint)
             ]);
@@ -380,7 +378,7 @@
                             let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - t.l)) / 2;
+                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
                     });
@@ -484,22 +482,7 @@
                         standingsContainer.innerHTML = renderWildCardHtml(WILDCARD_DATA[activeLeague] || []);
                     } else {
                         let label = config.standingsLabel;
-                        let standingsToRender = [];
-                        if (activeLeague === "CFB" || activeLeague === "CBB") {
-                            const selectedConf = document.getElementById('conf-select').value;
-                            const dataObj = STANDINGS_DATA[activeLeague] || {};
-                            if (selectedConf && selectedConf !== "ALL") {
-                                const targetKey = dataObj[selectedConf] ? selectedConf : Object.keys(dataObj)[0];
-                                standingsToRender = targetKey ? [{ division: targetKey, teams: dataObj[targetKey] }] : [];
-                                label = `${targetKey} Standings`;
-                            } else {
-                                // Render all conferences when "ALL" is selected
-                                standingsToRender = Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
-                                label = `${activeLeague} Standings (All Conferences)`;
-                            }
-                        } else {
-                            standingsToRender = STANDINGS_DATA[activeLeague] || [];
-                        }
+                        let standingsToRender = STANDINGS_DATA[activeLeague] || [];
                         titleElement.innerHTML = `<i class="fa-solid fa-table-list"></i> ${label}`;
                         standingsContainer.innerHTML = renderStandingsHtml(standingsToRender);
                     }
@@ -572,7 +555,7 @@
                 opt.innerText = c;
                 select.appendChild(opt);
             });
-            filterBar.style.display = 'flex';
+            filterbar.style.display = 'flex';
         }
 
         function renderStandingsHtml(standingsArray) {
@@ -660,15 +643,6 @@
                 actionContainer.innerHTML = `<div class="top-action-bar"><button class="top-action-btn" onclick="toggleSubpage(true)"><i class="fa-solid fa-trophy"></i> View UFC Champions & Top 10 Rankings</button></div>`;
             } else if (config.hasStandings) {
                 let label = config.standingsLabel;
-                if (activeLeague === "CFB" || activeLeague === "CBB") {
-                    const selectedConf = document.getElementById('conf-select').value;
-                    if (selectedConf && selectedConf !== "ALL") {
-                        label = `${selectedConf} Standings`;
-                    } else {
-                        label = `${activeLeague} Standings (All Conferences)`;
-                    }
-                }
-
                 let html = `<div class="top-action-bar">
                     <button class="top-action-btn" onclick="toggleSubpage(true, 'standings')"><i class="fa-solid fa-table-list"></i> View ${label}</button>`;
                 
@@ -839,11 +813,6 @@
             updateTopActionBar();
             const sel = document.getElementById('conf-select').value;
 
-            if (activeLeague === "CFB" || activeLeague === "CBB") {
-                renderGames([]);
-                return;
-            }
-
             if (sel === "ALL") renderGames(currentGames);
             else renderGames(currentGames.filter(g => g.conferences.includes(sel)));
         }
@@ -853,54 +822,6 @@
             container.className = "";
             let html = "";
             
-            if (activeLeague === "CFB" || activeLeague === "CBB") {
-                const selectedFilter = document.getElementById('conf-select').value;
-                const filteredGames = (selectedFilter && selectedFilter !== "ALL") 
-                    ? currentGames.filter(g => g.conferences.includes(selectedFilter))
-                    : currentGames;
-
-                if (!filteredGames.length) {
-                    html += "<p class='loading'>No games scheduled.</p>";
-                } else {
-                    html += filteredGames.map(g => {
-                        const isLive = g.statusState === 'in';
-                        const centerContent = isLive 
-                            ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status live">${g.statusDetail}</div>`
-                            : `<div class="time">${g.displayTime}</div><div class="status">UPCOMING</div>`;
-
-                        return `
-                        <div class="card">
-                            <div class="card-main">
-                                <div class="team away">
-                                    <div class="team-text-stack">
-                                        <span class="team-city">${g.awayCity}</span>
-                                        <span class="team-name">${g.awayTeam}</span>
-                                    </div>
-                                    <img src="${g.awayLogo}" alt="" onerror="this.style.display='none'">
-                                </div>
-                                <div class="info">
-                                    ${centerContent}
-                                </div>
-                                <div class="team home">
-                                    <img src="${g.homeLogo}" alt="" onerror="this.style.display='none'">
-                                    <div class="team-text-stack">
-                                        <span class="team-city">${g.homeCity}</span>
-                                        <span class="team-name">${g.homeTeam}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            ${g.streamLinks && g.streamLinks.length ? `
-                                <div class="stream-link-container">
-                                    ${g.streamLinks.map((l, i) => `<a href="${l}" target="_blank" class="stream-btn"><i class="fa-solid fa-play"></i> Stream ${i+1}</a>`).join('')}
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;}).join('');
-                }
-                container.innerHTML = html;
-                return;
-            }
-
             if (!games.length) {
                 html += "<p class='loading'>No games scheduled.</p>";
             } else {
@@ -933,6 +854,7 @@
                         </div>
                         ${g.streamLinks && g.streamLinks.length ? `
                             <div class="stream-link-container">
+                                ${g.streamLinks.link ? '' : ''}
                                 ${g.streamLinks.map((l, i) => `<a href="${l}" target="_blank" class="stream-btn"><i class="fa-solid fa-play"></i> Stream ${i+1}</a>`).join('')}
                             </div>
                         ` : ''}
