@@ -250,18 +250,109 @@
                 console.log("Could not load rankings.json:", e);
             }
 
-            const fetchStandingsEndpoint = async (leagueKey, url, targetMap) => {
+            // Pro Standings Fetcher (NFL, NBA, MLB) using explicit children/group depth parsing
+            const fetchProStandings = async (leagueKey, url) => {
                 try {
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
-                        const parsed = parseEspnStandings(data, LEAGUES[leagueKey]?.isCollege);
-                        if (parsed && (Array.isArray(parsed) ? parsed.length > 0 : Object.keys(parsed).length > 0)) {
-                            targetMap[leagueKey] = parsed;
+                        let divisionsResult = [];
+                        
+                        // Pro endpoints typically structure standings under data.children (e.g., AFC/NFC or Leagues -> Divisions)
+                        const parseGroupNode = (node) => {
+                            if (!node) return;
+                            // If this node has standings entries directly, it's a division/group
+                            if (node.standings && node.standings.entries) {
+                                let divName = node.name || node.abbreviation || "Standings";
+                                let entries = node.standings.entries || [];
+                                let teams = entries.map(entry => {
+                                    let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
+                                    let stats = entry.stats || [];
+                                    let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
+                                    let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
+                                    let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
+                                    let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || rawPct.toFixed(3);
+                                    return { name, w, l, pct, rawPct };
+                                });
+
+                                teams.sort((a, b) => b.rawPct - a.rawPct);
+                                if (teams.length > 0) {
+                                    let leader = teams[0];
+                                    teams.forEach(t => {
+                                        let gb = ((leader.w - t.w) + (t.l - leader.l)) / 2;
+                                        t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
+                                    });
+                                }
+                                divisionsResult.push({ division: divName, teams });
+                            }
+                            
+                            // Recurse children groups if present
+                            if (node.children && Array.isArray(node.children)) {
+                                node.children.forEach(child => parseGroupNode(child));
+                            }
+                        };
+
+                        if (data.children) {
+                            data.children.forEach(child => parseGroupNode(child));
+                        } else if (data.standings) {
+                            parseGroupNode(data);
+                        }
+
+                        if (divisionsResult.length > 0) {
+                            STANDINGS_DATA[leagueKey] = divisionsResult;
                         }
                     }
                 } catch (err) {
-                    console.log(`Failed to fetch standings for ${leagueKey}:`, err);
+                    console.log(`Failed to fetch pro standings for ${leagueKey}:`, err);
+                }
+            };
+
+            // College Standings Fetcher (CFB, CBB)
+            const fetchCollegeStandings = async (leagueKey, url) => {
+                try {
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const data = await res.json();
+                        let divisionsResult = {};
+
+                        const parseCollegeNode = (node) => {
+                            if (!node) return;
+                            if (node.standings && node.standings.entries) {
+                                let divName = node.name || node.abbreviation || "Conference";
+                                let entries = node.standings.entries || [];
+                                let teams = entries.map(entry => {
+                                    let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
+                                    let shortName = entry.team?.shortDisplayName || "";
+                                    let mascot = entry.team?.name || "";
+                                    let stats = entry.stats || [];
+                                    let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
+                                    let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
+                                    let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
+                                    let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || rawPct.toFixed(3);
+                                    return { name, shortName, mascot, w, l, pct, rawPct };
+                                });
+                                teams.sort((a, b) => b.rawPct - a.rawPct);
+                                if (teams.length > 0) {
+                                    let leader = teams[0];
+                                    teams.forEach(t => {
+                                        let gb = ((leader.w - t.w) + (t.l - leader.l)) / 2;
+                                        t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
+                                    });
+                                }
+                                divisionsResult[divName] = teams;
+                            }
+                            if (node.children && Array.isArray(node.children)) {
+                                node.children.forEach(child => parseCollegeNode(child));
+                            }
+                        };
+
+                        parseCollegeNode(data);
+                        if (Object.keys(divisionsResult).length > 0) {
+                            STANDINGS_DATA[leagueKey] = divisionsResult;
+                        }
+                    }
+                } catch (err) {
+                    console.log(`Failed to fetch college standings for ${leagueKey}:`, err);
                 }
             };
 
@@ -290,11 +381,11 @@
             };
 
             await Promise.allSettled([
-                fetchStandingsEndpoint("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3", STANDINGS_DATA),
-                fetchStandingsEndpoint("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings", STANDINGS_DATA),
-                fetchStandingsEndpoint("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings", STANDINGS_DATA),
+                fetchProStandings("NFL", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings?level=3"),
+                fetchProStandings("NBA", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=3"),
+                fetchProStandings("MLB", "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings?level=3"),
+                fetchCollegeStandings("CFB", "https://site.api.espn.com/apis/v2/sports/football/college-football/standings"),
+                fetchCollegeStandings("CBB", "https://site.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings"),
                 fetchApRankings("CFB", LEAGUES["CFB"].rankEndpoint),
                 fetchApRankings("CBB", LEAGUES["CBB"].rankEndpoint)
             ]);
@@ -306,56 +397,6 @@
                     console.log("Error computing MLB Wild Card:", e);
                 }
             }
-        }
-
-        function parseEspnStandings(data, isCollege = false) {
-            if (!data) return null;
-            let divisionsResult = isCollege ? {} : [];
-
-            const extractTeamsFromGroup = (groupNode) => {
-                let divName = groupNode.name || groupNode.abbreviation || "Division Standings";
-                let entries = groupNode.standings?.entries || [];
-                let teams = entries.map(entry => {
-                    let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
-                    let shortName = entry.team?.shortDisplayName || "";
-                    let mascot = entry.team?.name || "";
-                    let stats = entry.stats || [];
-                    let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
-                    let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
-                    let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
-                    let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || rawPct.toFixed(3);
-                    return { name, shortName, mascot, w, l, pct, rawPct };
-                });
-
-                teams.sort((a, b) => b.rawPct - a.rawPct);
-
-                if (teams.length > 0) {
-                    let leader = teams[0];
-                    teams.forEach(t => {
-                        let gb = ((leader.w - t.w) + (t.l - leader.l)) / 2;
-                        t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
-                    });
-                }
-
-                if (isCollege) {
-                    divisionsResult[divName] = teams;
-                } else {
-                    divisionsResult.push({ division: divName, teams });
-                }
-            };
-
-            const traverse = (node) => {
-                if (!node) return;
-                if (node.standings && node.standings.entries) {
-                    extractTeamsFromGroup(node);
-                }
-                if (node.children && Array.isArray(node.children)) {
-                    node.children.forEach(child => traverse(child));
-                }
-            };
-
-            traverse(data);
-            return divisionsResult;
         }
 
         function computeMlbWildCard(divisions) {
@@ -391,7 +432,7 @@
                         if (idx === 2) {
                             t.gb = "-";
                         } else if (idx < 2) {
-                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
+                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
                             let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
