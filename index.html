@@ -203,8 +203,8 @@
             "NFL": { endpoint: "football/nfl", type: "espn", hasStandings: true, standingsLabel: "NFL Standings" },
             "NBA": { endpoint: "basketball/nba", type: "espn", hasStandings: true, standingsLabel: "NBA Standings" },
             "MLB": { endpoint: "baseball/mlb", type: "espn", hasStandings: true, standingsLabel: "MLB Standings", hasWildCard: true },
-            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings", standingsEndpoint: "football/college-football/standings" },
-            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings", standingsEndpoint: "basketball/mens-college-basketball/standings" },
+            "CFB": { endpoint: "football/college-football", type: "espn", hasStandings: true, standingsLabel: "College Football Standings", rankEndpoint: "football/college-football/rankings", standingsEndpoint: "football/college-football/standings", isCollege: true },
+            "CBB": { endpoint: "basketball/mens-college-basketball", type: "espn", hasStandings: true, standingsLabel: "College Basketball Standings", rankEndpoint: "basketball/mens-college-basketball/rankings", standingsEndpoint: "basketball/mens-college-basketball/standings", isCollege: true },
             "MMA": { type: "scraped", category: "MMA", isUfcRankings: true },
             "Boxing": { type: "scraped", category: "Boxing", isBoxing: true }
         };
@@ -255,7 +255,7 @@
                     const res = await fetch(url);
                     if (res.ok) {
                         const data = await res.json();
-                        const parsed = parseEspnStandings(data);
+                        const parsed = parseEspnStandings(data, LEAGUES[leagueKey]?.isCollege);
                         if (parsed && (Array.isArray(parsed) ? parsed.length > 0 : Object.keys(parsed).length > 0)) {
                             targetMap[leagueKey] = parsed;
                         }
@@ -308,61 +308,53 @@
             }
         }
 
-        function parseEspnStandings(data) {
+        function parseEspnStandings(data, isCollege = false) {
             if (!data) return null;
-            let divisionsResult = {};
+            let divisionsResult = isCollege ? {} : [];
 
-            const processGroup = (group) => {
-                if (group.standings && group.standings.entries) {
-                    let divName = group.name || group.abbreviation || "Division Standings";
-                    let teams = group.standings.entries.map(entry => {
-                        let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
-                        let shortName = entry.team?.shortDisplayName || "";
-                        let mascot = entry.team?.name || "";
-                        let stats = entry.stats || [];
-                        let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
-                        let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
-                        let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
-                        let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || rawPct.toFixed(3);
-                        return { name, shortName, mascot, w, l, pct, rawPct };
+            const extractTeamsFromGroup = (groupNode) => {
+                let divName = groupNode.name || groupNode.abbreviation || "Division Standings";
+                let entries = groupNode.standings?.entries || [];
+                let teams = entries.map(entry => {
+                    let name = entry.team?.displayName || entry.team?.name || "Unknown Team";
+                    let shortName = entry.team?.shortDisplayName || "";
+                    let mascot = entry.team?.name || "";
+                    let stats = entry.stats || [];
+                    let w = Number(stats.find(s => s.name === "wins" || s.type === "wins")?.value || 0);
+                    let l = Number(stats.find(s => s.name === "losses" || s.type === "losses")?.value || 0);
+                    let rawPct = Number(stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.value || (w / (w + l || 1)));
+                    let pct = stats.find(s => s.name === "winPercent" || s.type === "winPercent")?.displayValue || rawPct.toFixed(3);
+                    return { name, shortName, mascot, w, l, pct, rawPct };
+                });
+
+                teams.sort((a, b) => b.rawPct - a.rawPct);
+
+                if (teams.length > 0) {
+                    let leader = teams[0];
+                    teams.forEach(t => {
+                        let gb = ((leader.w - t.w) + (t.l - leader.l)) / 2;
+                        t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                     });
-                    
-                    teams.sort((a, b) => b.rawPct - a.rawPct);
-
-                    if (teams.length > 0) {
-                        let leader = teams[0];
-                        teams.forEach(t => {
-                            let gb = ((leader.w - t.w) + (t.l - leader.l)) / 2;
-                            t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
-                        });
-                    }
-
-                    if (Array.isArray(divisionsResult)) {
-                        divisionsResult.push({ division: divName, teams });
-                    } else {
-                        divisionsResult[divName] = teams;
-                    }
                 }
 
-                if (group.children && Array.isArray(group.children)) {
-                    group.children.forEach(sub => processGroup(sub));
+                if (isCollege) {
+                    divisionsResult[divName] = teams;
+                } else {
+                    divisionsResult.push({ division: divName, teams });
                 }
             };
 
-            if (Array.isArray(data.children)) {
-                divisionsResult = {};
-                data.children.forEach(c => processGroup(c));
-            } else if (data.standings?.children && Array.isArray(data.standings.children)) {
-                divisionsResult = {};
-                data.standings.children.forEach(c => processGroup(c));
-            } else if (data.children) {
-                divisionsResult = {};
-                data.children.forEach(c => processGroup(c));
-            } else if (data.standings?.entries) {
-                divisionsResult = [];
-                processGroup(data);
-            }
+            const traverse = (node) => {
+                if (!node) return;
+                if (node.standings && node.standings.entries) {
+                    extractTeamsFromGroup(node);
+                }
+                if (node.children && Array.isArray(node.children)) {
+                    node.children.forEach(child => traverse(child));
+                }
+            };
 
+            traverse(data);
             return divisionsResult;
         }
 
@@ -399,10 +391,10 @@
                         if (idx === 2) {
                             t.gb = "-";
                         } else if (idx < 2) {
-                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
+                            let ga = ((t.w - thirdPlaceTeam.w) + (thirdPlaceTeam.l - t.l)) / 2;
                             t.gb = ga > 0 ? `+${ga % 1 === 0 ? ga.toString() : ga.toFixed(1)}` : "-";
                         } else {
-                            let gb = ((thirdPlaceTeam.w - t.w) + (t.l - thirdPlaceTeam.l)) / 2;
+                            let gb = ((thirdPlaceTeam.w - t.w) + (thirdPlaceTeam.l - thirdPlaceTeam.l)) / 2;
                             t.gb = gb > 0 ? (gb % 1 === 0 ? gb.toString() : gb.toFixed(1)) : "-";
                         }
                     });
@@ -519,7 +511,8 @@
                                 label = `${activeLeague} Standings (All Conferences)`;
                             }
                         } else {
-                            standingsToRender = STANDINGS_DATA[activeLeague] || [];
+                            const dataObj = STANDINGS_DATA[activeLeague] || [];
+                            standingsToRender = Array.isArray(dataObj) ? dataObj : Object.keys(dataObj).map(k => ({ division: k, teams: dataObj[k] }));
                         }
                         titleElement.innerHTML = `<i class="fa-solid fa-table-list"></i> ${label}`;
                         standingsContainer.innerHTML = renderStandingsHtml(standingsToRender);
