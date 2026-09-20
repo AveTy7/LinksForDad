@@ -853,10 +853,23 @@
                     urls = [`https://site.api.espn.com/apis/site/v2/sports/${config.endpoint}/scoreboard?dates=${dateParam}&limit=300`];
                 }
 
-                const responses = await Promise.all(urls.map((u, idx) => fetch(u).then(r => r.json()).then(data => ({ data, isFcsEndpoint: league === "CFB" && idx === 1 })).catch(() => ({ data: {}, isFcsEndpoint: false }))));
+                const responses = await Promise.all(
+                    urls.map(async (u, idx) => {
+                        try {
+                            const res = await fetch(u);
+                            if (!res.ok) return { data: {}, isFcsEndpoint: idx === 1 };
+                            const data = await res.json();
+                            return { data, isFcsEndpoint: idx === 1 };
+                        } catch (e) {
+                            console.warn("Fetch failed for URL:", u, e);
+                            return { data: {}, isFcsEndpoint: idx === 1 };
+                        }
+                    })
+                );
+
                 let rawEvents = [];
                 responses.forEach(resp => { 
-                    if (resp.data && resp.data.events) {
+                    if (resp.data && Array.isArray(resp.data.events)) {
                         resp.data.events.forEach(ev => {
                             ev._isFcsSource = resp.isFcsEndpoint;
                             rawEvents.push(ev);
@@ -869,7 +882,6 @@
                     const comp = event.competitions?.[0];
                     if (!comp) return;
                     const state = event.status?.type?.state?.toLowerCase() || '';
-                    if (state === 'post' || state === 'final') return;
 
                     const dateObj = new Date(event.date);
                     const home = comp.competitors?.find(c => c.homeAway === 'home') || {};
@@ -908,6 +920,9 @@
                         confSet.add("FCS");
                     }
 
+                    // Fallback tag to guarantee visibility under All Conferences view
+                    confSet.add("All Conferences");
+
                     const timeStr = dateObj.toLocaleTimeString('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit' });
                     const dateStr = dateObj.toLocaleDateString('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric' });
 
@@ -927,11 +942,18 @@
                     const homeScore = home.score !== undefined ? home.score : "0";
                     const awayScore = away.score !== undefined ? away.score : "0";
 
+                    let statusDetailText = 'UPCOMING';
+                    if (state === 'in') {
+                        statusDetailText = event.status?.type?.detail || 'LIVE';
+                    } else if (state === 'post' || state === 'final') {
+                        statusDetailText = 'FINAL';
+                    }
+
                     const gObj = {
                         id: event.id, utcTime: dateObj.getTime(),
                         displayTime: `${dateStr} @ ${timeStr} MST`,
                         statusState: state, 
-                        statusDetail: state === 'in' ? (event.status?.type?.detail || 'LIVE') : 'UPCOMING',
+                        statusDetail: statusDetailText,
                         homeCity: getTeam(home, hRank).city, homeTeam: getTeam(home, hRank).name, homeLogo: home.team?.logo || '', homeScore: homeScore,
                         awayCity: getTeam(away, aRank).city, awayTeam: getTeam(away, aRank).name, awayLogo: away.team?.logo || '', awayScore: awayScore,
                         conferences: Array.from(confSet)
@@ -946,7 +968,7 @@
                 updateTopActionBar();
                 renderGames(currentGames);
             } catch (err) {
-                console.error(err);
+                console.error("Error fetching league data:", err);
                 container.innerHTML = "<p class='loading'>Failed to load data.</p>";
             }
         }
@@ -996,8 +1018,9 @@
                 } else {
                     html += filteredGames.map(g => {
                         const isLive = g.statusState === 'in';
-                        const centerContent = isLive 
-                            ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status live">${g.statusDetail}</div>`
+                        const isFinal = g.statusState === 'post' || g.statusState === 'final';
+                        const centerContent = (isLive || isFinal)
+                            ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status ${isLive ? 'live' : ''}">${g.statusDetail}</div>`
                             : `<div class="time">${g.displayTime}</div><div class="status">UPCOMING</div>`;
 
                         return `
@@ -1038,8 +1061,9 @@
             } else {
                 html += games.map(g => {
                     const isLive = g.statusState === 'in';
-                    const centerContent = isLive 
-                        ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status live">${g.statusDetail}</div>`
+                    const isFinal = g.statusState === 'post' || g.statusState === 'final';
+                    const centerContent = (isLive || isFinal)
+                        ? `<div class="live-score">${g.awayScore} - ${g.homeScore}</div><div class="status ${isLive ? 'live' : ''}">${g.statusDetail}</div>`
                         : `<div class="time">${g.displayTime}</div><div class="status">UPCOMING</div>`;
 
                     return `
