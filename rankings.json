@@ -17,7 +17,7 @@
         {
             "weight": "Cruiserweight/Junior heavyweight",
             "wba": "David BenavidezMay 2, 2026 <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>32\u20130",
-            "wbc": "Noel MikaelianDecember 13, 2025<br>28\u20134",
+            "wbc": "Micha\u0142 Cie\u015blakJune 28, 2025<br>28\u20132 (1)",
             "ibf": "vacant",
             "wbo": "David BenavidezMay 2, 2026<br>32\u20130"
         },
@@ -33,13 +33,13 @@
             "wba": "Jaime MunguiaMay 2, 2026<br>46\u20132",
             "wbc": "Christian M'billiJanuary 27, 2026<br>29\u20130\u20131",
             "ibf": "Osleys IglesiasApril 9, 2026<br>15\u20130",
-            "wbo": "Hamzah SheerazMay 23, 2026<br>23\u20130\u20131"
+            "wbo": "vacant"
         },
         {
             "weight": "Middleweight",
             "wba": "Erislandy LaraMay 1, 2021<br>32\u20133\u20133",
             "wbc": "Carlos AdamesMay 7, 2024<br>25\u20131\u20131",
-            "ibf": "Aaron McKennaAugust 8, 2026<br>21-0",
+            "ibf": "Aaron McKennaAugust 8, 2026<br>21\u20130",
             "wbo": "Denzel BentleyJuly 20, 2026<br>22\u20133\u20131"
         },
         {
@@ -52,7 +52,7 @@
         {
             "weight": "Welterweight",
             "wba": "Teofimo LopezAugust 22, 2026 <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>23\u20132",
-            "wbc": "Ryan GarciaFebruary 22, 2026<br>25\u20132 (1)",
+            "wbc": "Ryan GarciaFebruary 22, 2026<br>26\u20132 (1)",
             "ibf": "Liam ParoJune 24, 2026<br>28\u20131",
             "wbo": "Devin HaneyNovember 22, 2025<br>33\u20130 (1)"
         },
@@ -130,18 +130,18 @@
     "ufc": [
         {
             "weight": "Heavyweight",
-            "champion": "Tom Aspinall",
+            "champion": "Ciryl Gane",
             "rankings": [
-                "Ciryl Gane <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Interim Champion\">\u2605</span>",
+                "Tom Aspinall",
                 "Alexander Volkov",
                 "Sergei Pavlovich",
                 "Alex Pereira",
                 "Rizvan Kuniev",
                 "Josh Hokit",
+                "Curtis Blaydes",
                 "Waldo Cortes-Acosta",
                 "Vitor Petrino",
-                "Mario Pinto",
-                "Valter Walker"
+                "Mario Pinto"
             ]
         },
         {
@@ -171,9 +171,9 @@
                 "Brendan Allen",
                 "Caio Borralho",
                 "Gregory Rodrigues",
-                "Michael Page",
                 "Anthony Hernandez",
-                "Israel Adesanya"
+                "Israel Adesanya",
+                "Christian Leroy Duncan"
             ]
         },
         {
@@ -202,8 +202,8 @@
                 "Max Holloway",
                 "Paddy Pimblett",
                 "Quillan Salkilld",
-                "Renato Moicano",
                 "Beno\u00eet Saint Denis",
+                "Renato Moicano",
                 "Mateusz Gamrot",
                 "Maur\u00edcio Ruffy"
             ]
@@ -216,8 +216,8 @@
                 "Diego Lopes",
                 "Lerone Murphy",
                 "Aljamain Sterling",
-                "Arnold Allen",
                 "Jean Silva",
+                "Arnold Allen",
                 "Pat Sabatini",
                 "Pavel Andrusca",
                 "Youssef Zalal",
@@ -252,8 +252,8 @@
                 "Lone'er Kavanagh",
                 "Ramazan Temirov",
                 "Kyoji Horiguchi",
-                "Amir Albazi",
-                "Brandon Moreno"
+                "Brandon Moreno",
+                "Amir Albazi"
             ]
         },
         {
@@ -277,9 +277,9 @@
             "champion": "Valentina Shevchenko",
             "rankings": [
                 "Nat\u00e1lia Silva",
-                "Manon Fiorot",
                 "Alexa Grasso",
                 "Erin Blanchfield",
+                "Manon Fiorot",
                 "Zhang Weili",
                 "Wang Cong",
                 "Jasmine Jasudavicius",
