@@ -94,14 +94,14 @@
         {
             "weight": "Bantamweight",
             "wba": "Jesse RodriguezJune 13, 2026 <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>24\u20130",
-            "wbc": "Takuma InoueNovember 24, 2025<br>22\u20132",
+            "wbc": "Takuma InoueNovember 24, 2025<br>23\u20132",
             "ibf": "Jos\u00e9 SalasDecember 13, 2025<br>17\u20130",
             "wbo": "Christian MedinaSeptember 14, 2025<br>27\u20134"
         },
         {
             "weight": "Super flyweight/Junior bantamweight",
             "wba": "David Jim\u00e9nezApril 20, 2024<br>18\u20131",
-            "wbc": "vacant",
+            "wbc": "Ricardo MalajikaSeptember 27, 2026<br>18\u20132",
             "ibf": "Andrew MoloneyJune 6, 2026<br>29\u20134 (1)",
             "wbo": "Kenshiro TerajiJuly 20, 2026<br>26\u20132"
         },
@@ -116,7 +116,7 @@
             "weight": "Light flyweight/Junior flyweight",
             "wba": "Daiya Kira September 2, 2026<br>5\u20130",
             "wbc": "Shokichi IwataMarch 15, 2026<br>17\u20132",
-            "ibf": "Thanongsak SimsriJune 19, 2025<br>40\u20131",
+            "ibf": "Thanongsak SimsriJune 19, 2025<br>41\u20131",
             "wbo": "Ren\u00e9 SantiagoMarch 13, 2025<br>16\u20134"
         },
         {
@@ -133,9 +133,9 @@
             "champion": "Ciryl Gane",
             "rankings": [
                 "Tom Aspinall",
-                "Alexander Volkov",
                 "Sergei Pavlovich",
                 "Alex Pereira",
+                "Alexander Volkov",
                 "Rizvan Kuniev",
                 "Josh Hokit",
                 "Curtis Blaydes",
@@ -187,9 +187,9 @@
                 "Sean Brady",
                 "Gabriel Bonfim",
                 "Belal Muhammad",
-                "Leon Edwards",
                 "Joaquin Buckley",
-                "Uro\u0161 Medi\u0107"
+                "Uro\u0161 Medi\u0107",
+                "Leon Edwards"
             ]
         },
         {
@@ -244,8 +244,8 @@
             "weight": "Flyweight",
             "champion": "Joshua Van",
             "rankings": [
-                "Alexandre Pantoja",
                 "Manel Kape",
+                "Alexandre Pantoja",
                 "Brandon Royval",
                 "Tatsuro Taira",
                 "Asu Almabayev",
