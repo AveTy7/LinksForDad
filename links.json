@@ -2,9 +2,9 @@
   {
     "id": 1,
     "category": "NFL",
-    "title": "Buffstreams Washington Commanders vs Indianapolis Colts",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/washington-commanders-indianapolis-colts/1536227"
+    "title": "NFL Redzone",
+    "time": "01:00 PM ET",
+    "href": "https://mybuffstreams.plus/title-game/nfl/nfl-redzone-live-streams-links"
   },
   {
     "id": 2,
@@ -114,30 +114,30 @@
   {
     "id": 17,
     "category": "MMA",
-    "title": "Dana White's Contender Series: Season 10, Week 9",
-    "time": "07:00 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-9-live-streams-links"
-  },
-  {
-    "id": 18,
-    "category": "MMA",
-    "title": "Dana White's Contender Series: Season 10, Week 10",
-    "time": "07:00 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-10-live-streams-links"
-  },
-  {
-    "id": 19,
-    "category": "MMA",
     "title": "LFC 63: Legacy Fighting Championship 63",
     "time": "12:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/lfc/lfc-63-legacy-fighting-championship-63-live-streams-links"
   },
   {
-    "id": 20,
+    "id": 18,
     "category": "MMA",
     "title": "2026 PFL Africa: Morocco",
     "time": "fri @ 01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/other/2026-pfl-africa-morocco-live-streams-links"
+  },
+  {
+    "id": 19,
+    "category": "MMA",
+    "title": "Dana White's Contender Series: Season 10, Week 9",
+    "time": "07:00 PM ET",
+    "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-9-live-streams-links"
+  },
+  {
+    "id": 20,
+    "category": "MMA",
+    "title": "Dana White's Contender Series: Season 10, Week 10",
+    "time": "07:00 PM ET",
+    "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-10-live-streams-links"
   },
   {
     "id": 21,
