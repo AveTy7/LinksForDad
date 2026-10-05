@@ -9,190 +9,85 @@
   {
     "id": 2,
     "category": "NFL",
-    "title": "Buffstreams Baltimore Ravens vs Tennessee Titans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/tennessee-titans-baltimore-ravens/1536528"
-  },
-  {
-    "id": 3,
-    "category": "NFL",
-    "title": "Buffstreams Buffalo Bills vs New England Patriots",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/new-england-patriots-buffalo-bills/1536529"
-  },
-  {
-    "id": 4,
-    "category": "NFL",
-    "title": "Buffstreams Chicago Bears vs New York Jets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/new-york-jets-chicago-bears/1536530"
-  },
-  {
-    "id": 5,
-    "category": "NFL",
-    "title": "Buffstreams Cincinnati Bengals vs Jacksonville Jaguars",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/cincinnati-bengals-jacksonville-jaguars/1536531"
-  },
-  {
-    "id": 6,
-    "category": "NFL",
-    "title": "Buffstreams Houston Texans vs Dallas Cowboys",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/dallas-cowboys-houston-texans/1536532"
-  },
-  {
-    "id": 7,
-    "category": "NFL",
-    "title": "Buffstreams New York Giants vs Arizona Cardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/new-york-giants-arizona-cardinals/1536533"
-  },
-  {
-    "id": 8,
-    "category": "NFL",
-    "title": "Buffstreams Philadelphia Eagles vs Los Angeles Rams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/philadelphia-eagles-los-angeles-rams/1536534"
-  },
-  {
-    "id": 9,
-    "category": "NFL",
-    "title": "Buffstreams Tampa Bay Buccaneers vs Green Bay Packers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/green-bay-packers-tampa-bay-buccaneers/1536535"
-  },
-  {
-    "id": 10,
-    "category": "NFL",
-    "title": "Buffstreams Minnesota Vikings vs Miami Dolphins",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/minnesota-vikings-miami-dolphins/1536536"
-  },
-  {
-    "id": 11,
-    "category": "NFL",
-    "title": "Buffstreams Las Vegas Raiders vs Kansas City Chiefs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/kansas-city-chiefs-las-vegas-raiders/1536537"
-  },
-  {
-    "id": 12,
-    "category": "NFL",
-    "title": "Buffstreams San Francisco 49ers vs Denver Broncos",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/denver-broncos-san-francisco-49ers/1536538"
-  },
-  {
-    "id": 13,
-    "category": "NFL",
-    "title": "Buffstreams Seattle Seahawks vs Los Angeles Chargers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/seattle-seahawks-los-angeles-chargers/1536539"
-  },
-  {
-    "id": 14,
-    "category": "NFL",
     "title": "Buffstreams Carolina Panthers vs Detroit Lions",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nfl/detroit-lions-carolina-panthers/1536540"
   },
   {
-    "id": 15,
-    "category": "MLB",
-    "title": "Buffstreams Milwaukee Brewers vs San Diego Padres",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/mlb-playoffs/san-diego-padres-milwaukee-brewers/1536590"
-  },
-  {
-    "id": 16,
+    "id": 3,
     "category": "MLB",
     "title": "Buffstreams Los Angeles Dodgers vs Atlanta Braves",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/mlb-playoffs/atlanta-braves-los-angeles-dodgers/1536589"
   },
   {
-    "id": 17,
+    "id": 4,
     "category": "MMA",
     "title": "LFC 63: Legacy Fighting Championship 63",
     "time": "12:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/lfc/lfc-63-legacy-fighting-championship-63-live-streams-links"
   },
   {
-    "id": 18,
+    "id": 5,
     "category": "MMA",
     "title": "2026 PFL Africa: Morocco",
     "time": "fri @ 01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/other/2026-pfl-africa-morocco-live-streams-links"
   },
   {
-    "id": 19,
+    "id": 6,
     "category": "MMA",
     "title": "Dana White's Contender Series: Season 10, Week 9",
     "time": "07:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-9-live-streams-links"
   },
   {
-    "id": 20,
+    "id": 7,
     "category": "MMA",
     "title": "Dana White's Contender Series: Season 10, Week 10",
     "time": "07:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/dana-white-s-contender-series-season-10-week-10-live-streams-links"
   },
   {
-    "id": 21,
+    "id": 8,
     "category": "Boxing",
     "title": "Osleys Iglesias vs Oliver Zaren",
     "time": "06:30 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/osleys-iglesias-vs-oliver-zaren-live-streams-links"
   },
   {
-    "id": 22,
+    "id": 9,
     "category": "Boxing",
     "title": "Zaur Abdullaev vs Khariton Agrba",
     "time": "11:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/zaur-abdullaev-vs-khariton-agrba-live-streams-links"
   },
   {
-    "id": 23,
+    "id": 10,
     "category": "Boxing",
     "title": "Nico Ali Walsh vs Treavon Craycraft",
     "time": "07:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/nico-ali-walsh-vs-treavon-craycraft-live-streams-links"
   },
   {
-    "id": 24,
+    "id": 11,
     "category": "Boxing",
     "title": "Floyd Schofield vs Lucas Bahdi",
     "time": "08:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/floyd-schofield-vs-lucas-bahdi-live-streams-links"
   },
   {
-    "id": 25,
+    "id": 12,
     "category": "NBA",
     "title": "Buffstreams Denver Nuggets vs Utah Jazz",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba-preseason/utah-jazz-denver-nuggets/1526288"
   },
   {
-    "id": 26,
+    "id": 13,
     "category": "NBA",
     "title": "Buffstreams Los Angeles Clippers vs Golden State Warriors",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba-preseason/golden-state-warriors-los-angeles-clippers/1526289"
-  },
-  {
-    "id": 27,
-    "category": "NBA",
-    "title": "Buffstreams Atlanta Dream vs New York Liberty",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/wnba-playoffs/atlanta-dream-new-york-liberty/1541553"
-  },
-  {
-    "id": 28,
-    "category": "NBA",
-    "title": "Buffstreams Golden State Valkyries vs Las Vegas Aces",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/wnba-playoffs/golden-state-valkyries-las-vegas-aces/1553124"
   }
 ]
