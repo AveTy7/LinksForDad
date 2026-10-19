@@ -2,103 +2,26 @@
   {
     "id": 1,
     "category": "NFL",
-    "title": "NFL Redzone",
-    "time": "01:00 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/nfl/nfl-redzone-live-streams-links"
-  },
-  {
-    "id": 2,
-    "category": "NFL",
-    "title": "Buffstreams Atlanta Falcons vs Chicago Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/atlanta-falcons-chicago-bears/1537660"
-  },
-  {
-    "id": 3,
-    "category": "NFL",
-    "title": "Buffstreams Indianapolis Colts vs Tennessee Titans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/tennessee-titans-indianapolis-colts/1537662"
-  },
-  {
-    "id": 4,
-    "category": "NFL",
-    "title": "Buffstreams New England Patriots vs New York Jets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/new-york-jets-new-england-patriots/1537663"
-  },
-  {
-    "id": 5,
-    "category": "NFL",
-    "title": "Buffstreams New York Giants vs New Orleans Saints",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/new-york-giants-new-orleans-saints/1537664"
-  },
-  {
-    "id": 6,
-    "category": "NFL",
-    "title": "Buffstreams Philadelphia Eagles vs Carolina Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/philadelphia-eagles-carolina-panthers/1537665"
-  },
-  {
-    "id": 7,
-    "category": "NFL",
-    "title": "Buffstreams Tampa Bay Buccaneers vs Pittsburgh Steelers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/tampa-bay-buccaneers-pittsburgh-steelers/1537666"
-  },
-  {
-    "id": 8,
-    "category": "NFL",
-    "title": "Buffstreams Los Angeles Rams vs Arizona Cardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/arizona-cardinals-los-angeles-rams/1537667"
-  },
-  {
-    "id": 9,
-    "category": "NFL",
-    "title": "Buffstreams Kansas City Chiefs vs Los Angeles Chargers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/los-angeles-chargers-kansas-city-chiefs/1537668"
-  },
-  {
-    "id": 10,
-    "category": "NFL",
-    "title": "Buffstreams Las Vegas Raiders vs Buffalo Bills",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/buffalo-bills-las-vegas-raiders/1537669"
-  },
-  {
-    "id": 11,
-    "category": "NFL",
     "title": "Buffstreams Green Bay Packers vs Dallas Cowboys",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nfl/green-bay-packers-dallas-cowboys/1537670"
   },
   {
-    "id": 12,
-    "category": "MLB",
-    "title": "Buffstreams Cleveland Guardians vs Tampa Bay Rays",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/mlb-playoffs/tampa-bay-rays-cleveland-guardians/1595234"
-  },
-  {
-    "id": 13,
+    "id": 2,
     "category": "MMA",
     "title": "UFC 333: Volkanovski vs. Evloev",
     "time": "10:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-333-volkanovski-vs-evloev-live-streams-links"
   },
   {
-    "id": 14,
+    "id": 3,
     "category": "MMA",
     "title": "LFC 63: Legacy Fighting Championship 63",
     "time": "12:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/lfc/lfc-63-legacy-fighting-championship-63-live-streams-links"
   },
   {
-    "id": 15,
+    "id": 4,
     "category": "Boxing",
     "title": "Emanuel Navarrete vs O\u2019Shaquie Foster",
     "time": "08:00 PM ET",
