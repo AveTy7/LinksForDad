@@ -30,8 +30,8 @@
         },
         {
             "weight": "Super middleweight",
-            "wba": "Jaime MunguiaMay 2, 2026<br>46\u20132",
-            "wbc": "Christian M'billiJanuary 27, 2026<br>29\u20130\u20131",
+            "wba": "Jaime MunguiaMay 2, 2026<br>47\u20132",
+            "wbc": "Canelo \u00c1lvarezOctober 31, 2026<br>64\u20133\u20132",
             "ibf": "Osleys IglesiasApril 9, 2026<br>16\u20130",
             "wbo": "vacant"
         },
@@ -40,7 +40,7 @@
             "wba": "Erislandy LaraMay 1, 2021<br>32\u20133\u20133",
             "wbc": "Carlos AdamesMay 7, 2024<br>25\u20131\u20131",
             "ibf": "Aaron McKennaAugust 8, 2026<br>21\u20130",
-            "wbo": "Denzel BentleyJuly 20, 2026<br>22\u20133\u20131"
+            "wbo": "vacant"
         },
         {
             "weight": "Super welterweight / Junior middleweight",
@@ -82,7 +82,7 @@
             "wba": "vacant",
             "wbc": "Bruce CarringtonJanuary 31, 2026<br>18\u20130",
             "ibf": "Angelo LeoAugust 10, 2024<br>26\u20131",
-            "wbo": "Rafael EspinozaDecember 9, 2023<br>28\u20130"
+            "wbo": "Rafael EspinozaDecember 9, 2023<br>29\u20130"
         },
         {
             "weight": "Super bantamweight/Junior featherweight",
@@ -133,12 +133,12 @@
             "champion": "Ciryl Gane",
             "rankings": [
                 "Tom Aspinall",
-                "Sergei Pavlovich",
-                "Alex Pereira",
                 "Alexander Volkov",
-                "Rizvan Kuniev",
+                "Alex Pereira",
+                "Sergei Pavlovich",
                 "Josh Hokit",
                 "Curtis Blaydes",
+                "Rizvan Kuniev",
                 "Waldo Cortes-Acosta",
                 "Vitor Petrino",
                 "Mario Pinto"
@@ -151,13 +151,13 @@
                 "Alex Pereira",
                 "Magomed Ankalaev",
                 "Ji\u0159\u00ed Proch\u00e1zka",
+                "Dominick Reyes",
                 "Paulo Costa",
                 "Khalil Rountree Jr.",
                 "Navajo Stirling",
-                "Dominick Reyes",
                 "Reinier de Ridder",
-                "Azamat Murzakanov",
-                "Alonzo Menifield"
+                "Alonzo Menifield",
+                "Bogdan Guskov"
             ]
         },
         {
@@ -172,8 +172,8 @@
                 "Caio Borralho",
                 "Gregory Rodrigues",
                 "Anthony Hernandez",
-                "Israel Adesanya",
-                "Ikram Aliskerov"
+                "Abusupiyan Magomedov",
+                "Israel Adesanya"
             ]
         },
         {
@@ -221,7 +221,7 @@
                 "Pat Sabatini",
                 "Pavel Andrusca",
                 "Youssef Zalal",
-                "Kevin Vallejos"
+                "Aaron Pico"
             ]
         },
         {
@@ -248,12 +248,12 @@
                 "Alexandre Pantoja",
                 "Brandon Royval",
                 "Tatsuro Taira",
-                "Asu Almabayev",
                 "Lone'er Kavanagh",
-                "Ramazan Temirov",
+                "Asu Almabayev",
                 "Kyoji Horiguchi",
                 "Amir Albazi",
-                "Brandon Moreno"
+                "Brandon Moreno",
+                "Ramazan Temirov"
             ]
         },
         {
@@ -298,10 +298,10 @@
                 "Denise Gomes",
                 "Gillian Robertson",
                 "Fatima Kline",
+                "Iasmin Lucindo",
                 "Alexia Thainara",
                 "Loopy God\u00ednez",
-                "Piera Rodriguez",
-                "Yan Xiaonan"
+                "Piera Rodr\u00edguez"
             ]
         }
     ]
