@@ -2,2287 +2,1685 @@
   {
     "id": 1,
     "category": "NFL",
-    "title": "College GameDay",
-    "time": "09:00 AM ET",
-    "href": "https://mybuffstreams.plus/title-game/cfb/college-gameday-live-streams-links"
-  },
-  {
-    "id": 2,
-    "category": "NFL",
-    "title": "Buffstreams Connecticut Huskies vs North Carolina Tar Heels",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/connecticut-huskies-north-carolina-tar-heels/1538426"
-  },
-  {
-    "id": 3,
-    "category": "NFL",
-    "title": "Buffstreams Baylor Bears vs Iowa State Cyclones",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/iowa-state-cyclones-baylor-bears/1538430"
-  },
-  {
-    "id": 4,
-    "category": "NFL",
-    "title": "Buffstreams Boston College Eagles vs Florida State Seminoles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/florida-state-seminoles-boston-college-eagles/1538431"
-  },
-  {
-    "id": 5,
-    "category": "NFL",
-    "title": "Buffstreams Minnesota Golden Gophers vs UCLA Bruins",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/minnesota-golden-gophers-ucla-bruins/1538442"
-  },
-  {
-    "id": 6,
-    "category": "NFL",
-    "title": "Buffstreams Missouri Tigers vs Texas Longhorns",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/texas-longhorns-missouri-tigers/1538444"
-  },
-  {
-    "id": 7,
-    "category": "NFL",
-    "title": "Buffstreams Syracuse Orange vs Clemson Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/syracuse-orange-clemson-tigers/1538453"
-  },
-  {
-    "id": 8,
-    "category": "NFL",
-    "title": "Buffstreams Tulane Green Wave vs Tulsa Golden Hurricane",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/tulsa-golden-hurricane-tulane-green-wave/1538457"
-  },
-  {
-    "id": 9,
-    "category": "NFL",
-    "title": "Buffstreams Utah Utes vs Brigham Young Cougars",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/utah-utes-brigham-young-cougars/1538460"
-  },
-  {
-    "id": 10,
-    "category": "NFL",
-    "title": "Buffstreams Dayton Flyers vs Valparaiso Beacons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/valparaiso-beacons-dayton-flyers/1538476"
-  },
-  {
-    "id": 11,
-    "category": "NFL",
-    "title": "Buffstreams Duquesne Dukes vs Robert Morris Colonials",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/robert-morris-colonials-duquesne-dukes/1538477"
-  },
-  {
-    "id": 12,
-    "category": "NFL",
-    "title": "Buffstreams Lehigh Mountain Hawks vs Colgate Raiders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/colgate-raiders-lehigh-mountain-hawks/1538478"
-  },
-  {
-    "id": 13,
-    "category": "NFL",
-    "title": "Buffstreams Marist Red Foxes vs Morehead State Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/morehead-state-eagles-marist-red-foxes/1538479"
-  },
-  {
-    "id": 14,
-    "category": "NFL",
-    "title": "Buffstreams Mercyhurst Lakers vs Wagner Seahawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/mercyhurst-lakers-wagner-seahawks/1538480"
-  },
-  {
-    "id": 15,
-    "category": "NFL",
-    "title": "Buffstreams Monmouth Hawks vs North Carolina A&T Aggies",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/north-carolina-a-and-t-aggies-monmouth-hawks/1538481"
-  },
-  {
-    "id": 16,
-    "category": "NFL",
-    "title": "Buffstreams New Haven Chargers vs Liu Sharks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/new-haven-chargers-liu-sharks/1538482"
-  },
-  {
-    "id": 17,
-    "category": "NFL",
-    "title": "Buffstreams Norfolk State Spartans vs North Carolina Central Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/norfolk-state-spartans-north-carolina-central-eagles/1538483"
-  },
-  {
-    "id": 18,
-    "category": "NFL",
-    "title": "Buffstreams Princeton Tigers vs Dartmouth Big Green",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/dartmouth-big-green-princeton-tigers/1538484"
-  },
-  {
-    "id": 19,
-    "category": "NFL",
-    "title": "Buffstreams Sacred Heart Pioneers vs Towson Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/sacred-heart-pioneers-towson-tigers/1538485"
-  },
-  {
-    "id": 20,
-    "category": "NFL",
-    "title": "Buffstreams Yale Bulldogs vs Brown Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/brown-bears-yale-bulldogs/1538486"
-  },
-  {
-    "id": 21,
-    "category": "NFL",
-    "title": "Buffstreams Assumption College Greyhounds vs Franklin Pierce Ravens",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/franklin-pierce-ravens-assumption-college-greyhounds/1538537"
-  },
-  {
-    "id": 22,
-    "category": "NFL",
-    "title": "Buffstreams Bentley Falcons vs American International Yellow Jackets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bentley-falcons-american-international-yellow-jackets/1538538"
-  },
-  {
-    "id": 23,
-    "category": "NFL",
-    "title": "Buffstreams Bluffton Beavers vs Ohio Northern\tPolar Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bluffton-beavers-ohio-northern-polar-bears/1538539"
-  },
-  {
-    "id": 24,
-    "category": "NFL",
-    "title": "Buffstreams Brevard Tornados vs Methodist Monarchs",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/methodist-monarchs-brevard-tornados/1538540"
-  },
-  {
-    "id": 25,
-    "category": "NFL",
-    "title": "Buffstreams Brockport\tGolden Eagles vs Cortland Red Dragons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/brockport-golden-eagles-cortland-red-dragons/1538541"
-  },
-  {
-    "id": 26,
-    "category": "NFL",
-    "title": "Buffstreams California Vulcans vs Gannon Golden Knights",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/gannon-golden-knights-california-vulcans/1538542"
-  },
-  {
-    "id": 27,
-    "category": "NFL",
-    "title": "Buffstreams Coast Guard Bears vs Salve Regina Seahawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/coast-guard-bears-salve-regina-seahawks/1538543"
-  },
-  {
-    "id": 28,
-    "category": "NFL",
-    "title": "Buffstreams Dean Bulldogs vs Framingham Rams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/framingham-rams-dean-bulldogs/1538544"
-  },
-  {
-    "id": 29,
-    "category": "NFL",
-    "title": "Buffstreams Endicott Gulls vs New England College Pilgrims",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/new-england-college-pilgrims-endicott-gulls/1538546"
-  },
-  {
-    "id": 30,
-    "category": "NFL",
-    "title": "Buffstreams Fdu Florham Devils vs Lebanon Valley Flying Dutchmen",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/fdu-florham-devils-lebanon-valley-flying-dutchmen/1538548"
-  },
-  {
-    "id": 31,
-    "category": "NFL",
-    "title": "Buffstreams Findlay Oilers vs Lake Erie Storm",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lake-erie-storm-findlay-oilers/1538550"
-  },
-  {
-    "id": 32,
-    "category": "NFL",
-    "title": "Buffstreams Fitchburg Falcons vs Plymouth State Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/plymouth-state-panthers-fitchburg-falcons/1538551"
-  },
-  {
-    "id": 33,
-    "category": "NFL",
-    "title": "Buffstreams Franklin And Marshall Diplomats vs Carnegie Mellon Tartans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/franklin-and-marshall-diplomats-carnegie-mellon-tartans/1538552"
-  },
-  {
-    "id": 34,
-    "category": "NFL",
-    "title": "Buffstreams Hillsdale Chargers vs Ashland Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/hillsdale-chargers-ashland-eagles/1538553"
-  },
-  {
-    "id": 35,
-    "category": "NFL",
-    "title": "Buffstreams Husson Eagles vs Nichols Bison",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/husson-eagles-nichols-bison/1538554"
-  },
-  {
-    "id": 36,
-    "category": "NFL",
-    "title": "Buffstreams Juniata Eagles vs Catholic Cardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/juniata-eagles-catholic-cardinals/1538555"
-  },
-  {
-    "id": 37,
-    "category": "NFL",
-    "title": "Buffstreams Keystone Giants vs Gallaudet\tBison",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/keystone-giants-gallaudet-bison/1538556"
-  },
-  {
-    "id": 38,
-    "category": "NFL",
-    "title": "Buffstreams Kutztown Golden Bears vs Bloomsburg Huskies",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bloomsburg-huskies-kutztown-golden-bears/1538557"
-  },
-  {
-    "id": 39,
-    "category": "NFL",
-    "title": "Buffstreams Maryville Scots vs Southwestern Pirates",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/southwestern-pirates-maryville-scots/1538558"
-  },
-  {
-    "id": 40,
-    "category": "NFL",
-    "title": "Buffstreams McDaniel\tGreen Terror vs Johns Hopkins Blue Jays",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/mcdaniel-green-terror-johns-hopkins-blue-jays/1538559"
-  },
-  {
-    "id": 41,
-    "category": "NFL",
-    "title": "Buffstreams Michigan Tech Huskies vs Davenport Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/davenport-panthers-michigan-tech-huskies/1538560"
-  },
-  {
-    "id": 42,
-    "category": "NFL",
-    "title": "Buffstreams Millersville Marauders vs East Stroudsburg Warriors",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/millersville-marauders-east-stroudsburg-warriors/1538561"
-  },
-  {
-    "id": 43,
-    "category": "NFL",
-    "title": "Buffstreams New England Noreasters vs Curry Colonels",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/new-england-noreasters-curry-colonels/1538562"
-  },
-  {
-    "id": 44,
-    "category": "NFL",
-    "title": "Buffstreams Oberlin Yeomen vs John Carroll Blue Streaks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/john-carroll-blue-streaks-oberlin-yeomen/1538563"
-  },
-  {
-    "id": 45,
-    "category": "NFL",
-    "title": "Buffstreams Shepherd Rams vs Lackawanna Falcons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lackawanna-falcons-shepherd-rams/1538564"
-  },
-  {
-    "id": 46,
-    "category": "NFL",
-    "title": "Buffstreams Susquehanna River Hawks vs Western Connecticut Colonials",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/western-connecticut-colonials-susquehanna-river-hawks/1538566"
-  },
-  {
-    "id": 47,
-    "category": "NFL",
-    "title": "Buffstreams Thomas More\tSaints vs Northwood Timberwolves",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/thomas-more-saints-northwood-timberwolves/1538567"
-  },
-  {
-    "id": 48,
-    "category": "NFL",
-    "title": "Buffstreams Tiffin Dragons vs Ohio Dominican Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/tiffin-dragons-ohio-dominican-panthers/1538568"
-  },
-  {
-    "id": 49,
-    "category": "NFL",
-    "title": "Buffstreams Walsh Cavaliers vs Kentucky Wesleyan Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/walsh-cavaliers-kentucky-wesleyan-panthers/1538569"
-  },
-  {
-    "id": 50,
-    "category": "NFL",
-    "title": "Buffstreams West Virginia State Yellow Jackets vs Frostburg State Bobcats",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/west-virginia-state-yellow-jackets-frostburg-state-bobcats/1538570"
-  },
-  {
-    "id": 51,
-    "category": "NFL",
-    "title": "Buffstreams Western New England Golden Bears vs Maine Maritime Mariners",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/maine-maritime-mariners-western-new-england-golden-bears/1538571"
-  },
-  {
-    "id": 52,
-    "category": "NFL",
-    "title": "Buffstreams Westfield State Owls vs Umass Dartmouth Corsairs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/umass-dartmouth-corsairs-westfield-state-owls/1538572"
-  },
-  {
-    "id": 53,
-    "category": "NFL",
-    "title": "Buffstreams Wilkes Colonels vs Moravian\tGreyhounds",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wilkes-colonels-moravian-greyhounds/1538573"
-  },
-  {
-    "id": 54,
-    "category": "NFL",
-    "title": "Buffstreams Worcester Poly Engineers vs MIT Engineers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/worcester-poly-engineers-mit-engineers/1538574"
-  },
-  {
-    "id": 55,
-    "category": "NFL",
-    "title": "Buffstreams Worcester State Lancers vs Massachusetts Maritime\tBuccaneers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/massachusetts-maritime-buccaneers-worcester-state-lancers/1538575"
-  },
-  {
-    "id": 56,
-    "category": "NFL",
-    "title": "Buffstreams Southern Virginia Knights vs Huntingdon Hawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/huntingdon-hawks-southern-virginia-knights/1538622"
-  },
-  {
-    "id": 57,
-    "category": "NFL",
-    "title": "Buffstreams Albright Lions vs Kings Monarchs",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/kings-monarchs-albright-lions/1538730"
-  },
-  {
-    "id": 58,
-    "category": "NFL",
-    "title": "Buffstreams North Carolina State Wolfpack vs Duke Blue Devils",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/north-carolina-state-wolfpack-duke-blue-devils/1538445"
-  },
-  {
-    "id": 59,
-    "category": "NFL",
-    "title": "Buffstreams Purdue Boilermakers vs Maryland Terrapins",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/purdue-boilermakers-maryland-terrapins/1538450"
-  },
-  {
-    "id": 60,
-    "category": "NFL",
-    "title": "Buffstreams Georgetown Hoyas vs Holy Cross Crusaders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/georgetown-hoyas-holy-cross-crusaders/1538487"
-  },
-  {
-    "id": 61,
-    "category": "NFL",
-    "title": "Buffstreams Eastern Eagles vs Stevenson Mustangs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/eastern-eagles-stevenson-mustangs/1538576"
-  },
-  {
-    "id": 62,
-    "category": "NFL",
-    "title": "Buffstreams Middlebury Panthers vs Hamilton Continentals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/middlebury-panthers-hamilton-continentals/1538577"
-  },
-  {
-    "id": 63,
-    "category": "NFL",
     "title": "Buffstreams Auburn Tigers vs Arkansas Razorbacks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/arkansas-razorbacks-auburn-tigers/1538429"
   },
   {
-    "id": 64,
+    "id": 2,
     "category": "NFL",
     "title": "Buffstreams Coastal Carolina Chanticleers vs Old Dominion Monarchs",
     "time": "Mon",
     "href": "https://mybuffstreams.plus/cfb/old-dominion-monarchs-coastal-carolina-chanticleers/1538432"
   },
   {
-    "id": 65,
+    "id": 3,
     "category": "NFL",
     "title": "Buffstreams Kansas State Wildcats vs Oklahoma State Cowboys",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/kansas-state-wildcats-oklahoma-state-cowboys/1538438"
   },
   {
-    "id": 66,
-    "category": "NFL",
-    "title": "Buffstreams Bryant Bulldogs vs Albany Great Danes",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bryant-bulldogs-albany-great-danes/1538488"
-  },
-  {
-    "id": 67,
-    "category": "NFL",
-    "title": "Buffstreams Bucknell Bison vs Fordham Rams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bucknell-bison-fordham-rams/1538489"
-  },
-  {
-    "id": 68,
+    "id": 4,
     "category": "NFL",
     "title": "Buffstreams Butler Bulldogs vs Saint Thomas Tommies",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/butler-bulldogs-saint-thomas-tommies/1538490"
   },
   {
-    "id": 69,
+    "id": 5,
     "category": "NFL",
     "title": "Buffstreams Campbell Fighting Camels vs Stony Brook Seawolves",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/campbell-fighting-camels-stony-brook-seawolves/1538491"
   },
   {
-    "id": 70,
-    "category": "NFL",
-    "title": "Buffstreams Chattanooga Mocs vs Mercer Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/mercer-bears-chattanooga-mocs/1538492"
-  },
-  {
-    "id": 71,
+    "id": 6,
     "category": "NFL",
     "title": "Buffstreams Cornell Big Red vs Pennsylvania Quakers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/cornell-big-red-pennsylvania-quakers/1538493"
   },
   {
-    "id": 72,
-    "category": "NFL",
-    "title": "Buffstreams Davidson Wildcats vs Stetson Hatters",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/stetson-hatters-davidson-wildcats/1538494"
-  },
-  {
-    "id": 73,
+    "id": 7,
     "category": "NFL",
     "title": "Buffstreams Delaware State Hornets vs Morgan State Bears",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/morgan-state-bears-delaware-state-hornets/1538495"
   },
   {
-    "id": 74,
-    "category": "NFL",
-    "title": "Buffstreams Drake Bulldogs vs San Diego Toreros",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/san-diego-toreros-drake-bulldogs/1538496"
-  },
-  {
-    "id": 75,
+    "id": 8,
     "category": "NFL",
     "title": "Buffstreams East Tennessee State Buccaneers vs Samford Bulldogs",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/samford-bulldogs-east-tennessee-state-buccaneers/1538497"
   },
   {
-    "id": 76,
-    "category": "NFL",
-    "title": "Buffstreams Harvard Crimson vs Columbia Lions",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/columbia-lions-harvard-crimson/1538498"
-  },
-  {
-    "id": 77,
+    "id": 9,
     "category": "NFL",
     "title": "Buffstreams New Hampshire Wildcats vs Rhode Island Rams",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/new-hampshire-wildcats-rhode-island-rams/1538499"
   },
   {
-    "id": 78,
+    "id": 10,
     "category": "NFL",
     "title": "Buffstreams Stonehill Skyhawks vs Central Connecticut State Blue Devils",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/stonehill-skyhawks-central-connecticut-state-blue-devils/1538500"
   },
   {
-    "id": 79,
-    "category": "NFL",
-    "title": "Buffstreams Villanova Wildcats vs Richmond Spiders",
-    "time": "mon",
-    "href": "https://mybuffstreams.plus/cfb/richmond-spiders-villanova-wildcats/1538501"
-  },
-  {
-    "id": 80,
+    "id": 11,
     "category": "NFL",
     "title": "Buffstreams Western Carolina Catamounts vs Wofford Terriers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/western-carolina-catamounts-wofford-terriers/1538502"
   },
   {
-    "id": 81,
-    "category": "NFL",
-    "title": "Buffstreams William & Mary Tribe vs Lafayette Leopards",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lafayette-leopards-william-and-mary-tribe/1538503"
-  },
-  {
-    "id": 82,
-    "category": "NFL",
-    "title": "Buffstreams Springfield Pride vs Norwich Cadets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/norwich-cadets-springfield-pride/1538565"
-  },
-  {
-    "id": 83,
-    "category": "NFL",
-    "title": "Buffstreams Albion Britons vs Adrian Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/adrian-bulldogs-albion-britons/1538578"
-  },
-  {
-    "id": 84,
-    "category": "NFL",
-    "title": "Buffstreams Alfred Saxons vs Alfred State Pioneers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/alfred-state-pioneers-alfred-saxons/1538579"
-  },
-  {
-    "id": 85,
-    "category": "NFL",
-    "title": "Buffstreams Allegheny Gators vs Hiram Terriers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/hiram-terriers-allegheny-gators/1538580"
-  },
-  {
-    "id": 86,
-    "category": "NFL",
-    "title": "Buffstreams Amherst Mammoths vs Trinity Bantams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/amherst-mammoths-trinity-bantams/1538581"
-  },
-  {
-    "id": 87,
-    "category": "NFL",
-    "title": "Buffstreams Augustana College Vikings vs Carthage\tRed Men",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/augustana-college-vikings-carthage-red-men/1538582"
-  },
-  {
-    "id": 88,
-    "category": "NFL",
-    "title": "Buffstreams Averett Cougars vs Guilford Quakers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/averett-cougars-guilford-quakers/1538583"
-  },
-  {
-    "id": 89,
-    "category": "NFL",
-    "title": "Buffstreams Bates Bobcats vs Bowdoin Polar Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bates-bobcats-bowdoin-polar-bears/1538584"
-  },
-  {
-    "id": 90,
-    "category": "NFL",
-    "title": "Buffstreams Belhaven\tBlazers vs Lagrange Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lagrange-panthers-belhaven-blazers/1538585"
-  },
-  {
-    "id": 91,
-    "category": "NFL",
-    "title": "Buffstreams Bowie State Bulldogs vs Lincoln Lions",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lincoln-lions-bowie-state-bulldogs/1538586"
-  },
-  {
-    "id": 92,
-    "category": "NFL",
-    "title": "Buffstreams Calvin Knights vs Hope Flying Dutchmen",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/calvin-knights-hope-flying-dutchmen/1538587"
-  },
-  {
-    "id": 93,
-    "category": "NFL",
-    "title": "Buffstreams Carleton Knights vs Bethel Royals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/carleton-knights-bethel-royals/1538588"
-  },
-  {
-    "id": 94,
-    "category": "NFL",
-    "title": "Buffstreams Centre Colonels vs Trinity Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/trinity-tigers-centre-colonels/1538589"
-  },
-  {
-    "id": 95,
-    "category": "NFL",
-    "title": "Buffstreams Chowan Hawks vs Shorter Hawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/shorter-hawks-chowan-hawks/1538590"
-  },
-  {
-    "id": 96,
-    "category": "NFL",
-    "title": "Buffstreams Christopher Newport Captains vs TCNJ Lions",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/christopher-newport-captains-tcnj-lions/1538591"
-  },
-  {
-    "id": 97,
-    "category": "NFL",
-    "title": "Buffstreams Colby Mules vs Tufts Jumbos",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/tufts-jumbos-colby-mules/1538592"
-  },
-  {
-    "id": 98,
-    "category": "NFL",
-    "title": "Buffstreams Concordia",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/concordia-st-paul-golden-bears-southwest-minnesota-state-mustangs/1538593"
-  },
-  {
-    "id": 99,
-    "category": "NFL",
-    "title": "Buffstreams Concordia Wisconsin Falcons vs Wisconsin Lutheran Warriors",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/concordia-wisconsin-falcons-wisconsin-lutheran-warriors/1538594"
-  },
-  {
-    "id": 100,
-    "category": "NFL",
-    "title": "Buffstreams Delaware Valley Aggies vs Alvernia Golden Wolves",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/delaware-valley-aggies-alvernia-golden-wolves/1538595"
-  },
-  {
-    "id": 101,
-    "category": "NFL",
-    "title": "Buffstreams Fairmont Falcons vs Concord Mountain Lions",
-    "time": "mon",
-    "href": "https://mybuffstreams.plus/cfb/concord-mountain-lions-fairmont-falcons/1538596"
-  },
-  {
-    "id": 102,
-    "category": "NFL",
-    "title": "Buffstreams Geneva Golden Tornadoes vs Waynesburg Yellow Jackets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/geneva-golden-tornadoes-waynesburg-yellow-jackets/1538597"
-  },
-  {
-    "id": 103,
-    "category": "NFL",
-    "title": "Buffstreams Grand Valley State Lakers vs Northern Michigan Wildcats",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/northern-michigan-wildcats-grand-valley-state-lakers/1538598"
-  },
-  {
-    "id": 104,
-    "category": "NFL",
-    "title": "Buffstreams Greensboro Pride vs NC Wesleyan Battling Bishops",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/nc-wesleyan-battling-bishops-greensboro-pride/1538599"
-  },
-  {
-    "id": 105,
-    "category": "NFL",
-    "title": "Buffstreams Grove City Wolverines vs Case Western Reserve Spartans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/grove-city-wolverines-case-western-reserve-spartans/1538600"
-  },
-  {
-    "id": 106,
-    "category": "NFL",
-    "title": "Buffstreams Gustavus Adolphus\tGusties vs Augsburg\tAuggies",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/augsburg-auggies-gustavus-adolphus-gusties/1538601"
-  },
-  {
-    "id": 107,
-    "category": "NFL",
-    "title": "Buffstreams Hartwick Hawks vs Utica Pioneers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/utica-pioneers-hartwick-hawks/1538602"
-  },
-  {
-    "id": 108,
-    "category": "NFL",
-    "title": "Buffstreams Hobart Statesmen vs Hilbert Hawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/hilbert-hawks-hobart-statesmen/1538603"
-  },
-  {
-    "id": 109,
-    "category": "NFL",
-    "title": "Buffstreams Ithaca Bombers vs RPI\tEngineers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/rpi-engineers-ithaca-bombers/1538604"
-  },
-  {
-    "id": 110,
-    "category": "NFL",
-    "title": "Buffstreams Kalamazoo Hornets vs Alma Scots",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/kalamazoo-hornets-alma-scots/1538605"
-  },
-  {
-    "id": 111,
-    "category": "NFL",
-    "title": "Buffstreams Kean Cougars vs Salisbury\tSea Gulls",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/kean-cougars-salisbury-sea-gulls/1538606"
-  },
-  {
-    "id": 112,
-    "category": "NFL",
-    "title": "Buffstreams Kentucky State Thorobreds vs Morehouse Maroon Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/morehouse-maroon-tigers-kentucky-state-thorobreds/1538607"
-  },
-  {
-    "id": 113,
-    "category": "NFL",
-    "title": "Buffstreams Knox Prairie Fire vs Illinois Blueboys",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/knox-prairie-fire-illinois-blueboys/1538608"
-  },
-  {
-    "id": 114,
-    "category": "NFL",
-    "title": "Buffstreams Lake Forest Foresters vs Cornell Rams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lake-forest-foresters-cornell-rams/1538609"
-  },
-  {
-    "id": 115,
-    "category": "NFL",
-    "title": "Buffstreams Millikin Big Blue vs North Central Cardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/north-central-cardinals-millikin-big-blue/1538610"
-  },
-  {
-    "id": 116,
-    "category": "NFL",
-    "title": "Buffstreams Minnesota State Mankato Mavericks vs Augustana University Vikings",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/augustana-university-vikings-minnesota-state-mankato-mavericks/1538611"
-  },
-  {
-    "id": 117,
-    "category": "NFL",
-    "title": "Buffstreams Misericordia Cougars vs Widener Pride",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/misericordia-cougars-widener-pride/1538612"
-  },
-  {
-    "id": 118,
-    "category": "NFL",
-    "title": "Buffstreams Montclair State Red Hawks vs Castleton\tSpartans",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/montclair-state-red-hawks-castleton-spartans/1538613"
-  },
-  {
-    "id": 119,
-    "category": "NFL",
-    "title": "Buffstreams Muhlenberg Mules vs Gettysburg Bullets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/muhlenberg-mules-gettysburg-bullets/1538614"
-  },
-  {
-    "id": 120,
-    "category": "NFL",
-    "title": "Buffstreams Ohio Wesleyan Battling Bishops vs Washington Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/washington-bears-ohio-wesleyan-battling-bishops/1538615"
-  },
-  {
-    "id": 121,
-    "category": "NFL",
-    "title": "Buffstreams Randolph Macon Yellow Jackets vs Roanoke Maroons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/roanoke-maroons-randolph-macon-yellow-jackets/1538616"
-  },
-  {
-    "id": 122,
-    "category": "NFL",
-    "title": "Buffstreams Saint John Fisher Cardinals vs Suny Morrisville Mustangs",
-    "time": "Sun",
-    "href": "https://mybuffstreams.plus/cfb/saint-john-fisher-cardinals-suny-morrisville-mustangs/1538617"
-  },
-  {
-    "id": 123,
-    "category": "NFL",
-    "title": "Buffstreams Saint Lawrence Saints vs Buffalo Bengals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/buffalo-bengals-saint-lawrence-saints/1538618"
-  },
-  {
-    "id": 124,
-    "category": "NFL",
-    "title": "Buffstreams Saint Scholastica Saints vs Saint Johns Johnnies",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/saint-johns-johnnies-saint-scholastica-saints/1538619"
-  },
-  {
-    "id": 125,
-    "category": "NFL",
-    "title": "Buffstreams Seton Hill Griffins vs Lock Haven Bald Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lock-haven-bald-eagles-seton-hill-griffins/1538620"
-  },
-  {
-    "id": 126,
-    "category": "NFL",
-    "title": "Buffstreams Southern Connecticut Fighting Owls vs Pace Setters",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/pace-setters-southern-connecticut-fighting-owls/1538621"
-  },
-  {
-    "id": 127,
-    "category": "NFL",
-    "title": "Buffstreams Thiel Tomcats vs Westminster Titans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/thiel-tomcats-westminster-titans/1538623"
-  },
-  {
-    "id": 128,
-    "category": "NFL",
-    "title": "Buffstreams Trine Thunder vs Olivet Comets",
-    "time": "Thu",
-    "href": "https://mybuffstreams.plus/cfb/olivet-comets-trine-thunder/1538624"
-  },
-  {
-    "id": 129,
-    "category": "NFL",
-    "title": "Buffstreams Union Dutchmen vs Rochester Yellowjackets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/rochester-yellowjackets-union-dutchmen/1538625"
-  },
-  {
-    "id": 130,
-    "category": "NFL",
-    "title": "Buffstreams Ursinus Bears vs Dickinson Red Devils",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/dickinson-red-devils-ursinus-bears/1538626"
-  },
-  {
-    "id": 131,
-    "category": "NFL",
-    "title": "Buffstreams Virginia State Trojans vs Virginia Union Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/virginia-state-trojans-virginia-union-panthers/1538627"
-  },
-  {
-    "id": 132,
-    "category": "NFL",
-    "title": "Buffstreams Wabash Little Giants vs Kenyon Lords",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/kenyon-lords-wabash-little-giants/1538628"
-  },
-  {
-    "id": 133,
-    "category": "NFL",
-    "title": "Buffstreams Washington And Jefferson Presidents vs St. Francis Red Flash",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/washington-and-jefferson-presidents-st-francis-red-flash/1538629"
-  },
-  {
-    "id": 134,
-    "category": "NFL",
-    "title": "Buffstreams Washington And Lee Generals vs Shenandoah Hornets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/washington-and-lee-generals-shenandoah-hornets/1538630"
-  },
-  {
-    "id": 135,
-    "category": "NFL",
-    "title": "Buffstreams Wayne State Warriors vs Ferris State Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wayne-state-warriors-ferris-state-bulldogs/1538631"
-  },
-  {
-    "id": 136,
-    "category": "NFL",
-    "title": "Buffstreams Wesleyan Cardinals vs Williams Ephs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/williams-ephs-wesleyan-cardinals/1538632"
-  },
-  {
-    "id": 137,
-    "category": "NFL",
-    "title": "Buffstreams West Liberty Hilltoppers vs Charleston Golden Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/charleston-golden-eagles-west-liberty-hilltoppers/1538633"
-  },
-  {
-    "id": 138,
-    "category": "NFL",
-    "title": "Buffstreams Wheaton Thunder vs Elmhurst Bluejays",
-    "time": "Thu",
-    "href": "https://mybuffstreams.plus/cfb/wheaton-thunder-elmhurst-bluejays/1538634"
-  },
-  {
-    "id": 139,
-    "category": "NFL",
-    "title": "Buffstreams Wheeling Cardinals vs Glenville State Pioneers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wheeling-cardinals-glenville-state-pioneers/1538635"
-  },
-  {
-    "id": 140,
-    "category": "NFL",
-    "title": "Buffstreams William Paterson Pioneers vs Rowan Profs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/william-paterson-pioneers-rowan-profs/1538636"
-  },
-  {
-    "id": 141,
-    "category": "NFL",
-    "title": "Buffstreams Wooster Fighting Scots vs Depauw Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wooster-fighting-scots-depauw-tigers/1538637"
-  },
-  {
-    "id": 142,
-    "category": "NFL",
-    "title": "Buffstreams Concordia Moorhead Cobbers vs Macalester Scots",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/macalester-scots-concordia-moorhead-cobbers/1538656"
-  },
-  {
-    "id": 143,
+    "id": 12,
     "category": "NFL",
     "title": "Buffstreams Gardner",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/lindenwood-lions-gardner-webb-runnin-bulldogs/1538504"
   },
   {
-    "id": 144,
-    "category": "NFL",
-    "title": "Buffstreams Capital Crusaders vs Heidelberg Student Princes",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/capital-crusaders-heidelberg-student-princes/1538638"
-  },
-  {
-    "id": 145,
-    "category": "NFL",
-    "title": "Buffstreams Erskine Flying Fleet vs Barton Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/erskine-flying-fleet-barton-bulldogs/1538639"
-  },
-  {
-    "id": 146,
-    "category": "NFL",
-    "title": "Buffstreams Franklin College Grizzlies vs Anderson\tRavens",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/franklin-college-grizzlies-anderson-ravens/1538640"
-  },
-  {
-    "id": 147,
-    "category": "NFL",
-    "title": "Buffstreams Manchester Spartans vs Hanover Panthers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/manchester-spartans-hanover-panthers/1538641"
-  },
-  {
-    "id": 148,
-    "category": "NFL",
-    "title": "Buffstreams Marietta Pioneers vs Wilmington Quakers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/marietta-pioneers-wilmington-quakers/1538642"
-  },
-  {
-    "id": 149,
-    "category": "NFL",
-    "title": "Buffstreams Mount St. Joseph Lions vs Rose Hulman Engineers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/mount-st-joseph-lions-rose-hulman-engineers/1538643"
-  },
-  {
-    "id": 150,
-    "category": "NFL",
-    "title": "Buffstreams Muskingum Fighting Muskies vs Otterbein\tCardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/muskingum-fighting-muskies-otterbein-cardinals/1538645"
-  },
-  {
-    "id": 151,
-    "category": "NFL",
-    "title": "Buffstreams Wingate Bulldogs vs Emory And Henry Wasps",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wingate-bulldogs-emory-and-henry-wasps/1538646"
-  },
-  {
-    "id": 152,
-    "category": "NFL",
-    "title": "Buffstreams Winston",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/winston-salem-state-rams-fayetteville-state-broncos/1538647"
-  },
-  {
-    "id": 153,
+    "id": 13,
     "category": "NFL",
     "title": "Buffstreams Charleston Southern Buccaneers vs Tennessee",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/charleston-southern-buccaneers-tennessee-martin-skyhawks/1538505"
   },
   {
-    "id": 154,
+    "id": 14,
     "category": "NFL",
     "title": "Buffstreams Citadel Bulldogs vs Furman Paladins",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/citadel-bulldogs-furman-paladins/1538506"
   },
   {
-    "id": 155,
+    "id": 15,
     "category": "NFL",
     "title": "Buffstreams Elon Phoenix vs Hampton Pirates",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/hampton-pirates-elon-phoenix/1538507"
   },
   {
-    "id": 156,
+    "id": 16,
     "category": "NFL",
     "title": "Buffstreams Murray State Racers vs Youngstown State Penguins",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/murray-state-racers-youngstown-state-penguins/1538508"
   },
   {
-    "id": 157,
+    "id": 17,
     "category": "NFL",
     "title": "Buffstreams North Dakota Fighting Sioux vs Illinois State Redbirds",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/illinois-state-redbirds-north-dakota-fighting-sioux/1538509"
   },
   {
-    "id": 158,
+    "id": 18,
     "category": "NFL",
     "title": "Buffstreams Northern Iowa Panthers vs South Dakota State",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/northern-iowa-panthers-south-dakota-state/1538510"
   },
   {
-    "id": 159,
+    "id": 19,
     "category": "NFL",
     "title": "Buffstreams Northwestern State Demons vs UT Rio Grande Valley Vaqueros",
     "time": "mon",
     "href": "https://mybuffstreams.plus/cfb/ut-rio-grande-valley-vaqueros-northwestern-state-demons/1538511"
   },
   {
-    "id": 160,
-    "category": "NFL",
-    "title": "Buffstreams Bemidji State Beavers vs Minnesota Duluth Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bemidji-state-beavers-minnesota-duluth-bulldogs/1538648"
-  },
-  {
-    "id": 161,
-    "category": "NFL",
-    "title": "Buffstreams Benedict Tigers vs Central State Marauders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/central-state-marauders-benedict-tigers/1538649"
-  },
-  {
-    "id": 162,
-    "category": "NFL",
-    "title": "Buffstreams Benedictine Eagles vs Aurora Spartans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/benedictine-eagles-aurora-spartans/1538650"
-  },
-  {
-    "id": 163,
-    "category": "NFL",
-    "title": "Buffstreams Bethany Bison vs Saint Vincent Bearcats",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bethany-bison-saint-vincent-bearcats/1538651"
-  },
-  {
-    "id": 164,
-    "category": "NFL",
-    "title": "Buffstreams Bluefield State Big Blues vs Elizabeth City Vikings",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/elizabeth-city-vikings-bluefield-state-big-blues/1538652"
-  },
-  {
-    "id": 165,
-    "category": "NFL",
-    "title": "Buffstreams Bridgewater Eagles vs Hampden Sydney Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/bridgewater-eagles-hampden-sydney-tigers/1538653"
-  },
-  {
-    "id": 166,
-    "category": "NFL",
-    "title": "Buffstreams Central Dutch vs Wartburg Knights",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wartburg-knights-central-dutch/1538654"
-  },
-  {
-    "id": 167,
-    "category": "NFL",
-    "title": "Buffstreams Coe\tKohawks vs Dubuque\tSpartans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/coe-kohawks-dubuque-spartans/1538655"
-  },
-  {
-    "id": 168,
-    "category": "NFL",
-    "title": "Buffstreams Crown Storm vs Minnesota Morris Cougars",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/crown-storm-minnesota-morris-cougars/1538657"
-  },
-  {
-    "id": 169,
-    "category": "NFL",
-    "title": "Buffstreams East Texas Baptist Tigers vs Mary Hardin Baylor Crusaders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/mary-hardin-baylor-crusaders-east-texas-baptist-tigers/1538658"
-  },
-  {
-    "id": 170,
-    "category": "NFL",
-    "title": "Buffstreams Emporia State Hornets vs Washburn Ichabods",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/emporia-state-hornets-washburn-ichabods/1538660"
-  },
-  {
-    "id": 171,
-    "category": "NFL",
-    "title": "Buffstreams Eureka Red Devils vs Rockford\tRegents",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/rockford-regents-eureka-red-devils/1538661"
-  },
-  {
-    "id": 172,
-    "category": "NFL",
-    "title": "Buffstreams Ferrum Panthers vs North Carolina Pembroke Braves",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/north-carolina-pembroke-braves-ferrum-panthers/1538662"
-  },
-  {
-    "id": 173,
-    "category": "NFL",
-    "title": "Buffstreams Fort Lewis Skyhawks vs Colorado Mesa Mavericks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/fort-lewis-skyhawks-colorado-mesa-mavericks/1538663"
-  },
-  {
-    "id": 174,
-    "category": "NFL",
-    "title": "Buffstreams Fort Valley State Wildcats vs Albany State Golden Rams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/fort-valley-state-wildcats-albany-state-golden-rams/1538664"
-  },
-  {
-    "id": 175,
-    "category": "NFL",
-    "title": "Buffstreams Greenville Panthers vs Westminster Blue Jays",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/westminster-blue-jays-greenville-panthers/1538665"
-  },
-  {
-    "id": 176,
-    "category": "NFL",
-    "title": "Buffstreams Hamline Pipers vs Saint Olaf Oles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/hamline-pipers-saint-olaf-oles/1538666"
-  },
-  {
-    "id": 177,
-    "category": "NFL",
-    "title": "Buffstreams Hardin Simmons Cowboys vs Schreiner Mountaineers",
-    "time": "mon",
-    "href": "https://mybuffstreams.plus/cfb/schreiner-mountaineers-hardin-simmons-cowboys/1538667"
-  },
-  {
-    "id": 178,
-    "category": "NFL",
-    "title": "Buffstreams Illinois Wesleyan Titans vs North Park Vikings",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/illinois-wesleyan-titans-north-park-vikings/1538668"
-  },
-  {
-    "id": 179,
-    "category": "NFL",
-    "title": "Buffstreams Indiana Crimson Hawks vs Clarion Golden Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/indiana-crimson-hawks-clarion-golden-eagles/1538669"
-  },
-  {
-    "id": 180,
-    "category": "NFL",
-    "title": "Buffstreams Indianapolis Greyhounds vs Southwest Baptist Bearcats",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/southwest-baptist-bearcats-indianapolis-greyhounds/1538670"
-  },
-  {
-    "id": 181,
-    "category": "NFL",
-    "title": "Buffstreams Jamestown Jimmies vs Minnesota Moorhead Dragons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/jamestown-jimmies-minnesota-moorhead-dragons/1538671"
-  },
-  {
-    "id": 182,
-    "category": "NFL",
-    "title": "Buffstreams Lawrence Vikings vs Chicago Maroons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lawrence-vikings-chicago-maroons/1538672"
-  },
-  {
-    "id": 183,
-    "category": "NFL",
-    "title": "Buffstreams Lenoir Rhyne Bears vs Tusculum Pioneers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lenoir-rhyne-bears-tusculum-pioneers/1538673"
-  },
-  {
-    "id": 184,
-    "category": "NFL",
-    "title": "Buffstreams Livingstone Blue Bears vs Johnson C. Smith Golden Bulls",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/livingstone-blue-bears-johnson-smith-golden-bulls/1538674"
-  },
-  {
-    "id": 185,
-    "category": "NFL",
-    "title": "Buffstreams Loras Duhawks vs Buena Vista Beavers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/buena-vista-beavers-loras-duhawks/1538675"
-  },
-  {
-    "id": 186,
-    "category": "NFL",
-    "title": "Buffstreams Lyon College Scots vs Hendrix Warriors",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lyon-college-scots-hendrix-warriors/1538676"
-  },
-  {
-    "id": 187,
-    "category": "NFL",
-    "title": "Buffstreams McMurry War Hawks vs Howard Payne Yellow Jackets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/howard-payne-yellow-jackets-mcmurry-war-hawks/1538677"
-  },
-  {
-    "id": 188,
-    "category": "NFL",
-    "title": "Buffstreams Mckendree Bearcats vs Northeastern State Riverhawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/northeastern-state-riverhawks-mckendree-bearcats/1538678"
-  },
-  {
-    "id": 189,
-    "category": "NFL",
-    "title": "Buffstreams Midwestern State Mustangs vs Texas",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/texas-permian-basin-falcons-midwestern-state-mustangs/1538679"
-  },
-  {
-    "id": 190,
-    "category": "NFL",
-    "title": "Buffstreams Millsaps Majors vs Berry Vikings",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/berry-vikings-millsaps-majors/1538680"
-  },
-  {
-    "id": 191,
-    "category": "NFL",
-    "title": "Buffstreams Minot State Beavers vs Northern State Wolves",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/minot-state-beavers-northern-state-wolves/1538681"
-  },
-  {
-    "id": 192,
-    "category": "NFL",
-    "title": "Buffstreams Missouri S&T Miners vs Lincoln University Blue Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lincoln-university-blue-tigers-missouri-s-and-t-miners/1538682"
-  },
-  {
-    "id": 193,
-    "category": "NFL",
-    "title": "Buffstreams Missouri Southern Lions vs Central Oklahoma Bronchos",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/central-oklahoma-bronchos-missouri-southern-lions/1538683"
-  },
-  {
-    "id": 194,
-    "category": "NFL",
-    "title": "Buffstreams Monmouth Fighting Scots vs Grinnell Pioneers",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/grinnell-pioneers-monmouth-fighting-scots/1538684"
-  },
-  {
-    "id": 195,
-    "category": "NFL",
-    "title": "Buffstreams Nebraska Kearney Lopers vs Fort Hays State Tigers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/fort-hays-state-tigers-nebraska-kearney-lopers/1538685"
-  },
-  {
-    "id": 196,
-    "category": "NFL",
-    "title": "Buffstreams Nebraska Wesleyan Prairie Wolves vs Simpson Storm",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/simpson-storm-nebraska-wesleyan-prairie-wolves/1538686"
-  },
-  {
-    "id": 197,
-    "category": "NFL",
-    "title": "Buffstreams New Mexico Highlands Cowboys vs Adams State Grizzlies",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/adams-state-grizzlies-new-mexico-highlands-cowboys/1538687"
-  },
-  {
-    "id": 198,
-    "category": "NFL",
-    "title": "Buffstreams Northwestern Eagles vs Martin Luther Knights",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/northwestern-eagles-martin-luther-knights/1538688"
-  },
-  {
-    "id": 199,
-    "category": "NFL",
-    "title": "Buffstreams Ouachita Baptist Tigers vs Southwestern Oklahoma State Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/southwestern-oklahoma-state-bulldogs-ouachita-baptist-tigers/1538689"
-  },
-  {
-    "id": 200,
-    "category": "NFL",
-    "title": "Buffstreams Quincy Hawks vs Upper Iowa Peacocks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/quincy-hawks-upper-iowa-peacocks/1538690"
-  },
-  {
-    "id": 201,
-    "category": "NFL",
-    "title": "Buffstreams Robert Morris Eagles vs Saginaw Valley State Cardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/robert-morris-eagles-saginaw-valley-state-cardinals/1538691"
-  },
-  {
-    "id": 202,
-    "category": "NFL",
-    "title": "Buffstreams Saint Norbert Green Knights vs Concordia Chicago Cougars",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/saint-norbert-green-knights-concordia-chicago-cougars/1538692"
-  },
-  {
-    "id": 203,
-    "category": "NFL",
-    "title": "Buffstreams Sewanee\tTigers vs Rhodes Lynx",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/sewanee-tigers-rhodes-lynx/1538693"
-  },
-  {
-    "id": 204,
-    "category": "NFL",
-    "title": "Buffstreams Texas Lutheran Bulldogs vs Centenary Gents",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/centenary-gents-texas-lutheran-bulldogs/1538694"
-  },
-  {
-    "id": 205,
-    "category": "NFL",
-    "title": "Buffstreams UW\u2013La Crosse Eagles vs UW",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/uw-la-crosse-eagles-uw-river-falls-falcons/1538695"
-  },
-  {
-    "id": 206,
-    "category": "NFL",
-    "title": "Buffstreams Valdosta State Blazers vs North Greenville Crusaders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/valdosta-state-blazers-north-greenville-crusaders/1538696"
-  },
-  {
-    "id": 207,
-    "category": "NFL",
-    "title": "Buffstreams Wayne State Wildcats vs Sioux Falls Cougars",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wayne-state-wildcats-sioux-falls-cougars/1538697"
-  },
-  {
-    "id": 208,
-    "category": "NFL",
-    "title": "Buffstreams West Alabama Tigers vs Monroe Mustangs",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/monroe-mustangs-west-alabama-tigers/1538698"
-  },
-  {
-    "id": 209,
-    "category": "NFL",
-    "title": "Buffstreams West Chester Golden Rams vs Shippensburg Raiders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/shippensburg-raiders-west-chester-golden-rams/1538699"
-  },
-  {
-    "id": 210,
-    "category": "NFL",
-    "title": "Buffstreams Winona State Warriors vs Mary Marauders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/mary-marauders-winona-state-warriors/1538700"
-  },
-  {
-    "id": 211,
-    "category": "NFL",
-    "title": "Buffstreams Wisconsin Platteville Pioneers vs UW",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/uw-whitewater-warhawks-wisconsin-platteville-pioneers/1538701"
-  },
-  {
-    "id": 212,
-    "category": "NFL",
-    "title": "Buffstreams Wisconsin Stevens Point Pointers vs UW",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/wisconsin-stevens-point-pointers-uw-oshkosh-titans/1538702"
-  },
-  {
-    "id": 213,
-    "category": "NFL",
-    "title": "Buffstreams UW Stout Blue Devils vs Wisconsin",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/uw-stout-blue-devils-wisconsin-eau-claire-blugolds/1538703"
-  },
-  {
-    "id": 214,
+    "id": 20,
     "category": "NFL",
     "title": "Buffstreams Appalachian State Mountaineers vs Georgia State Panthers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/georgia-state-panthers-appalachian-state-mountaineers/1538427"
   },
   {
-    "id": 215,
+    "id": 21,
     "category": "NFL",
     "title": "Buffstreams Tennessee Tech vs Virginia Military Keydets",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/virginia-military-keydets-tennessee-tech/1538512"
   },
   {
-    "id": 216,
+    "id": 22,
     "category": "NFL",
     "title": "Buffstreams South Carolina Gamecocks vs Texas A&M Aggies",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/texas-a-and-m-aggies-south-carolina-gamecocks/1538452"
   },
   {
-    "id": 217,
+    "id": 23,
     "category": "NFL",
     "title": "Buffstreams Arkansas State Red Wolves vs Louisiana",
     "time": "Mon",
     "href": "https://mybuffstreams.plus/cfb/louisiana-monroe-warhawks-arkansas-state-red-wolves/1538463"
   },
   {
-    "id": 218,
+    "id": 24,
     "category": "NFL",
     "title": "Buffstreams Kennesaw State Owls vs Delaware Blue Hens",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/kennesaw-state-owls-delaware-blue-hens/1538464"
   },
   {
-    "id": 219,
+    "id": 25,
     "category": "NFL",
     "title": "Buffstreams Alcorn State Braves vs Florida A&M Rattlers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/florida-a-and-m-rattlers-alcorn-state-braves/1538513"
   },
   {
-    "id": 220,
+    "id": 26,
     "category": "NFL",
     "title": "Buffstreams Eastern Illinois Panthers vs Western Illinois Leathernecks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/western-illinois-leathernecks-eastern-illinois-panthers/1538514"
   },
   {
-    "id": 221,
+    "id": 27,
     "category": "NFL",
     "title": "Buffstreams Grambling State Tigers vs Arkansas",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/arkansas-pine-bluff-golden-lions-grambling-state-tigers/1538515"
   },
   {
-    "id": 222,
+    "id": 28,
     "category": "NFL",
     "title": "Buffstreams Jackson State Tigers vs Mississippi Valley State Delta Devils",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/mississippi-valley-state-delta-devils-jackson-state-tigers/1538516"
   },
   {
-    "id": 223,
+    "id": 29,
     "category": "NFL",
     "title": "Buffstreams Montana Grizzlies vs Portland State Vikings",
     "time": "Mon",
     "href": "https://mybuffstreams.plus/cfb/montana-grizzlies-portland-state-vikings/1538517"
   },
   {
-    "id": 224,
+    "id": 30,
     "category": "NFL",
     "title": "Buffstreams Prairie View A&M Panthers vs Alabama A&M Bulldogs",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/alabama-a-and-m-bulldogs-prairie-view-a-and-m-panthers/1538518"
   },
   {
-    "id": 225,
+    "id": 31,
     "category": "NFL",
     "title": "Buffstreams Southern University Jaguars vs Bethune Cookman Wildcats",
     "time": "thu",
     "href": "https://mybuffstreams.plus/cfb/bethune-cookman-wildcats-southern-university-jaguars/1538519"
   },
   {
-    "id": 226,
+    "id": 32,
     "category": "NFL",
     "title": "Buffstreams Southern Utah Thunderbirds vs Northern Colorado Bears",
     "time": "Thu",
     "href": "https://mybuffstreams.plus/cfb/northern-colorado-bears-southern-utah-thunderbirds/1538520"
   },
   {
-    "id": 227,
+    "id": 33,
     "category": "NFL",
     "title": "Buffstreams Texas Southern Tigers vs Alabama State Hornets",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/alabama-state-hornets-texas-southern-tigers/1538521"
   },
   {
-    "id": 228,
-    "category": "NFL",
-    "title": "Buffstreams Arkansas Monticello Boll Weevils vs Northwestern Oklahoma State Rangers",
-    "time": "Mon",
-    "href": "https://mybuffstreams.plus/cfb/northwestern-oklahoma-state-rangers-arkansas-monticello-boll-weevils/1538704"
-  },
-  {
-    "id": 229,
-    "category": "NFL",
-    "title": "Buffstreams Arkansas Tech Wonder Boys vs Oklahoma Baptist Bison",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/arkansas-tech-wonder-boys-oklahoma-baptist-bison/1538705"
-  },
-  {
-    "id": 230,
-    "category": "NFL",
-    "title": "Buffstreams Black Hills State Yellow Jackets vs Chadron State Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/chadron-state-eagles-black-hills-state-yellow-jackets/1538706"
-  },
-  {
-    "id": 231,
-    "category": "NFL",
-    "title": "Buffstreams Carson",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/newberry-wolves-carson-newman-eagles/1538707"
-  },
-  {
-    "id": 232,
-    "category": "NFL",
-    "title": "Buffstreams East Central Tigers vs Henderson State Reddies",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/henderson-state-reddies-east-central-tigers/1538708"
-  },
-  {
-    "id": 233,
-    "category": "NFL",
-    "title": "Buffstreams Missouri Western Griffons vs Northwest Missouri State Bearcats",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/missouri-western-griffons-northwest-missouri-state-bearcats/1538709"
-  },
-  {
-    "id": 234,
-    "category": "NFL",
-    "title": "Buffstreams Pittsburg State Gorillas vs Central Missouri Mules",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/central-missouri-mules-pittsburg-state-gorillas/1538710"
-  },
-  {
-    "id": 235,
-    "category": "NFL",
-    "title": "Buffstreams Savannah State Tigers vs Virginia Lynchburg Dragons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/virginia-lynchburg-dragons-savannah-state-tigers/1538711"
-  },
-  {
-    "id": 236,
-    "category": "NFL",
-    "title": "Buffstreams Southeastern Oklahoma State Savage Storm vs Southern Arkansas Muleriders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/southern-arkansas-muleriders-southeastern-oklahoma-state-savage-storm/1538712"
-  },
-  {
-    "id": 237,
-    "category": "NFL",
-    "title": "Buffstreams Virginia",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/catawba-indians-virginia-wise-cavaliers/1538713"
-  },
-  {
-    "id": 238,
-    "category": "NFL",
-    "title": "Buffstreams Western Colorado Mountaineers vs Colorado Mines Orediggers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/western-colorado-mountaineers-colorado-mines-orediggers/1538714"
-  },
-  {
-    "id": 239,
-    "category": "NFL",
-    "title": "Buffstreams Whitworth Pirates vs Willamette Bearcats",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/willamette-bearcats-whitworth-pirates/1538715"
-  },
-  {
-    "id": 240,
+    "id": 34,
     "category": "NFL",
     "title": "Buffstreams Georgia Southern Eagles vs Marshall Thundering Herd",
     "time": "Thu",
     "href": "https://mybuffstreams.plus/cfb/georgia-southern-eagles-marshall-thundering-herd/1538434"
   },
   {
-    "id": 241,
+    "id": 35,
     "category": "NFL",
     "title": "Buffstreams Houston Cougars vs Cincinnati Bearcats",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/houston-cougars-cincinnati-bearcats/1538436"
   },
   {
-    "id": 242,
+    "id": 36,
     "category": "NFL",
     "title": "Buffstreams LSU Tigers vs Alabama Crimson Tide",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/alabama-crimson-tide-lsu-tigers/1538439"
   },
   {
-    "id": 243,
+    "id": 37,
     "category": "NFL",
     "title": "Buffstreams Ohio State Buckeyes vs Oregon Ducks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/oregon-ducks-ohio-state-buckeyes/1538448"
   },
   {
-    "id": 244,
+    "id": 38,
     "category": "NFL",
     "title": "Buffstreams UAB Blazers vs Charlotte 49ers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/charlotte-49ers-uab-blazers/1538458"
   },
   {
-    "id": 245,
+    "id": 39,
     "category": "NFL",
     "title": "Buffstreams Washington Huskies vs Penn State Nittany Lions",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/washington-huskies-penn-state-nittany-lions/1538461"
   },
   {
-    "id": 246,
+    "id": 40,
     "category": "NFL",
     "title": "Buffstreams Middle Tennessee Blue Raiders vs Western Kentucky Hilltoppers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/western-kentucky-hilltoppers-middle-tennessee-blue-raiders/1538465"
   },
   {
-    "id": 247,
+    "id": 41,
     "category": "NFL",
     "title": "Buffstreams Navy Midshipmen vs Temple Owls",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/temple-owls-navy-midshipmen/1538466"
   },
   {
-    "id": 248,
+    "id": 42,
     "category": "NFL",
     "title": "Buffstreams Tennessee State Tigers vs Southeast Missouri State Redhawks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/tennessee-state-tigers-southeast-missouri-state-redhawks/1538522"
   },
   {
-    "id": 249,
+    "id": 43,
     "category": "NFL",
     "title": "Buffstreams Wake Forest Demon Deacons vs Merrimack Warriors",
     "time": "mon",
     "href": "https://mybuffstreams.plus/cfb/merrimack-warriors-wake-forest-demon-deacons/1538536"
   },
   {
-    "id": 250,
-    "category": "NFL",
-    "title": "Buffstreams Saint Anselm Hawks vs Post Eagles",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/post-eagles-saint-anselm-hawks/1538716"
-  },
-  {
-    "id": 251,
-    "category": "NFL",
-    "title": "Buffstreams Tuskegee Golden Tigers vs Miles Golden Bears",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/tuskegee-golden-tigers-miles-golden-bears/1538717"
-  },
-  {
-    "id": 252,
+    "id": 44,
     "category": "NFL",
     "title": "Buffstreams Kansas Jayhawks vs UCF Knights",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/kansas-jayhawks-ucf-knights/1538437"
   },
   {
-    "id": 253,
+    "id": 45,
     "category": "NFL",
     "title": "Buffstreams North Texas Mean Green vs Rice Owls",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/rice-owls-north-texas-mean-green/1538446"
   },
   {
-    "id": 254,
+    "id": 46,
     "category": "NFL",
     "title": "Buffstreams San Jose State Spartans vs Northern Illinois Huskies",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/northern-illinois-huskies-san-jose-state-spartans/1538451"
   },
   {
-    "id": 255,
+    "id": 47,
     "category": "NFL",
     "title": "Buffstreams Troy Trojans vs Louisiana Tech Bulldogs",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/louisiana-tech-bulldogs-troy-trojans/1538456"
   },
   {
-    "id": 256,
+    "id": 48,
     "category": "NFL",
     "title": "Buffstreams Florida Intl Golden Panthers vs Missouri State Bears",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/missouri-state-bears-florida-intl-golden-panthers/1538467"
   },
   {
-    "id": 257,
+    "id": 49,
     "category": "NFL",
     "title": "Buffstreams Lamar Cardinals vs Stephen F. Austin Lumberjacks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/lamar-cardinals-stephen-austin-lumberjacks/1538523"
   },
   {
-    "id": 258,
+    "id": 50,
     "category": "NFL",
     "title": "Buffstreams Nicholls State Colonels vs East Texas A&M",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/east-texas-a-and-m-commerce-lions-nicholls-state-colonels/1538524"
   },
   {
-    "id": 259,
+    "id": 51,
     "category": "NFL",
     "title": "Buffstreams Austin Peay Governors vs Eastern Kentucky",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/austin-peay-governors-eastern-kentucky/1538525"
   },
   {
-    "id": 260,
-    "category": "NFL",
-    "title": "Buffstreams Mount Union Purple Raiders vs Baldwin Wallace Yellow Jackets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/baldwin-wallace-yellow-jackets-mount-union-purple-raiders/1538644"
-  },
-  {
-    "id": 261,
-    "category": "NFL",
-    "title": "Buffstreams Anderson Trojans vs Mars Hill Lions",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/anderson-trojans-mars-hill-lions/1538718"
-  },
-  {
-    "id": 262,
-    "category": "NFL",
-    "title": "Buffstreams Central Washington Wildcats vs Western New Mexico Mustangs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/western-new-mexico-mustangs-central-washington-wildcats/1538719"
-  },
-  {
-    "id": 263,
-    "category": "NFL",
-    "title": "Buffstreams Harding Bisons vs Southern Nazarene Crimson Storm",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/southern-nazarene-crimson-storm-harding-bisons/1538720"
-  },
-  {
-    "id": 264,
-    "category": "NFL",
-    "title": "Buffstreams La Verne Leopards vs Whittier Poets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/whittier-poets-la-verne-leopards/1538721"
-  },
-  {
-    "id": 265,
-    "category": "NFL",
-    "title": "Buffstreams Linfield Wildcats vs Puget Sound Loggers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/linfield-wildcats-puget-sound-loggers/1538722"
-  },
-  {
-    "id": 266,
-    "category": "NFL",
-    "title": "Buffstreams Pacific Boxers vs George Fox Bruins",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/pacific-boxers-george-fox-bruins/1538723"
-  },
-  {
-    "id": 267,
-    "category": "NFL",
-    "title": "Buffstreams Pacific Lutheran Lutes vs Lewis And Clark Pioneers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/lewis-and-clark-pioneers-pacific-lutheran-lutes/1538724"
-  },
-  {
-    "id": 268,
-    "category": "NFL",
-    "title": "Buffstreams Slippery Rock vs Edinboro Fighting Scots",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/slippery-rock-edinboro-fighting-scots/1538725"
-  },
-  {
-    "id": 269,
-    "category": "NFL",
-    "title": "Buffstreams William Jewell Cardinals vs Truman State Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/truman-state-bulldogs-william-jewell-cardinals/1538726"
-  },
-  {
-    "id": 270,
-    "category": "NFL",
-    "title": "Buffstreams South Dakota Hardrockers vs Colorado State Pueblo Thunderwolves",
-    "time": "Thu",
-    "href": "https://mybuffstreams.plus/cfb/colorado-state-pueblo-thunderwolves-south-dakota-hardrockers/1538729"
-  },
-  {
-    "id": 271,
-    "category": "NFL",
-    "title": "Buffstreams Western Oregon Wolves vs West Texas A&M Buffaloes",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/west-texas-a-and-m-buffaloes-western-oregon-wolves/1538727"
-  },
-  {
-    "id": 272,
+    "id": 52,
     "category": "NFL",
     "title": "Buffstreams Mississippi State Bulldogs vs Vanderbilt Commodores",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/vanderbilt-commodores-mississippi-state-bulldogs/1538443"
   },
   {
-    "id": 273,
+    "id": 53,
     "category": "NFL",
     "title": "Buffstreams Wisconsin Badgers vs Rutgers Scarlet Knights",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/rutgers-scarlet-knights-wisconsin-badgers/1538462"
   },
   {
-    "id": 274,
+    "id": 54,
+    "category": "NFL",
+    "title": "Buffstreams Dean Bulldogs vs Framingham Rams",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/framingham-rams-dean-bulldogs/1538544"
+  },
+  {
+    "id": 55,
+    "category": "NFL",
+    "title": "Buffstreams Maryville Scots vs Southwestern Pirates",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/southwestern-pirates-maryville-scots/1538558"
+  },
+  {
+    "id": 56,
+    "category": "NFL",
+    "title": "Buffstreams Albion Britons vs Adrian Bulldogs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/adrian-bulldogs-albion-britons/1538578"
+  },
+  {
+    "id": 57,
+    "category": "NFL",
+    "title": "Buffstreams Alfred Saxons vs Alfred State Pioneers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/alfred-state-pioneers-alfred-saxons/1538579"
+  },
+  {
+    "id": 58,
+    "category": "NFL",
+    "title": "Buffstreams Allegheny Gators vs Hiram Terriers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/hiram-terriers-allegheny-gators/1538580"
+  },
+  {
+    "id": 59,
+    "category": "NFL",
+    "title": "Buffstreams Amherst Mammoths vs Trinity Bantams",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/amherst-mammoths-trinity-bantams/1538581"
+  },
+  {
+    "id": 60,
+    "category": "NFL",
+    "title": "Buffstreams Averett Cougars vs Guilford Quakers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/averett-cougars-guilford-quakers/1538583"
+  },
+  {
+    "id": 61,
+    "category": "NFL",
+    "title": "Buffstreams Belhaven\tBlazers vs Lagrange Panthers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lagrange-panthers-belhaven-blazers/1538585"
+  },
+  {
+    "id": 62,
+    "category": "NFL",
+    "title": "Buffstreams Calvin Knights vs Hope Flying Dutchmen",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/calvin-knights-hope-flying-dutchmen/1538587"
+  },
+  {
+    "id": 63,
+    "category": "NFL",
+    "title": "Buffstreams Carleton Knights vs Bethel Royals",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/carleton-knights-bethel-royals/1538588"
+  },
+  {
+    "id": 64,
+    "category": "NFL",
+    "title": "Buffstreams Centre Colonels vs Trinity Tigers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/trinity-tigers-centre-colonels/1538589"
+  },
+  {
+    "id": 65,
+    "category": "NFL",
+    "title": "Buffstreams Chowan Hawks vs Shorter Hawks",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/shorter-hawks-chowan-hawks/1538590"
+  },
+  {
+    "id": 66,
+    "category": "NFL",
+    "title": "Buffstreams Christopher Newport Captains vs TCNJ Lions",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/christopher-newport-captains-tcnj-lions/1538591"
+  },
+  {
+    "id": 67,
+    "category": "NFL",
+    "title": "Buffstreams Concordia",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/concordia-st-paul-golden-bears-southwest-minnesota-state-mustangs/1538593"
+  },
+  {
+    "id": 68,
+    "category": "NFL",
+    "title": "Buffstreams Concordia Wisconsin Falcons vs Wisconsin Lutheran Warriors",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/concordia-wisconsin-falcons-wisconsin-lutheran-warriors/1538594"
+  },
+  {
+    "id": 69,
+    "category": "NFL",
+    "title": "Buffstreams Fairmont Falcons vs Concord Mountain Lions",
+    "time": "mon",
+    "href": "https://mybuffstreams.plus/cfb/concord-mountain-lions-fairmont-falcons/1538596"
+  },
+  {
+    "id": 70,
+    "category": "NFL",
+    "title": "Buffstreams Geneva Golden Tornadoes vs Waynesburg Yellow Jackets",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/geneva-golden-tornadoes-waynesburg-yellow-jackets/1538597"
+  },
+  {
+    "id": 71,
+    "category": "NFL",
+    "title": "Buffstreams Greensboro Pride vs NC Wesleyan Battling Bishops",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/nc-wesleyan-battling-bishops-greensboro-pride/1538599"
+  },
+  {
+    "id": 72,
+    "category": "NFL",
+    "title": "Buffstreams Grove City Wolverines vs Case Western Reserve Spartans",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/grove-city-wolverines-case-western-reserve-spartans/1538600"
+  },
+  {
+    "id": 73,
+    "category": "NFL",
+    "title": "Buffstreams Gustavus Adolphus\tGusties vs Augsburg\tAuggies",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/augsburg-auggies-gustavus-adolphus-gusties/1538601"
+  },
+  {
+    "id": 74,
+    "category": "NFL",
+    "title": "Buffstreams Hartwick Hawks vs Utica Pioneers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/utica-pioneers-hartwick-hawks/1538602"
+  },
+  {
+    "id": 75,
+    "category": "NFL",
+    "title": "Buffstreams Kentucky State Thorobreds vs Morehouse Maroon Tigers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/morehouse-maroon-tigers-kentucky-state-thorobreds/1538607"
+  },
+  {
+    "id": 76,
+    "category": "NFL",
+    "title": "Buffstreams Knox Prairie Fire vs Illinois Blueboys",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/knox-prairie-fire-illinois-blueboys/1538608"
+  },
+  {
+    "id": 77,
+    "category": "NFL",
+    "title": "Buffstreams Minnesota State Mankato Mavericks vs Augustana University Vikings",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/augustana-university-vikings-minnesota-state-mankato-mavericks/1538611"
+  },
+  {
+    "id": 78,
+    "category": "NFL",
+    "title": "Buffstreams Misericordia Cougars vs Widener Pride",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/misericordia-cougars-widener-pride/1538612"
+  },
+  {
+    "id": 79,
+    "category": "NFL",
+    "title": "Buffstreams Montclair State Red Hawks vs Castleton\tSpartans",
+    "time": "Mon",
+    "href": "https://mybuffstreams.plus/cfb/montclair-state-red-hawks-castleton-spartans/1538613"
+  },
+  {
+    "id": 80,
+    "category": "NFL",
+    "title": "Buffstreams Muhlenberg Mules vs Gettysburg Bullets",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/muhlenberg-mules-gettysburg-bullets/1538614"
+  },
+  {
+    "id": 81,
+    "category": "NFL",
+    "title": "Buffstreams Randolph Macon Yellow Jackets vs Roanoke Maroons",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/roanoke-maroons-randolph-macon-yellow-jackets/1538616"
+  },
+  {
+    "id": 82,
+    "category": "NFL",
+    "title": "Buffstreams Saint John Fisher Cardinals vs Suny Morrisville Mustangs",
+    "time": "Sun",
+    "href": "https://mybuffstreams.plus/cfb/saint-john-fisher-cardinals-suny-morrisville-mustangs/1538617"
+  },
+  {
+    "id": 83,
+    "category": "NFL",
+    "title": "Buffstreams Saint Lawrence Saints vs Buffalo Bengals",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/buffalo-bengals-saint-lawrence-saints/1538618"
+  },
+  {
+    "id": 84,
+    "category": "NFL",
+    "title": "Buffstreams Saint Scholastica Saints vs Saint Johns Johnnies",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/saint-johns-johnnies-saint-scholastica-saints/1538619"
+  },
+  {
+    "id": 85,
+    "category": "NFL",
+    "title": "Buffstreams Seton Hill Griffins vs Lock Haven Bald Eagles",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lock-haven-bald-eagles-seton-hill-griffins/1538620"
+  },
+  {
+    "id": 86,
+    "category": "NFL",
+    "title": "Buffstreams Thiel Tomcats vs Westminster Titans",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/thiel-tomcats-westminster-titans/1538623"
+  },
+  {
+    "id": 87,
+    "category": "NFL",
+    "title": "Buffstreams Union Dutchmen vs Rochester Yellowjackets",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/rochester-yellowjackets-union-dutchmen/1538625"
+  },
+  {
+    "id": 88,
+    "category": "NFL",
+    "title": "Buffstreams Ursinus Bears vs Dickinson Red Devils",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/dickinson-red-devils-ursinus-bears/1538626"
+  },
+  {
+    "id": 89,
+    "category": "NFL",
+    "title": "Buffstreams Virginia State Trojans vs Virginia Union Panthers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/virginia-state-trojans-virginia-union-panthers/1538627"
+  },
+  {
+    "id": 90,
+    "category": "NFL",
+    "title": "Buffstreams Washington And Jefferson Presidents vs St. Francis Red Flash",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/washington-and-jefferson-presidents-st-francis-red-flash/1538629"
+  },
+  {
+    "id": 91,
+    "category": "NFL",
+    "title": "Buffstreams Wayne State Warriors vs Ferris State Bulldogs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/wayne-state-warriors-ferris-state-bulldogs/1538631"
+  },
+  {
+    "id": 92,
+    "category": "NFL",
+    "title": "Buffstreams Wesleyan Cardinals vs Williams Ephs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/williams-ephs-wesleyan-cardinals/1538632"
+  },
+  {
+    "id": 93,
+    "category": "NFL",
+    "title": "Buffstreams West Liberty Hilltoppers vs Charleston Golden Eagles",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/charleston-golden-eagles-west-liberty-hilltoppers/1538633"
+  },
+  {
+    "id": 94,
+    "category": "NFL",
+    "title": "Buffstreams Wheaton Thunder vs Elmhurst Bluejays",
+    "time": "Thu",
+    "href": "https://mybuffstreams.plus/cfb/wheaton-thunder-elmhurst-bluejays/1538634"
+  },
+  {
+    "id": 95,
+    "category": "NFL",
+    "title": "Buffstreams Wheeling Cardinals vs Glenville State Pioneers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/wheeling-cardinals-glenville-state-pioneers/1538635"
+  },
+  {
+    "id": 96,
+    "category": "NFL",
+    "title": "Buffstreams Concordia Moorhead Cobbers vs Macalester Scots",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/macalester-scots-concordia-moorhead-cobbers/1538656"
+  },
+  {
+    "id": 97,
+    "category": "NFL",
+    "title": "Buffstreams Capital Crusaders vs Heidelberg Student Princes",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/capital-crusaders-heidelberg-student-princes/1538638"
+  },
+  {
+    "id": 98,
+    "category": "NFL",
+    "title": "Buffstreams Erskine Flying Fleet vs Barton Bulldogs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/erskine-flying-fleet-barton-bulldogs/1538639"
+  },
+  {
+    "id": 99,
+    "category": "NFL",
+    "title": "Buffstreams Franklin College Grizzlies vs Anderson\tRavens",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/franklin-college-grizzlies-anderson-ravens/1538640"
+  },
+  {
+    "id": 100,
+    "category": "NFL",
+    "title": "Buffstreams Manchester Spartans vs Hanover Panthers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/manchester-spartans-hanover-panthers/1538641"
+  },
+  {
+    "id": 101,
+    "category": "NFL",
+    "title": "Buffstreams Marietta Pioneers vs Wilmington Quakers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/marietta-pioneers-wilmington-quakers/1538642"
+  },
+  {
+    "id": 102,
+    "category": "NFL",
+    "title": "Buffstreams Mount St. Joseph Lions vs Rose Hulman Engineers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/mount-st-joseph-lions-rose-hulman-engineers/1538643"
+  },
+  {
+    "id": 103,
+    "category": "NFL",
+    "title": "Buffstreams Muskingum Fighting Muskies vs Otterbein\tCardinals",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/muskingum-fighting-muskies-otterbein-cardinals/1538645"
+  },
+  {
+    "id": 104,
+    "category": "NFL",
+    "title": "Buffstreams Wingate Bulldogs vs Emory And Henry Wasps",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/wingate-bulldogs-emory-and-henry-wasps/1538646"
+  },
+  {
+    "id": 105,
+    "category": "NFL",
+    "title": "Buffstreams Winston",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/winston-salem-state-rams-fayetteville-state-broncos/1538647"
+  },
+  {
+    "id": 106,
+    "category": "NFL",
+    "title": "Buffstreams Bemidji State Beavers vs Minnesota Duluth Bulldogs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/bemidji-state-beavers-minnesota-duluth-bulldogs/1538648"
+  },
+  {
+    "id": 107,
+    "category": "NFL",
+    "title": "Buffstreams Benedict Tigers vs Central State Marauders",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/central-state-marauders-benedict-tigers/1538649"
+  },
+  {
+    "id": 108,
+    "category": "NFL",
+    "title": "Buffstreams Benedictine Eagles vs Aurora Spartans",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/benedictine-eagles-aurora-spartans/1538650"
+  },
+  {
+    "id": 109,
+    "category": "NFL",
+    "title": "Buffstreams Bethany Bison vs Saint Vincent Bearcats",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/bethany-bison-saint-vincent-bearcats/1538651"
+  },
+  {
+    "id": 110,
+    "category": "NFL",
+    "title": "Buffstreams Bluefield State Big Blues vs Elizabeth City Vikings",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/elizabeth-city-vikings-bluefield-state-big-blues/1538652"
+  },
+  {
+    "id": 111,
+    "category": "NFL",
+    "title": "Buffstreams Bridgewater Eagles vs Hampden Sydney Tigers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/bridgewater-eagles-hampden-sydney-tigers/1538653"
+  },
+  {
+    "id": 112,
+    "category": "NFL",
+    "title": "Buffstreams Central Dutch vs Wartburg Knights",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/wartburg-knights-central-dutch/1538654"
+  },
+  {
+    "id": 113,
+    "category": "NFL",
+    "title": "Buffstreams Coe\tKohawks vs Dubuque\tSpartans",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/coe-kohawks-dubuque-spartans/1538655"
+  },
+  {
+    "id": 114,
+    "category": "NFL",
+    "title": "Buffstreams Crown Storm vs Minnesota Morris Cougars",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/crown-storm-minnesota-morris-cougars/1538657"
+  },
+  {
+    "id": 115,
+    "category": "NFL",
+    "title": "Buffstreams East Texas Baptist Tigers vs Mary Hardin Baylor Crusaders",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/mary-hardin-baylor-crusaders-east-texas-baptist-tigers/1538658"
+  },
+  {
+    "id": 116,
+    "category": "NFL",
+    "title": "Buffstreams Emporia State Hornets vs Washburn Ichabods",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/emporia-state-hornets-washburn-ichabods/1538660"
+  },
+  {
+    "id": 117,
+    "category": "NFL",
+    "title": "Buffstreams Eureka Red Devils vs Rockford\tRegents",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/rockford-regents-eureka-red-devils/1538661"
+  },
+  {
+    "id": 118,
+    "category": "NFL",
+    "title": "Buffstreams Ferrum Panthers vs North Carolina Pembroke Braves",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/north-carolina-pembroke-braves-ferrum-panthers/1538662"
+  },
+  {
+    "id": 119,
+    "category": "NFL",
+    "title": "Buffstreams Fort Lewis Skyhawks vs Colorado Mesa Mavericks",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/fort-lewis-skyhawks-colorado-mesa-mavericks/1538663"
+  },
+  {
+    "id": 120,
+    "category": "NFL",
+    "title": "Buffstreams Fort Valley State Wildcats vs Albany State Golden Rams",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/fort-valley-state-wildcats-albany-state-golden-rams/1538664"
+  },
+  {
+    "id": 121,
+    "category": "NFL",
+    "title": "Buffstreams Greenville Panthers vs Westminster Blue Jays",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/westminster-blue-jays-greenville-panthers/1538665"
+  },
+  {
+    "id": 122,
+    "category": "NFL",
+    "title": "Buffstreams Hamline Pipers vs Saint Olaf Oles",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/hamline-pipers-saint-olaf-oles/1538666"
+  },
+  {
+    "id": 123,
+    "category": "NFL",
+    "title": "Buffstreams Hardin Simmons Cowboys vs Schreiner Mountaineers",
+    "time": "mon",
+    "href": "https://mybuffstreams.plus/cfb/schreiner-mountaineers-hardin-simmons-cowboys/1538667"
+  },
+  {
+    "id": 124,
+    "category": "NFL",
+    "title": "Buffstreams Illinois Wesleyan Titans vs North Park Vikings",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/illinois-wesleyan-titans-north-park-vikings/1538668"
+  },
+  {
+    "id": 125,
+    "category": "NFL",
+    "title": "Buffstreams Indiana Crimson Hawks vs Clarion Golden Eagles",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/indiana-crimson-hawks-clarion-golden-eagles/1538669"
+  },
+  {
+    "id": 126,
+    "category": "NFL",
+    "title": "Buffstreams Indianapolis Greyhounds vs Southwest Baptist Bearcats",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/southwest-baptist-bearcats-indianapolis-greyhounds/1538670"
+  },
+  {
+    "id": 127,
+    "category": "NFL",
+    "title": "Buffstreams Jamestown Jimmies vs Minnesota Moorhead Dragons",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/jamestown-jimmies-minnesota-moorhead-dragons/1538671"
+  },
+  {
+    "id": 128,
+    "category": "NFL",
+    "title": "Buffstreams Lawrence Vikings vs Chicago Maroons",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lawrence-vikings-chicago-maroons/1538672"
+  },
+  {
+    "id": 129,
+    "category": "NFL",
+    "title": "Buffstreams Lenoir Rhyne Bears vs Tusculum Pioneers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lenoir-rhyne-bears-tusculum-pioneers/1538673"
+  },
+  {
+    "id": 130,
+    "category": "NFL",
+    "title": "Buffstreams Livingstone Blue Bears vs Johnson C. Smith Golden Bulls",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/livingstone-blue-bears-johnson-smith-golden-bulls/1538674"
+  },
+  {
+    "id": 131,
+    "category": "NFL",
+    "title": "Buffstreams Loras Duhawks vs Buena Vista Beavers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/buena-vista-beavers-loras-duhawks/1538675"
+  },
+  {
+    "id": 132,
+    "category": "NFL",
+    "title": "Buffstreams Lyon College Scots vs Hendrix Warriors",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lyon-college-scots-hendrix-warriors/1538676"
+  },
+  {
+    "id": 133,
+    "category": "NFL",
+    "title": "Buffstreams McMurry War Hawks vs Howard Payne Yellow Jackets",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/howard-payne-yellow-jackets-mcmurry-war-hawks/1538677"
+  },
+  {
+    "id": 134,
+    "category": "NFL",
+    "title": "Buffstreams Mckendree Bearcats vs Northeastern State Riverhawks",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/northeastern-state-riverhawks-mckendree-bearcats/1538678"
+  },
+  {
+    "id": 135,
+    "category": "NFL",
+    "title": "Buffstreams Midwestern State Mustangs vs Texas",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/texas-permian-basin-falcons-midwestern-state-mustangs/1538679"
+  },
+  {
+    "id": 136,
+    "category": "NFL",
+    "title": "Buffstreams Millsaps Majors vs Berry Vikings",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/berry-vikings-millsaps-majors/1538680"
+  },
+  {
+    "id": 137,
+    "category": "NFL",
+    "title": "Buffstreams Minot State Beavers vs Northern State Wolves",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/minot-state-beavers-northern-state-wolves/1538681"
+  },
+  {
+    "id": 138,
+    "category": "NFL",
+    "title": "Buffstreams Missouri S&T Miners vs Lincoln University Blue Tigers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lincoln-university-blue-tigers-missouri-s-and-t-miners/1538682"
+  },
+  {
+    "id": 139,
+    "category": "NFL",
+    "title": "Buffstreams Missouri Southern Lions vs Central Oklahoma Bronchos",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/central-oklahoma-bronchos-missouri-southern-lions/1538683"
+  },
+  {
+    "id": 140,
+    "category": "NFL",
+    "title": "Buffstreams Monmouth Fighting Scots vs Grinnell Pioneers",
+    "time": "Mon",
+    "href": "https://mybuffstreams.plus/cfb/grinnell-pioneers-monmouth-fighting-scots/1538684"
+  },
+  {
+    "id": 141,
+    "category": "NFL",
+    "title": "Buffstreams Nebraska Kearney Lopers vs Fort Hays State Tigers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/fort-hays-state-tigers-nebraska-kearney-lopers/1538685"
+  },
+  {
+    "id": 142,
+    "category": "NFL",
+    "title": "Buffstreams Nebraska Wesleyan Prairie Wolves vs Simpson Storm",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/simpson-storm-nebraska-wesleyan-prairie-wolves/1538686"
+  },
+  {
+    "id": 143,
+    "category": "NFL",
+    "title": "Buffstreams New Mexico Highlands Cowboys vs Adams State Grizzlies",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/adams-state-grizzlies-new-mexico-highlands-cowboys/1538687"
+  },
+  {
+    "id": 144,
+    "category": "NFL",
+    "title": "Buffstreams Northwestern Eagles vs Martin Luther Knights",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/northwestern-eagles-martin-luther-knights/1538688"
+  },
+  {
+    "id": 145,
+    "category": "NFL",
+    "title": "Buffstreams Ouachita Baptist Tigers vs Southwestern Oklahoma State Bulldogs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/southwestern-oklahoma-state-bulldogs-ouachita-baptist-tigers/1538689"
+  },
+  {
+    "id": 146,
+    "category": "NFL",
+    "title": "Buffstreams Quincy Hawks vs Upper Iowa Peacocks",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/quincy-hawks-upper-iowa-peacocks/1538690"
+  },
+  {
+    "id": 147,
+    "category": "NFL",
+    "title": "Buffstreams Robert Morris Eagles vs Saginaw Valley State Cardinals",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/robert-morris-eagles-saginaw-valley-state-cardinals/1538691"
+  },
+  {
+    "id": 148,
+    "category": "NFL",
+    "title": "Buffstreams Saint Norbert Green Knights vs Concordia Chicago Cougars",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/saint-norbert-green-knights-concordia-chicago-cougars/1538692"
+  },
+  {
+    "id": 149,
+    "category": "NFL",
+    "title": "Buffstreams Sewanee\tTigers vs Rhodes Lynx",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/sewanee-tigers-rhodes-lynx/1538693"
+  },
+  {
+    "id": 150,
+    "category": "NFL",
+    "title": "Buffstreams Texas Lutheran Bulldogs vs Centenary Gents",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/centenary-gents-texas-lutheran-bulldogs/1538694"
+  },
+  {
+    "id": 151,
+    "category": "NFL",
+    "title": "Buffstreams UW\u2013La Crosse Eagles vs UW",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/uw-la-crosse-eagles-uw-river-falls-falcons/1538695"
+  },
+  {
+    "id": 152,
+    "category": "NFL",
+    "title": "Buffstreams Valdosta State Blazers vs North Greenville Crusaders",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/valdosta-state-blazers-north-greenville-crusaders/1538696"
+  },
+  {
+    "id": 153,
+    "category": "NFL",
+    "title": "Buffstreams Wayne State Wildcats vs Sioux Falls Cougars",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/wayne-state-wildcats-sioux-falls-cougars/1538697"
+  },
+  {
+    "id": 154,
+    "category": "NFL",
+    "title": "Buffstreams West Alabama Tigers vs Monroe Mustangs",
+    "time": "Mon",
+    "href": "https://mybuffstreams.plus/cfb/monroe-mustangs-west-alabama-tigers/1538698"
+  },
+  {
+    "id": 155,
+    "category": "NFL",
+    "title": "Buffstreams West Chester Golden Rams vs Shippensburg Raiders",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/shippensburg-raiders-west-chester-golden-rams/1538699"
+  },
+  {
+    "id": 156,
+    "category": "NFL",
+    "title": "Buffstreams Winona State Warriors vs Mary Marauders",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/mary-marauders-winona-state-warriors/1538700"
+  },
+  {
+    "id": 157,
+    "category": "NFL",
+    "title": "Buffstreams Wisconsin Platteville Pioneers vs UW",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/uw-whitewater-warhawks-wisconsin-platteville-pioneers/1538701"
+  },
+  {
+    "id": 158,
+    "category": "NFL",
+    "title": "Buffstreams Wisconsin Stevens Point Pointers vs UW",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/wisconsin-stevens-point-pointers-uw-oshkosh-titans/1538702"
+  },
+  {
+    "id": 159,
+    "category": "NFL",
+    "title": "Buffstreams UW Stout Blue Devils vs Wisconsin",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/uw-stout-blue-devils-wisconsin-eau-claire-blugolds/1538703"
+  },
+  {
+    "id": 160,
+    "category": "NFL",
+    "title": "Buffstreams Arkansas Monticello Boll Weevils vs Northwestern Oklahoma State Rangers",
+    "time": "Mon",
+    "href": "https://mybuffstreams.plus/cfb/northwestern-oklahoma-state-rangers-arkansas-monticello-boll-weevils/1538704"
+  },
+  {
+    "id": 161,
+    "category": "NFL",
+    "title": "Buffstreams Arkansas Tech Wonder Boys vs Oklahoma Baptist Bison",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/arkansas-tech-wonder-boys-oklahoma-baptist-bison/1538705"
+  },
+  {
+    "id": 162,
+    "category": "NFL",
+    "title": "Buffstreams Black Hills State Yellow Jackets vs Chadron State Eagles",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/chadron-state-eagles-black-hills-state-yellow-jackets/1538706"
+  },
+  {
+    "id": 163,
+    "category": "NFL",
+    "title": "Buffstreams Carson",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/newberry-wolves-carson-newman-eagles/1538707"
+  },
+  {
+    "id": 164,
+    "category": "NFL",
+    "title": "Buffstreams East Central Tigers vs Henderson State Reddies",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/henderson-state-reddies-east-central-tigers/1538708"
+  },
+  {
+    "id": 165,
+    "category": "NFL",
+    "title": "Buffstreams Missouri Western Griffons vs Northwest Missouri State Bearcats",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/missouri-western-griffons-northwest-missouri-state-bearcats/1538709"
+  },
+  {
+    "id": 166,
+    "category": "NFL",
+    "title": "Buffstreams Pittsburg State Gorillas vs Central Missouri Mules",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/central-missouri-mules-pittsburg-state-gorillas/1538710"
+  },
+  {
+    "id": 167,
+    "category": "NFL",
+    "title": "Buffstreams Savannah State Tigers vs Virginia Lynchburg Dragons",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/virginia-lynchburg-dragons-savannah-state-tigers/1538711"
+  },
+  {
+    "id": 168,
+    "category": "NFL",
+    "title": "Buffstreams Southeastern Oklahoma State Savage Storm vs Southern Arkansas Muleriders",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/southern-arkansas-muleriders-southeastern-oklahoma-state-savage-storm/1538712"
+  },
+  {
+    "id": 169,
+    "category": "NFL",
+    "title": "Buffstreams Virginia",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/catawba-indians-virginia-wise-cavaliers/1538713"
+  },
+  {
+    "id": 170,
+    "category": "NFL",
+    "title": "Buffstreams Western Colorado Mountaineers vs Colorado Mines Orediggers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/western-colorado-mountaineers-colorado-mines-orediggers/1538714"
+  },
+  {
+    "id": 171,
+    "category": "NFL",
+    "title": "Buffstreams Whitworth Pirates vs Willamette Bearcats",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/willamette-bearcats-whitworth-pirates/1538715"
+  },
+  {
+    "id": 172,
+    "category": "NFL",
+    "title": "Buffstreams Saint Anselm Hawks vs Post Eagles",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/post-eagles-saint-anselm-hawks/1538716"
+  },
+  {
+    "id": 173,
+    "category": "NFL",
+    "title": "Buffstreams Tuskegee Golden Tigers vs Miles Golden Bears",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/tuskegee-golden-tigers-miles-golden-bears/1538717"
+  },
+  {
+    "id": 174,
+    "category": "NFL",
+    "title": "Buffstreams Mount Union Purple Raiders vs Baldwin Wallace Yellow Jackets",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/baldwin-wallace-yellow-jackets-mount-union-purple-raiders/1538644"
+  },
+  {
+    "id": 175,
+    "category": "NFL",
+    "title": "Buffstreams Anderson Trojans vs Mars Hill Lions",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/anderson-trojans-mars-hill-lions/1538718"
+  },
+  {
+    "id": 176,
+    "category": "NFL",
+    "title": "Buffstreams Central Washington Wildcats vs Western New Mexico Mustangs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/western-new-mexico-mustangs-central-washington-wildcats/1538719"
+  },
+  {
+    "id": 177,
+    "category": "NFL",
+    "title": "Buffstreams Harding Bisons vs Southern Nazarene Crimson Storm",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/southern-nazarene-crimson-storm-harding-bisons/1538720"
+  },
+  {
+    "id": 178,
+    "category": "NFL",
+    "title": "Buffstreams La Verne Leopards vs Whittier Poets",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/whittier-poets-la-verne-leopards/1538721"
+  },
+  {
+    "id": 179,
+    "category": "NFL",
+    "title": "Buffstreams Linfield Wildcats vs Puget Sound Loggers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/linfield-wildcats-puget-sound-loggers/1538722"
+  },
+  {
+    "id": 180,
+    "category": "NFL",
+    "title": "Buffstreams Pacific Boxers vs George Fox Bruins",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/pacific-boxers-george-fox-bruins/1538723"
+  },
+  {
+    "id": 181,
+    "category": "NFL",
+    "title": "Buffstreams Pacific Lutheran Lutes vs Lewis And Clark Pioneers",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/lewis-and-clark-pioneers-pacific-lutheran-lutes/1538724"
+  },
+  {
+    "id": 182,
+    "category": "NFL",
+    "title": "Buffstreams Slippery Rock vs Edinboro Fighting Scots",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/slippery-rock-edinboro-fighting-scots/1538725"
+  },
+  {
+    "id": 183,
+    "category": "NFL",
+    "title": "Buffstreams William Jewell Cardinals vs Truman State Bulldogs",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/truman-state-bulldogs-william-jewell-cardinals/1538726"
+  },
+  {
+    "id": 184,
+    "category": "NFL",
+    "title": "Buffstreams South Dakota Hardrockers vs Colorado State Pueblo Thunderwolves",
+    "time": "Thu",
+    "href": "https://mybuffstreams.plus/cfb/colorado-state-pueblo-thunderwolves-south-dakota-hardrockers/1538729"
+  },
+  {
+    "id": 185,
+    "category": "NFL",
+    "title": "Buffstreams Western Oregon Wolves vs West Texas A&M Buffaloes",
+    "time": "Upcoming",
+    "href": "https://mybuffstreams.plus/cfb/west-texas-a-and-m-buffaloes-western-oregon-wolves/1538727"
+  },
+  {
+    "id": 186,
     "category": "NFL",
     "title": "Buffstreams Louisiana Ragin Cajuns vs South Alabama Jaguars",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/south-alabama-jaguars-louisiana-ragin-cajuns/1538440"
   },
   {
-    "id": 275,
+    "id": 187,
     "category": "NFL",
     "title": "Buffstreams Cal Poly Mustangs vs Northern Arizona",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/cal-poly-mustangs-northern-arizona/1538526"
   },
   {
-    "id": 276,
+    "id": 188,
     "category": "NFL",
     "title": "Buffstreams Central Arkansas Bears vs West Georgia Wolves",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/west-georgia-wolves-central-arkansas-bears/1538527"
   },
   {
-    "id": 277,
+    "id": 189,
     "category": "NFL",
     "title": "Buffstreams Houston Baptist Huskies vs Mcneese State Cowboys",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/houston-baptist-huskies-mcneese-state-cowboys/1538528"
   },
   {
-    "id": 278,
+    "id": 190,
     "category": "NFL",
     "title": "Buffstreams Idaho Vandals vs Eastern Washington Eagles",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/eastern-washington-eagles-idaho-vandals/1538529"
   },
   {
-    "id": 279,
+    "id": 191,
     "category": "NFL",
     "title": "Buffstreams Ripon Red Hawks vs Beloit Buccaneers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/beloit-buccaneers-ripon-red-hawks/1538728"
   },
   {
-    "id": 280,
+    "id": 192,
     "category": "NFL",
     "title": "Buffstreams Colorado State Rams vs Boise State Broncos",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/colorado-state-rams-boise-state-broncos/1538469"
   },
   {
-    "id": 281,
+    "id": 193,
     "category": "NFL",
     "title": "Buffstreams Idaho State Bengals vs Montana State Bobcats",
     "time": "Mon",
     "href": "https://mybuffstreams.plus/cfb/montana-state-bobcats-idaho-state-bengals/1538530"
   },
   {
-    "id": 282,
+    "id": 194,
     "category": "NFL",
     "title": "Buffstreams Indiana State Sycamores vs Southern Illinois Salukis",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/indiana-state-sycamores-southern-illinois-salukis/1538531"
   },
   {
-    "id": 283,
+    "id": 195,
     "category": "NFL",
     "title": "Buffstreams Edward Waters Tigers vs Allen Yellow Jackets",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/allen-yellow-jackets-edward-waters-tigers/1538659"
   },
   {
-    "id": 284,
+    "id": 196,
     "category": "NFL",
     "title": "Buffstreams Tennessee Volunteers vs Kentucky Wildcats",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/kentucky-wildcats-tennessee-volunteers/1538454"
   },
   {
-    "id": 285,
+    "id": 197,
     "category": "NFL",
     "title": "Buffstreams Jacksonville State Gamecocks vs Sam Houston State Bearkats",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/sam-houston-state-bearkats-jacksonville-state-gamecocks/1538470"
   },
   {
-    "id": 286,
+    "id": 198,
     "category": "NFL",
     "title": "Buffstreams California",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/utah-tech-trailblazers-california-davis-aggies/1538532"
   },
   {
-    "id": 287,
+    "id": 199,
     "category": "NFL",
     "title": "Buffstreams Southeastern Louisiana Lions vs Incarnate Word Cardinals",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/incarnate-word-cardinals-southeastern-louisiana-lions/1538533"
   },
   {
-    "id": 288,
+    "id": 200,
     "category": "NFL",
     "title": "Buffstreams Tarleton State Texans vs Abilene Christian Wildcats",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/tarleton-state-texans-abilene-christian-wildcats/1538534"
   },
   {
-    "id": 289,
+    "id": 201,
     "category": "NFL",
     "title": "Buffstreams North Alabama Lions vs West Florida Argonauts",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/west-florida-argonauts-north-alabama-lions/1538535"
   },
   {
-    "id": 290,
+    "id": 202,
     "category": "NFL",
     "title": "Buffstreams Angelo State Rams vs Eastern New Mexico Greyhounds",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/eastern-new-mexico-greyhounds-angelo-state-rams/1538731"
   },
   {
-    "id": 291,
+    "id": 203,
     "category": "NFL",
     "title": "Buffstreams Denison Big Red vs Wittenberg Tigers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/denison-big-red-wittenberg-tigers/1538732"
   },
   {
-    "id": 292,
+    "id": 204,
     "category": "NFL",
     "title": "Buffstreams Arizona State Sun Devils vs Colorado Buffaloes",
     "time": "Sun",
     "href": "https://mybuffstreams.plus/cfb/colorado-buffaloes-arizona-state-sun-devils/1538428"
   },
   {
-    "id": 293,
+    "id": 205,
     "category": "NFL",
     "title": "Buffstreams Georgia Tech Yellow Jackets vs Louisville Cardinals",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/louisville-cardinals-georgia-tech-yellow-jackets/1538435"
   },
   {
-    "id": 294,
+    "id": 206,
     "category": "NFL",
     "title": "Buffstreams Michigan Wolverines vs Michigan State Spartans",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/michigan-state-spartans-michigan-wolverines/1538441"
   },
   {
-    "id": 295,
+    "id": 207,
     "category": "NFL",
     "title": "Buffstreams Northwestern Wildcats vs Iowa Hawkeyes",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/northwestern-wildcats-iowa-hawkeyes/1538447"
   },
   {
-    "id": 296,
+    "id": 208,
     "category": "NFL",
     "title": "Buffstreams Ole Miss Rebels vs Georgia Bulldogs",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/georgia-bulldogs-ole-miss-rebels/1538449"
   },
   {
-    "id": 297,
+    "id": 209,
     "category": "NFL",
     "title": "Buffstreams Army Knights vs Air Force Falcons",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/army-knights-air-force-falcons/1538471"
   },
   {
-    "id": 298,
+    "id": 210,
     "category": "NFL",
     "title": "Buffstreams Notre Dame Fighting Irish vs Miami Hurricanes",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/miami-hurricanes-notre-dame-fighting-irish/1538472"
   },
   {
-    "id": 299,
+    "id": 211,
     "category": "NFL",
     "title": "Buffstreams Florida Gators vs Oklahoma Sooners",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/oklahoma-sooners-florida-gators/1538433"
   },
   {
-    "id": 300,
+    "id": 212,
     "category": "NFL",
     "title": "Buffstreams New Mexico State Aggies vs Liberty Flames",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/liberty-flames-new-mexico-state-aggies/1538468"
   },
   {
-    "id": 301,
+    "id": 213,
     "category": "NFL",
     "title": "Buffstreams Claremont Mudd Scripps Stags vs Azusa Pacific Cougars",
     "time": "mon",
     "href": "https://mybuffstreams.plus/cfb/azusa-pacific-cougars-claremont-mudd-scripps-stags/1538733"
   },
   {
-    "id": 302,
+    "id": 214,
     "category": "NFL",
     "title": "Buffstreams Texas A&M Kingsville Javelinas vs Sul Ross State Lobos",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/texas-a-and-m-kingsville-javelinas-sul-ross-state-lobos/1538734"
   },
   {
-    "id": 303,
+    "id": 215,
     "category": "NFL",
     "title": "Buffstreams Texas Tech Red Raiders vs West Virginia Mountaineers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/texas-tech-red-raiders-west-virginia-mountaineers/1538455"
   },
   {
-    "id": 304,
+    "id": 216,
     "category": "NFL",
     "title": "Buffstreams UTEP Miners vs Hawaii Rainbow Warriors",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/hawaii-rainbow-warriors-utep-miners/1538459"
   },
   {
-    "id": 305,
+    "id": 217,
     "category": "NFL",
     "title": "Buffstreams Utah State Aggies vs Fresno State Bulldogs",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/utah-state-aggies-fresno-state-bulldogs/1538473"
   },
   {
-    "id": 306,
+    "id": 218,
     "category": "NFL",
     "title": "Buffstreams California Lutheran Kingsmen vs Chapman Panthers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/chapman-panthers-california-lutheran-kingsmen/1538735"
   },
   {
-    "id": 307,
+    "id": 219,
     "category": "NFL",
     "title": "Buffstreams Pomona Pitzer Sagehens vs Redlands\tBulldogs",
     "time": "mon",
     "href": "https://mybuffstreams.plus/cfb/redlands-bulldogs-pomona-pitzer-sagehens/1538736"
   },
   {
-    "id": 308,
+    "id": 220,
     "category": "NFL",
     "title": "Buffstreams Oregon State Beavers vs Texas State Bobcats",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/texas-state-bobcats-oregon-state-beavers/1538474"
   },
   {
-    "id": 309,
+    "id": 221,
     "category": "NFL",
     "title": "Buffstreams UNLV Rebels vs Wyoming Cowboys",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/unlv-rebels-wyoming-cowboys/1538475"
   },
   {
-    "id": 310,
+    "id": 222,
     "category": "NFL",
     "title": "Buffstreams Montreal Alouettes vs Winnipeg Blue Bombers",
     "time": "Mon",
     "href": "https://mybuffstreams.plus/cfl-playoffs/montreal-alouettes-winnipeg-blue-bombers/1623506"
   },
   {
-    "id": 311,
+    "id": 223,
     "category": "NFL",
     "title": "Buffstreams Edmonton Elks vs BC Lions",
     "time": "mon",
     "href": "https://mybuffstreams.plus/cfl-playoffs/bc-lions-edmonton-elks/1623507"
   },
   {
-    "id": 312,
+    "id": 224,
     "category": "MMA",
     "title": "UFC Fight Night: Cortes Acosta vs. Walker",
     "time": "05:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-fight-night-bonfim-vs-brady-live-streams-links"
   },
   {
-    "id": 313,
+    "id": 225,
     "category": "MMA",
     "title": "UFC 334: Gane vs. Hokit",
     "time": "05:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-334-gane-vs-hokit-live-streams-links"
   },
   {
-    "id": 314,
+    "id": 226,
     "category": "MMA",
     "title": "PFL Dubai: Nemkov vs. Bilostenniy",
     "time": "09:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/pfl/pfl-dubai-nemkov-vs-bilostenniy-live-streams-links"
   },
   {
-    "id": 315,
-    "category": "Boxing",
-    "title": "Chris Billam",
-    "time": "01:00 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/boxing/chris-billam-smith-vs-cheavon-clarke-live-streams-links"
+    "id": 227,
+    "category": "MMA",
+    "title": "Oktagon 97: Severino vs Holzer",
+    "time": "11:00 AM ET",
+    "href": "https://mybuffstreams.plus/title-game/other/oktagon-97-severino-vs-holzer-live-streams-links"
   },
   {
-    "id": 316,
+    "id": 228,
     "category": "Boxing",
     "title": "Joshua Buatsi vs Willy Hutchinson",
-    "time": "02:00 PM ET",
+    "time": "10:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/joshua-buatsi-vs-willy-hutchinson-live-streams-links"
   },
   {
-    "id": 317,
+    "id": 229,
+    "category": "Boxing",
+    "title": "Chris Billam",
+    "time": "11:00 AM ET",
+    "href": "https://mybuffstreams.plus/title-game/boxing/chris-billam-smith-vs-cheavon-clarke-live-streams-links"
+  },
+  {
+    "id": 230,
+    "category": "Boxing",
+    "title": "BKFC 96 Cohoon vs Weir",
+    "time": "01:00 PM ET",
+    "href": "https://mybuffstreams.plus/title-game/boxing/bkfc-96-cohoon-vs-weir-live-streams-links"
+  },
+  {
+    "id": 231,
     "category": "Boxing",
     "title": "Elif Nur Turhan vs Alycia Baumgardner",
     "time": "08:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/elif-nur-turhan-vs-alycia-baumgardner-live-streams-links"
   },
   {
-    "id": 318,
+    "id": 232,
     "category": "Boxing",
     "title": "Pedro Taduran vs Brandon Moreno",
     "time": "02:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/pedro-taduran-vs-brandon-moreno-live-streams-links"
   },
   {
-    "id": 319,
+    "id": 233,
     "category": "Boxing",
     "title": "Bakary Samake vs Uisma Lima",
     "time": "01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/bakary-samake-vs-uisma-lima-live-streams-links"
   },
   {
-    "id": 320,
+    "id": 234,
     "category": "Boxing",
     "title": "Zelfa Barrett vs Gavin Gwynne",
     "time": "02:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/zelfa-barrett-vs-gavin-gwynne-live-streams-links"
   },
   {
-    "id": 321,
+    "id": 235,
     "category": "NBA",
     "title": "Buffstreams Indiana Pacers vs Denver Nuggets",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/indiana-pacers-denver-nuggets/1578339"
   },
   {
-    "id": 322,
+    "id": 236,
     "category": "NBA",
     "title": "Buffstreams Atlanta Hawks vs Brooklyn Nets",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/brooklyn-nets-atlanta-hawks/1578340"
   },
   {
-    "id": 323,
+    "id": 237,
     "category": "NBA",
     "title": "Buffstreams Cleveland Cavaliers vs New York Knicks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/cleveland-cavaliers-new-york-knicks/1578341"
   },
   {
-    "id": 324,
+    "id": 238,
     "category": "NBA",
     "title": "Buffstreams Oklahoma City Thunder vs Washington Wizards",
     "time": "Thu",
     "href": "https://mybuffstreams.plus/nba/washington-wizards-oklahoma-city-thunder/1578342"
   },
   {
-    "id": 325,
+    "id": 239,
     "category": "NBA",
     "title": "Buffstreams Golden State Warriors vs Orlando Magic",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/orlando-magic-golden-state-warriors/1578343"
   },
   {
-    "id": 326,
+    "id": 240,
     "category": "NBA",
     "title": "Buffstreams Phoenix Suns vs Houston Rockets",
     "time": "Sun",
     "href": "https://mybuffstreams.plus/nba/phoenix-suns-houston-rockets/1578344"
   },
   {
-    "id": 327,
+    "id": 241,
     "category": "NBA",
     "title": "Buffstreams Portland Trail Blazers vs San Antonio Spurs",
     "time": "Upcoming",
