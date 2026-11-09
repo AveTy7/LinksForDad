@@ -2,131 +2,61 @@
   {
     "id": 1,
     "category": "NFL",
-    "title": "NFL Redzone",
-    "time": "01:00 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/nfl/nfl-redzone-live-streams-links"
-  },
-  {
-    "id": 2,
-    "category": "NFL",
-    "title": "Buffstreams Los Angeles Chargers vs Houston Texans",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/los-angeles-chargers-houston-texans/1538754"
-  },
-  {
-    "id": 3,
-    "category": "NFL",
-    "title": "Buffstreams San Francisco 49ers vs Las Vegas Raiders",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/las-vegas-raiders-san-francisco-49ers/1538755"
-  },
-  {
-    "id": 4,
-    "category": "NFL",
-    "title": "Buffstreams New England Patriots vs Green Bay Packers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/new-england-patriots-green-bay-packers/1538756"
-  },
-  {
-    "id": 5,
-    "category": "NFL",
-    "title": "Buffstreams Seattle Seahawks vs Arizona Cardinals",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/seattle-seahawks-arizona-cardinals/1538757"
-  },
-  {
-    "id": 6,
-    "category": "NFL",
     "title": "Buffstreams Chicago Bears vs Tampa Bay Buccaneers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nfl/chicago-bears-tampa-bay-buccaneers/1538758"
   },
   {
-    "id": 7,
+    "id": 2,
     "category": "MMA",
     "title": "UFC 334: Gane vs. Hokit",
     "time": "05:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-334-gane-vs-hokit-live-streams-links"
   },
   {
-    "id": 8,
+    "id": 3,
     "category": "MMA",
     "title": "PFL Dubai: Nemkov vs. Bilostenniy",
     "time": "09:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/pfl/pfl-dubai-nemkov-vs-bilostenniy-live-streams-links"
   },
   {
-    "id": 9,
+    "id": 4,
     "category": "Boxing",
     "title": "Elif Nur Turhan vs Alycia Baumgardner",
     "time": "08:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/elif-nur-turhan-vs-alycia-baumgardner-live-streams-links"
   },
   {
-    "id": 10,
+    "id": 5,
     "category": "Boxing",
     "title": "Pedro Taduran vs Brandon Moreno",
     "time": "02:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/pedro-taduran-vs-brandon-moreno-live-streams-links"
   },
   {
-    "id": 11,
+    "id": 6,
     "category": "Boxing",
     "title": "Bakary Samake vs Uisma Lima",
     "time": "01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/bakary-samake-vs-uisma-lima-live-streams-links"
   },
   {
-    "id": 12,
+    "id": 7,
     "category": "Boxing",
     "title": "Zelfa Barrett vs Gavin Gwynne",
     "time": "02:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/zelfa-barrett-vs-gavin-gwynne-live-streams-links"
   },
   {
-    "id": 13,
-    "category": "NBA",
-    "title": "Buffstreams Chicago Bulls vs Philadelphia 76ers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/philadelphia-76ers-chicago-bulls/1579176"
-  },
-  {
-    "id": 14,
-    "category": "NBA",
-    "title": "Buffstreams Detroit Pistons vs Los Angeles Lakers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/los-angeles-lakers-detroit-pistons/1579177"
-  },
-  {
-    "id": 15,
-    "category": "NBA",
-    "title": "Buffstreams Minnesota Timberwolves vs Utah Jazz",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/utah-jazz-minnesota-timberwolves/1579178"
-  },
-  {
-    "id": 16,
-    "category": "NBA",
-    "title": "Buffstreams Dallas Mavericks vs Brooklyn Nets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/brooklyn-nets-dallas-mavericks/1579179"
-  },
-  {
-    "id": 17,
-    "category": "NBA",
-    "title": "Buffstreams Milwaukee Bucks vs Boston Celtics",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/boston-celtics-milwaukee-bucks/1579180"
-  },
-  {
-    "id": 18,
+    "id": 8,
     "category": "NBA",
     "title": "Buffstreams Los Angeles Clippers vs New Orleans Pelicans",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/new-orleans-pelicans-los-angeles-clippers/1579181"
   },
   {
-    "id": 19,
+    "id": 9,
     "category": "NBA",
     "title": "Buffstreams Sacramento Kings vs Miami Heat",
     "time": "Upcoming",
