@@ -1,135 +1,30 @@
 [
   {
     "id": 1,
-    "category": "NFL",
-    "title": "NFL Redzone",
-    "time": "01:00 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/nfl/nfl-redzone-live-streams-links"
-  },
-  {
-    "id": 2,
-    "category": "NFL",
-    "title": "Buffstreams Arizona Cardinals vs Los Angeles Rams",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/arizona-cardinals-los-angeles-rams/1539100"
-  },
-  {
-    "id": 3,
-    "category": "NFL",
-    "title": "Buffstreams Las Vegas Raiders vs Seattle Seahawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/seattle-seahawks-las-vegas-raiders/1539101"
-  },
-  {
-    "id": 4,
-    "category": "NFL",
-    "title": "Buffstreams Dallas Cowboys vs San Francisco 49ers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/dallas-cowboys-san-francisco-49ers/1539102"
-  },
-  {
-    "id": 5,
-    "category": "NFL",
-    "title": "Buffstreams Cincinnati Bengals vs Pittsburgh Steelers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/cincinnati-bengals-pittsburgh-steelers/1539103"
-  },
-  {
-    "id": 6,
-    "category": "NFL",
-    "title": "Buffstreams Edmonton Elks vs Montreal Alouettes",
-    "time": "mon",
-    "href": "https://mybuffstreams.plus/cfl-playoffs/montreal-alouettes-edmonton-elks/1638319"
-  },
-  {
-    "id": 7,
     "category": "MMA",
     "title": "UFC Fight Night: Proch\u00e1zka vs. Stirling",
     "time": "10:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-fight-night-prochazka-vs-stirling-live-streams-links"
   },
   {
-    "id": 8,
+    "id": 2,
     "category": "Boxing",
     "title": "Teremoana Teremoana vs Hemi Ahio",
     "time": "04:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/teremoana-teremoana-vs-hemi-ahio-live-streams-links"
   },
   {
-    "id": 9,
+    "id": 3,
     "category": "Boxing",
     "title": "Lauren Price vs Michaela Kotaskova",
     "time": "12:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/lauren-price-vs-michaela-kotaskova-live-streams-links"
   },
   {
-    "id": 10,
+    "id": 4,
     "category": "Boxing",
     "title": "Amari Jones vs DeAundre Pettus",
     "time": "08:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/amari-jones-vs-deaundre-pettus-live-streams-links"
-  },
-  {
-    "id": 11,
-    "category": "NBA",
-    "title": "Buffstreams Phoenix Suns vs Los Angeles Lakers",
-    "time": "Sun",
-    "href": "https://mybuffstreams.plus/nba/los-angeles-lakers-phoenix-suns/1638350"
-  },
-  {
-    "id": 12,
-    "category": "NBA",
-    "title": "Buffstreams Los Angeles Clippers vs Charlotte Hornets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/charlotte-hornets-los-angeles-clippers/1638351"
-  },
-  {
-    "id": 13,
-    "category": "NBA",
-    "title": "Buffstreams Utah Jazz vs San Antonio Spurs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/utah-jazz-san-antonio-spurs/1638352"
-  },
-  {
-    "id": 14,
-    "category": "NBA",
-    "title": "Buffstreams Boston Celtics vs Dallas Mavericks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/boston-celtics-dallas-mavericks/1638353"
-  },
-  {
-    "id": 15,
-    "category": "NBA",
-    "title": "Buffstreams Toronto Raptors vs New York Knicks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/toronto-raptors-new-york-knicks/1638354"
-  },
-  {
-    "id": 16,
-    "category": "NBA",
-    "title": "Buffstreams Washington Wizards vs Houston Rockets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/washington-wizards-houston-rockets/1638355"
-  },
-  {
-    "id": 17,
-    "category": "NBA",
-    "title": "Buffstreams Milwaukee Bucks vs Atlanta Hawks",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nba/atlanta-hawks-milwaukee-bucks/1638356"
-  },
-  {
-    "id": 18,
-    "category": "NBA",
-    "title": "Buffstreams Sacramento Kings vs Oklahoma City Thunder",
-    "time": "Thu",
-    "href": "https://mybuffstreams.plus/nba/oklahoma-city-thunder-sacramento-kings/1638357"
-  },
-  {
-    "id": 19,
-    "category": "NBA",
-    "title": "WNBA Draft Lottery",
-    "time": "07:30 PM ET",
-    "href": "https://mybuffstreams.plus/title-game/wnba/wnba-draft-lottery-live-streams-links"
   }
 ]
