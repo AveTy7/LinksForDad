@@ -24,7 +24,7 @@
         {
             "weight": "Light heavyweight",
             "wba": "Dmitry BivolFebruary 22, 2025 <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>25\u20131",
-            "wbc": "vacant",
+            "wbc": "Willy HutchinsonNovember 7, 2026<br>21\u20132",
             "ibf": "Dmitry BivolFebruary 22, 2025<br>25\u20131",
             "wbo": "Dmitry BivolFebruary 22, 2025<br>25\u20131"
         },
@@ -110,7 +110,7 @@
             "wba": "Sergio MendozaOctober 10, 2026<br>28\u20131",
             "wbc": "Sergio MendozaOctober 10, 2026<br>28\u20131",
             "ibf": "Masamichi YabukiMarch 29, 2025<br>20\u20134",
-            "wbo": "Anthony OlascuagaJuly 20, 2024<br>12\u20131"
+            "wbo": "Anthony OlascuagaJuly 20, 2024<br>13\u20131"
         },
         {
             "weight": "Light flyweight/Junior flyweight",
@@ -123,8 +123,8 @@
             "weight": "Minimumweight/Mini flyweight/Strawweight",
             "wba": "Oscar CollazoNovember 16, 2024 <span style=\"color: #fbbf24; font-size: 0.85em;\" title=\"Super Champion\">\u2605</span><br>15\u20130",
             "wbc": "Siyakholwa KuseMay 16, 2026<br>10\u20133\u20131",
-            "ibf": "Pedro TaduranJuly 28, 2024<br>20\u20134\u20131",
-            "wbo": "Oscar CollazoMay 27, 2023<br>15\u20130"
+            "ibf": "Pedro TaduranJuly 28, 2024<br>21\u20134\u20131",
+            "wbo": "Ry\u016bsei MatsumotoSeptember 27, 2026<br>9\u20130"
         }
     ],
     "ufc": [
@@ -137,9 +137,9 @@
                 "Alex Pereira",
                 "Sergei Pavlovich",
                 "Josh Hokit",
-                "Curtis Blaydes",
                 "Rizvan Kuniev",
-                "Waldo Cortes-Acosta",
+                "Curtis Blaydes",
+                "Johnny Walker",
                 "Vitor Petrino",
                 "Mario Pinto"
             ]
@@ -202,8 +202,8 @@
                 "Max Holloway",
                 "Paddy Pimblett",
                 "Quillan Salkilld",
+                "Tom Nolan",
                 "Beno\u00eet Saint Denis",
-                "Renato Moicano",
                 "Mateusz Gamrot",
                 "Maur\u00edcio Ruffy"
             ]
@@ -219,9 +219,9 @@
                 "Jean Silva",
                 "Arnold Allen",
                 "Pat Sabatini",
-                "Pavel Andrusca",
                 "Youssef Zalal",
-                "Aaron Pico"
+                "Aaron Pico",
+                "Kevin Vallejos"
             ]
         },
         {
@@ -262,12 +262,12 @@
             "rankings": [
                 "Joselyne Edwards",
                 "Ail\u00edn P\u00e9rez",
-                "Norma Dumont",
                 "Luana Santos",
+                "Norma Dumont",
                 "Julianna Pe\u00f1a",
-                "Yana Santos",
                 "Jacqueline Cavalcanti",
                 "Michelle Montague",
+                "Yana Santos",
                 "Chelsea Chandler",
                 "Karol Rosa"
             ]
@@ -292,16 +292,16 @@
             "weight": "Women's Strawweight",
             "champion": "Mackenzie Dern",
             "rankings": [
+                "Tatiana Suarez",
                 "Zhang Weili",
                 "Virna Jandiroba",
-                "Tatiana Suarez",
                 "Denise Gomes",
                 "Gillian Robertson",
                 "Fatima Kline",
+                "Piera Rodr\u00edguez",
                 "Iasmin Lucindo",
                 "Alexia Thainara",
-                "Loopy God\u00ednez",
-                "Piera Rodr\u00edguez"
+                "Loopy God\u00ednez"
             ]
         }
     ]
