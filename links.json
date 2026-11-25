@@ -64,20 +64,34 @@
   },
   {
     "id": 10,
+    "category": "Boxing",
+    "title": "Adam Azim vs Gabriel Gollaz Valenzuela",
+    "time": "12:00 PM ET",
+    "href": "https://mybuffstreams.plus/title-game/boxing/adam-azim-vs-gabriel-gollaz-valenzuela-live-streams-links"
+  },
+  {
+    "id": 11,
+    "category": "Boxing",
+    "title": "Danny Garcia vs Ruslan Provodnikov",
+    "time": "06:00 PM ET",
+    "href": "https://mybuffstreams.plus/title-game/boxing/danny-garcia-vs-ruslan-provodnikov-live-streams-links"
+  },
+  {
+    "id": 12,
     "category": "NBA",
     "title": "Buffstreams Orlando Magic vs Detroit Pistons",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/orlando-magic-detroit-pistons/1647879"
   },
   {
-    "id": 11,
+    "id": 13,
     "category": "NBA",
     "title": "Buffstreams Washington Wizards vs Boston Celtics",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/washington-wizards-boston-celtics/1647880"
   },
   {
-    "id": 12,
+    "id": 14,
     "category": "NBA",
     "title": "Buffstreams Denver Nuggets vs Dallas Mavericks",
     "time": "Upcoming",
