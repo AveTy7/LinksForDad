@@ -2,264 +2,180 @@
   {
     "id": 1,
     "category": "NFL",
-    "title": "Buffstreams Pittsburgh Steelers vs Denver Broncos",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/nfl/denver-broncos-pittsburgh-steelers/1539257"
-  },
-  {
-    "id": 2,
-    "category": "NFL",
-    "title": "Buffstreams Akron Zips vs Buffalo Bulls",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/buffalo-bulls-akron-zips/1539258"
-  },
-  {
-    "id": 3,
-    "category": "NFL",
-    "title": "Buffstreams Ohio Bobcats vs Toledo Rockets",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/toledo-rockets-ohio-bobcats/1539260"
-  },
-  {
-    "id": 4,
-    "category": "NFL",
-    "title": "Buffstreams Ole Miss Rebels vs Mississippi State Bulldogs",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/ole-miss-rebels-mississippi-state-bulldogs/1539261"
-  },
-  {
-    "id": 5,
-    "category": "NFL",
-    "title": "Buffstreams UTSA Roadrunners vs Tulsa Golden Hurricane",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/utsa-roadrunners-tulsa-golden-hurricane/1539265"
-  },
-  {
-    "id": 6,
-    "category": "NFL",
-    "title": "Buffstreams Iowa Hawkeyes vs Nebraska Cornhuskers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/iowa-hawkeyes-nebraska-cornhuskers/1539259"
-  },
-  {
-    "id": 7,
-    "category": "NFL",
-    "title": "Buffstreams South Alabama Jaguars vs Appalachian State Mountaineers",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/south-alabama-jaguars-appalachian-state-mountaineers/1539266"
-  },
-  {
-    "id": 8,
-    "category": "NFL",
-    "title": "Buffstreams Memphis Tigers vs Temple Owls",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/temple-owls-memphis-tigers/1539263"
-  },
-  {
-    "id": 9,
-    "category": "NFL",
-    "title": "Buffstreams Florida State Seminoles vs Florida Gators",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/florida-gators-florida-state-seminoles/1539267"
-  },
-  {
-    "id": 10,
-    "category": "NFL",
-    "title": "Buffstreams San Jose State Spartans vs North Dakota State Bison",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/north-dakota-state-bison-san-jose-state-spartans/1539268"
-  },
-  {
-    "id": 11,
-    "category": "NFL",
-    "title": "Buffstreams New Mexico Lobos vs Air Force Falcons",
-    "time": "Upcoming",
-    "href": "https://mybuffstreams.plus/cfb/new-mexico-lobos-air-force-falcons/1539269"
-  },
-  {
-    "id": 12,
-    "category": "NFL",
     "title": "Buffstreams Texas A&M Aggies vs Texas Longhorns",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/texas-a-and-m-aggies-texas-longhorns/1539270"
   },
   {
-    "id": 13,
+    "id": 2,
     "category": "NFL",
     "title": "Buffstreams Wisconsin Badgers vs Minnesota Golden Gophers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/minnesota-golden-gophers-wisconsin-badgers/1539271"
   },
   {
-    "id": 14,
+    "id": 3,
     "category": "NFL",
     "title": "Buffstreams Utah Utes vs West Virginia Mountaineers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/cfb/utah-utes-west-virginia-mountaineers/1539272"
   },
   {
-    "id": 15,
+    "id": 4,
     "category": "MMA",
     "title": "UFC Fight Night: Adesanya vs Magomedov",
     "time": "10:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/ufc/ufc-fight-night-adesanya-vs-magomedov-live-streams-links"
   },
   {
-    "id": 16,
-    "category": "MMA",
-    "title": "ONE Friday Fights 180",
-    "time": "Fri @ 08:30 AM ET",
-    "href": "https://mybuffstreams.plus/title-game/ofc/one-friday-fights-180-live-streams-links"
-  },
-  {
-    "id": 17,
+    "id": 5,
     "category": "Boxing",
     "title": "Andy Cruz vs Artur Subkhankulov",
     "time": "11:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/andy-cruz-vs-artur-subkhankulov-live-streams-links"
   },
   {
-    "id": 18,
+    "id": 6,
     "category": "Boxing",
     "title": "Emanuel Odiase vs Mike Perez",
     "time": "11:45 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/emanuel-odiase-vs-mike-perez-live-streams-links"
   },
   {
-    "id": 19,
+    "id": 7,
     "category": "Boxing",
     "title": "Agit Kabayel vs Nelson Hysa",
     "time": "01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/agit-kabayel-vs-nelson-hysa-live-streams-links"
   },
   {
-    "id": 20,
+    "id": 8,
     "category": "Boxing",
     "title": "Gradus Kraus vs Adam Deines",
     "time": "01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/gradus-kraus-vs-adam-deines-live-streams-links"
   },
   {
-    "id": 21,
+    "id": 9,
     "category": "Boxing",
     "title": "Riku Masuda vs Seiya Tsutsumi",
     "time": "02:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/riku-masuda-vs-seiya-tsutsumi-live-streams-links"
   },
   {
-    "id": 22,
+    "id": 10,
     "category": "Boxing",
     "title": "Takero Kitano vs Joseph Sumabong",
     "time": "02:00 AM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/takero-kitano-vs-joseph-sumabong-live-streams-links"
   },
   {
-    "id": 23,
+    "id": 11,
     "category": "Boxing",
     "title": "Adam Azim vs Gabriel Gollaz Valenzuela",
     "time": "12:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/adam-azim-vs-gabriel-gollaz-valenzuela-live-streams-links"
   },
   {
-    "id": 24,
+    "id": 12,
     "category": "Boxing",
     "title": "Danny Garcia vs Ruslan Provodnikov",
     "time": "06:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/danny-garcia-vs-ruslan-provodnikov-live-streams-links"
   },
   {
-    "id": 25,
+    "id": 13,
     "category": "Boxing",
     "title": "Litzy Adilene Vazquez vs Stephanie Pineiro",
     "time": "01:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/litzy-adilene-vazquez-vs-stephanie-pineiro-live-streams-links"
   },
   {
-    "id": 26,
+    "id": 14,
     "category": "Boxing",
     "title": "Conah Walker vs Alexis Rocha",
     "time": "02:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/conah-walker-vs-alexis-rocha-live-streams-links"
   },
   {
-    "id": 27,
+    "id": 15,
     "category": "Boxing",
     "title": "David Benavidez vs Michal Cieslak",
     "time": "08:00 PM ET",
     "href": "https://mybuffstreams.plus/title-game/boxing/david-benavidez-vs-michal-cieslak-live-streams-links"
   },
   {
-    "id": 28,
+    "id": 16,
     "category": "NBA",
     "title": "Buffstreams New York Knicks vs Miami Heat",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/miami-heat-new-york-knicks/1648868"
   },
   {
-    "id": 29,
+    "id": 17,
     "category": "NBA",
     "title": "Buffstreams Detroit Pistons vs Milwaukee Bucks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/detroit-pistons-milwaukee-bucks/1648869"
   },
   {
-    "id": 30,
+    "id": 18,
     "category": "NBA",
     "title": "Buffstreams Indiana Pacers vs Philadelphia 76ers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/philadelphia-76ers-indiana-pacers/1648870"
   },
   {
-    "id": 31,
+    "id": 19,
     "category": "NBA",
     "title": "Buffstreams Toronto Raptors vs Brooklyn Nets",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/brooklyn-nets-toronto-raptors/1648871"
   },
   {
-    "id": 32,
+    "id": 20,
     "category": "NBA",
     "title": "Buffstreams Boston Celtics vs Atlanta Hawks",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/atlanta-hawks-boston-celtics/1648872"
   },
   {
-    "id": 33,
+    "id": 21,
     "category": "NBA",
     "title": "Buffstreams Minnesota Timberwolves vs Memphis Grizzlies",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/minnesota-timberwolves-memphis-grizzlies/1648873"
   },
   {
-    "id": 34,
+    "id": 22,
     "category": "NBA",
     "title": "Buffstreams Phoenix Suns vs Dallas Mavericks",
     "time": "Sun",
     "href": "https://mybuffstreams.plus/nba/phoenix-suns-dallas-mavericks/1648874"
   },
   {
-    "id": 35,
+    "id": 23,
     "category": "NBA",
     "title": "Buffstreams Los Angeles Clippers vs New Orleans Pelicans",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/new-orleans-pelicans-los-angeles-clippers/1648875"
   },
   {
-    "id": 36,
+    "id": 24,
     "category": "NBA",
     "title": "Buffstreams Portland Trail Blazers vs Golden State Warriors",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/golden-state-warriors-portland-trail-blazers/1648876"
   },
   {
-    "id": 37,
+    "id": 25,
     "category": "NBA",
     "title": "Buffstreams San Antonio Spurs vs Los Angeles Lakers",
     "time": "Upcoming",
     "href": "https://mybuffstreams.plus/nba/san-antonio-spurs-los-angeles-lakers/1648877"
   },
   {
-    "id": 38,
+    "id": 26,
     "category": "NBA",
     "title": "Buffstreams Utah Jazz vs Denver Nuggets",
     "time": "Upcoming",
